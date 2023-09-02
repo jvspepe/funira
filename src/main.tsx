@@ -10,6 +10,9 @@ import Products from "./pages/Products.tsx";
 import SingleProduct from "./pages/SingleProduct.tsx";
 import About from "./pages/About.tsx";
 import Cart from "./pages/Cart.tsx";
+import AuthLayout from "./layouts/AuthLayout.tsx";
+import Login from "./pages/Login.tsx";
+import CreateAccount from "./pages/CreateAccount/index.tsx";
 
 const browserRouter = createBrowserRouter([
   {
@@ -23,6 +26,13 @@ const browserRouter = createBrowserRouter([
           { path: "/produtos/:productId", element: <SingleProduct /> },
           { path: "/carrinho", element: <Cart /> },
           { path: "/sobre", element: <About /> },
+        ],
+      },
+      {
+        element: <AuthLayout />,
+        children: [
+          { path: "/conectar", element: <Login /> },
+          { path: "/criar-conta", element: <CreateAccount /> },
         ],
       },
     ],

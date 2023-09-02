@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
 import { styled } from "styled-components";
+import Link from "./Link";
 
 type Props = {
-  routes: string[];
+  routes: { path: string; label: string }[];
 };
 
 const Root = styled.nav`
@@ -18,19 +18,13 @@ const NavList = styled.ul`
   list-style: none;
 `;
 
-const NavLink = styled(Link)`
-  color: ${({ theme }) => theme.colors.text.secondary};
-  font-family: ${({ theme }) => theme.typography.font.body};
-  text-decoration: none;
-`;
-
 const Nav = ({ routes }: Props) => {
   return (
     <Root>
       <NavList>
         {routes.map((route) => (
-          <li key={route}>
-            <NavLink to="/">{route}</NavLink>
+          <li key={route.label}>
+            <Link to={route.path}>{route.label}</Link>
           </li>
         ))}
       </NavList>

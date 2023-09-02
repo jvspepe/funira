@@ -1,6 +1,8 @@
 import Product from "../@types/product";
+import Contact from "../components/Contact";
 import Features from "../components/Features";
 import Hero from "../components/Hero";
+import Newsletter from "../components/Newsletter";
 import ProductSection from "../components/ProductSection";
 import product1 from "/images/product-1.jpg";
 import product2 from "/images/product-2.jpg";
@@ -39,7 +41,13 @@ const Home = () => {
     <>
       <Hero />
       <Features />
-      <ProductSection sectionTitle="Novos Produtos" products={newProducts} />
+      <ProductSection
+        sectionTitle="Novos Produtos"
+        products={newProducts}
+        route="/produtos?ordem=novo"
+      />
+      <Contact />
+      <Newsletter />
     </>
   );
 };
