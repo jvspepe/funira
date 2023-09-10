@@ -1,14 +1,32 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { CaretDown } from "@phosphor-icons/react";
+import { TCategory } from "../../@types/categories";
 import Menu from "../Menu";
 import Button from "../Button";
-import { CaretDown } from "@phosphor-icons/react";
 import Checkbox from "../Checkbox";
 import FilterDropdown from "./styles";
 
-type Props = { title: string; items: string[] };
+type Props = {
+  categories: TCategory[];
+};
 
-const MenuFilter = ({ title, items }: Props) => {
+const MenuFilter = ({ categories }: Props) => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [open, setOpen] = useState(false);
+
+  function handleChangeFilter(event: ChangeEvent<HTMLInputElement>) {
+    const typeParams = searchParams.getAll("tipo");
+    if (typeParams.includes(event.target.value)) {
+      setSearchParams({
+        tipo: typeParams.filter((type) => type !== event.target.value),
+      });
+    } else {
+      searchParams.append("tipo", event.target.value);
+      setSearchParams(searchParams);
+    }
+  }
+
   return (
     <>
       <Menu
@@ -18,21 +36,24 @@ const MenuFilter = ({ title, items }: Props) => {
         toggle={
           <Button
             onClick={() => setOpen(!open)}
-            variant="tertiary"
+            variant="secondary"
             size="small"
             endIcon={<CaretDown size={16} />}
           >
-            {title}
+            Filtros
           </Button>
         }
       >
         <FilterDropdown>
-          {items.map((menuItem) => (
+          {categories.map((category) => (
             <Checkbox
-              key={menuItem}
+              onChange={handleChangeFilter}
+              key={category.value}
               variant="small"
-              label={menuItem}
-              id={menuItem}
+              label={category.label}
+              id={category.value}
+              value={category.value}
+              checked={searchParams.getAll("tipo").includes(category.value)}
             />
           ))}
         </FilterDropdown>

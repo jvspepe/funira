@@ -1,21 +1,15 @@
-import { Link } from "react-router-dom";
 import { styled } from "styled-components";
-import font from "../../styles/font";
+import Link from "../Link";
 
 const NavList = styled.ul`
   position: absolute;
   top: 5rem;
   right: 0;
-
   height: 0;
   width: 100%;
-
   flex-direction: column;
-
   background-color: ${({ theme }) => theme.colors.background.primary};
-
   list-style: none;
-
   visibility: hidden;
   overflow-y: hidden;
   transition: 500ms;
@@ -23,18 +17,16 @@ const NavList = styled.ul`
 `;
 
 const NavListItem = styled.li`
+  border-top: 1px solid ${({ theme }) => theme.colors.border.primary};
   display: flex;
   align-items: center;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.border.primary};
 `;
 
 const NavLink = styled(Link)`
-  color: ${({ theme }) => theme.colors.text.secondary};
-  font-family: ${font.family.body};
-  text-decoration: none;
   width: 100%;
-  padding: 1rem;
-  transition: background-color 300ms;
+  padding: 1.5rem;
+
+  transition: background-color 200ms;
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.border.primary};
@@ -43,7 +35,8 @@ const NavLink = styled(Link)`
 
 const Wrapper = styled.nav`
   display: none;
-  @media (max-width: 768px) {
+
+  @media (width <= 768px) {
     display: flex;
   }
 

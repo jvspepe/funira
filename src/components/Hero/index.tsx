@@ -1,28 +1,29 @@
+import { Link } from "react-router-dom";
 import Button from "../Button";
-import * as S from "./styles";
+import * as Styled from "./styles";
 
 const Hero = () => {
   return (
-    <S.Wrapper>
-      <S.Container>
-        <S.Section>
-          <S.Content>
-            <S.Heading>
+    <Styled.Wrapper>
+      <Styled.Container>
+        <Styled.Section>
+          <Styled.Content>
+            <Styled.Heading>
               Artigos de luxo para pessoas que amam design atemporal de
               qualidade.
-            </S.Heading>
-            <S.Text>
+            </Styled.Heading>
+            <Styled.Paragraph>
               Com a nossa nova coleção, veja mais de 400 peças exclusivas, desde
-              artigos para o lar até móveis.
-            </S.Text>
-          </S.Content>
-          <Button variant="secondary" to="/produtos">
+              artigos para o lar até movéis.
+            </Styled.Paragraph>
+          </Styled.Content>
+          <Button component={Link} variant="secondary" to="/produtos">
             Ver coleção
           </Button>
-        </S.Section>
-        <S.Image src="/images/hero.jpg" alt="" aria-hidden />
-      </S.Container>
-    </S.Wrapper>
+        </Styled.Section>
+        <Styled.Image src="/images/hero.jpg" alt="" aria-hidden />
+      </Styled.Container>
+    </Styled.Wrapper>
   );
 };
 

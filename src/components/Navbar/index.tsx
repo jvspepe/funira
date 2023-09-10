@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useTheme } from "styled-components";
 import { List, X } from "@phosphor-icons/react";
+import { TCategory } from "../../@types/categories";
 import IconButton from "../IconButton";
 import * as Styled from "./styles";
 
 type Props = {
-  routes: { path: string; label: string }[];
+  routes: TCategory[];
 };
 
 const MobileNav = ({ routes }: Props) => {
@@ -33,7 +34,6 @@ const MobileNav = ({ routes }: Props) => {
         aria-controls="navigation-list"
         aria-expanded={active}
         type="button"
-        $variant="primary"
       >
         {active ? (
           <X color={colors.text.primary} size={24} aria-hidden="true" />
@@ -43,8 +43,13 @@ const MobileNav = ({ routes }: Props) => {
       </IconButton>
       <Styled.NavList id="navigation-list" aria-hidden={!active}>
         {routes.map((route) => (
-          <Styled.NavListItem key={route.label}>
-            <Styled.NavLink to={route.path}>{route.label}</Styled.NavLink>
+          <Styled.NavListItem key={route.value}>
+            <Styled.NavLink
+              onClick={() => setActive(false)}
+              to={`/produtos?tipo=${route.value}`}
+            >
+              {route.label}
+            </Styled.NavLink>
           </Styled.NavListItem>
         ))}
       </Styled.NavList>

@@ -11,14 +11,14 @@ const Newsletter = () => {
       <Styled.Container>
         <Styled.Section>
           <Styled.Content>
-            <Styled.Title>
+            <Styled.Heading>
               Junte-se ao clube e aproveite os benefícios.
-            </Styled.Title>
-            <Styled.Description>
+            </Styled.Heading>
+            <Styled.Paragraph>
               Cadastre-se para receber nossa newsletter e receba ofertas
               exclusivas em novas coleções, liquidações, lojas pop-up e muito
               mais.
-            </Styled.Description>
+            </Styled.Paragraph>
           </Styled.Content>
           <Styled.Benefits>
             {benefits.map((benefit) => (

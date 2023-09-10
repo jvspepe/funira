@@ -15,7 +15,7 @@ const Details = styled.div`
   gap: 0.5rem;
 `;
 
-const Title = styled.h3`
+const Heading = styled.h3`
   color: ${({ theme }) => theme.colors.text.primary};
   font-family: ${font.family.heading};
   font-size: ${font.size.lg};
@@ -26,10 +26,11 @@ const Title = styled.h3`
   }
 `;
 
-const Price = styled.span`
+const Price = styled.p`
   color: ${({ theme }) => theme.colors.text.primary};
   font-family: ${font.family.body};
   font-size: ${font.size.sm};
+
   @media (min-width: ${breakpoints.lg}) {
     font-size: ${font.size.lg};
   }
@@ -39,11 +40,15 @@ const Link = styled(RouterLink)`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+
   text-decoration: none;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 
   &:hover ${Image} {
     transform: scale(1.025);
   }
 `;
 
-export { Link, Image, Details, Title, Price };
+export { Link, Image, Details, Heading, Price };

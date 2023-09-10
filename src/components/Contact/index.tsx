@@ -1,6 +1,7 @@
 import Container from "../Container";
 import Button from "../Button";
 import * as S from "./styles";
+import { Link } from "react-router-dom";
 
 const Contact = () => {
   return (
@@ -14,7 +15,7 @@ const Contact = () => {
             pela criação e design de peças para o lar meticulosamente
             elaboradas.
           </S.Details>
-          <Button variant="opaque" to="/">
+          <Button component={Link} variant="opaque" to="/">
             Entrar em contato
           </Button>
         </S.Wrapper>

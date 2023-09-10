@@ -1,15 +1,26 @@
-import { ComponentPropsWithoutRef } from "react";
-import StyledIconButton from "./styles";
+import { ElementType } from "react";
+import Styled from "./styles";
 
-export type Props = ComponentPropsWithoutRef<"button"> & {
-  $variant?: "primary" | "secondary";
+export type Variants = "primary" | "secondary";
+export type Sizes = "big" | "base" | "small";
+
+type Props<T extends ElementType> = {
+  component?: T;
+  variant?: Variants;
+  size?: Sizes;
 };
 
-const IconButton = ({ $variant = "primary", ...props }: Props) => {
+const IconButton = <T extends ElementType = "button">({
+  component,
+  variant = "primary",
+  size = "base",
+  ...props
+}: Props<T> & Omit<React.ComponentPropsWithoutRef<T>, keyof Props<T>>) => {
+  const Component = component || "button";
   return (
-    <StyledIconButton $variant={$variant} {...props}>
+    <Styled as={Component} $variant={variant} $size={size} {...props}>
       {props.children}
-    </StyledIconButton>
+    </Styled>
   );
 };
 

@@ -1,34 +1,58 @@
-import { ComponentPropsWithRef, ReactNode } from "react";
+import { ComponentPropsWithRef, ReactNode, forwardRef } from "react";
 import * as Styled from "./styles";
 
-export type Props = ComponentPropsWithRef<"input"> & {
-  variant?: "primary" | "secondary";
+export type Variants = "primary" | "secondary" | "opaque";
+export type Sizes = "base" | "small";
+
+export type Props = Omit<ComponentPropsWithRef<"input">, "size"> & {
+  variant?: Variants;
+  size?: Sizes;
   label: string;
+  error?: boolean;
   showLabel?: boolean;
-  inputIcon?: ReactNode;
   helperText?: string;
+  inputIcon?: ReactNode;
 };
 
-const TextInput = ({
-  variant = "primary",
-  label,
-  showLabel = true,
-  inputIcon,
-  helperText,
-  ...props
-}: Props) => {
+const TextInput = forwardRef<HTMLInputElement, Props>(function Input(
+  {
+    variant = "primary",
+    size = "base",
+    label,
+    error = false,
+    showLabel = true,
+    helperText,
+    inputIcon,
+    ...props
+  },
+  ref
+) {
   return (
     <Styled.Wrapper>
-      <Styled.Label $showLabel={showLabel} htmlFor={props.id}>
+      <Styled.Label
+        $variant={variant}
+        $size={size}
+        $error={error}
+        $showLabel={showLabel}
+        htmlFor={props.id}
+      >
         {label}
       </Styled.Label>
       <Styled.InputWrapper>
-        <Styled.Input $variant={variant} type="text" {...props} />
+        <Styled.Input
+          $variant={variant}
+          $size={size}
+          $error={error}
+          ref={ref}
+          {...props}
+        />
         {inputIcon}
       </Styled.InputWrapper>
-      {helperText && <Styled.HelperText>{helperText}</Styled.HelperText>}
+      {helperText && (
+        <Styled.HelperText $error={error}>{helperText}</Styled.HelperText>
+      )}
     </Styled.Wrapper>
   );
-};
+});
 
 export default TextInput;

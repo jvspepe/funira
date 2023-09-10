@@ -1,58 +1,39 @@
-import { ButtonHTMLAttributes, ReactNode } from "react";
-import {
-  Link as RouterLink,
-  LinkProps as RouterLinkProps,
-} from "react-router-dom";
+import { ElementType, ReactNode } from "react";
 import StyledButton from "./styles";
 
-export type CommonProps = {
-  variant?: "primary" | "secondary" | "tertiary" | "opaque" | "transparent";
-  size?: "base" | "small";
+export type Variants =
+  | "primary"
+  | "secondary"
+  | "tertiary"
+  | "opaque"
+  | "transparent";
+export type Sizes = "base" | "small";
+
+export type Props<T extends ElementType> = {
+  component?: T;
+  variant?: Variants;
+  size?: Sizes;
   startIcon?: ReactNode;
   endIcon?: ReactNode;
 };
-type ButtonProps = CommonProps & ButtonHTMLAttributes<HTMLButtonElement>;
-type LinkProps = CommonProps & RouterLinkProps;
-type Props = ButtonProps | LinkProps;
 
-const Button = ({
+const Button = <T extends ElementType = "button">({
+  component,
   variant = "primary",
   size = "base",
   startIcon,
   endIcon,
   ...props
-}: Props) => {
-  const isLink = "to" in props;
+}: Props<T> & Omit<React.ComponentPropsWithoutRef<T>, keyof Props<T>>) => {
+  const Component = component || "button";
 
-  if (isLink) {
-    const linkProps = props as LinkProps;
-    return (
-      <StyledButton
-        as={RouterLink}
-        $variant={variant}
-        $size={size}
-        {...linkProps}
-      >
-        {startIcon}
-        {props.children}
-        {endIcon}
-      </StyledButton>
-    );
-  } else {
-    const buttonProps = props as ButtonProps;
-    return (
-      <StyledButton
-        as="button"
-        $variant={variant}
-        $size={size}
-        {...buttonProps}
-      >
-        {startIcon}
-        {props.children}
-        {endIcon}
-      </StyledButton>
-    );
-  }
+  return (
+    <StyledButton as={Component} $variant={variant} $size={size} {...props}>
+      {startIcon}
+      {props.children}
+      {endIcon}
+    </StyledButton>
+  );
 };
 
 export default Button;

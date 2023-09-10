@@ -1,16 +1,16 @@
 import Feature from "../../@types/feature";
-import * as S from "./styles";
+import * as Styled from "./styles";
 type Props = {
   feature: Feature;
 };
 
 const FeatureCard = ({ feature }: Props) => {
   return (
-    <S.Wrapper>
-      <S.Icon>{feature.icon}</S.Icon>
-      <S.Title>{feature.title}</S.Title>
-      <S.Details>{feature.details}</S.Details>
-    </S.Wrapper>
+    <Styled.Wrapper>
+      <Styled.Icon>{feature.icon}</Styled.Icon>
+      <Styled.Heading>{feature.title}</Styled.Heading>
+      <Styled.Paragraph>{feature.details}</Styled.Paragraph>
+    </Styled.Wrapper>
   );
 };
 

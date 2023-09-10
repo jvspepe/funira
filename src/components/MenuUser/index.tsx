@@ -1,10 +1,11 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useTheme } from "styled-components";
 import { UserCircle } from "@phosphor-icons/react";
 import Menu from "../Menu";
 import IconButton from "../IconButton";
 import Wrapper from "./styles";
-import Link from "../Link";
+import Button from "../Button";
 
 const MenuUser = () => {
   const [open, setOpen] = useState(false);
@@ -21,8 +22,18 @@ const MenuUser = () => {
       }
     >
       <Wrapper>
-        <Link to="/conectar">Entrar</Link>
-        <Link to="/criar-conta">Criar Conta</Link>
+        <Button component={Link} to="/conectar" variant="tertiary" size="small">
+          Conectar
+        </Button>
+        <hr />
+        <Button
+          component={Link}
+          to="/criar-conta"
+          variant="tertiary"
+          size="small"
+        >
+          Criar conta
+        </Button>
       </Wrapper>
     </Menu>
   );

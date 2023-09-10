@@ -8,7 +8,6 @@ const Wrapper = styled.div`
 const Footer = styled.footer`
   display: grid;
   gap: 1.25rem;
-
   padding-block: 2.5rem 1.5rem;
   padding-inline: 1.5rem;
 

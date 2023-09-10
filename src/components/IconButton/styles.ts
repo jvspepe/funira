@@ -1,16 +1,16 @@
 import { styled } from "styled-components";
-import { Props } from ".";
+import { Sizes, Variants } from ".";
 
-const StyledIconButton = styled.button<Pick<Props, "$variant">>`
+const Styled = styled.button<{ $variant: Variants; $size: Sizes }>`
   border: none;
   padding: 0.25rem;
   border-radius: 0.5rem;
-
   background-color: transparent;
+
   &:hover,
   &:focus {
     background-color: ${({ theme }) => theme.colors.background.secondary};
   }
 `;
 
-export default StyledIconButton;
+export default Styled;

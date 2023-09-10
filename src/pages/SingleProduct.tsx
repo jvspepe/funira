@@ -1,51 +1,40 @@
-import Product from "../@types/product";
+import { useCallback, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { firestore } from "../api/firebase/firebase-config";
+import { getProduct } from "../api/firebase/firestore/products";
+import { TProduct } from "../@types/product";
 import CallToAction from "../components/Contact";
 import Features from "../components/Features";
 import ProductListing from "../components/ProductListing";
-import ProductSection from "../components/ProductSection";
-import product1 from "/images/product-1.jpg";
-import product2 from "/images/product-2.jpg";
-import product3 from "/images/product-3.jpg";
-import product4 from "/images/product-4.jpg";
 
-const newProducts: Product[] = [
-  {
-    uid: Date.now().toString(),
-    thumbnail: product2,
-    title: "Cadeira Preta",
-    price: 150,
-  },
-  {
-    uid: Date.now().toString(),
-    thumbnail: product4,
-    title: "Vasos Rústico",
-    price: 300,
-  },
-  {
-    uid: Date.now().toString(),
-    thumbnail: product3,
-    title: "Vaso Cinza",
-    price: 125,
-  },
-  {
-    uid: Date.now().toString(),
-    thumbnail: product1,
-    title: "Pendente Preta",
-    price: 200,
-  },
-];
 const SingleProduct = () => {
-  return (
+  const { productId } = useParams();
+
+  const [product, setProduct] = useState<TProduct | null>(null);
+
+  const getSingleProduct = useCallback(async () => {
+    if (!productId) return;
+    try {
+      const databaseProduct = await getProduct(firestore, productId);
+      setProduct(databaseProduct);
+    } catch (error) {
+      throw new Error(String(error));
+    }
+  }, [productId]);
+
+  useEffect(() => {
+    getSingleProduct().catch((error) => {
+      throw new Error(String(error));
+    });
+  }, [getSingleProduct]);
+  return product ? (
     <>
-      <ProductListing />
-      <ProductSection
-        sectionTitle="Você também pode gostar"
-        products={newProducts}
-        route="/produtos"
-      />
+      <ProductListing product={product} />
       <Features />
       <CallToAction />
     </>
+  ) : (
+    <p>Loading</p>
   );
 };
 

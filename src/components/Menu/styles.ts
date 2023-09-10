@@ -8,15 +8,12 @@ const Wrapper = styled.div`
 const Dropdown = styled.div<{ $position: Props["position"] }>`
   overflow: hidden;
   position: absolute;
-
   width: 100%;
-  min-width: 7.5rem;
-
+  min-width: 10rem;
   border: 1px solid ${({ theme }) => theme.colors.border.primary};
   border-radius: 0.25rem;
-
   background-color: ${({ theme }) => theme.colors.background.primary};
-  z-index: 1000;
+  z-index: 10;
   top: calc(100% + 0.125rem);
   ${({ $position }) => {
     switch ($position) {

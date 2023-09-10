@@ -9,6 +9,7 @@ const Wrapper = styled.header`
   justify-content: space-between;
   gap: 0.5rem;
   padding-inline: 1.5rem;
+  background-color: ${({ theme }) => theme.colors.background.primary};
 `;
 
 const Brand = styled(Link)`

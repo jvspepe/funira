@@ -13,7 +13,7 @@ const Section = styled.section`
   }
 `;
 
-const Title = styled.h2`
+const Heading = styled.h2`
   color: ${({ theme }) => theme.colors.text.primary};
   font-family: ${font.family.heading};
   font-size: ${font.size.xl};
@@ -38,4 +38,4 @@ const Display = styled.div`
   }
 `;
 
-export { Section, Title, Display };
+export { Section, Heading, Display };

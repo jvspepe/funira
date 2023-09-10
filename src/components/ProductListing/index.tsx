@@ -1,56 +1,77 @@
+import { useState } from "react";
+import { useAppDispatch } from "../../store/store";
+import { addToCart } from "../../store/cartSlice";
+import { TProduct } from "../../@types/product";
 import Button from "../Button";
-import Container from "../Container";
-import * as S from "./styles";
+import Stepper from "../Stepper";
+import Typography from "../Typography";
+import * as Styled from "./styles";
 
-const ProductListing = () => {
+type Props = { product: TProduct };
+
+const ProductListing = ({ product }: Props) => {
+  const [quantity, setQuantity] = useState<number>(1);
+  const dispatch = useAppDispatch();
+  const handleAddToCart = (product: TProduct) => {
+    dispatch(addToCart({ ...product, quantity }));
+  };
+
   return (
-    <Container>
-      <S.Wrapper>
-        <S.Image src="/images/product-3.jpg" alt="" />
-        <S.Details>
-          <S.Header>
-            <S.Title>Cadeira Preta</S.Title>
-            <S.Price>
+    <Styled.Wrapper>
+      <Styled.Container>
+        <Styled.Image src={product.images[0]} alt="" />
+        <Styled.Details>
+          <Styled.Header>
+            <Styled.Title>{product.title}</Styled.Title>
+            <Styled.Price>
               {Intl.NumberFormat("pt-BR", {
                 currency: "BRL",
                 style: "currency",
-              }).format(150)}
-            </S.Price>
-          </S.Header>
-          <S.Description>
-            <S.DescriptionHeader>Descrição</S.DescriptionHeader>
-            <S.DescriptionBody>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-              Doloribus facere odio modi possimus nam vel temporibus eum libero
-              voluptatibus! Voluptas.
-            </S.DescriptionBody>
-          </S.Description>
-          <S.Dimensions>
-            <S.DimensionsHeader>Dimensões</S.DimensionsHeader>
-            <S.DimensionsContent>
+              }).format(product.price)}
+            </Styled.Price>
+          </Styled.Header>
+          <Styled.Description>
+            <Typography font="heading">Descrição</Typography>
+            <Typography size="sm">{product.description}</Typography>
+          </Styled.Description>
+          <Styled.Dimensions>
+            <Typography font="heading">Dimensões</Typography>
+            <Styled.DimensionsContent>
               <div>
-                <span>Altura</span>
-                <span>110cm</span>
+                <Typography font="heading">Altura</Typography>
+                <Typography size="sm">
+                  {product.dimensions?.height}cm
+                </Typography>
               </div>
               <hr />
               <div>
-                <span>Largura</span>
-                <span>75cm</span>
+                <Typography font="heading">Largura</Typography>
+                <Typography size="sm">{product.dimensions?.width}cm</Typography>
               </div>
               <hr />
               <div>
-                <span>Comprimento</span>
-                <span>50cm</span>
+                <Typography font="heading">Comprimento</Typography>
+                <Typography size="sm">{product.dimensions?.depth}cm</Typography>
               </div>
-            </S.DimensionsContent>
-          </S.Dimensions>
-          <S.Buttons>
-            <Button>Adicionar ao carrinho</Button>
-            <Button>Adicionar ao carrinho</Button>
-          </S.Buttons>
-        </S.Details>
-      </S.Wrapper>
-    </Container>
+            </Styled.DimensionsContent>
+          </Styled.Dimensions>
+          <Styled.Buttons>
+            <Styled.Quantity>
+              <Typography font="heading">Quantidade</Typography>
+              <Stepper
+                value={quantity}
+                setValue={setQuantity}
+                minValue={1}
+                maxValue={product.stock}
+              />
+            </Styled.Quantity>
+            <Button onClick={() => handleAddToCart(product)} type="button">
+              Adicionar ao carrinho
+            </Button>
+          </Styled.Buttons>
+        </Styled.Details>
+      </Styled.Container>
+    </Styled.Wrapper>
   );
 };
 

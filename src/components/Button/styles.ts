@@ -1,20 +1,21 @@
 import { styled } from "styled-components";
-import { CommonProps } from ".";
+
 import font from "../../styles/font";
+import { Sizes, Variants } from ".";
 
 const StyledButton = styled.button<{
-  $variant: CommonProps["variant"];
-  $size: CommonProps["size"];
+  $variant: Variants;
+  $size: Sizes;
 }>`
-  /* width: 100%; */
-
   display: flex;
   align-items: center;
   justify-content: center;
   gap: ${({ $size }) => ($size === "small" ? "0.5rem" : "0.75rem")};
 
   border: 1px solid transparent;
+
   outline: none;
+
   padding: ${({ $size }) =>
     $size === "small" ? "0.75rem 1.25rem" : "1rem 2rem"};
 
@@ -23,7 +24,7 @@ const StyledButton = styled.button<{
   transition: background-color 300ms, outline-color 300ms;
 
   &:disabled {
-    opacity: 0.5;
+    opacity: 0.9;
   }
 
   & svg {
@@ -45,12 +46,11 @@ const StyledButton = styled.button<{
         return "transparent";
     }
   }};
-
   color: ${({ $variant, theme }) => {
     switch ($variant) {
       case "primary":
       case "opaque":
-        return theme.colors.text.tertiary;
+        return theme.colors.text.secondary;
       case "secondary":
       case "tertiary":
       case "transparent":

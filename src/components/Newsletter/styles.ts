@@ -11,6 +11,7 @@ const Wrapper = styled.div`
 const Container = styled(BaseContainer)`
   display: flex;
   padding: 1.5rem;
+
   @media (min-width: ${breakpoints.sm}) {
     align-items: center;
     justify-content: center;
@@ -21,6 +22,7 @@ const Section = styled.section`
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+
   @media (min-width: ${breakpoints.sm}) {
     padding: 5rem 0;
   }
@@ -31,13 +33,14 @@ const Content = styled.div`
   flex-direction: column;
   gap: 0.75rem;
   max-width: 35rem;
+
   @media (min-width: ${breakpoints.sm}) {
     text-align: center;
   }
 `;
 
-const Title = styled.h6`
-  color: ${({ theme }) => theme.colors.text.tertiary};
+const Heading = styled.h6`
+  color: ${({ theme }) => theme.colors.text.secondary};
   font-family: ${font.family.heading};
   font-size: ${font.size["2xl"]};
   font-weight: normal;
@@ -47,8 +50,8 @@ const Title = styled.h6`
   }
 `;
 
-const Description = styled.p`
-  color: ${({ theme }) => theme.colors.text.tertiary};
+const Paragraph = styled.p`
+  color: ${({ theme }) => theme.colors.text.secondary};
   font-family: ${font.family.body};
   font-size: ${font.size.sm};
 
@@ -58,7 +61,7 @@ const Description = styled.p`
 `;
 
 const Benefits = styled.div`
-  color: ${({ theme }) => theme.colors.text.tertiary};
+  color: ${({ theme }) => theme.colors.text.secondary};
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -81,8 +84,8 @@ export {
   Container,
   Section,
   Content,
-  Title,
-  Description,
+  Heading,
+  Paragraph,
   Benefits,
   BenefitItem,
 };
