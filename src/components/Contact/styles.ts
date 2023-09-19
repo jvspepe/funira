@@ -51,6 +51,7 @@ const Details = styled.p`
 
 const Image = styled.img`
   height: 100%;
+  align-self: start;
   object-fit: cover;
 `;
 
