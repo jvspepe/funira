@@ -42,6 +42,11 @@ const MobileNav = ({ routes }: Props) => {
         )}
       </IconButton>
       <Styled.NavList id="navigation-list" aria-hidden={!active}>
+        <Styled.NavListItem key="Todos">
+          <Styled.NavLink onClick={() => setActive(false)} to="/produtos">
+            Todos
+          </Styled.NavLink>
+        </Styled.NavListItem>
         {routes.map((route) => (
           <Styled.NavListItem key={route.value}>
             <Styled.NavLink

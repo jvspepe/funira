@@ -10,6 +10,9 @@ const Nav = ({ routes }: Props) => {
   return (
     <Styled.Wrapper>
       <Styled.List>
+        <li key="Todos">
+          <Link to="/produtos">Todos</Link>
+        </li>
         {routes.map((route) => (
           <li key={route.label}>
             <Link to={`produtos?tipo=${route.value}`}>{route.label}</Link>

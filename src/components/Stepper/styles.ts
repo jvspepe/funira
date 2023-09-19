@@ -1,13 +1,13 @@
 import { styled } from "styled-components";
+import { Sizes } from ".";
 import font from "../../styles/font";
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ $size: Sizes }>`
   font-family: ${font.family.body};
   background-color: ${({ theme }) => theme.colors.background.secondary};
-  display: flex;
-  height: 3rem;
-  max-width: fit-content;
   color: ${({ theme }) => theme.colors.text.primary};
+  display: flex;
+  height: ${({ $size }) => ($size === "small" ? "2rem" : "3rem")};
 `;
 
 const Button = styled.button`
@@ -27,7 +27,9 @@ const Button = styled.button`
 
 const Value = styled.span`
   color: ${({ theme }) => theme.colors.text.primary};
-  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 100%;
   aspect-ratio: 1;
 `;

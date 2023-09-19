@@ -3,12 +3,15 @@ import {
   InstagramLogo,
   LinkedinLogo,
 } from "@phosphor-icons/react";
+import Typography from "../Typography";
 import * as Styled from "./styles";
 
 const Copyright = () => {
   return (
     <Styled.Wrapper>
-      <Styled.Text>Copyright 2023 &copy; Avion LTDA.</Styled.Text>
+      <Typography variant="secondary">
+        Copyright 2023 &copy; Avion LTDA.
+      </Typography>
       <Styled.Socials>
         <LinkedinLogo size={24} weight="fill" />
         <FacebookLogo size={24} weight="fill" />

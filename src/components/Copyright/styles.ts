@@ -1,17 +1,11 @@
 import { styled } from "styled-components";
 
 import breakpoints from "../../styles/breakpoints";
-import font from "../../styles/font";
 
 const Wrapper = styled.span`
   display: flex;
   align-items: center;
   justify-content: space-between;
-`;
-
-const Text = styled.p`
-  color: ${({ theme }) => theme.colors.text.secondary};
-  font-size: ${font.family.body};
 `;
 
 const Socials = styled.div`
@@ -24,4 +18,4 @@ const Socials = styled.div`
   }
 `;
 
-export { Wrapper, Text, Socials };
+export { Wrapper, Socials };

@@ -7,6 +7,7 @@ export type Props = {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   position?: "left" | "middle" | "right";
   children: ReactNode;
+  className?: string;
 };
 
 const Menu = ({
@@ -15,6 +16,7 @@ const Menu = ({
   setIsOpen,
   position = "middle",
   children,
+  className,
 }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -33,7 +35,7 @@ const Menu = ({
   });
 
   return (
-    <S.Wrapper ref={ref}>
+    <S.Wrapper className={className} ref={ref}>
       {toggle}
       {isOpen && <S.Dropdown $position={position}>{children}</S.Dropdown>}
     </S.Wrapper>

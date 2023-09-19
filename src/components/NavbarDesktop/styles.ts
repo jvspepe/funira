@@ -10,7 +10,7 @@ const Wrapper = styled.nav`
 const List = styled.ul`
   display: flex;
   align-items: center;
-  gap: 2.5rem;
+  gap: 1.5rem;
   list-style: none;
 `;
 

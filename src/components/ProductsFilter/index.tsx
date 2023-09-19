@@ -10,6 +10,7 @@ import Checkbox from "../Checkbox";
 import IconButton from "../IconButton";
 import Menu from "../Menu";
 import * as Styled from "./styles";
+import MenuSort from "../MenuSort";
 
 const sortOptions = [
   { label: "Maior Preço", value: "maior-preço" },
@@ -133,32 +134,7 @@ const ProductsFilter = ({ categories }: Props) => {
       </Styled.Wrapper>
       <Styled.WrapperDesktop>
         <MenuFilter categories={categories} />
-        <Menu
-          isOpen={openSort}
-          setIsOpen={setOpenSort}
-          toggle={
-            <Button
-              onClick={() => setOpenSort(!openSort)}
-              variant="secondary"
-              size="small"
-              endIcon={<CaretDown size={16} />}
-            >
-              Ordem
-            </Button>
-          }
-        >
-          {sortOptions.map((option) => (
-            <Button
-              onClick={() => handleChangeSort(option.value)}
-              key={option.value}
-              variant="tertiary"
-              size="small"
-              style={{ width: "100%" }}
-            >
-              {option.label}
-            </Button>
-          ))}
-        </Menu>
+        <MenuSort options={sortOptions} onClick={handleChangeSort} />
       </Styled.WrapperDesktop>
     </Container>
   );

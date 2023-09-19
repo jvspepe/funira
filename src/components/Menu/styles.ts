@@ -6,9 +6,8 @@ const Wrapper = styled.div`
 `;
 
 const Dropdown = styled.div<{ $position: Props["position"] }>`
-  overflow: hidden;
+  /* overflow: hidden; */
   position: absolute;
-  width: 100%;
   min-width: 10rem;
   border: 1px solid ${({ theme }) => theme.colors.border.primary};
   border-radius: 0.25rem;

@@ -1,7 +1,7 @@
-import Product from "../../@types/product";
+import { TProduct } from "../../@types/product";
 import * as Styled from "./styles";
 type Props = {
-  product: Product;
+  product: TProduct;
 };
 
 const ProductCard = ({ product }: Props) => {
@@ -9,9 +9,7 @@ const ProductCard = ({ product }: Props) => {
     <Styled.Link to={`/produtos/${product.uid}`}>
       <Styled.Image src={product.images[0]} alt="" />
       <Styled.Details>
-        <Styled.Heading>
-          {product.title.split(" ").slice(0, 3).join(" ")}...
-        </Styled.Heading>
+        <Styled.Heading>{product.title}</Styled.Heading>
         <Styled.Price>
           {Intl.NumberFormat("pt-BR", {
             currency: "BRL",

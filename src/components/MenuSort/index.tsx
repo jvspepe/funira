@@ -2,42 +2,45 @@ import { useState } from "react";
 import { CaretDown } from "@phosphor-icons/react";
 import Menu from "../Menu";
 import Button from "../Button";
-import * as S from "./styles";
+import { useSearchParams } from "react-router-dom";
 
-type Props = { options: string[] };
-const MenuSort = ({ options }: Props) => {
-  const [open, setOpen] = useState(false);
-  const [sortValue, setSortValue] = useState<string>(options[0]);
+type Props = {
+  options: { label: string; value: string }[];
+  onClick(value: string): void;
+};
+
+const MenuSort = ({ options, onClick }: Props) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [searchParams] = useSearchParams();
+
   return (
-    <S.Wrapper>
-      <S.Text>Ordenar por:</S.Text>
-      <Menu
-        isOpen={open}
-        setIsOpen={setOpen}
-        position="left"
-        toggle={
-          <Button
-            onClick={() => setOpen(!open)}
-            variant="tertiary"
-            size="small"
-            endIcon={<CaretDown size={16} />}
-          >
-            {sortValue}
-          </Button>
-        }
-      >
-        {options.map((option) => (
-          <Button
-            key={option}
-            onClick={() => setSortValue(option)}
-            variant="tertiary"
-            size="small"
-          >
-            {option}
-          </Button>
-        ))}
-      </Menu>
-    </S.Wrapper>
+    <Menu
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+      toggle={
+        <Button
+          onClick={() => setIsOpen(!isOpen)}
+          variant="secondary"
+          size="small"
+          endIcon={<CaretDown size={16} />}
+        >
+          {options.find((option) => option.value === searchParams.get("ordem"))
+            ?.label || "Ordem"}
+        </Button>
+      }
+    >
+      {options.map((option) => (
+        <Button
+          onClick={() => onClick(option.value)}
+          key={option.value}
+          variant="tertiary"
+          size="small"
+          style={{ width: "100%" }}
+        >
+          {option.label}
+        </Button>
+      ))}
+    </Menu>
   );
 };
 

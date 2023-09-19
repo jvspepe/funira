@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { useTheme } from "styled-components";
-import { MagnifyingGlass, ShoppingCart } from "@phosphor-icons/react";
+import { MagnifyingGlass } from "@phosphor-icons/react";
 import { firestore } from "../../api/firebase/firebase-config";
 import { getCategories } from "../../api/firebase/firestore/categories";
 import { TCategory } from "../../@types/categories";
@@ -9,6 +8,7 @@ import Nav from "../NavbarDesktop";
 import MobileNav from "../Navbar";
 import IconButton from "../IconButton";
 import UserMenu from "../MenuUser";
+import CartButton from "../CartButton";
 import * as S from "./styles";
 
 const Header = () => {
@@ -37,9 +37,7 @@ const Header = () => {
         <IconButton type="button">
           <MagnifyingGlass color={colors.text.primary} size={24} />
         </IconButton>
-        <IconButton component={Link} to="/carrinho">
-          <ShoppingCart color={colors.text.primary} size={24} />
-        </IconButton>
+        <CartButton />
         <UserMenu />
         <MobileNav routes={categories} />
       </S.Controls>

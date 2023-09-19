@@ -20,6 +20,10 @@ const Heading = styled.h3`
   font-family: ${font.family.heading};
   font-size: ${font.size.lg};
   font-weight: normal;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 
   @media (min-width: ${breakpoints.lg}) {
     font-size: ${font.size.xl};
@@ -47,7 +51,7 @@ const Link = styled(RouterLink)`
   text-overflow: ellipsis;
 
   &:hover ${Image} {
-    transform: scale(1.025);
+    transform: scale(1.05);
   }
 `;
 
