@@ -1,8 +1,8 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { CaretDown } from "@phosphor-icons/react";
 import Menu from "../Menu";
 import Button from "../Button";
-import { useSearchParams } from "react-router-dom";
 
 type Props = {
   options: { label: string; value: string }[];
