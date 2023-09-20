@@ -1,7 +1,8 @@
 import { Dispatch, ReactNode, SetStateAction, useEffect, useRef } from "react";
 import * as S from "./styles";
+import { LayoutProps } from "styled-system";
 
-export type Props = {
+export type Props = LayoutProps & {
   toggle: ReactNode;
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
@@ -17,6 +18,7 @@ const Menu = ({
   position = "middle",
   children,
   className,
+  ...props
 }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -35,7 +37,7 @@ const Menu = ({
   });
 
   return (
-    <S.Wrapper className={className} ref={ref}>
+    <S.Wrapper className={className} ref={ref} {...props}>
       {toggle}
       {isOpen && <S.Dropdown $position={position}>{children}</S.Dropdown>}
     </S.Wrapper>

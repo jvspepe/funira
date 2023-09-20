@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import font from "../../styles/font";
 
 const Wrapper = styled.div`
   display: grid;
@@ -11,12 +10,4 @@ const Wrapper = styled.div`
   }
 `;
 
-const Text = styled.p`
-  color: ${({ theme }) => theme.colors.text.primary};
-  font-family: ${font.family.heading};
-  font-size: ${font.size.lg};
-  padding: 0.5rem;
-  text-align: center;
-`;
-
-export { Wrapper, Text };
+export default Wrapper;

@@ -1,10 +1,18 @@
-import * as Styled from "./styles";
+import Typography from "../Typography";
+import Wrapper from "./styles";
 
 const ProductsHeader = () => {
   return (
-    <Styled.Wrapper>
-      <Styled.Heading>Nossos produtos</Styled.Heading>
-    </Styled.Wrapper>
+    <Wrapper>
+      <Typography
+        component="h2"
+        fontFamily="heading"
+        fontSize="4xl"
+        textAlign="center"
+      >
+        Nossos produtos
+      </Typography>
+    </Wrapper>
   );
 };
 

@@ -1,5 +1,4 @@
 import { styled } from "styled-components";
-import font from "../../styles/font";
 
 const Wrapper = styled.div`
   display: flex;
@@ -26,11 +25,4 @@ const Checkbox = styled.input`
   }
 `;
 
-const Label = styled.label<{ $variant: "base" | "small" }>`
-  color: ${({ theme }) => theme.colors.text.primary};
-  font-family: ${font.family.body};
-  font-size: ${({ $variant }) =>
-    $variant === "small" ? font.size.sm : font.size.md};
-`;
-
-export { Wrapper, Checkbox, Label };
+export { Wrapper, Checkbox };

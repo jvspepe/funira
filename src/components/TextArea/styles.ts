@@ -1,7 +1,6 @@
 import TextareaAutosize from "react-textarea-autosize";
 import { styled } from "styled-components";
 import { Props, Sizes, Variants } from ".";
-import font from "../../styles/font";
 
 const Wrapper = styled.div`
   display: flex;
@@ -17,8 +16,8 @@ const Label = styled.label<{
   $showLabel: Props["showLabel"];
 }>`
   width: fit-content;
-  font-family: ${font.family.heading};
-  font-size: ${({ $size }) => $size === "small" && font.size.sm};
+  font-family: ${({ theme }) => theme.fonts.heading};
+  font-size: ${({ $size, theme }) => $size === "small" && theme.fontSizes.sm};
 
   color: ${({ $variant, $error, theme }) => {
     if ($error) return "red";
@@ -74,7 +73,8 @@ const TextArea = styled(TextareaAutosize)<{
       ? theme.colors.background.secondary
       : "rgba(255, 255, 255, 0.15)";
   }};
-  font-family: ${font.family.body};
+  font-family: ${({ theme }) => theme.fonts.body};
+
   transition: background-color 200ms, outline-color 200ms;
 
   &::placeholder {
@@ -98,8 +98,8 @@ const TextArea = styled(TextareaAutosize)<{
 
 const HelperText = styled.span<{ $error: Props["error"] }>`
   color: ${({ $error, theme }) => ($error ? "red" : theme.colors.text.primary)};
-  font-size: ${font.size.xs};
-  font-family: ${font.family.heading};
+  font-size: ${({ theme }) => theme.fontSizes.xs};
+  font-family: ${({ theme }) => theme.fonts.heading};
 `;
 
 export { Wrapper, Label, InputWrapper, TextArea, HelperText };

@@ -1,5 +1,4 @@
 import { styled } from "styled-components";
-import font from "../../styles/font";
 
 const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.background.secondary};
@@ -12,12 +11,4 @@ const Wrapper = styled.div`
   justify-content: center;
 `;
 
-const Heading = styled.h2`
-  color: ${({ theme }) => theme.colors.text.secondary};
-  font-family: ${font.family.heading};
-  font-size: ${font.size["4xl"]};
-  font-weight: normal;
-  text-align: center;
-`;
-
-export { Wrapper, Heading };
+export default Wrapper;

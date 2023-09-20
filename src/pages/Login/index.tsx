@@ -2,8 +2,9 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import TextInput from "../../components/TextInput";
 import Button from "../../components/Button";
-import Link from "../../components/Link";
 import * as Styled from "./styles";
+import Typography from "../../components/Typography";
+import { Link } from "react-router-dom";
 
 type LoginValues = {
   email: string;
@@ -51,7 +52,9 @@ const Login = () => {
           label="Senha"
         />
         <Button type="submit">Entrar</Button>
-        <Link to="/criar-conta">Não possui uma conta? Criar</Link>
+        <Typography component={Link} to="/conectar">
+          Não possui uma conta? Criar
+        </Typography>
       </Styled.Form>
     </Styled.Wrapper>
   );

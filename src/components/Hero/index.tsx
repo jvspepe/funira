@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Button from "../Button";
 import * as Styled from "./styles";
+import Typography from "../Typography";
 
 const Hero = () => {
   return (
@@ -8,14 +9,19 @@ const Hero = () => {
       <Styled.Container>
         <Styled.Section>
           <Styled.Content>
-            <Styled.Heading>
+            <Typography
+              component="h2"
+              fontFamily="heading"
+              fontSize={"2xl"}
+              fontWeight="normal"
+            >
               Artigos de luxo para pessoas que amam design atemporal de
               qualidade.
-            </Styled.Heading>
-            <Styled.Paragraph>
+            </Typography>
+            <Typography>
               Com a nossa nova coleção, veja mais de 400 peças exclusivas, desde
               artigos para o lar até movéis.
-            </Styled.Paragraph>
+            </Typography>
           </Styled.Content>
           <Button component={Link} variant="secondary" to="/produtos">
             Ver coleção

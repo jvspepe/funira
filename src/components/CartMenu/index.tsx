@@ -5,7 +5,8 @@ import { useAppSelector } from "../../store/store";
 import Menu from "../Menu";
 import IconButton from "../IconButton";
 import CartMenuItem from "../CartMenuItem";
-import * as Styled from "./styles";
+import Typography from "../Typography";
+import Wrapper from "./styles";
 
 const CartMenu = () => {
   const { colors } = useTheme();
@@ -16,19 +17,27 @@ const CartMenu = () => {
       isOpen={isOpen}
       setIsOpen={setIsOpen}
       position="right"
+      display={["none", null, "block"]}
       toggle={
         <IconButton onClick={() => setIsOpen(!isOpen)}>
           <ShoppingCart color={colors.text.primary} size={24} />
         </IconButton>
       }
     >
-      <Styled.Wrapper>
+      <Wrapper>
         {cart && cart.length > 1 ? (
           cart.map((item) => <CartMenuItem key={item.uid} product={item} />)
         ) : (
-          <Styled.Text>Carrinho vazio</Styled.Text>
+          <Typography
+            fontFamily="heading"
+            fontSize="lg"
+            textAlign="center"
+            p="0.5rem"
+          >
+            Carrinho vazio
+          </Typography>
         )}
-      </Styled.Wrapper>
+      </Wrapper>
     </Menu>
   );
 };

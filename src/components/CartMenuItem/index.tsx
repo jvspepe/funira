@@ -6,6 +6,7 @@ import IconButton from "../IconButton";
 import { X } from "@phosphor-icons/react";
 import { useAppDispatch } from "../../store/store";
 import { removeFromCart } from "../../store/cartSlice";
+import Typography from "../Typography";
 
 type Props = { product: TCartProduct };
 
@@ -16,13 +17,13 @@ const CartMenuItem = ({ product }: Props) => {
     <Styled.Wrapper>
       <Styled.Image src={product.images[0]} alt="" />
       <Styled.InnerWrapper>
-        <Styled.Heading>{product.title}</Styled.Heading>
-        <Styled.Price>
+        <Typography fontFamily="heading">{product.title}</Typography>
+        <Typography component="span" fontFamily="heading" fontSize="sm">
           {Intl.NumberFormat("pt-BR", {
             currency: "BRL",
             style: "currency",
           }).format(product.price)}
-        </Styled.Price>
+        </Typography>
         <Styled.Buttons>
           <Stepper
             value={value}

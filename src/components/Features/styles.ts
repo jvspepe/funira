@@ -1,6 +1,5 @@
 import { styled } from "styled-components";
 import breakpoints from "../../styles/breakpoints";
-import font from "../../styles/font";
 
 const Section = styled.section`
   display: flex;
@@ -10,18 +9,6 @@ const Section = styled.section`
 
   @media (min-width: ${breakpoints.sm}) {
     padding: 3rem 0;
-  }
-`;
-
-const Heading = styled.h2`
-  color: ${({ theme }) => theme.colors.text.primary};
-  font-family: ${font.family.heading};
-  font-size: ${font.size.xl};
-  font-weight: normal;
-
-  @media (min-width: ${breakpoints.sm}) {
-    text-align: center;
-    font-size: ${font.size["2xl"]};
   }
 `;
 
@@ -38,4 +25,4 @@ const Display = styled.div`
   }
 `;
 
-export { Section, Heading, Display };
+export { Section, Display };

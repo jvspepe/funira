@@ -1,10 +1,19 @@
 import { styled } from "styled-components";
-import { Sizes, Variants } from ".";
+import {
+  FlexboxProps,
+  GridProps,
+  LayoutProps,
+  compose,
+  flexbox,
+  grid,
+  layout,
+} from "styled-system";
 
-const Styled = styled.button<{ $variant: Variants; $size: Sizes }>`
+const Styled = styled.button<FlexboxProps & GridProps & LayoutProps>`
+  ${compose(flexbox, grid, layout)}
   border: none;
-  padding: 0.25rem;
   border-radius: 0.5rem;
+  padding: 0.25rem;
   background-color: transparent;
 
   &:hover,

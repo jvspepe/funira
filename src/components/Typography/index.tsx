@@ -1,35 +1,29 @@
 import { ElementType } from "react";
+import {
+  FlexboxProps,
+  LayoutProps,
+  SpaceProps,
+  TypographyProps,
+} from "styled-system";
 import Styles from "./styles";
-import font from "../../styles/font";
 
-export type Variants = "primary" | "secondary";
-export type Fonts = keyof (typeof font)["family"];
-export type Sizes = keyof (typeof font)["size"];
-
-export type Props<T extends ElementType> = {
-  component?: T;
-  variant?: Variants;
-  font?: Fonts;
-  size?: Sizes;
-};
+export type Props<T extends ElementType> = FlexboxProps &
+  LayoutProps &
+  SpaceProps &
+  TypographyProps & {
+    component?: T;
+    variant?: "primary" | "secondary";
+  };
 
 const Typography = <T extends ElementType = "p">({
   component,
   variant = "primary",
-  font = "body",
-  size = "md",
   ...props
 }: Props<T> & Omit<React.ComponentPropsWithoutRef<T>, keyof Props<T>>) => {
   const Component = component || "p";
 
   return (
-    <Styles
-      as={Component}
-      {...props}
-      $variant={variant}
-      $font={font}
-      $size={size}
-    >
+    <Styles $variant={variant} as={Component} {...props}>
       {props.children}
     </Styles>
   );

@@ -1,4 +1,6 @@
 import "styled-components";
+import { FontSizes } from "./styles/font-sizes";
+import { Fonts } from "./styles/fonts";
 
 declare module "styled-components" {
   export interface DefaultTheme {
@@ -19,5 +21,7 @@ declare module "styled-components" {
         tertiary: string;
       };
     };
+    fonts: Fonts;
+    fontSizes: FontSizes;
   }
 }

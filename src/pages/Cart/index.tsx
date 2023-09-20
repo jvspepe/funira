@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
-import CartProduct from "../../components/CartProduct";
-import * as Styled from "./styles";
 import { useTheme } from "styled-components";
 import { useAppSelector } from "../../store/store";
+import CartProduct from "../../components/CartProduct";
+import Typography from "../../components/Typography";
+import * as Styled from "./styles";
 
 const Cart = () => {
   const { cart, total } = useAppSelector((state) => state.cartReducer);
@@ -10,7 +11,9 @@ const Cart = () => {
   return (
     <Styled.Container>
       <Styled.Wrapper>
-        <Styled.Title>Seu carrinho</Styled.Title>
+        <Typography component="h2" fontFamily="heading" fontSize="2xl">
+          Seu carrinho
+        </Typography>
         <hr style={{ border: `1px solid ${colors.border.primary}` }} />
         {cart.length !== 0 ? (
           <Styled.InnerContainer>
@@ -19,7 +22,9 @@ const Cart = () => {
             ))}
           </Styled.InnerContainer>
         ) : (
-          <Styled.Title>O Carrinho está vázio...</Styled.Title>
+          <Typography component="h2" fontFamily="heading" fontSize="2xl">
+            O Carrinho está vázio...
+          </Typography>
         )}
         <hr
           style={{
@@ -28,14 +33,16 @@ const Cart = () => {
           }}
         />
         <Styled.PriceContainer>
-          <span>Total</span>
-          <span>
+          <Typography component="span" fontFamily="heading" fontSize="xl">
+            Total
+          </Typography>
+          <Typography component="span" fontFamily="heading" fontSize="xl">
             {" "}
             {Intl.NumberFormat("pt-BR", {
               currency: "BRL",
               style: "currency",
             }).format(total)}
-          </span>
+          </Typography>
         </Styled.PriceContainer>
         <Styled.Button component={Link} to="/">
           Finalizar compra

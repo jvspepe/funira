@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import font from "../../styles/font";
+
 import BaseContainer from "../Container";
 import breakpoints from "../../styles/breakpoints";
 
@@ -39,33 +39,11 @@ const Content = styled.div`
   }
 `;
 
-const Heading = styled.h6`
-  color: ${({ theme }) => theme.colors.text.secondary};
-  font-family: ${font.family.heading};
-  font-size: ${font.size["2xl"]};
-  font-weight: normal;
-
-  @media (min-width: ${breakpoints.lg}) {
-    font-size: ${font.size["3xl"]};
-  }
-`;
-
-const Paragraph = styled.p`
-  color: ${({ theme }) => theme.colors.text.secondary};
-  font-family: ${font.family.body};
-  font-size: ${font.size.sm};
-
-  @media (min-width: ${breakpoints.lg}) {
-    font-size: ${font.size.lg};
-  }
-`;
-
 const Benefits = styled.div`
   color: ${({ theme }) => theme.colors.text.secondary};
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  font-family: ${font.family.body};
 
   @media (min-width: ${breakpoints.sm}) {
     align-self: center;
@@ -79,13 +57,4 @@ const BenefitItem = styled.span`
   gap: 0.5rem;
 `;
 
-export {
-  Wrapper,
-  Container,
-  Section,
-  Content,
-  Heading,
-  Paragraph,
-  Benefits,
-  BenefitItem,
-};
+export { Wrapper, Container, Section, Content, Benefits, BenefitItem };

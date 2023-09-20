@@ -4,6 +4,7 @@ import { List, X } from "@phosphor-icons/react";
 import { TCategory } from "../../@types/categories";
 import IconButton from "../IconButton";
 import * as Styled from "./styles";
+import { Link } from "react-router-dom";
 
 type Props = {
   routes: TCategory[];
@@ -43,7 +44,11 @@ const MobileNav = ({ routes }: Props) => {
       </IconButton>
       <Styled.NavList id="navigation-list" aria-hidden={!active}>
         <Styled.NavListItem key="Todos">
-          <Styled.NavLink onClick={() => setActive(false)} to="/produtos">
+          <Styled.NavLink
+            component={Link}
+            onClick={() => setActive(false)}
+            to="/produtos"
+          >
             Todos
           </Styled.NavLink>
         </Styled.NavListItem>

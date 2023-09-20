@@ -1,4 +1,6 @@
 import { DefaultTheme } from "styled-components";
+import fonts from "../fonts";
+import fontSizes from "../font-sizes";
 
 const light: DefaultTheme = {
   colors: {
@@ -18,6 +20,8 @@ const light: DefaultTheme = {
       tertiary: "#726E8D",
     },
   },
+  fonts,
+  fontSizes,
 };
 
 export default light;

@@ -40,12 +40,12 @@ const Home = () => {
       <ProductDisplay
         title="Novos Produtos"
         products={newProducts}
-        link="/produtos?ordem=novos"
+        link="/produtos?ordem=novo"
       />
       <ProductDisplay
         title="Produtos Populares"
         products={ratedProducts}
-        link="/produtos?ordem=mais-vendidos"
+        link="/produtos?ordem=mais-vendido"
       />
 
       <Contact />

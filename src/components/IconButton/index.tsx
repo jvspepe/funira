@@ -1,24 +1,21 @@
 import { ElementType } from "react";
 import Styled from "./styles";
+import { FlexboxProps, GridProps, LayoutProps } from "styled-system";
 
-export type Variants = "primary" | "secondary";
-export type Sizes = "big" | "base" | "small";
-
-type Props<T extends ElementType> = {
-  component?: T;
-  variant?: Variants;
-  size?: Sizes;
-};
+type Props<T extends ElementType> = FlexboxProps &
+  GridProps &
+  LayoutProps & {
+    component?: T;
+  };
 
 const IconButton = <T extends ElementType = "button">({
   component,
-  variant = "primary",
-  size = "base",
+
   ...props
 }: Props<T> & Omit<React.ComponentPropsWithoutRef<T>, keyof Props<T>>) => {
   const Component = component || "button";
   return (
-    <Styled as={Component} $variant={variant} $size={size} {...props}>
+    <Styled as={Component} {...props}>
       {props.children}
     </Styled>
   );

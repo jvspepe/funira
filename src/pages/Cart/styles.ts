@@ -1,5 +1,4 @@
 import { styled } from "styled-components";
-import font from "../../styles/font";
 import BaseButton from "../../components/Button";
 import BaseContainer from "../../components/Container";
 import breakpoints from "../../styles/breakpoints";
@@ -26,13 +25,6 @@ const Wrapper = styled.div`
   padding: 2rem 1.5rem;
 `;
 
-const Title = styled.h2`
-  color: ${({ theme }) => theme.colors.text.primary};
-  font-family: ${font.family.heading};
-  font-size: ${font.size["2xl"]};
-  font-weight: normal;
-`;
-
 const InnerContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -40,21 +32,10 @@ const InnerContainer = styled.div`
   flex-grow: 1;
 `;
 
-const Heading = styled.h3`
-  color: ${({ theme }) => theme.colors.text.primary};
-  font-family: ${font.family.heading};
-  font-size: ${font.size.md};
-  font-weight: normal;
-`;
-
 const PriceContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: ${({ theme }) => theme.colors.text.primary};
-  font-family: ${font.family.heading};
-  font-size: ${font.size.xl};
-  font-weight: normal;
   align-self: end;
 
   & span:first-of-type {
@@ -68,12 +49,4 @@ const Button = styled(BaseButton)`
   }
 `;
 
-export {
-  Container,
-  Wrapper,
-  Title,
-  InnerContainer,
-  Heading,
-  PriceContainer,
-  Button,
-};
+export { Container, Wrapper, InnerContainer, PriceContainer, Button };

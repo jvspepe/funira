@@ -1,5 +1,4 @@
 import { styled } from "styled-components";
-import font from "../../styles/font";
 import breakpoints from "../../styles/breakpoints";
 import BaseContainer from "../Container";
 
@@ -45,27 +44,6 @@ const Details = styled.div`
 const Header = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-const Title = styled.h2`
-  color: ${({ theme }) => theme.colors.text.primary};
-  font-family: ${font.family.heading};
-  font-size: ${font.size["2xl"]};
-  font-weight: normal;
-
-  @media (min-width: ${breakpoints.md}) {
-    font-size: ${font.size["4xl"]};
-  }
-`;
-
-const Price = styled.span`
-  color: ${({ theme }) => theme.colors.text.primary};
-  font-family: ${font.family.heading};
-  font-size: ${font.size.xl};
-
-  @media (min-width: ${breakpoints.md}) {
-    font-size: ${font.size["2xl"]};
-  }
 `;
 
 const Description = styled.div`
@@ -132,8 +110,6 @@ export {
   Image,
   Details,
   Header,
-  Title,
-  Price,
   Description,
   Dimensions,
   DimensionsContent,

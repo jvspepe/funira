@@ -1,7 +1,5 @@
 import { Link as RouterLink } from "react-router-dom";
 import { styled } from "styled-components";
-import font from "../../styles/font";
-import breakpoints from "../../styles/breakpoints";
 
 const Image = styled.img`
   flex-grow: 1;
@@ -13,31 +11,6 @@ const Details = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-`;
-
-const Heading = styled.h3`
-  color: ${({ theme }) => theme.colors.text.primary};
-  font-family: ${font.family.heading};
-  font-size: ${font.size.lg};
-  font-weight: normal;
-  width: 100%;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-
-  @media (min-width: ${breakpoints.lg}) {
-    font-size: ${font.size.xl};
-  }
-`;
-
-const Price = styled.p`
-  color: ${({ theme }) => theme.colors.text.primary};
-  font-family: ${font.family.body};
-  font-size: ${font.size.sm};
-
-  @media (min-width: ${breakpoints.lg}) {
-    font-size: ${font.size.lg};
-  }
 `;
 
 const Link = styled(RouterLink)`
@@ -55,4 +28,4 @@ const Link = styled(RouterLink)`
   }
 `;
 
-export { Link, Image, Details, Heading, Price };
+export { Link, Image, Details };

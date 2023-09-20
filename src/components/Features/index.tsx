@@ -4,6 +4,7 @@ import Feature from "../../@types/feature";
 import FeatureCard from "../FeatureCard/FeatureCard";
 import * as S from "./styles";
 import Container from "../Container";
+import Typography from "../Typography";
 
 const featureList: Feature[] = [
   {
@@ -33,7 +34,13 @@ const Features = () => {
   return (
     <Container>
       <S.Section>
-        <S.Heading>O que faz de nossa marca diferente</S.Heading>
+        <Typography
+          component="h2"
+          fontFamily="heading"
+          fontSize={["xl", "2xl"]}
+        >
+          O que faz de nossa marca diferente
+        </Typography>
         <S.Display>
           {featureList.map((feature) => (
             <FeatureCard key={feature.title} feature={feature} />

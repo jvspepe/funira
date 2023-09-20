@@ -4,7 +4,6 @@ import breakpoints from "../../styles/breakpoints";
 const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.background.secondary};
 
-  /* background-image: url("/images/bg-1.jpg"); */
   background-position: center;
   background-size: cover;
   height: calc(100dvh - 5rem);

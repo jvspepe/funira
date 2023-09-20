@@ -1,6 +1,7 @@
-import * as Styled from "./styles";
-import Link from "../Link";
+import { Link } from "react-router-dom";
 import { TCategory } from "../../@types/categories";
+import Typography from "../Typography";
+import * as Styled from "./styles";
 
 type Props = {
   routes: TCategory[];
@@ -11,11 +12,15 @@ const Nav = ({ routes }: Props) => {
     <Styled.Wrapper>
       <Styled.List>
         <li key="Todos">
-          <Link to="/produtos">Todos</Link>
+          <Typography component={Link} to="/produtos">
+            Todos
+          </Typography>
         </li>
         {routes.map((route) => (
           <li key={route.label}>
-            <Link to={`produtos?tipo=${route.value}`}>{route.label}</Link>
+            <Typography component={Link} to={`produtos?tipo=${route.value}`}>
+              {route.label}
+            </Typography>
           </li>
         ))}
       </Styled.List>

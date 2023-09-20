@@ -2,6 +2,7 @@ import { CheckCircle } from "@phosphor-icons/react";
 import TextInput from "../TextInput";
 import Button from "../Button";
 import * as Styled from "./styles";
+import Typography from "../Typography";
 
 const benefits = ["Ofertas Exclusivas", "Eventos", "Descontos"];
 
@@ -11,14 +12,19 @@ const Newsletter = () => {
       <Styled.Container>
         <Styled.Section>
           <Styled.Content>
-            <Styled.Heading>
+            <Typography
+              component="h6"
+              variant="secondary"
+              fontFamily="heading"
+              fontSize={["2xl", null, null, "3xl"]}
+            >
               Junte-se ao clube e aproveite os benefícios.
-            </Styled.Heading>
-            <Styled.Paragraph>
+            </Typography>
+            <Typography variant="secondary" fontSize={["sm", null, null, "lg"]}>
               Cadastre-se para receber nossa newsletter e receba ofertas
               exclusivas em novas coleções, liquidações, lojas pop-up e muito
               mais.
-            </Styled.Paragraph>
+            </Typography>
           </Styled.Content>
           <Styled.Benefits>
             {benefits.map((benefit) => (

@@ -1,5 +1,4 @@
 import { styled } from "styled-components";
-import font from "../../styles/font";
 import { Props, Sizes, Variants } from ".";
 
 const Wrapper = styled.div`
@@ -16,8 +15,8 @@ const Label = styled.label<{
   $showLabel: Props["showLabel"];
 }>`
   width: fit-content;
-  font-family: ${font.family.heading};
-  font-size: ${({ $size }) => $size === "small" && font.size.sm};
+  font-family: ${({ theme }) => theme.fonts.heading};
+  font-size: ${({ $size, theme }) => $size === "small" && theme.fontSizes.sm};
   color: ${({ $variant, $error, theme }) => {
     if ($error) return "red";
     switch ($variant) {
@@ -72,7 +71,7 @@ const Input = styled.input<{
       ? theme.colors.background.secondary
       : "rgba(255, 255, 255, 0.15)";
   }};
-  font-family: ${font.family.body};
+  font-family: ${({ theme }) => theme.fonts.body};
   transition: background-color 200ms, outline-color 200ms;
 
   &::placeholder {
@@ -96,8 +95,8 @@ const Input = styled.input<{
 
 const HelperText = styled.span<{ $error: Props["error"] }>`
   color: ${({ $error, theme }) => ($error ? "red" : theme.colors.text.primary)};
-  font-size: ${font.size.xs};
-  font-family: ${font.family.heading};
+  font-size: ${({ theme }) => theme.fontSizes.xs};
+  font-family: ${({ theme }) => theme.fonts.heading};
 `;
 
 export { Wrapper, Label, InputWrapper, Input, HelperText };

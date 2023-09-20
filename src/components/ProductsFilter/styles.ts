@@ -1,6 +1,5 @@
 import { styled } from "styled-components";
 import breakpoints from "../../styles/breakpoints";
-import font from "../../styles/font";
 
 const Wrapper = styled.div`
   display: grid;
@@ -32,12 +31,6 @@ const Header = styled.div`
   justify-content: space-between;
   padding: 1rem;
   border-bottom: 1px solid ${({ theme }) => theme.colors.border.primary};
-
-  & h3 {
-    font-family: ${font.family.heading};
-    font-size: ${font.size["4xl"]};
-    font-weight: normal;
-  }
 `;
 
 const Content = styled.div`
@@ -47,15 +40,9 @@ const Content = styled.div`
   padding: 1rem;
 `;
 
-const Title = styled.span`
-  color: ${({ theme }) => theme.colors.text.primary};
-  font-family: ${font.family.heading};
-  font-size: ${font.size.md};
-`;
-
 const List = styled.div`
   display: grid;
   gap: 0.75rem;
 `;
 
-export { Wrapper, WrapperDesktop, Header, Content, Title, List };
+export { Wrapper, WrapperDesktop, Header, Content, List };

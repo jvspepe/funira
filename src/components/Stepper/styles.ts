@@ -1,9 +1,8 @@
 import { styled } from "styled-components";
 import { Sizes } from ".";
-import font from "../../styles/font";
 
 const Wrapper = styled.div<{ $size: Sizes }>`
-  font-family: ${font.family.body};
+  font-family: ${({ theme }) => theme.fonts.body};
   background-color: ${({ theme }) => theme.colors.background.secondary};
   color: ${({ theme }) => theme.colors.text.primary};
   display: flex;

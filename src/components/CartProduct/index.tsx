@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { TCartProduct } from "../../@types/product";
 import * as Styled from "./styles";
+import Typography from "../Typography";
+import Stepper from "../Stepper";
 
 type Props = {
   product: TCartProduct;
@@ -14,22 +16,24 @@ const CartProduct = ({ product }: Props) => {
       <Styled.Image src={product.images[0]} alt="" />
       <Styled.InnerWrapper>
         <Styled.Information>
-          <Styled.Title>{product.title}</Styled.Title>
-          <Styled.Description>{product.description}</Styled.Description>
-          <Styled.Price>
+          <Typography fontFamily="heading" fontSize={["md", "lg,"]}>
+            {product.title}
+          </Typography>
+          <Typography fontSize="sm">{product.description}</Typography>
+          <Typography>
             {Intl.NumberFormat("pt-BR", {
               currency: "BRL",
               style: "currency",
             }).format(product.price)}
-          </Styled.Price>
+          </Typography>
         </Styled.Information>
-        <Styled.Stepper value={value} setValue={setValue} />
-        <Styled.OuterPrice>
+        <Stepper value={value} setValue={setValue} />
+        <Typography display={["none", null, "block"]}>
           {Intl.NumberFormat("pt-BR", {
             currency: "BRL",
             style: "currency",
           }).format(product.price)}
-        </Styled.OuterPrice>
+        </Typography>
       </Styled.InnerWrapper>
     </Styled.Wrapper>
   );

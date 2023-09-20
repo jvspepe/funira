@@ -1,5 +1,6 @@
 import { ComponentPropsWithoutRef } from "react";
 import * as S from "./styles";
+import Typography from "../Typography";
 type Props = ComponentPropsWithoutRef<"input"> & {
   variant?: "base" | "small";
   label: string;
@@ -9,9 +10,13 @@ const Checkbox = ({ variant = "base", label, ...props }: Props) => {
   return (
     <S.Wrapper>
       <S.Checkbox type="checkbox" {...props} />
-      <S.Label $variant={variant} htmlFor={props.id}>
+      <Typography
+        component="label"
+        fontSize={variant === "small" ? "sm" : "md"}
+        htmlFor={props.id}
+      >
         {label}
-      </S.Label>
+      </Typography>
     </S.Wrapper>
   );
 };

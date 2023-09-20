@@ -1,6 +1,4 @@
 import { styled } from "styled-components";
-
-import font from "../../styles/font";
 import { Sizes, Variants } from ".";
 
 const StyledButton = styled.button<{
@@ -19,7 +17,7 @@ const StyledButton = styled.button<{
   padding: ${({ $size }) =>
     $size === "small" ? "0.75rem 1.25rem" : "1rem 2rem"};
 
-  font-family: ${font.family.body};
+  font-family: ${({ theme }) => theme.fonts.body};
   text-decoration: none;
   transition: background-color 300ms, outline-color 300ms;
 

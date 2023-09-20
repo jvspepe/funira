@@ -1,6 +1,5 @@
 import { styled } from "styled-components";
 import breakpoints from "../../styles/breakpoints";
-import font from "../../styles/font";
 
 const Section = styled.section`
   display: grid;
@@ -29,28 +28,8 @@ const Wrapper = styled.div`
   }
 `;
 
-const Title = styled.h5`
-  font-family: ${font.family.heading};
-  font-size: ${font.size.xl};
-  font-weight: normal;
-
-  @media (min-width: ${breakpoints.md}) {
-    font-size: ${font.size["3xl"]};
-  }
-`;
-
-const Details = styled.p`
-  font-family: ${font.family.body};
-  font-size: ${font.size.sm};
-  flex-grow: 1;
-
-  @media (min-width: ${breakpoints.md}) {
-    font-size: ${font.size.lg};
-  }
-`;
-
 const Image = styled.img`
   object-fit: cover;
 `;
 
-export { Section, Wrapper, Title, Details, Image };
+export { Section, Wrapper, Image };

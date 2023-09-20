@@ -1,5 +1,7 @@
 import { ReactNode } from "react";
-import * as Styled from "./styles";
+
+import Typography from "../Typography";
+import StyledList from "./styles";
 
 type Props = {
   title: string;
@@ -8,10 +10,10 @@ type Props = {
 
 const List = ({ title, children }: Props) => {
   return (
-    <Styled.List>
-      <Styled.Heading>{title}</Styled.Heading>
+    <StyledList>
+      <Typography fontFamily="heading">{title}</Typography>
       {children}
-    </Styled.List>
+    </StyledList>
   );
 };
 

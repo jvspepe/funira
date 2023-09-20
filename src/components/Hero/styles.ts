@@ -1,6 +1,5 @@
 import { styled } from "styled-components";
 import BaseContainer from "../Container";
-import font from "../../styles/font";
 import breakpoints from "../../styles/breakpoints";
 
 const Wrapper = styled.div`
@@ -36,19 +35,6 @@ const Section = styled.section`
   }
 `;
 
-const Heading = styled.h2`
-  color: ${({ theme }) => theme.colors.text.primary};
-  font-family: ${font.family.heading};
-  font-size: ${font.size["2xl"]};
-  font-weight: normal;
-`;
-
-const Paragraph = styled.p`
-  color: ${({ theme }) => theme.colors.text.primary};
-  font-family: ${font.family.body};
-  font-size: ${font.size.md};
-`;
-
 const Content = styled.div`
   display: flex;
   flex-direction: column;
@@ -68,4 +54,4 @@ const Image = styled.img`
   }
 `;
 
-export { Wrapper, Container, Section, Heading, Paragraph, Content, Image };
+export { Wrapper, Container, Section, Content, Image };

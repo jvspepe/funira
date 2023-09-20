@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { auth, firestore } from "../../api/firebase/firebase-config";
+import createUser from "../../api/firebase/authentication/create-new-user";
 import Button from "../../components/Button";
 import TextInput from "../../components/TextInput";
 import * as Styled from "./styles";
-import Link from "../../components/Link";
-import { useState } from "react";
-import createUser from "../../api/firebase/authentication/create-new-user";
-import { auth, firestore } from "../../api/firebase/firebase-config";
+import Typography from "../../components/Typography";
+import { Link } from "react-router-dom";
 
 type CreateAccountValues = {
   displayName: string;
@@ -88,7 +89,9 @@ const CreateAccount = () => {
         <Button variant="primary" type="submit">
           {loading ? <Styled.Spinner /> : "Criar"}
         </Button>
-        <Link to="/conectar">Já possui uma conta? Conectar</Link>
+        <Typography component={Link} to="/conectar">
+          Já possui uma conta? Conectar
+        </Typography>
       </Styled.Form>
     </Styled.Background>
   );

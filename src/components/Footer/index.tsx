@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import useGetCategories from "../../hooks/useGetCategories";
 import Container from "../Container";
 import Button from "../Button";
 import Copyright from "../Copyright";
@@ -7,16 +8,11 @@ import TextInput from "../TextInput";
 import Typography from "../Typography";
 import * as S from "./styles";
 
-const navRoutes = [
-  "Móveis",
-  "Eletrodomésticos",
-  "Eletroportáteis",
-  "TVs e Vídeo",
-];
 const productRoutes = ["Novos", "Mais Vendidos", "Melhor Avaliados", "Todos"];
 const companyRoutes = ["Sobre", "Contato", "Carreiras"];
 
 const Footer = () => {
+  const categories = useGetCategories();
   return (
     <S.Wrapper>
       <Container>
@@ -24,15 +20,15 @@ const Footer = () => {
           <S.FooterContainer>
             <S.ListContainer>
               <List title="Categorias">
-                {navRoutes.map((route) => (
+                {categories.map((item) => (
                   <Typography
                     component={Link}
-                    key={route}
-                    to="/"
+                    key={item.uid}
+                    to={`/produtos?tipo=${item.value}`}
                     variant="secondary"
                     size="sm"
                   >
-                    {route}
+                    {item.label}
                   </Typography>
                 ))}
               </List>

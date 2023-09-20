@@ -1,13 +1,11 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { DefaultValues, SubmitHandler, useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 import { nanoid } from "nanoid";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { firestore, storage } from "../../api/firebase/firebase-config";
 import { addProduct } from "../../api/firebase/firestore/products";
-import { getCategories } from "../../api/firebase/firestore/categories";
-import { TCategory } from "../../@types/categories";
 import { TProduct } from "../../@types/product";
 import Button from "../../components/Button";
 import Container from "../../components/Container";
@@ -16,6 +14,8 @@ import TextArea from "../../components/TextArea";
 import Spinner from "../../components/Spinner";
 import Select from "../../components/Select";
 import * as Styled from "./styles";
+import useGetCategories from "../../hooks/useGetCategories";
+import Typography from "../../components/Typography";
 
 type AddProductValues = Omit<
   TProduct,
@@ -43,7 +43,7 @@ const Admin = () => {
     defaultValues,
   });
 
-  const [categories, setCategories] = useState<TCategory[]>([]);
+  const categories = useGetCategories();
   const [loading, setLoading] = useState(false);
 
   const onSubmit: SubmitHandler<AddProductValues> = async (data) => {
@@ -71,17 +71,13 @@ const Admin = () => {
     setLoading(false);
   };
 
-  useEffect(() => {
-    getCategories(firestore)
-      .then((data) => setCategories(data))
-      .catch((error) => console.log(error));
-  }, []);
-
   return (
     <>
       <Container>
         <Styled.Form onSubmit={handleSubmit(onSubmit)}>
-          <Styled.Heading>Adicionar Produto</Styled.Heading>
+          <Typography component="h2" fontFamily="heading" fontSize="2xl">
+            Adicionar Produto
+          </Typography>
           <TextInput
             {...register("title")}
             type="text"
@@ -161,7 +157,14 @@ const Admin = () => {
             />
           </Styled.Grid>
           <Styled.Grid>
-            <Styled.Label htmlFor="images">Imagens</Styled.Label>
+            <Typography
+              component="label"
+              fontFamily="heading"
+              fontSize="sm"
+              htmlFor="images"
+            >
+              Imagens
+            </Typography>
             <input
               type="file"
               {...register("images", {

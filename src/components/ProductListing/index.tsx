@@ -22,42 +22,52 @@ const ProductListing = ({ product }: Props) => {
         <Styled.Image src={product.images[0]} alt="" />
         <Styled.Details>
           <Styled.Header>
-            <Styled.Title>{product.title}</Styled.Title>
-            <Styled.Price>
+            <Typography
+              component="h2"
+              fontFamily="heading"
+              fontSize={["2xl", null, "4xl"]}
+            >
+              {product.title}
+            </Typography>
+            <Typography
+              component="span"
+              fontFamily="heading"
+              fontStyle={["xl", null, "2xl"]}
+            >
               {Intl.NumberFormat("pt-BR", {
                 currency: "BRL",
                 style: "currency",
               }).format(product.price)}
-            </Styled.Price>
+            </Typography>
           </Styled.Header>
           <Styled.Description>
-            <Typography font="heading">Descrição</Typography>
+            <Typography fontFamily="heading">Descrição</Typography>
             <Typography size="sm">{product.description}</Typography>
           </Styled.Description>
           <Styled.Dimensions>
-            <Typography font="heading">Dimensões</Typography>
+            <Typography fontFamily="heading">Dimensões</Typography>
             <Styled.DimensionsContent>
               <div>
-                <Typography font="heading">Altura</Typography>
-                <Typography size="sm">
+                <Typography fontFamily="heading">Altura</Typography>
+                <Typography fontSize="sm">
                   {product.dimensions?.height}cm
                 </Typography>
               </div>
               <hr />
               <div>
-                <Typography font="heading">Largura</Typography>
+                <Typography fontFamily="heading">Largura</Typography>
                 <Typography size="sm">{product.dimensions?.width}cm</Typography>
               </div>
               <hr />
               <div>
-                <Typography font="heading">Comprimento</Typography>
+                <Typography fontFamily="heading">Comprimento</Typography>
                 <Typography size="sm">{product.dimensions?.depth}cm</Typography>
               </div>
             </Styled.DimensionsContent>
           </Styled.Dimensions>
           <Styled.Buttons>
             <Styled.Quantity>
-              <Typography font="heading">Quantidade</Typography>
+              <Typography fontFamily="heading">Quantidade</Typography>
               <Stepper
                 value={quantity}
                 setValue={setQuantity}

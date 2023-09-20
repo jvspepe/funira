@@ -1,7 +1,9 @@
 import { styled } from "styled-components";
 import { Props } from ".";
+import { LayoutProps, layout } from "styled-system";
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<LayoutProps>`
+  ${layout}
   position: relative;
 `;
 

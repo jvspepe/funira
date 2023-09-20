@@ -8,28 +8,27 @@ import {
   startAfter,
 } from "firebase/firestore";
 import { TProduct } from "../../@types/product";
-import { TCategory } from "../../@types/categories";
 import { firestore } from "../../api/firebase/firebase-config";
 import { getProducts } from "../../api/firebase/firestore/products";
-import { getCategories } from "../../api/firebase/firestore/categories";
 import Button from "../../components/Button";
 import ProductsFilter from "../../components/ProductsFilter";
 import ProductsHeader from "../../components/HeaderPage";
 import ProductSection from "../../components/ProductDisplay";
 import Container from "./styles";
+import useGetCategories from "../../hooks/useGetCategories";
 
 const sortOptions = {
   highestPrice: "maior-preço",
   lowestPrice: "menor-preço",
   newest: "novo",
-  bestSellers: "mais-vendidos",
-  highestRating: "melhor-avaliados",
+  bestSellers: "mais-vendido",
+  highestRating: "melhor-avaliado",
 };
 
 const Products = () => {
   const [products, setProducts] = useState<TProduct[]>([]);
-  const [categories, setCategories] = useState<TCategory[]>([]);
   const [searchParams] = useSearchParams();
+  const categories = useGetCategories();
 
   function sortProducts() {
     const sortParam = searchParams.get("ordem");
@@ -79,15 +78,6 @@ const Products = () => {
     }
   }
 
-  async function getAllCategories() {
-    try {
-      const databaseCategories = await getCategories(firestore);
-      setCategories(databaseCategories);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   async function loadMoreProducts() {
     setLoadingMoreProducts(true);
     try {
@@ -109,9 +99,6 @@ const Products = () => {
 
   useEffect(() => {
     getAllProducts().catch((error) => {
-      throw new Error(String(error));
-    });
-    getAllCategories().catch((error) => {
       throw new Error(String(error));
     });
   }, []);

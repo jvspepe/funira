@@ -1,6 +1,4 @@
 import { styled } from "styled-components";
-import font from "../../styles/font";
-import BaseStepper from "../Stepper";
 import breakpoints from "../../styles/breakpoints";
 
 const Wrapper = styled.div`
@@ -23,36 +21,6 @@ const Information = styled.div`
   gap: 0.5rem;
 `;
 
-const Title = styled.h3`
-  color: ${({ theme }) => theme.colors.text.primary};
-  font-family: ${font.family.heading};
-  font-size: ${font.size.md};
-  font-weight: normal;
-
-  @media (min-width: ${breakpoints.sm}) {
-    font-size: ${font.size.lg};
-  }
-`;
-
-const Description = styled.p`
-  color: ${({ theme }) => theme.colors.text.primary};
-  font-family: ${font.family.body};
-  font-size: ${font.size.sm};
-`;
-
-const Price = styled.span`
-  color: ${({ theme }) => theme.colors.text.primary};
-  font-family: ${font.family.body};
-  font-size: ${font.size.md};
-`;
-
-const OuterPrice = styled(Price)`
-  display: none;
-  @media (min-width: ${breakpoints.md}) {
-    display: block;
-  }
-`;
-
 const InnerWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -65,16 +33,4 @@ const InnerWrapper = styled.div`
   }
 `;
 
-const Stepper = styled(BaseStepper)``;
-
-export {
-  Wrapper,
-  Image,
-  InnerWrapper,
-  Information,
-  Title,
-  Description,
-  Price,
-  OuterPrice,
-  Stepper,
-};
+export { Wrapper, Image, InnerWrapper, Information };

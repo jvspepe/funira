@@ -11,6 +11,7 @@ import IconButton from "../IconButton";
 import Menu from "../Menu";
 import * as Styled from "./styles";
 import MenuSort from "../MenuSort";
+import Typography from "../Typography";
 
 const sortOptions = [
   { label: "Maior Preço", value: "maior-preço" },
@@ -77,7 +78,9 @@ const ProductsFilter = ({ categories }: Props) => {
             header={
               <Styled.Header>
                 <FunnelSimple size={32} />
-                <h3>Filtros</h3>
+                <Typography component="h3" fontFamily="heading" fontSize="4xl">
+                  Filtros
+                </Typography>
                 <IconButton onClick={handleOpenFilter}>
                   <X size={32} />
                 </IconButton>
@@ -85,7 +88,9 @@ const ProductsFilter = ({ categories }: Props) => {
             }
           >
             <Styled.Content>
-              <Styled.Title>Filtros</Styled.Title>
+              <Typography component="span" fontFamily="heading">
+                Filtros
+              </Typography>
               <Button onClick={handleClearFilter} size="small">
                 Limpar filtros
               </Button>

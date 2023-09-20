@@ -7,7 +7,7 @@ import IconButton from "../IconButton";
 import Wrapper from "./styles";
 import Button from "../Button";
 
-const MenuUser = () => {
+const ActionUser = () => {
   const [open, setOpen] = useState(false);
   const { colors } = useTheme();
   return (
@@ -39,4 +39,4 @@ const MenuUser = () => {
   );
 };
 
-export default MenuUser;
+export default ActionUser;

@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import Link from "../Link";
+import Typography from "../Typography";
 
 const NavList = styled.ul`
   position: absolute;
@@ -22,7 +22,7 @@ const NavListItem = styled.li`
   align-items: center;
 `;
 
-const NavLink = styled(Link)`
+const NavLink = styled(Typography)`
   width: 100%;
   padding: 1.5rem;
 
