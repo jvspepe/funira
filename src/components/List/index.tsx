@@ -11,7 +11,9 @@ type Props = {
 const List = ({ title, children }: Props) => {
   return (
     <StyledList>
-      <Typography fontFamily="heading">{title}</Typography>
+      <Typography fontFamily="heading" variant="secondary">
+        {title}
+      </Typography>
       {children}
     </StyledList>
   );

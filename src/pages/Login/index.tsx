@@ -1,10 +1,14 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
-import TextInput from "../../components/TextInput";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../api/firebase/firebase-config";
+import getAuthError from "../../api/firebase/authentication/auth-errors";
+import Box from "../../components/Box";
 import Button from "../../components/Button";
-import * as Styled from "./styles";
+import Spinner from "../../components/Spinner";
+import TextInput from "../../components/TextInput";
 import Typography from "../../components/Typography";
-import { Link } from "react-router-dom";
 
 type LoginValues = {
   email: string;
@@ -19,14 +23,47 @@ const Login = () => {
     handleSubmit,
   } = useForm<LoginValues>();
 
-  const onSubmit: SubmitHandler<LoginValues> = (data) => {
-    console.log(data);
+  const navigate = useNavigate();
+
+  const [authError, setAuthError] = useState<string>("");
+  const [authLoading, setAuthLoading] = useState<boolean>(false);
+
+  const onSubmit: SubmitHandler<LoginValues> = async (data) => {
+    setAuthLoading(true);
+    try {
+      await signInWithEmailAndPassword(auth, data.email, data.password);
+      navigate("/");
+    } catch (error) {
+      setAuthError(getAuthError(error));
+    }
+    setAuthLoading(false);
     reset();
   };
 
   return (
-    <Styled.Wrapper>
-      <Styled.Form onSubmit={handleSubmit(onSubmit)}>
+    <Box
+      alignItems="center"
+      backgroundColor="background.secondary"
+      backgroundImage="url(/images/auth-bg.jpg)"
+      backgroundPosition="center"
+      backgroundSize="cover"
+      backgroundRepeat="no-repeat"
+      display="flex"
+      height="calc(100vh - 5rem)"
+      p="1.5rem"
+    >
+      <Box
+        component="form"
+        onSubmit={handleSubmit(onSubmit)}
+        display="flex"
+        flexDirection="column"
+        p="1rem"
+        gridGap="1rem"
+        marginX="auto"
+        width={["20rem", "30rem"]}
+        backgroundColor="background.primary"
+      >
+        {authError && <Typography textAlign="center">{authError}</Typography>}
         <TextInput
           {...register("email", {
             required: { value: true, message: "E-mail obrigatório" },
@@ -51,12 +88,15 @@ const Login = () => {
           placeholder="Senha123"
           label="Senha"
         />
-        <Button type="submit">Entrar</Button>
-        <Typography component={Link} to="/conectar">
-          Não possui uma conta? Criar
+        <Button type="submit">{authLoading ? <Spinner /> : "Conectar"}</Button>
+        <Typography component="span">
+          Não possui uma conta?{" "}
+          <Typography component={Link} to="/criar-conta">
+            Criar
+          </Typography>
         </Typography>
-      </Styled.Form>
-    </Styled.Wrapper>
+      </Box>
+    </Box>
   );
 };
 

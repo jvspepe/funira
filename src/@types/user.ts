@@ -4,7 +4,7 @@ export type TUser = {
   uid: string;
   displayName: string;
   email: string;
-  role: string;
+  role: "cliente" | "admin";
   createdAt: Timestamp;
 };
 

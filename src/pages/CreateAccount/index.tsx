@@ -1,13 +1,14 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { auth, firestore } from "../../api/firebase/firebase-config";
 import createUser from "../../api/firebase/authentication/create-new-user";
+import getAuthError from "../../api/firebase/authentication/auth-errors";
+import Box from "../../components/Box";
 import Button from "../../components/Button";
+import Spinner from "../../components/Spinner";
 import TextInput from "../../components/TextInput";
-import * as Styled from "./styles";
 import Typography from "../../components/Typography";
-import { Link } from "react-router-dom";
 
 type CreateAccountValues = {
   displayName: string;
@@ -23,23 +24,46 @@ const CreateAccount = () => {
     formState: { errors },
     handleSubmit,
   } = useForm<CreateAccountValues>();
-
-  const [loading, setLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
+  const [authError, setAuthError] = useState<string>("");
+  const [authLoading, setAuthLoading] = useState<boolean>(false);
 
   const onSubmit: SubmitHandler<CreateAccountValues> = async (data) => {
-    setLoading(true);
+    setAuthLoading(true);
     try {
       await createUser(auth, firestore, data);
+      navigate("/");
     } catch (error) {
-      throw new Error(String(error));
+      setAuthError(getAuthError(error));
     }
-    setLoading(false);
+    setAuthLoading(false);
     reset();
   };
 
   return (
-    <Styled.Background>
-      <Styled.Form onSubmit={handleSubmit(onSubmit)}>
+    <Box
+      alignItems="center"
+      backgroundColor="background.secondary"
+      backgroundImage="url(/images/auth-bg.jpg)"
+      backgroundPosition="center"
+      backgroundSize="cover"
+      backgroundRepeat="no-repeat"
+      display="flex"
+      height="calc(100vh - 5rem)"
+      p="1.5rem"
+    >
+      <Box
+        component="form"
+        onSubmit={handleSubmit(onSubmit)}
+        display="flex"
+        flexDirection="column"
+        p="1rem"
+        gridGap="1rem"
+        marginX="auto"
+        width={["20rem", "30rem"]}
+        backgroundColor="background.primary"
+      >
+        {authError && <Typography textAlign="center">{authError}</Typography>}
         <TextInput
           {...register("displayName", {
             required: { value: true, message: "Nome de Usuário obrigatório" },
@@ -51,7 +75,6 @@ const CreateAccount = () => {
           name="displayName"
           placeholder="Nome de Usuário"
           label="Nome de Usuário"
-          variant="primary"
         />
         <TextInput
           {...register("email")}
@@ -62,7 +85,6 @@ const CreateAccount = () => {
           name="email"
           placeholder="seu@email.com"
           label="E-mail"
-          variant="primary"
         />
         <TextInput
           {...register("password")}
@@ -73,7 +95,6 @@ const CreateAccount = () => {
           name="password"
           placeholder="Senha"
           label="Senha"
-          variant="primary"
         />
         <TextInput
           {...register("confirmPassword")}
@@ -84,16 +105,16 @@ const CreateAccount = () => {
           name="confirmPassword"
           placeholder="Confirmar Senha"
           label="Confirmar Senha"
-          variant="primary"
         />
-        <Button variant="primary" type="submit">
-          {loading ? <Styled.Spinner /> : "Criar"}
-        </Button>
-        <Typography component={Link} to="/conectar">
-          Já possui uma conta? Conectar
+        <Button type="submit">{authLoading ? <Spinner /> : "Criar"}</Button>
+        <Typography component="span">
+          Já possui uma conta?{" "}
+          <Typography component={Link} to="/conectar">
+            Conectar
+          </Typography>
         </Typography>
-      </Styled.Form>
-    </Styled.Background>
+      </Box>
+    </Box>
   );
 };
 

@@ -18,5 +18,10 @@
     "project": ["./tsconfig.json", "./tsconfig.node.json"]
   },
   "plugins": ["react", "@typescript-eslint"],
-  "rules": {}
+  "rules": {
+    "@typescript-eslint/no-misused-promises": [
+      "error",
+      { "checksVoidReturn": { "attributes": false } }
+    ]
+  }
 }
