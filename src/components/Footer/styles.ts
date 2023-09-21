@@ -1,10 +1,6 @@
 import { styled } from "styled-components";
 import breakpoints from "../../styles/breakpoints";
 
-const Wrapper = styled.div`
-  background-color: ${({ theme }) => theme.colors.text.primary};
-`;
-
 const Footer = styled.footer`
   display: grid;
   gap: 1.25rem;
@@ -28,14 +24,4 @@ const FooterContainer = styled.div`
   }
 `;
 
-const ListContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 3rem;
-`;
-
-const MailForm = styled.form`
-  flex-grow: 1;
-`;
-
-export { Wrapper, Footer, FooterContainer, ListContainer, MailForm };
+export { Footer, FooterContainer };

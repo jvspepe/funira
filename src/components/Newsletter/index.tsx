@@ -28,10 +28,16 @@ const Newsletter = () => {
           </Styled.Content>
           <Styled.Benefits>
             {benefits.map((benefit) => (
-              <Styled.BenefitItem key={benefit}>
+              <Typography
+                variant="secondary"
+                display="flex"
+                alignItems="center"
+                key={benefit}
+                style={{ gap: "0.5rem" }}
+              >
                 <CheckCircle size={16} weight="fill" />
                 {benefit}
-              </Styled.BenefitItem>
+              </Typography>
             ))}
           </Styled.Benefits>
           <form onSubmit={(event) => event.preventDefault()}>

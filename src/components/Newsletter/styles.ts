@@ -51,10 +51,4 @@ const Benefits = styled.div`
   }
 `;
 
-const BenefitItem = styled.span`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-`;
-
-export { Wrapper, Container, Section, Content, Benefits, BenefitItem };
+export { Wrapper, Container, Section, Content, Benefits };

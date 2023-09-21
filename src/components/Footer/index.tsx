@@ -7,18 +7,26 @@ import List from "../List";
 import TextInput from "../TextInput";
 import Typography from "../Typography";
 import * as S from "./styles";
+import Box from "../Box";
+import { FormEvent } from "react";
 
-const productRoutes = ["Novos", "Mais Vendidos", "Melhor Avaliados", "Todos"];
+const productRoutes = [
+  { label: "Maior Preço", value: "maior-preço" },
+  { label: "Menor Preço", value: "menor-preço" },
+  { label: "Novos", value: "novo" },
+  { label: "Mais Vendidos", value: "mais-vendidos" },
+  { label: "Melhor Avaliados", value: "melhor-avaliados" },
+];
 const companyRoutes = ["Sobre", "Contato", "Carreiras"];
 
 const Footer = () => {
   const categories = useGetCategories();
   return (
-    <S.Wrapper>
+    <Box backgroundColor="background.tertiary">
       <Container>
         <S.Footer>
           <S.FooterContainer>
-            <S.ListContainer>
+            <Box display="flex" flexWrap="wrap" gridGap="3rem">
               <List title="Categorias">
                 {categories.map((item) => (
                   <Typography
@@ -36,12 +44,12 @@ const Footer = () => {
                 {productRoutes.map((route) => (
                   <Typography
                     component={Link}
-                    key={route}
-                    to="/"
+                    key={route.value}
+                    to={`/produtos?ordem=${route.value}`}
                     variant="secondary"
                     size="sm"
                   >
-                    {route}
+                    {route.label}
                   </Typography>
                 ))}
               </List>
@@ -58,8 +66,12 @@ const Footer = () => {
                   </Typography>
                 ))}
               </List>
-            </S.ListContainer>
-            <S.MailForm onSubmit={(event) => event.preventDefault()}>
+            </Box>
+            <Box
+              component="form"
+              onSubmit={(event: FormEvent) => event.preventDefault()}
+              flexGrow={1}
+            >
               <TextInput
                 label="Inscreva-se na nossa lista de e-mails"
                 variant="secondary"
@@ -70,12 +82,12 @@ const Footer = () => {
                 }
                 placeholder="seu@email.com"
               />
-            </S.MailForm>
+            </Box>
           </S.FooterContainer>
           <Copyright />
         </S.Footer>
       </Container>
-    </S.Wrapper>
+    </Box>
   );
 };
 
