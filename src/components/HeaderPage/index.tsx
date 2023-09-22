@@ -9,6 +9,7 @@ const ProductsHeader = () => {
         fontFamily="heading"
         fontSize="4xl"
         textAlign="center"
+        variant="secondary"
       >
         Nossos produtos
       </Typography>
