@@ -19,7 +19,7 @@ const ProductCard = ({ product }: Props) => {
           overflow="hidden"
           style={{ whiteSpace: "nowrap", textOverflow: "ellipsis" }}
         >
-          {product.title}
+          {product.name}
         </Typography>
         <Typography fontSize={{ _: "sm", lg: "lg" }}>
           {Intl.NumberFormat("pt-BR", {

@@ -27,7 +27,7 @@ const ProductListing = ({ product }: Props) => {
               fontFamily="heading"
               fontSize={["2xl", null, "4xl"]}
             >
-              {product.title}
+              {product.name}
             </Typography>
             <Typography
               component="span"
@@ -68,12 +68,7 @@ const ProductListing = ({ product }: Props) => {
           <Styled.Buttons>
             <Styled.Quantity>
               <Typography fontFamily="heading">Quantidade</Typography>
-              <Stepper
-                value={quantity}
-                setValue={setQuantity}
-                minValue={1}
-                maxValue={product.stock}
-              />
+              <Stepper value={quantity} setValue={setQuantity} minValue={1} />
             </Styled.Quantity>
             <Button onClick={() => handleAddToCart(product)} type="button">
               Adicionar ao carrinho

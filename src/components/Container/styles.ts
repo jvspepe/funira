@@ -6,23 +6,23 @@ const StyledContainer = styled.div`
   margin-inline: auto;
 
   @media (min-width: ${breakpoints.sm}) {
-    max-width: 640px;
+    max-width: ${breakpoints.sm};
   }
 
   @media (min-width: ${breakpoints.md}) {
-    max-width: 768px;
+    max-width: ${breakpoints.md};
   }
 
   @media (min-width: ${breakpoints.lg}) {
-    max-width: 1024px;
+    max-width: ${breakpoints.lg};
   }
 
   @media (min-width: ${breakpoints.xl}) {
-    max-width: 1280px;
+    max-width: ${breakpoints.xl};
   }
 
   @media (min-width: ${breakpoints.xxl}) {
-    max-width: 1536px;
+    max-width: ${breakpoints.xxl};
   }
 `;
 

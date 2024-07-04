@@ -11,7 +11,7 @@ const breakpoints: Breakpoints = [
   "769px",
   "1025px",
   "1281px",
-  "1537px",
+  "1441px",
 ];
 
 breakpoints.sm = breakpoints[0];

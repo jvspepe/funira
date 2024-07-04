@@ -7,15 +7,15 @@ import {
   orderBy,
   startAfter,
 } from "firebase/firestore";
-import { TProduct } from "../../@types/product";
-import { firestore } from "../../api/firebase/firebase-config";
-import { getProducts } from "../../api/firebase/firestore/products";
-import Button from "../../components/Button";
-import ProductsFilter from "../../components/ProductsFilter";
-import ProductsHeader from "../../components/HeaderPage";
-import ProductSection from "../../components/ProductDisplay";
+import { TProduct } from "@/@types/product";
+import { firestore } from "@/api/firebase/firebase-config";
+import { getProducts } from "@/api/firebase/firestore/products";
+import Button from "@/components/Button";
+import ProductsFilter from "@/components/ProductsFilter";
+import ProductsHeader from "@/components/HeaderPage";
+import ProductSection from "@/components/ProductDisplay";
+import useGetCategories from "@/hooks/useGetCategories";
 import Container from "./styles";
-import useGetCategories from "../../hooks/useGetCategories";
 
 const sortOptions = {
   highestPrice: "maior-preço",
@@ -47,7 +47,7 @@ const Products = () => {
       case sortOptions.bestSellers:
         return products.sort((a, b) => b.sales - a.sales);
       default:
-        return products.sort((a, b) => a.title.localeCompare(b.title));
+        return products.sort((a, b) => a.name.localeCompare(b.name));
     }
   }
 
@@ -67,7 +67,7 @@ const Products = () => {
   async function getAllProducts() {
     try {
       const { databaseProducts, lastDocument } = await getProducts(firestore, [
-        orderBy("title", "asc"),
+        orderBy("name", "asc"),
         limit(pageSize),
       ]);
 
@@ -83,7 +83,7 @@ const Products = () => {
     try {
       const { databaseProducts, lastDocument, isLastDocument } =
         await getProducts(firestore, [
-          orderBy("title", "asc"),
+          orderBy("name", "asc"),
           limit(pageSize),
           startAfter(startAfterDoc),
         ]);

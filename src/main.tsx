@@ -13,7 +13,6 @@ import Cart from "./pages/Cart/index.tsx";
 import AuthLayout from "./layouts/AuthLayout.tsx";
 import Login from "./pages/Login/index.tsx";
 import CreateAccount from "./pages/CreateAccount/index.tsx";
-import Admin from "./pages/Admin/index.tsx";
 import { Provider } from "react-redux";
 import { store } from "./store/store.ts";
 
@@ -36,7 +35,6 @@ const browserRouter = createBrowserRouter([
         children: [
           { path: "/conectar", element: <Login /> },
           { path: "/criar-conta", element: <CreateAccount /> },
-          { path: "/admin", element: <Admin /> },
         ],
       },
     ],

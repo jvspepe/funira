@@ -3,7 +3,7 @@ import { Timestamp } from "firebase/firestore";
 type TProduct = {
   uid: string;
   images: string[];
-  title: string;
+  name: string;
   price: number;
   category: string;
   description?: string;
@@ -12,7 +12,6 @@ type TProduct = {
     height: string;
     width: string;
   };
-  stock: number;
   rating: number;
   sales: number;
   createdAt: Timestamp;
