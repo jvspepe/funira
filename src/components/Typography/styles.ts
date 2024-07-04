@@ -23,6 +23,8 @@ const Styles = styled.p.withConfig({ shouldForwardProp })<Props>`
   ${compose(flexbox, layout, space, typography)}
   color: ${({ $variant, theme }) => theme.colors.text[$variant]};
   text-decoration: none;
+
+  border: none;
 `;
 
 Styles.defaultProps = {

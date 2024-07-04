@@ -1,9 +1,10 @@
 import { styled } from "styled-components";
 import Typography from "../Typography";
+import breakpoints from "@/styles/breakpoints";
 
 const NavList = styled.ul`
   position: absolute;
-  top: 5rem;
+  top: 100%;
   right: 0;
   height: 0;
   width: 100%;
@@ -11,9 +12,9 @@ const NavList = styled.ul`
   background-color: ${({ theme }) => theme.colors.background.primary};
   list-style: none;
   visibility: hidden;
-  overflow-y: hidden;
+  overflow-y: auto;
   transition: 500ms;
-  z-index: 999;
+  z-index: 99;
 `;
 
 const NavListItem = styled.li`
@@ -33,19 +34,52 @@ const NavLink = styled(Typography)`
   }
 `;
 
-const Wrapper = styled.nav`
-  display: none;
+const Accordion = styled.div`
+  position: relative;
+  border-top: 1px solid ${({ theme }) => theme.colors.border.primary};
+`;
 
-  @media (width <= 768px) {
+const AccordionButton = styled(NavLink)``;
+
+const AccordionContent = styled.ul`
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 300ms ease-out;
+
+  & > * {
+    border-top: 1px solid ${({ theme }) => theme.colors.border.primary};
+    border-left: 1.5rem solid ${({ theme }) => theme.colors.border.secondary};
+  }
+
+  & li {
     display: flex;
+  }
+`;
+
+const Wrapper = styled.nav`
+  display: flex;
+
+  @media (min-width: ${breakpoints.md}) {
+    display: none;
   }
 
   &[data-active="true"] ${NavList} {
     display: flex;
-    height: calc(100dvh - 5rem);
+    height: calc(100dvh - 100%);
     visibility: visible;
-    overflow-y: auto;
   }
 `;
 
-export { Wrapper, NavList, NavListItem, NavLink };
+export {
+  Wrapper,
+  NavList,
+  NavListItem,
+  Accordion,
+  AccordionButton,
+  AccordionContent,
+  NavLink,
+};

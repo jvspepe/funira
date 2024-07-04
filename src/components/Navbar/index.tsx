@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTheme } from "styled-components";
 import { List, X } from "@phosphor-icons/react";
 import { TCategory } from "../../@types/categories";
 import IconButton from "../IconButton";
-import * as Styled from "./styles";
+import * as S from "./styles";
 
 type Props = {
   routes: TCategory[];
@@ -12,7 +12,9 @@ type Props = {
 
 const MobileNav = ({ routes }: Props) => {
   const [active, setActive] = useState(false);
+  const [accordionActive, setAccordionActive] = useState(false);
   const { colors } = useTheme();
+  const accordionRef = useRef<HTMLUListElement>(null);
 
   function handleActive() {
     setActive(!active);
@@ -26,8 +28,18 @@ const MobileNav = ({ routes }: Props) => {
     }
   }, [active]);
 
+  useEffect(() => {
+    if (!accordionRef.current) return;
+    if (accordionActive) {
+      accordionRef.current.style.maxHeight =
+        accordionRef.current.scrollHeight + "px";
+    } else {
+      accordionRef.current.style.maxHeight = "0";
+    }
+  }, [accordionActive]);
+
   return (
-    <Styled.Wrapper data-active={active}>
+    <S.Wrapper data-active={active}>
       <IconButton
         onClick={handleActive}
         aria-label={active ? "Fechar menu" : "Abrir menu"}
@@ -42,28 +54,47 @@ const MobileNav = ({ routes }: Props) => {
           <List color={colors.text.primary} size={24} aria-hidden="true" />
         )}
       </IconButton>
-      <Styled.NavList id="navigation-list" aria-hidden={!active}>
-        <Styled.NavListItem key="Todos">
-          <Styled.NavLink
+      <S.NavList id="navigation-list" aria-hidden={!active}>
+        <S.NavListItem key="inicio">
+          <S.NavLink component={Link} onClick={() => setActive(false)} to="/">
+            Início
+          </S.NavLink>
+        </S.NavListItem>
+        <S.Accordion>
+          <S.AccordionButton
+            onClick={() => setAccordionActive(!accordionActive)}
+            type="button"
+          >
+            Produtos
+          </S.AccordionButton>
+          <S.AccordionContent ref={accordionRef} data-active={accordionActive}>
+            {routes.map((route) => (
+              <li key={route.uid}>
+                <S.NavLink
+                  component={Link}
+                  onClick={() => {
+                    setAccordionActive(false);
+                    setActive(false);
+                  }}
+                  to={`/produtos?tipo=${route.value}`}
+                >
+                  {route.label}
+                </S.NavLink>
+              </li>
+            ))}
+          </S.AccordionContent>
+        </S.Accordion>
+        <S.NavListItem key="sobre">
+          <S.NavLink
             component={Link}
             onClick={() => setActive(false)}
-            to="/produtos"
+            to="/sobre"
           >
-            Todos
-          </Styled.NavLink>
-        </Styled.NavListItem>
-        {routes.map((route) => (
-          <Styled.NavListItem key={route.value}>
-            <Styled.NavLink
-              onClick={() => setActive(false)}
-              to={`/produtos?tipo=${route.value}`}
-            >
-              {route.label}
-            </Styled.NavLink>
-          </Styled.NavListItem>
-        ))}
-      </Styled.NavList>
-    </Styled.Wrapper>
+            Sobre
+          </S.NavLink>
+        </S.NavListItem>
+      </S.NavList>
+    </S.Wrapper>
   );
 };
 

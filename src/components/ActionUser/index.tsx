@@ -3,12 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { useTheme } from "styled-components";
 import { UserCircle } from "@phosphor-icons/react";
-import { auth } from "../../api/firebase/firebase-config";
-import { useAuth } from "../../contexts/AuthContext";
-import Button from "../Button";
-import IconButton from "../IconButton";
-import Menu from "../Menu";
-import Wrapper from "./styles";
+import { useAuth } from "@/contexts/AuthContext";
+import { auth } from "@/api/firebase/firebase-config";
+import IconButton from "@/components/IconButton";
+import Menu from "@/components/Menu";
+import * as S from "./styles";
 
 const ActionUser = () => {
   const [open, setOpen] = useState(false);
@@ -36,33 +35,20 @@ const ActionUser = () => {
         </IconButton>
       }
     >
-      <Wrapper>
+      <S.Wrapper>
         {!userData ? (
           <>
-            <Button
-              component={Link}
-              to="/conectar"
-              variant="tertiary"
-              size="small"
-            >
+            <S.Button component={Link} to="/conectar">
               Conectar
-            </Button>
-            <hr />
-            <Button
-              component={Link}
-              to="/criar-conta"
-              variant="tertiary"
-              size="small"
-            >
+            </S.Button>
+            <S.Button component={Link} to="/criar-conta">
               Criar conta
-            </Button>
+            </S.Button>
           </>
         ) : (
-          <Button onClick={handleSignOut} variant="tertiary" size="small">
-            Sair
-          </Button>
+          <S.Button onClick={handleSignOut}>Sair</S.Button>
         )}
-      </Wrapper>
+      </S.Wrapper>
     </Menu>
   );
 };

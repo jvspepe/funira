@@ -39,7 +39,10 @@ const Menu = ({
   return (
     <S.Wrapper className={className} ref={ref} {...props}>
       {toggle}
-      {isOpen && <S.Dropdown $position={position}>{children}</S.Dropdown>}
+
+      <S.Dropdown data-is-active={isOpen} $position={position}>
+        {children}
+      </S.Dropdown>
     </S.Wrapper>
   );
 };

@@ -3,15 +3,13 @@ import {
   FirestoreDataConverter,
   QueryDocumentSnapshot,
   QueryNonFilterConstraint,
-  Timestamp,
   collection,
   doc,
   getDoc,
   getDocs,
   query,
-  setDoc,
 } from "firebase/firestore";
-import { TProduct } from "../../../@types/product";
+import { TProduct } from "@/@types/product";
 
 const productConverter: FirestoreDataConverter<TProduct> = {
   toFirestore(product) {
@@ -22,31 +20,6 @@ const productConverter: FirestoreDataConverter<TProduct> = {
     return data as TProduct;
   },
 };
-
-function getRandomRating(max: number, min: number) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-async function addProduct(
-  firestore: Firestore,
-  productData: Omit<TProduct, "rating" | "sales" | "createdAt">
-) {
-  try {
-    await setDoc(
-      doc(firestore, "products", productData.uid).withConverter(
-        productConverter
-      ),
-      {
-        ...productData,
-        rating: getRandomRating(5, 3),
-        sales: 0,
-        createdAt: Timestamp.now(),
-      }
-    );
-  } catch (error) {
-    throw new Error(String(error));
-  }
-}
 
 async function getProduct(firestore: Firestore, productUID: string) {
   try {
@@ -92,4 +65,4 @@ async function getProducts(
   return { databaseProducts, lastDocument, isLastDocument };
 }
 
-export { addProduct, getProduct, getProducts };
+export { getProduct, getProducts };

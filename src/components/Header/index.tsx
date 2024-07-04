@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
+import { HouseLine } from "@phosphor-icons/react";
 import useGetCategories from "@/hooks/useGetCategories";
-import ActionCart from "../ActionCart";
-import ActionUser from "../ActionUser";
-import MobileNav from "../Navbar";
-import Typography from "../Typography";
+import ActionCart from "@/components/ActionCart";
+import ActionUser from "@/components/ActionUser";
+import Container from "@/components/Container";
+import MobileNav from "@/components/Navbar";
+import Nav from "@/components/NavbarDesktop";
 import * as S from "./styles";
-import Container from "../Container";
-import Nav from "../NavbarDesktop";
 
 const Header = () => {
   const categories = useGetCategories();
@@ -15,14 +15,10 @@ const Header = () => {
     <S.Header>
       <Container>
         <S.Wrapper>
-          <Typography
-            component={Link}
-            to="/"
-            fontFamily="heading"
-            fontSize="2xl"
-          >
+          <S.Logo component={Link} to="/" fontFamily="heading" fontSize="2xl">
+            <HouseLine weight="fill" />
             Funira
-          </Typography>
+          </S.Logo>
           <Nav routes={categories} />
           <S.Controls>
             <ActionCart />

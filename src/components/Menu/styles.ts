@@ -12,10 +12,14 @@ const Dropdown = styled.div<{ $position: Props["position"] }>`
   position: absolute;
   min-width: 10rem;
   border: 1px solid ${({ theme }) => theme.colors.border.primary};
-  border-radius: 0.25rem;
+
   background-color: ${({ theme }) => theme.colors.background.primary};
   z-index: 10;
-  top: calc(100% + 0.125rem);
+  top: calc(200% + 0.125rem);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 300ms;
+
   ${({ $position }) => {
     switch ($position) {
       case "left":
@@ -33,6 +37,12 @@ const Dropdown = styled.div<{ $position: Props["position"] }>`
         `;
     }
   }}
+
+  &[data-is-active="true"] {
+    top: calc(100% + 0.125rem);
+    opacity: 1;
+    visibility: visible;
+  }
 `;
 
 export { Wrapper, Dropdown };
