@@ -17,7 +17,7 @@ const CartMenuItem = ({ product }: Props) => {
     <Styled.Wrapper>
       <Styled.Image src={product.images[0]} alt="" />
       <Styled.InnerWrapper>
-        <Typography fontFamily="heading">{product.title}</Typography>
+        <Typography fontFamily="heading">{product.name}</Typography>
         <Typography component="span" fontFamily="heading" fontSize="sm">
           {Intl.NumberFormat("pt-BR", {
             currency: "BRL",
@@ -29,7 +29,6 @@ const CartMenuItem = ({ product }: Props) => {
             value={value}
             setValue={setValue}
             minValue={1}
-            maxValue={product.stock}
             size="small"
           />
           <IconButton onClick={() => dispatch(removeFromCart(product.uid))}>

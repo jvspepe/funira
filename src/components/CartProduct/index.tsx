@@ -17,7 +17,7 @@ const CartProduct = ({ product }: Props) => {
       <Styled.InnerWrapper>
         <Styled.Information>
           <Typography fontFamily="heading" fontSize={["md", "lg,"]}>
-            {product.title}
+            {product.name}
           </Typography>
           <Typography fontSize="sm">{product.description}</Typography>
           <Typography>

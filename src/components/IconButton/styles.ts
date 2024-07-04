@@ -15,10 +15,11 @@ const Styled = styled.button<FlexboxProps & GridProps & LayoutProps>`
   border-radius: 0.5rem;
   padding: 0.25rem;
   background-color: transparent;
+  transition: background-color 300ms;
 
   &:hover,
   &:focus {
-    background-color: ${({ theme }) => theme.colors.background.secondary};
+    background-color: ${({ theme }) => theme.colors.border.primary};
   }
 `;
 
