@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import Button from "../Button";
+import Button from "@/components/Button";
+import Typography from "@/components/Typography";
 import * as Styled from "./styles";
-import Typography from "../Typography";
 
 const Hero = () => {
   return (

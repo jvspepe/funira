@@ -1,6 +1,6 @@
 import { Dispatch, ReactNode, SetStateAction, useEffect, useRef } from "react";
-import * as S from "./styles";
 import { LayoutProps } from "styled-system";
+import * as S from "./styles";
 
 export type Props = LayoutProps & {
   toggle: ReactNode;

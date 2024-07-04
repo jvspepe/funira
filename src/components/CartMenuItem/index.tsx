@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { TCartProduct } from "../../@types/product";
-import Stepper from "../Stepper";
-import * as Styled from "./styles";
-import IconButton from "../IconButton";
 import { X } from "@phosphor-icons/react";
-import { useAppDispatch } from "../../store/store";
-import { removeFromCart } from "../../store/cartSlice";
-import Typography from "../Typography";
+import { useAppDispatch } from "@/store/store";
+import { removeFromCart } from "@/store/cartSlice";
+import { TCartProduct } from "@/@types/product";
+import IconButton from "@/components/IconButton";
+import Stepper from "@/components/Stepper";
+import Typography from "@/components/Typography";
+import * as Styled from "./styles";
 
 type Props = { product: TCartProduct };
 

@@ -3,7 +3,7 @@ import {
   InstagramLogo,
   LinkedinLogo,
 } from "@phosphor-icons/react";
-import Typography from "../Typography";
+import Typography from "@/components/Typography";
 import * as Styled from "./styles";
 
 const Copyright = () => {

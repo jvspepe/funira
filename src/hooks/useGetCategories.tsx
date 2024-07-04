@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
-import { TCategory } from "../@types/categories";
-import { firestore } from "../api/firebase/firebase-config";
-import { getCategories } from "../api/firebase/firestore/categories";
+import { TCategory } from "@/@types/categories";
+import { getCategories } from "@/api/firebase/firestore/categories";
 
 function useGetCategories() {
   const [categories, setCategories] = useState<TCategory[]>([]);
 
   useEffect(() => {
-    getCategories(firestore)
+    getCategories()
       .then((data) => setCategories(data))
       .catch((error) => console.log(error));
   }, []);

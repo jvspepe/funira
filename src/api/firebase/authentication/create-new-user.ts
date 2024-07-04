@@ -1,26 +1,16 @@
-import {
-  Auth,
-  createUserWithEmailAndPassword,
-  updateProfile,
-} from "firebase/auth";
-import { Firestore } from "firebase/firestore";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth } from "@/api/firebase/firebase-config";
+import { addUser } from "@/api/firebase/firestore/users";
+import { TUserCredentials } from "@/@types/user";
 
-import { addUser } from "../firestore/users";
-import { TUserCredentials } from "../../../@types/user";
-
-async function createUser(
-  auth: Auth,
-  firestore: Firestore,
-  userCredentials: TUserCredentials,
-  isAdmin = false
-) {
+async function createUser(userCredentials: TUserCredentials, isAdmin = false) {
   const { displayName, email, password } = userCredentials;
   const { user } = await createUserWithEmailAndPassword(auth, email, password);
   await Promise.all([
     updateProfile(user, {
       displayName,
     }),
-    addUser(firestore, {
+    addUser({
       uid: user.uid,
       displayName,
       email,

@@ -1,10 +1,10 @@
 import { ChangeEvent, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { CaretDown } from "@phosphor-icons/react";
-import { TCategory } from "../../@types/categories";
-import Menu from "../Menu";
-import Button from "../Button";
-import Checkbox from "../Checkbox";
+import { TCategory } from "@/@types/categories";
+import Button from "@/components/Button";
+import Checkbox from "@/components/Checkbox";
+import Menu from "@/components/Menu";
 import FilterDropdown from "./styles";
 
 type Props = {

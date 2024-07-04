@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { TCartProduct } from "../../@types/product";
+import { TCartProduct } from "@/@types/product";
+import Typography from "@/components/Typography";
+import Stepper from "@/components/Stepper";
 import * as Styled from "./styles";
-import Typography from "../Typography";
-import Stepper from "../Stepper";
 
 type Props = {
   product: TCartProduct;

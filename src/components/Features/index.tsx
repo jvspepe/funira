@@ -1,10 +1,9 @@
 import { CheckCircle, CreditCard, Plant, Truck } from "@phosphor-icons/react";
-import Feature from "../../@types/feature";
-
+import Feature from "@/@types/feature";
+import Container from "@/components/Container";
+import Typography from "@/components/Typography";
 import FeatureCard from "../FeatureCard/FeatureCard";
 import * as S from "./styles";
-import Container from "../Container";
-import Typography from "../Typography";
 
 const featureList: Feature[] = [
   {

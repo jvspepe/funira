@@ -1,17 +1,17 @@
 import { ChangeEvent, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { CaretDown, FunnelSimple, X } from "@phosphor-icons/react";
-import { TCategory } from "../../@types/categories";
-import Container from "../Container";
-import MenuFilter from "../MenuFilter";
-import Button from "../Button";
-import Drawer from "../Drawer";
-import Checkbox from "../Checkbox";
-import IconButton from "../IconButton";
-import Menu from "../Menu";
+import { TCategory } from "@/@types/categories";
+import Button from "@/components/Button";
+import Container from "@/components/Container";
+import Checkbox from "@/components/Checkbox";
+import Drawer from "@/components/Drawer";
+import IconButton from "@/components/IconButton";
+import Menu from "@/components/Menu";
+import MenuFilter from "@/components/MenuFilter";
+import MenuSort from "@/components/MenuSort";
+import Typography from "@/components/Typography";
 import * as Styled from "./styles";
-import MenuSort from "../MenuSort";
-import Typography from "../Typography";
 
 const sortOptions = [
   { label: "Maior Preço", value: "maior-preço" },

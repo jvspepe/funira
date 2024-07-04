@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { useTheme } from "styled-components";
 import { ShoppingCart } from "@phosphor-icons/react";
-import IconButton from "../IconButton";
-import CartMenu from "../CartMenu";
+import CartMenu from "@/components/CartMenu";
+import IconButton from "@/components/IconButton";
 
 const ActionCart = () => {
   const { colors } = useTheme();

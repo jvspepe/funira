@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { auth, firestore } from "../../api/firebase/firebase-config";
-import createUser from "../../api/firebase/authentication/create-new-user";
-import getAuthError from "../../api/firebase/authentication/auth-errors";
-import Box from "../../components/Box";
-import Button from "../../components/Button";
-import Spinner from "../../components/Spinner";
-import TextInput from "../../components/TextInput";
-import Typography from "../../components/Typography";
+import createUser from "@/api/firebase/authentication/create-new-user";
+import getAuthError from "@/api/firebase/authentication/auth-errors";
+import Box from "@/components/Box";
+import Button from "@/components/Button";
+import Spinner from "@/components/Spinner";
+import TextInput from "@/components/TextInput";
+import Typography from "@/components/Typography";
 
 type CreateAccountValues = {
   displayName: string;
@@ -31,7 +30,7 @@ const CreateAccount = () => {
   const onSubmit: SubmitHandler<CreateAccountValues> = async (data) => {
     setAuthLoading(true);
     try {
-      await createUser(auth, firestore, data);
+      await createUser(data);
       navigate("/");
     } catch (error) {
       setAuthError(getAuthError(error));

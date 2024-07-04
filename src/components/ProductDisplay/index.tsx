@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { TProduct } from "@/@types/product";
-import Container from "../Container";
-import ProductCard from "../ProductCard";
-import Typography from "../Typography";
+import Container from "@/components/Container";
+import ProductCard from "@/components/ProductCard";
+import Typography from "@/components/Typography";
 import * as Styled from "./styles";
 
 type Props = {

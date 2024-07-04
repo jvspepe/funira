@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTheme } from "styled-components";
 import { List, X } from "@phosphor-icons/react";
-import { TCategory } from "../../@types/categories";
-import IconButton from "../IconButton";
+import { TCategory } from "@/@types/categories";
+import IconButton from "@/components/IconButton";
 import * as S from "./styles";
 
 type Props = {

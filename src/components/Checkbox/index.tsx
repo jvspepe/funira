@@ -1,6 +1,7 @@
 import { ComponentPropsWithoutRef } from "react";
+import Typography from "@/components/Typography";
 import * as S from "./styles";
-import Typography from "../Typography";
+
 type Props = ComponentPropsWithoutRef<"input"> & {
   variant?: "base" | "small";
   label: string;

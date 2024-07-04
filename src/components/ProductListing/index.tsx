@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { useAppDispatch } from "../../store/store";
-import { addToCart } from "../../store/cartSlice";
-import { TProduct } from "../../@types/product";
-import Button from "../Button";
-import Stepper from "../Stepper";
-import Typography from "../Typography";
+import { useAppDispatch } from "@/store/store";
+import { addToCart } from "@/store/cartSlice";
+import { TProduct } from "@/@types/product";
+import Button from "@/components/Button";
+import Stepper from "@/components/Stepper";
+import Typography from "@/components/Typography";
 import * as Styled from "./styles";
 
 type Props = { product: TProduct };

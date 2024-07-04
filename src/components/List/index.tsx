@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-import Typography from "../Typography";
+import Typography from "@/components/Typography";
 import StyledList from "./styles";
 
 type Props = {

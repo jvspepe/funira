@@ -1,14 +1,14 @@
-import { Link } from "react-router-dom";
-import useGetCategories from "../../hooks/useGetCategories";
-import Container from "../Container";
-import Button from "../Button";
-import Copyright from "../Copyright";
-import List from "../List";
-import TextInput from "../TextInput";
-import Typography from "../Typography";
-import * as S from "./styles";
-import Box from "../Box";
 import { FormEvent } from "react";
+import { Link } from "react-router-dom";
+import useGetCategories from "@/hooks/useGetCategories";
+import Box from "@/components/Box";
+import Button from "@/components/Button";
+import Container from "@/components/Container";
+import Copyright from "@/components/Copyright";
+import List from "@/components/List";
+import TextInput from "@/components/TextInput";
+import Typography from "@/components/Typography";
+import * as S from "./styles";
 
 const productRoutes = [
   { label: "Maior Preço", value: "maior-preço" },

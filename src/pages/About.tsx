@@ -1,7 +1,7 @@
-import Contact from "../components/Contact";
-import Features from "../components/Features";
-import Newsletter from "../components/Newsletter";
-import ProductsHeader from "../components/HeaderPage";
+import Contact from "@/components/Contact";
+import Features from "@/components/Features";
+import Newsletter from "@/components/Newsletter";
+import ProductsHeader from "@/components/HeaderPage";
 
 const About = () => {
   return (

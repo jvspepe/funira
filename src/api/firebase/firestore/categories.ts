@@ -1,12 +1,12 @@
 import {
-  Firestore,
   FirestoreDataConverter,
   collection,
   getDocs,
   orderBy,
   query,
 } from "firebase/firestore";
-import { TCategory } from "../../../@types/categories";
+import { firestore } from "@/api/firebase/firebase-config";
+import { TCategory } from "@/@types/categories";
 
 const categoryConverter: FirestoreDataConverter<TCategory> = {
   toFirestore(category) {
@@ -18,7 +18,7 @@ const categoryConverter: FirestoreDataConverter<TCategory> = {
   },
 };
 
-async function getCategories(firestore: Firestore) {
+async function getCategories() {
   const dataCollection: TCategory[] = [];
   const collectionReference = query(
     collection(firestore, "categories"),

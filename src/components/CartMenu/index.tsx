@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useTheme } from "styled-components";
 import { ShoppingCart } from "@phosphor-icons/react";
-import { useAppSelector } from "../../store/store";
-import Menu from "../Menu";
-import IconButton from "../IconButton";
-import CartMenuItem from "../CartMenuItem";
-import Typography from "../Typography";
+import { useAppSelector } from "@/store/store";
+import CartMenuItem from "@/components/CartMenuItem";
+import IconButton from "@/components/IconButton";
+import Menu from "@/components/Menu";
+import Typography from "@/components/Typography";
 import Wrapper from "./styles";
 
 const CartMenu = () => {

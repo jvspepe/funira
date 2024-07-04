@@ -7,9 +7,9 @@ import {
   useState,
 } from "react";
 import { User, onAuthStateChanged } from "firebase/auth";
-import { TUser } from "../@types/user";
-import { getUser } from "../api/firebase/firestore/users";
-import { auth, firestore } from "../api/firebase/firebase-config";
+import { TUser } from "@/@types/user";
+import { getUser } from "@/api/firebase/firestore/users";
+import { auth } from "@/api/firebase/firebase-config";
 
 type TAuthContext = {
   currentUser: User | null;
@@ -44,7 +44,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
 
   async function getUserData(userUID: string) {
     try {
-      const data = await getUser(firestore, userUID);
+      const data = await getUser(userUID);
       setUserData(data);
     } catch (error) {
       throw new Error(String(error));

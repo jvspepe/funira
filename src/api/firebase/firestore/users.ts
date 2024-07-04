@@ -6,7 +6,8 @@ import {
   getDoc,
   setDoc,
 } from "firebase/firestore";
-import { TUser } from "../../../@types/user";
+import { TUser } from "@/@types/user";
+import { firestore } from "@/api/firebase/firebase-config";
 
 const userConverter: FirestoreDataConverter<TUser> = {
   toFirestore(user) {
@@ -18,10 +19,7 @@ const userConverter: FirestoreDataConverter<TUser> = {
   },
 };
 
-async function addUser(
-  firestore: Firestore,
-  userData: Omit<TUser, "createdAt">
-) {
+async function addUser(userData: Omit<TUser, "createdAt">) {
   try {
     await setDoc(
       doc(firestore, "users", userData.uid).withConverter(userConverter),
@@ -35,7 +33,7 @@ async function addUser(
   }
 }
 
-async function getUser(firestore: Firestore, userUID: string) {
+async function getUser(userUID: string) {
   try {
     const userData = await getDoc(
       doc(firestore, "users", userUID).withConverter(userConverter)

@@ -1,8 +1,8 @@
-import Container from "../Container";
-import Button from "../Button";
-import * as S from "./styles";
 import { Link } from "react-router-dom";
-import Typography from "../Typography";
+import Button from "@/components/Button";
+import Container from "@/components/Container";
+import Typography from "@/components/Typography";
+import * as S from "./styles";
 
 const Contact = () => {
   return (

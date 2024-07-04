@@ -1,6 +1,6 @@
 import { ElementType } from "react";
-import Styled from "./styles";
 import { FlexboxProps, GridProps, LayoutProps } from "styled-system";
+import Styled from "./styles";
 
 type Props<T extends ElementType> = FlexboxProps &
   GridProps &

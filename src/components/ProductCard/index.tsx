@@ -1,5 +1,5 @@
-import { TProduct } from "../../@types/product";
-import Typography from "../Typography";
+import { TProduct } from "@/@types/product";
+import Typography from "@/components/Typography";
 import * as Styled from "./styles";
 
 type Props = {
