@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
-import breakpoints from "../../styles/breakpoints";
-import BaseButton from "../ui/Button";
+import breakpoints from "@/styles/breakpoints";
+import BaseButton from "@/components/ui/Button";
 
 const Section = styled.section`
   display: grid;

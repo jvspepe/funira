@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
 import { useTheme } from "styled-components";
-import { CaretDown, CaretUp, List, X } from "@phosphor-icons/react";
+import { CaretDown, List, X } from "@phosphor-icons/react";
 import { TCategory } from "@/@types/categories";
 import IconButton from "@/components/ui/IconButton";
 import * as S from "./styles";
@@ -56,7 +55,7 @@ const MobileNav = ({ routes }: Props) => {
       </IconButton>
       <S.NavList id="navigation-list" aria-hidden={!active}>
         <S.NavListItem key="inicio">
-          <S.NavLink component={Link} onClick={() => setActive(false)} to="/">
+          <S.NavLink onClick={() => setActive(false)} to="/">
             Início
           </S.NavLink>
         </S.NavListItem>
@@ -66,13 +65,17 @@ const MobileNav = ({ routes }: Props) => {
             type="button"
           >
             Produtos
-            {accordionActive ? <CaretUp /> : <CaretDown />}
+            <CaretDown
+              style={{
+                transform: accordionActive ? "rotate(-180deg)" : "",
+                transition: "transform 300ms",
+              }}
+            />
           </S.AccordionButton>
           <S.AccordionContent ref={accordionRef} data-active={accordionActive}>
             {routes.map((route) => (
               <li key={route.uid}>
                 <S.NavLink
-                  component={Link}
                   onClick={() => {
                     setAccordionActive(false);
                     setActive(false);
@@ -86,7 +89,7 @@ const MobileNav = ({ routes }: Props) => {
           </S.AccordionContent>
         </S.Accordion>
         <S.NavListItem key="sobre">
-          <S.NavLink component={Link} onClick={() => setActive(false)} to="/">
+          <S.NavLink onClick={() => setActive(false)} to="/">
             Sobre
           </S.NavLink>
         </S.NavListItem>

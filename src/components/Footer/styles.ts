@@ -1,5 +1,6 @@
+import { Link } from "react-router-dom";
 import { styled } from "styled-components";
-import breakpoints from "../../styles/breakpoints";
+import breakpoints from "@/styles/breakpoints";
 
 const Footer = styled.footer`
   display: grid;
@@ -24,4 +25,29 @@ const FooterContainer = styled.div`
   }
 `;
 
-export { Footer, FooterContainer };
+const FooterList = styled.ul`
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  list-style: none;
+`;
+
+const FooterListHeading = styled.h6`
+  font-family: ${({ theme }) => theme.fonts.heading};
+  font-size: ${({ theme }) => theme.fontSizes.md};
+  font-weight: normal;
+  color: ${({ theme }) => theme.colors.text.secondary};
+`;
+
+const FooterListContent = styled(Link)`
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+  color: ${({ theme }) => theme.colors.text.secondary};
+`;
+
+export {
+  Footer,
+  FooterContainer,
+  FooterList,
+  FooterListHeading,
+  FooterListContent,
+};

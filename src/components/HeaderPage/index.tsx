@@ -1,19 +1,10 @@
-import Typography from "@/components/ui/Typography";
-import Wrapper from "./styles";
+import * as S from "./styles";
 
 const ProductsHeader = () => {
   return (
-    <Wrapper>
-      <Typography
-        component="h2"
-        fontFamily="heading"
-        fontSize="4xl"
-        textAlign="center"
-        variant="secondary"
-      >
-        Nossos produtos
-      </Typography>
-    </Wrapper>
+    <S.Wrapper>
+      <S.Heading>Nossos produtos</S.Heading>
+    </S.Wrapper>
   );
 };
 

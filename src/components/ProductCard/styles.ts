@@ -1,6 +1,6 @@
-import breakpoints from "@/styles/breakpoints";
 import { Link as RouterLink } from "react-router-dom";
 import { styled } from "styled-components";
+import breakpoints from "@/styles/breakpoints";
 
 const Image = styled.img`
   flex-grow: 1;

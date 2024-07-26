@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
-import breakpoints from "../../styles/breakpoints";
-import BaseContainer from "../ui/Container";
+import breakpoints from "@/styles/breakpoints";
+import BaseContainer from "@/components/ui/Container";
 
 const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.background.secondary};

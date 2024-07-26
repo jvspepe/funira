@@ -11,4 +11,12 @@ const Wrapper = styled.div`
   justify-content: center;
 `;
 
-export default Wrapper;
+const Heading = styled.h2`
+  font-family: ${({ theme }) => theme.fonts.heading};
+  font-size: ${({ theme }) => theme.fontSizes["4xl"]};
+  font-weight: normal;
+  color: ${({ theme }) => theme.colors.text.secondary};
+  text-align: center;
+`;
+
+export { Wrapper, Heading };

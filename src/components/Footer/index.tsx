@@ -1,13 +1,10 @@
 import { FormEvent } from "react";
-import { Link } from "react-router-dom";
+import { useTheme } from "styled-components";
 import useGetCategories from "@/hooks/useGetCategories";
-import Box from "@/components/ui/Box";
 import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
 import Copyright from "@/components/Copyright";
-import List from "@/components/List";
 import TextInput from "@/components/ui/TextInput";
-import Typography from "@/components/ui/Typography";
 import * as S from "./styles";
 
 const productRoutes = [
@@ -21,56 +18,48 @@ const companyRoutes = ["Sobre", "Contato", "Carreiras"];
 
 const Footer = () => {
   const categories = useGetCategories();
+  const { colors } = useTheme();
+
   return (
-    <Box backgroundColor="background.tertiary">
+    <div style={{ backgroundColor: colors.background.tertiary }}>
       <Container>
         <S.Footer>
           <S.FooterContainer>
-            <Box display="flex" flexWrap="wrap" gridGap="3rem">
-              <List title="Categorias">
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "3rem" }}>
+              <S.FooterList>
+                <S.FooterListHeading>Categories</S.FooterListHeading>
                 {categories.map((item) => (
-                  <Typography
-                    component={Link}
+                  <S.FooterListContent
                     key={item.uid}
                     to={`/produtos?tipo=${item.value}`}
-                    variant="secondary"
-                    size="sm"
                   >
                     {item.label}
-                  </Typography>
+                  </S.FooterListContent>
                 ))}
-              </List>
-              <List title="Menu">
+              </S.FooterList>
+              <S.FooterList>
+                <S.FooterListHeading>Menu</S.FooterListHeading>
                 {productRoutes.map((route) => (
-                  <Typography
-                    component={Link}
+                  <S.FooterListContent
                     key={route.value}
                     to={`/produtos?ordem=${route.value}`}
-                    variant="secondary"
-                    size="sm"
                   >
                     {route.label}
-                  </Typography>
+                  </S.FooterListContent>
                 ))}
-              </List>
-              <List title="Nossa Empresa">
+              </S.FooterList>
+              <S.FooterList>
+                <S.FooterListHeading>Nossa Empresa</S.FooterListHeading>
                 {companyRoutes.map((route) => (
-                  <Typography
-                    component={Link}
-                    key={route}
-                    to="/"
-                    variant="secondary"
-                    size="sm"
-                  >
+                  <S.FooterListContent key={route} to="/">
                     {route}
-                  </Typography>
+                  </S.FooterListContent>
                 ))}
-              </List>
-            </Box>
-            <Box
-              component="form"
+              </S.FooterList>
+            </div>
+            <form
               onSubmit={(event: FormEvent) => event.preventDefault()}
-              flexGrow={1}
+              style={{ flexGrow: 1 }}
             >
               <TextInput
                 label="Inscreva-se na nossa lista de e-mails"
@@ -82,12 +71,12 @@ const Footer = () => {
                 }
                 placeholder="seu@email.com"
               />
-            </Box>
+            </form>
           </S.FooterContainer>
           <Copyright />
         </S.Footer>
       </Container>
-    </Box>
+    </div>
   );
 };
 

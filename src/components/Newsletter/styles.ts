@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
-import BaseContainer from "../ui/Container";
-import breakpoints from "../../styles/breakpoints";
+import BaseContainer from "@/components/ui/Container";
+import breakpoints from "@/styles/breakpoints";
 
 const Wrapper = styled.div`
   background-image: url("/images/newsletter.jpg");
@@ -27,7 +27,7 @@ const Section = styled.section`
   }
 `;
 
-const Content = styled.div`
+const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -38,7 +38,27 @@ const Content = styled.div`
   }
 `;
 
-const Benefits = styled.div`
+const Heading = styled.h6`
+  font-family: ${({ theme }) => theme.fonts.heading};
+  font-size: ${({ theme }) => theme.fontSizes["2xl"]};
+  font-weight: normal;
+  color: ${({ theme }) => theme.colors.text.secondary};
+
+  @media (min-width: ${breakpoints.xl}) {
+    font-size: ${({ theme }) => theme.fontSizes["3xl"]};
+  }
+`;
+
+const Content = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+  color: ${({ theme }) => theme.colors.text.secondary};
+
+  @media (min-width: ${breakpoints.xl}) {
+    font-size: ${({ theme }) => theme.fontSizes.lg};
+  }
+`;
+
+const BenefitList = styled.div`
   color: ${({ theme }) => theme.colors.text.secondary};
   display: flex;
   flex-direction: column;
@@ -50,4 +70,20 @@ const Benefits = styled.div`
   }
 `;
 
-export { Wrapper, Container, Section, Content, Benefits };
+const BenefitItem = styled.p`
+  color: ${({ theme }) => theme.colors.text.secondary};
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
+export {
+  Wrapper,
+  Container,
+  Section,
+  ContentWrapper,
+  Heading,
+  Content,
+  BenefitList,
+  BenefitItem,
+};

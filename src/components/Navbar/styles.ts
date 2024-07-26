@@ -1,5 +1,5 @@
+import { Link } from "react-router-dom";
 import { styled } from "styled-components";
-import Typography from "../ui/Typography";
 import breakpoints from "@/styles/breakpoints";
 
 const NavList = styled.ul`
@@ -23,7 +23,7 @@ const NavListItem = styled.li`
   align-items: center;
 `;
 
-const NavLink = styled(Typography)`
+const NavLink = styled(Link)`
   width: 100%;
   padding: 1.5rem;
 
@@ -39,10 +39,20 @@ const Accordion = styled.div`
   border-top: 1px solid ${({ theme }) => theme.colors.border.primary};
 `;
 
-const AccordionButton = styled(NavLink)`
+const AccordionButton = styled.button`
+  background: transparent;
+  border: none;
   display: flex;
   align-items: center;
   gap: 0.25rem;
+  width: 100%;
+  padding: 1.5rem;
+
+  transition: background-color 200ms;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.border.primary};
+  }
 `;
 
 const AccordionContent = styled.ul`

@@ -1,10 +1,10 @@
 import { createGlobalStyle } from "styled-components";
-import ClashDisplayVariableWoff2 from "/public/fonts/clash-display/ClashDisplay-Variable.woff2";
-import ClashDisplayVariableWoff from "/public/fonts/clash-display/ClashDisplay-Variable.woff2";
-import SatoshiVariableWoff2 from "/public/fonts/satoshi/Satoshi-Variable.woff2";
-import SatoshiVariableWoff from "/public/fonts/satoshi/Satoshi-Variable.woff";
-import SatoshiVariableItalicWoff2 from "/public/fonts/satoshi/Satoshi-VariableItalic.woff2";
-import SatoshiVariableItalicWoff from "/public/fonts/satoshi/Satoshi-VariableItalic.woff";
+import ClashDisplayVariableWoff2 from "/fonts/clash-display/ClashDisplay-Variable.woff2";
+import ClashDisplayVariableWoff from "/fonts/clash-display/ClashDisplay-Variable.woff2";
+import SatoshiVariableWoff2 from "/fonts/satoshi/Satoshi-Variable.woff2";
+import SatoshiVariableWoff from "/fonts/satoshi/Satoshi-Variable.woff";
+import SatoshiVariableItalicWoff2 from "/fonts/satoshi/Satoshi-VariableItalic.woff2";
+import SatoshiVariableItalicWoff from "/fonts/satoshi/Satoshi-VariableItalic.woff";
 
 const GlobalStyles = createGlobalStyle`
   @font-face {

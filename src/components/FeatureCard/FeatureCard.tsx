@@ -1,6 +1,5 @@
 import Feature from "@/@types/feature";
-import Typography from "@/components/ui/Typography";
-import * as Styled from "./styles";
+import * as S from "./styles";
 
 type Props = {
   feature: Feature;
@@ -8,18 +7,11 @@ type Props = {
 
 const FeatureCard = ({ feature }: Props) => {
   return (
-    <Styled.Wrapper>
-      <Styled.Icon>{feature.icon}</Styled.Icon>
-      <Typography
-        component="h3"
-        fontFamily="heading"
-        fontSize="xl"
-        fontWeight="normal"
-      >
-        {feature.title}
-      </Typography>
-      <Typography>{feature.details}</Typography>
-    </Styled.Wrapper>
+    <S.Wrapper>
+      <S.Icon>{feature.icon}</S.Icon>
+      <S.Title>{feature.title}</S.Title>
+      <p>{feature.details}</p>
+    </S.Wrapper>
   );
 };
 

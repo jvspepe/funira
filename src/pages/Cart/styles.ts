@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
-import BaseButton from "../../components/ui/Button";
-import BaseContainer from "../../components/ui/Container";
-import breakpoints from "../../styles/breakpoints";
+import breakpoints from "@/styles/breakpoints";
+import BaseButton from "@/components/ui/Button";
+import BaseContainer from "@/components/ui/Container";
 
 const Container = styled(BaseContainer)`
   min-height: calc(100dvh - 5rem);

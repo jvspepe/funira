@@ -16,4 +16,10 @@ const Icon = styled.div`
   }
 `;
 
-export { Wrapper, Icon };
+const Title = styled.h3`
+  font-family: ${({ theme }) => theme.fonts.heading};
+  font-size: ${({ theme }) => theme.fontSizes.xl};
+  font-weight: normal;
+`;
+
+export { Wrapper, Icon, Title };

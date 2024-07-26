@@ -8,6 +8,10 @@ const Wrapper = styled.span`
   justify-content: space-between;
 `;
 
+const Heading = styled.p`
+  color: ${({ theme }) => theme.colors.text.secondary};
+`;
+
 const Socials = styled.div`
   display: none;
   gap: 1.5rem;
@@ -18,4 +22,4 @@ const Socials = styled.div`
   }
 `;
 
-export { Wrapper, Socials };
+export { Wrapper, Heading, Socials };

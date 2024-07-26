@@ -8,6 +8,7 @@ import * as Styled from "./styles";
 const Cart = () => {
   const { cart, total } = useAppSelector((state) => state.cartReducer);
   const { colors } = useTheme();
+
   return (
     <Styled.Container>
       <Styled.Wrapper>

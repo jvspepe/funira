@@ -28,8 +28,29 @@ const Wrapper = styled.div`
   }
 `;
 
+const Heading = styled.h5`
+  font-family: ${({ theme }) => theme.fonts.heading};
+  font-size: ${({ theme }) => theme.fontSizes.xl};
+  font-weight: normal;
+  color: ${({ theme }) => theme.colors.text.secondary};
+
+  @media (min-width: ${breakpoints.xl}) {
+    font-size: ${({ theme }) => theme.fontSizes["3xl"]};
+  }
+`;
+
+const Content = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+  color: ${({ theme }) => theme.colors.text.secondary};
+  flex-grow: 1;
+
+  @media (min-width: ${breakpoints.xl}) {
+    font-size: ${({ theme }) => theme.fontSizes.lg};
+  }
+`;
+
 const Image = styled.img`
   object-fit: cover;
 `;
 
-export { Section, Wrapper, Image };
+export { Section, Wrapper, Heading, Content, Image };

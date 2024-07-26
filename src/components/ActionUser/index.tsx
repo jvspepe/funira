@@ -5,9 +5,9 @@ import { useTheme } from "styled-components";
 import { UserCircle } from "@phosphor-icons/react";
 import { useAuth } from "@/contexts/AuthContext";
 import { auth } from "@/api/firebase/firebase-config";
+import Button from "@/components/ui/Button";
 import IconButton from "@/components/ui/IconButton";
 import Menu from "@/components/ui/Menu";
-import Button from "../ui/Button";
 
 const ActionUser = () => {
   const [open, setOpen] = useState(false);

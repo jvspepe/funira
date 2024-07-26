@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import IconButton from "../ui/IconButton";
 import breakpoints from "@/styles/breakpoints";
+import IconButton from "@/components/ui/IconButton";
 
 const Button = styled(IconButton)`
   display: block;
