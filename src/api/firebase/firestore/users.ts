@@ -1,5 +1,4 @@
 import {
-  Firestore,
   FirestoreDataConverter,
   Timestamp,
   doc,
