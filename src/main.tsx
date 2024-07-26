@@ -8,7 +8,7 @@ import MainLayout from "./layouts/MainLayout.tsx";
 import Home from "./pages/Home/index.tsx";
 import Products from "./pages/Products/index.tsx";
 import SingleProduct from "./pages/SingleProduct.tsx";
-import About from "./pages/About.tsx";
+import About from "./pages/About/index.tsx";
 import Cart from "./pages/Cart/index.tsx";
 import AuthLayout from "./layouts/AuthLayout.tsx";
 import Login from "./pages/Login/index.tsx";

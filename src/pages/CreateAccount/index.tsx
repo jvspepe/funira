@@ -3,11 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 import createUser from "@/api/firebase/authentication/create-new-user";
 import getAuthError from "@/api/firebase/authentication/auth-errors";
-import Box from "@/components/Box";
-import Button from "@/components/Button";
-import Spinner from "@/components/Spinner";
-import TextInput from "@/components/TextInput";
-import Typography from "@/components/Typography";
+import Box from "@/components/ui/Box";
+import Button from "@/components/ui/Button";
+import Spinner from "@/components/ui/Spinner";
+import TextInput from "@/components/ui/TextInput";
+import Typography from "@/components/ui/Typography";
 
 type CreateAccountValues = {
   displayName: string;

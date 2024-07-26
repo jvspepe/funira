@@ -1,19 +1,12 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent } from "react";
 import { useSearchParams } from "react-router-dom";
-import { CaretDown, FunnelSimple, X } from "@phosphor-icons/react";
 import { TCategory } from "@/@types/categories";
-import Button from "@/components/Button";
-import Container from "@/components/Container";
-import Checkbox from "@/components/Checkbox";
-import Drawer from "@/components/Drawer";
-import IconButton from "@/components/IconButton";
-import Menu from "@/components/Menu";
-import MenuFilter from "@/components/MenuFilter";
-import MenuSort from "@/components/MenuSort";
-import Typography from "@/components/Typography";
-import * as Styled from "./styles";
+import SortOption from "@/@types/sort-options";
+import Container from "@/components/ui/Container";
+import Filters from "@/components/Filters";
+import FiltersDesktop from "../FiltersDesktop";
 
-const sortOptions = [
+const sortOptions: SortOption[] = [
   { label: "Maior Preço", value: "maior-preço" },
   { label: "Menor Preço", value: "menor-preço" },
   { label: "Novos", value: "novo" },
@@ -26,14 +19,7 @@ type Props = {
 };
 
 const ProductsFilter = ({ categories }: Props) => {
-  const [openFilter, setOpenFilter] = useState(false);
-  const [openSort, setOpenSort] = useState(false);
-
   const [searchParams, setSearchParams] = useSearchParams();
-
-  function handleOpenFilter() {
-    setOpenFilter(!openFilter);
-  }
 
   function handleChangeFilter(event: ChangeEvent<HTMLInputElement>) {
     const typeParams = searchParams.getAll("tipo");
@@ -47,6 +33,11 @@ const ProductsFilter = ({ categories }: Props) => {
     }
   }
 
+  function handleClearFilter() {
+    searchParams.delete("tipo");
+    setSearchParams(searchParams);
+  }
+
   function handleChangeSort(value: string) {
     const sortParams = searchParams.get("ordem");
     if (sortParams === value) {
@@ -58,89 +49,22 @@ const ProductsFilter = ({ categories }: Props) => {
     }
   }
 
-  function handleClearFilter() {
-    setSearchParams();
-  }
-
   return (
     <Container>
-      <Styled.Wrapper>
-        <Button
-          onClick={handleOpenFilter}
-          variant="secondary"
-          endIcon={<CaretDown size={16} />}
-        >
-          Filtros
-        </Button>
-        {openFilter && (
-          <Drawer
-            isOpen={openFilter}
-            header={
-              <Styled.Header>
-                <FunnelSimple size={32} />
-                <Typography component="h3" fontFamily="heading" fontSize="4xl">
-                  Filtros
-                </Typography>
-                <IconButton onClick={handleOpenFilter}>
-                  <X size={32} />
-                </IconButton>
-              </Styled.Header>
-            }
-          >
-            <Styled.Content>
-              <Typography component="span" fontFamily="heading">
-                Filtros
-              </Typography>
-              <Button onClick={handleClearFilter} size="small">
-                Limpar filtros
-              </Button>
-              <Styled.List>
-                {categories.map((item) => (
-                  <Checkbox
-                    onChange={handleChangeFilter}
-                    key={item.value}
-                    id={item.value}
-                    name={item.value}
-                    value={item.value}
-                    checked={searchParams.getAll("tipo").includes(item.value)}
-                    label={item.label}
-                  />
-                ))}
-              </Styled.List>
-            </Styled.Content>
-          </Drawer>
-        )}
-        <Menu
-          isOpen={openSort}
-          setIsOpen={setOpenSort}
-          toggle={
-            <Button
-              onClick={() => setOpenSort(!openSort)}
-              variant="secondary"
-              endIcon={<CaretDown size={16} />}
-              style={{ width: "100%" }}
-            >
-              Ordem
-            </Button>
-          }
-        >
-          {sortOptions.map((option) => (
-            <Button
-              onClick={() => handleChangeSort(option.value)}
-              key={option.value}
-              variant="tertiary"
-              size="small"
-              style={{ width: "100%" }}
-            >
-              {option.label}
-            </Button>
-          ))}
-        </Menu>
-      </Styled.Wrapper>
-      <Styled.WrapperDesktop>
-        <MenuFilter categories={categories} />
-        <MenuSort options={sortOptions} onClick={handleChangeSort} />
-      </Styled.WrapperDesktop>
+      <Filters
+        categories={categories}
+        sortOptions={sortOptions}
+        handleChangeFilter={handleChangeFilter}
+        handleChangeSort={handleChangeSort}
+        handleClearFilter={handleClearFilter}
+      />
+      <FiltersDesktop
+        categories={categories}
+        sortOptions={sortOptions}
+        handleChangeFilter={handleChangeFilter}
+        handleChangeSort={handleChangeSort}
+        handleClearFilter={handleClearFilter}
+      />
     </Container>
   );
 };

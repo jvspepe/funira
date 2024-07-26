@@ -1,13 +1,13 @@
 import { FormEvent } from "react";
 import { Link } from "react-router-dom";
 import useGetCategories from "@/hooks/useGetCategories";
-import Box from "@/components/Box";
-import Button from "@/components/Button";
-import Container from "@/components/Container";
+import Box from "@/components/ui/Box";
+import Button from "@/components/ui/Button";
+import Container from "@/components/ui/Container";
 import Copyright from "@/components/Copyright";
 import List from "@/components/List";
-import TextInput from "@/components/TextInput";
-import Typography from "@/components/Typography";
+import TextInput from "@/components/ui/TextInput";
+import Typography from "@/components/ui/Typography";
 import * as S from "./styles";
 
 const productRoutes = [

@@ -10,7 +10,7 @@ import {
 import { TProduct } from "@/@types/product";
 import { firestore } from "@/api/firebase/firebase-config";
 import { getProducts } from "@/api/firebase/firestore/products";
-import Button from "@/components/Button";
+import Button from "@/components/ui/Button";
 import ProductsFilter from "@/components/ProductsFilter";
 import ProductsHeader from "@/components/HeaderPage";
 import ProductSection from "@/components/ProductDisplay";

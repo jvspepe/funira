@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import breakpoints from "../../styles/breakpoints";
-import BaseButton from "../Button";
+import BaseButton from "../ui/Button";
 
 const Section = styled.section`
   display: grid;
@@ -10,6 +10,16 @@ const Section = styled.section`
   @media (min-width: ${breakpoints.sm}) {
     gap: 2rem;
     padding: 1rem 0;
+  }
+`;
+
+const SectionHeader = styled.h3`
+  font-family: ${({ theme }) => theme.fonts.heading};
+  font-size: ${({ theme }) => theme.fontSizes.xl};
+  font-weight: normal;
+
+  @media (min-width: ${breakpoints.md}) {
+    font-size: ${({ theme }) => theme.fontSizes["3xl"]};
   }
 `;
 
@@ -31,4 +41,4 @@ const Button = styled(BaseButton)`
   }
 `;
 
-export { Section, Display, Button };
+export { Section, SectionHeader, Display, Button };

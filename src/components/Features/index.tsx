@@ -1,7 +1,6 @@
 import { CheckCircle, CreditCard, Plant, Truck } from "@phosphor-icons/react";
 import Feature from "@/@types/feature";
-import Container from "@/components/Container";
-import Typography from "@/components/Typography";
+import Container from "@/components/ui/Container";
 import FeatureCard from "../FeatureCard/FeatureCard";
 import * as S from "./styles";
 
@@ -33,13 +32,7 @@ const Features = () => {
   return (
     <Container>
       <S.Section>
-        <Typography
-          component="h2"
-          fontFamily="heading"
-          fontSize={["xl", "2xl"]}
-        >
-          O que faz de nossa marca diferente
-        </Typography>
+        <S.SectionHeader>O que faz de nossa marca diferente</S.SectionHeader>
         <S.Display>
           {featureList.map((feature) => (
             <FeatureCard key={feature.title} feature={feature} />

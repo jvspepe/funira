@@ -4,11 +4,11 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/api/firebase/firebase-config";
 import getAuthError from "@/api/firebase/authentication/auth-errors";
-import Box from "@/components/Box";
-import Button from "@/components/Button";
-import Spinner from "@/components/Spinner";
-import TextInput from "@/components/TextInput";
-import Typography from "@/components/Typography";
+import Box from "@/components/ui/Box";
+import Button from "@/components/ui/Button";
+import Spinner from "@/components/ui/Spinner";
+import TextInput from "@/components/ui/TextInput";
+import Typography from "@/components/ui/Typography";
 
 type LoginValues = {
   email: string;

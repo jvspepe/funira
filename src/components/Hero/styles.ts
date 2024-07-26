@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import BaseContainer from "../Container";
+import BaseContainer from "../ui/Container";
 import breakpoints from "../../styles/breakpoints";
 
 const Wrapper = styled.div`
@@ -10,7 +10,7 @@ const Wrapper = styled.div`
 `;
 
 const Container = styled(BaseContainer)`
-  height: calc(100vh - 5rem);
+  height: calc(100dvh - 5.25rem);
   display: flex;
   flex-direction: column;
 
@@ -25,7 +25,7 @@ const Section = styled.section`
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  padding: 2.5rem 1.5rem 0.5rem;
+  padding: 1.5rem;
   background-color: ${({ theme }) => theme.colors.background.primary};
 
   @media (min-width: ${breakpoints.sm}) {
@@ -45,6 +45,22 @@ const Content = styled.div`
   }
 `;
 
+const ContentHeader = styled.h2`
+  font-family: ${({ theme }) => theme.fonts.heading};
+  font-size: ${({ theme }) => theme.fontSizes["2xl"]};
+  font-weight: normal;
+
+  @media (min-width: ${breakpoints.md}) {
+    font-size: ${({ theme }) => theme.fontSizes["3xl"]};
+  }
+`;
+
+const ContentBody = styled.p`
+  @media (min-width: ${breakpoints.md}) {
+    font-size: ${({ theme }) => theme.fontSizes.lg};
+  }
+`;
+
 const Image = styled.img`
   flex-grow: 1;
   object-fit: cover;
@@ -54,4 +70,12 @@ const Image = styled.img`
   }
 `;
 
-export { Wrapper, Container, Section, Content, Image };
+export {
+  Wrapper,
+  Container,
+  Section,
+  Content,
+  ContentHeader,
+  ContentBody,
+  Image,
+};

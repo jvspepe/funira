@@ -1,9 +1,7 @@
 import { useState } from "react";
-import { CaretDown } from "@phosphor-icons/react";
-import { Link } from "react-router-dom";
+import { CaretDown, CaretUp } from "@phosphor-icons/react";
 import { TCategory } from "@/@types/categories";
-import Typography from "@/components/Typography";
-import Menu from "@/components/Menu";
+import Menu from "@/components/ui/Menu";
 import * as S from "./styles";
 
 type Props = {
@@ -17,29 +15,22 @@ const Nav = ({ routes }: Props) => {
     <S.Wrapper>
       <S.List>
         <li key="inicio">
-          <Typography component={Link} to="/">
-            Início
-          </Typography>
+          <S.Link to="/">Início</S.Link>
         </li>
         <li>
           <Menu
             isOpen={active}
             setIsOpen={setActive}
             toggle={
-              <S.MenuToggle
-                onClick={() => setActive(!active)}
-                component="button"
-                type="button"
-              >
+              <S.MenuToggle onClick={() => setActive(!active)} type="button">
                 Produtos
-                <CaretDown />
+                {active ? <CaretUp /> : <CaretDown />}
               </S.MenuToggle>
             }
           >
             <S.MenuDropdown>
               <li key="todos">
                 <S.MenuDropdownItem
-                  component={Link}
                   onClick={() => setActive(false)}
                   to="/produtos"
                 >
@@ -49,7 +40,6 @@ const Nav = ({ routes }: Props) => {
               {routes.map((route) => (
                 <li key={route.label}>
                   <S.MenuDropdownItem
-                    component={Link}
                     onClick={() => setActive(false)}
                     to={`produtos?tipo=${route.value}`}
                   >
@@ -61,9 +51,7 @@ const Nav = ({ routes }: Props) => {
           </Menu>
         </li>
         <li key="sobre">
-          <Typography component={Link} to="/sobre">
-            Sobre
-          </Typography>
+          <S.Link to="/">Sobre</S.Link>
         </li>
       </S.List>
     </S.Wrapper>

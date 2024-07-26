@@ -2,20 +2,16 @@ import { Link } from "react-router-dom";
 import { useTheme } from "styled-components";
 import { ShoppingCart } from "@phosphor-icons/react";
 import CartMenu from "@/components/CartMenu";
-import IconButton from "@/components/IconButton";
+import Button from "./styles";
 
 const ActionCart = () => {
   const { colors } = useTheme();
 
   return (
     <>
-      <IconButton
-        component={Link}
-        to="/carrinho"
-        display={["block", null, "none"]}
-      >
+      <Button component={Link} to="/carrinho">
         <ShoppingCart color={colors.text.primary} size={24} />
-      </IconButton>
+      </Button>
       <CartMenu />
     </>
   );

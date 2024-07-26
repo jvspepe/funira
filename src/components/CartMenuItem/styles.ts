@@ -7,22 +7,33 @@ const Wrapper = styled.div`
   gap: 0.5rem;
 `;
 
-const InnerWrapper = styled.div`
-  display: flex;
+const ItemWrapper = styled.div`
   width: 100%;
 
-  padding: 0.5rem;
+  display: flex;
   flex-direction: column;
+
+  padding: 0.5rem;
+`;
+
+const ItemHeader = styled.h3`
+  font-family: ${({ theme }) => theme.fonts.heading};
+`;
+
+const ItemPrice = styled.span`
+  font-family: ${({ theme }) => theme.fonts.heading};
+  font-size: ${({ theme }) => theme.fontSizes.sm};
 `;
 
 const Image = styled.img`
   max-height: 10rem;
 `;
 
-const Buttons = styled.div`
+const Controls = styled.div`
   display: flex;
   align-items: center;
+
   justify-content: space-between;
 `;
 
-export { Wrapper, InnerWrapper, Image, Buttons };
+export { Wrapper, ItemWrapper, ItemHeader, ItemPrice, Image, Controls };

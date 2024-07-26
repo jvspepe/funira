@@ -1,5 +1,5 @@
 import Feature from "@/@types/feature";
-import Typography from "@/components/Typography";
+import Typography from "@/components/ui/Typography";
 import * as Styled from "./styles";
 
 type Props = {

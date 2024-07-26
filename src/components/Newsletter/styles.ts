@@ -1,6 +1,5 @@
 import { styled } from "styled-components";
-
-import BaseContainer from "../Container";
+import BaseContainer from "../ui/Container";
 import breakpoints from "../../styles/breakpoints";
 
 const Wrapper = styled.div`

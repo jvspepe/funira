@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useTheme } from "styled-components";
 import { useAppSelector } from "@/store/store";
 import CartProduct from "@/components/CartProduct";
-import Typography from "@/components/Typography";
+import Typography from "@/components/ui/Typography";
 import * as Styled from "./styles";
 
 const Cart = () => {

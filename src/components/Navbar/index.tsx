@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTheme } from "styled-components";
-import { List, X } from "@phosphor-icons/react";
+import { CaretDown, CaretUp, List, X } from "@phosphor-icons/react";
 import { TCategory } from "@/@types/categories";
-import IconButton from "@/components/IconButton";
+import IconButton from "@/components/ui/IconButton";
 import * as S from "./styles";
 
 type Props = {
@@ -66,6 +66,7 @@ const MobileNav = ({ routes }: Props) => {
             type="button"
           >
             Produtos
+            {accordionActive ? <CaretUp /> : <CaretDown />}
           </S.AccordionButton>
           <S.AccordionContent ref={accordionRef} data-active={accordionActive}>
             {routes.map((route) => (
@@ -85,11 +86,7 @@ const MobileNav = ({ routes }: Props) => {
           </S.AccordionContent>
         </S.Accordion>
         <S.NavListItem key="sobre">
-          <S.NavLink
-            component={Link}
-            onClick={() => setActive(false)}
-            to="/sobre"
-          >
+          <S.NavLink component={Link} onClick={() => setActive(false)} to="/">
             Sobre
           </S.NavLink>
         </S.NavListItem>

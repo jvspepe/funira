@@ -1,21 +1,22 @@
 import { styled } from "styled-components";
 import breakpoints from "../../styles/breakpoints";
-import BaseContainer from "../Container";
+import BaseContainer from "../ui/Container";
 
 const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.background.secondary};
 
   @media (min-width: ${breakpoints.md}) {
-    padding: 2rem 0;
   }
 `;
 
 const Container = styled(BaseContainer)`
   display: grid;
 
-  @media (min-width: ${breakpoints.md}) {
+  @media (min-width: ${breakpoints.lg}) {
     grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
+    padding: 2rem 0;
+    height: calc(100dvh - 5.25rem);
   }
 `;
 
@@ -41,18 +42,47 @@ const Details = styled.div`
   }
 `;
 
-const Header = styled.div`
+const ProductHeader = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-const Description = styled.div`
+const ProductName = styled.h2`
+  font-family: ${({ theme }) => theme.fonts.heading};
+  font-size: ${({ theme }) => theme.fontSizes["2xl"]};
+  font-weight: normal;
+
+  @media (min-width: ${breakpoints.xl}) {
+    font-size: ${({ theme }) => theme.fontSizes["4xl"]};
+  }
+`;
+
+const ProductPrice = styled.span`
+  font-size: ${({ theme }) => theme.fontSizes.xl};
+
+  @media (min-width: ${breakpoints.xl}) {
+    font-size: ${({ theme }) => theme.fontSizes["2xl"]};
+  }
+`;
+
+const ProductDescription = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
 `;
 
-const Dimensions = styled.div`
+const ProductDescriptionHeading = styled.span`
+  font-family: ${({ theme }) => theme.fonts.heading};
+`;
+
+const ProductDescriptionContent = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+  @media (min-width: ${breakpoints.xl}) {
+    font-size: ${({ theme }) => theme.fontSizes.md};
+  }
+`;
+
+const ProductDimensions = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -61,7 +91,11 @@ const Dimensions = styled.div`
   }
 `;
 
-const DimensionsContent = styled.div`
+const ProductDimensionsHeading = styled.span`
+  font-family: ${({ theme }) => theme.fonts.heading};
+`;
+
+const ProductDimensionsContent = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 1rem;
@@ -86,7 +120,17 @@ const DimensionsContent = styled.div`
   }
 `;
 
-const Buttons = styled.div`
+const ProductDimensionHeader = styled.h3`
+  font-family: ${({ theme }) => theme.fonts.heading};
+  font-size: ${({ theme }) => theme.fontSizes.md};
+  font-weight: normal;
+`;
+
+const ProductDimensionContent = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+`;
+
+const Controls = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -98,21 +142,21 @@ const Buttons = styled.div`
   }
 `;
 
-const Quantity = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-`;
-
 export {
   Wrapper,
   Container,
   Image,
   Details,
-  Header,
-  Description,
-  Dimensions,
-  DimensionsContent,
-  Buttons,
-  Quantity,
+  ProductHeader,
+  ProductName,
+  ProductPrice,
+  ProductDescription,
+  ProductDescriptionHeading,
+  ProductDescriptionContent,
+  ProductDimensions,
+  ProductDimensionsHeading,
+  ProductDimensionsContent,
+  ProductDimensionHeader,
+  ProductDimensionContent,
+  Controls,
 };

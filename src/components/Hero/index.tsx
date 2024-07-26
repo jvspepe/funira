@@ -1,35 +1,29 @@
 import { Link } from "react-router-dom";
-import Button from "@/components/Button";
-import Typography from "@/components/Typography";
-import * as Styled from "./styles";
+import Button from "@/components/ui/Button";
+import * as S from "./styles";
 
 const Hero = () => {
   return (
-    <Styled.Wrapper>
-      <Styled.Container>
-        <Styled.Section>
-          <Styled.Content>
-            <Typography
-              component="h2"
-              fontFamily="heading"
-              fontSize={"2xl"}
-              fontWeight="normal"
-            >
+    <S.Wrapper>
+      <S.Container>
+        <S.Section>
+          <S.Content>
+            <S.ContentHeader>
               Artigos de luxo para pessoas que amam design atemporal de
               qualidade.
-            </Typography>
-            <Typography>
+            </S.ContentHeader>
+            <S.ContentBody>
               Com a nossa nova coleção, veja mais de 400 peças exclusivas, desde
               artigos para o lar até movéis.
-            </Typography>
-          </Styled.Content>
+            </S.ContentBody>
+          </S.Content>
           <Button component={Link} variant="secondary" to="/produtos">
             Ver coleção
           </Button>
-        </Styled.Section>
-        <Styled.Image src="/images/hero.jpg" alt="" aria-hidden />
-      </Styled.Container>
-    </Styled.Wrapper>
+        </S.Section>
+        <S.Image src="/images/hero.jpg" alt="" aria-hidden />
+      </S.Container>
+    </S.Wrapper>
   );
 };
 

@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
-import BaseButton from "../../components/Button";
-import BaseContainer from "../../components/Container";
+import BaseButton from "../../components/ui/Button";
+import BaseContainer from "../../components/ui/Container";
 import breakpoints from "../../styles/breakpoints";
 
 const Container = styled(BaseContainer)`

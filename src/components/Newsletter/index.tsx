@@ -1,7 +1,7 @@
 import { CheckCircle } from "@phosphor-icons/react";
-import Button from "@/components/Button";
-import TextInput from "@/components/TextInput";
-import Typography from "@/components/Typography";
+import Button from "@/components/ui/Button";
+import TextInput from "@/components/ui/TextInput";
+import Typography from "@/components/ui/Typography";
 import * as Styled from "./styles";
 
 const benefits = ["Ofertas Exclusivas", "Eventos", "Descontos"];

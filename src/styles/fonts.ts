@@ -4,8 +4,8 @@ export type Fonts = {
 };
 
 const fonts: Fonts = {
-  body: `"Montserrat Variable", sans-serif`,
-  heading: `"Space Grotesk Variable", sans-serif`,
+  body: `"Satoshi Variable", sans-serif`,
+  heading: `"Clash Display Variable", sans-serif`,
 };
 
 export default fonts;

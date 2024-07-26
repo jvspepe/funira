@@ -12,6 +12,17 @@ const Section = styled.section`
   }
 `;
 
+const SectionHeader = styled.h2`
+  font-family: ${({ theme }) => theme.fonts.heading};
+  font-size: ${({ theme }) => theme.fontSizes.xl};
+  font-weight: normal;
+  align-self: center;
+
+  @media (min-width: ${breakpoints.md}) {
+    font-size: ${({ theme }) => theme.fontSizes["2xl"]};
+  }
+`;
+
 const Display = styled.div`
   display: grid;
   gap: 1.5rem;
@@ -25,4 +36,4 @@ const Display = styled.div`
   }
 `;
 
-export { Section, Display };
+export { Section, SectionHeader, Display };

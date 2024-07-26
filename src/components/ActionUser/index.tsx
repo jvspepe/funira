@@ -5,9 +5,9 @@ import { useTheme } from "styled-components";
 import { UserCircle } from "@phosphor-icons/react";
 import { useAuth } from "@/contexts/AuthContext";
 import { auth } from "@/api/firebase/firebase-config";
-import IconButton from "@/components/IconButton";
-import Menu from "@/components/Menu";
-import * as S from "./styles";
+import IconButton from "@/components/ui/IconButton";
+import Menu from "@/components/ui/Menu";
+import Button from "../ui/Button";
 
 const ActionUser = () => {
   const [open, setOpen] = useState(false);
@@ -35,20 +35,30 @@ const ActionUser = () => {
         </IconButton>
       }
     >
-      <S.Wrapper>
-        {!userData ? (
-          <>
-            <S.Button component={Link} to="/conectar">
-              Conectar
-            </S.Button>
-            <S.Button component={Link} to="/criar-conta">
-              Criar conta
-            </S.Button>
-          </>
-        ) : (
-          <S.Button onClick={handleSignOut}>Sair</S.Button>
-        )}
-      </S.Wrapper>
+      {!userData ? (
+        <>
+          <Button
+            component={Link}
+            to="/conectar"
+            variant="secondary"
+            size="small"
+          >
+            Conectar
+          </Button>
+          <Button
+            component={Link}
+            to="/criar-conta"
+            variant="secondary"
+            size="small"
+          >
+            Criar conta
+          </Button>
+        </>
+      ) : (
+        <Button onClick={handleSignOut} variant="secondary" size="small">
+          Sair
+        </Button>
+      )}
     </Menu>
   );
 };

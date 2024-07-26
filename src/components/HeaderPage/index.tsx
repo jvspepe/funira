@@ -1,4 +1,4 @@
-import Typography from "@/components/Typography";
+import Typography from "@/components/ui/Typography";
 import Wrapper from "./styles";
 
 const ProductsHeader = () => {

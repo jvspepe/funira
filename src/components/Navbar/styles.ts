@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import Typography from "../Typography";
+import Typography from "../ui/Typography";
 import breakpoints from "@/styles/breakpoints";
 
 const NavList = styled.ul`
@@ -39,7 +39,11 @@ const Accordion = styled.div`
   border-top: 1px solid ${({ theme }) => theme.colors.border.primary};
 `;
 
-const AccordionButton = styled(NavLink)``;
+const AccordionButton = styled(NavLink)`
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+`;
 
 const AccordionContent = styled.ul`
   display: flex;
@@ -52,7 +56,6 @@ const AccordionContent = styled.ul`
 
   & > * {
     border-top: 1px solid ${({ theme }) => theme.colors.border.primary};
-    border-left: 1.5rem solid ${({ theme }) => theme.colors.border.secondary};
   }
 
   & li {

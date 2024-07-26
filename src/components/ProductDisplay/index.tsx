@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import { TProduct } from "@/@types/product";
-import Container from "@/components/Container";
+import Container from "@/components/ui/Container";
 import ProductCard from "@/components/ProductCard";
-import Typography from "@/components/Typography";
 import * as Styled from "./styles";
 
 type Props = {
@@ -15,15 +14,7 @@ const ProductDisplay = ({ title, products, link }: Props) => {
   return (
     <Container>
       <Styled.Section>
-        {title && (
-          <Typography
-            component="h3"
-            fontFamily="heading"
-            fontSize={{ _: "xl", md: "3xl" }}
-          >
-            {title}
-          </Typography>
-        )}
+        {title && <Styled.SectionHeader>{title}</Styled.SectionHeader>}
         <Styled.Display>
           {products.map((product) => (
             <ProductCard key={product.name} product={product} />

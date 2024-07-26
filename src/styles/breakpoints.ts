@@ -1,4 +1,4 @@
-type Breakpoints = Array<string> & {
+type Breakpoints = {
   sm?: string;
   md?: string;
   lg?: string;
@@ -6,18 +6,12 @@ type Breakpoints = Array<string> & {
   xxl?: string;
 };
 
-const breakpoints: Breakpoints = [
-  "641px",
-  "769px",
-  "1025px",
-  "1281px",
-  "1441px",
-];
-
-breakpoints.sm = breakpoints[0];
-breakpoints.md = breakpoints[1];
-breakpoints.lg = breakpoints[2];
-breakpoints.xl = breakpoints[3];
-breakpoints.xxl = breakpoints[4];
+const breakpoints: Breakpoints = {
+  sm: "641px",
+  md: "769px",
+  lg: "1025px",
+  xl: "1281px",
+  xxl: "1441px",
+};
 
 export default breakpoints;

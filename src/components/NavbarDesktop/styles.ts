@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
-import breakpoints from "../../styles/breakpoints";
-import Typography from "../Typography";
+import { Link as RouterLink } from "react-router-dom";
+import breakpoints from "@/styles/breakpoints";
 
 const Wrapper = styled.nav`
   @media (max-width: ${breakpoints.md}) {
@@ -11,30 +11,48 @@ const Wrapper = styled.nav`
 const List = styled.ul`
   display: flex;
   align-items: center;
-  gap: 2.25rem;
+  gap: 2rem;
   list-style: none;
+
+  li {
+    display: flex;
+  }
 `;
 
-const MenuToggle = styled(Typography)`
-  display: flex;
-  padding: 0 0.25rem;
+const Link = styled(RouterLink)`
+  font-family: ${({ theme }) => theme.fonts.heading};
+  color: ${({ theme }) => theme.colors.text.tertiary};
 
+  transition: color 200ms;
+  &:hover {
+    color: ${({ theme }) => theme.colors.text.primary};
+  }
+`;
+
+const MenuToggle = styled.button`
+  background-color: transparent;
+  border: none;
+
+  position: relative;
+
+  font-family: ${({ theme }) => theme.fonts.heading};
+  color: ${({ theme }) => theme.colors.text.tertiary};
+
+  display: flex;
   align-items: center;
   gap: 0.25rem;
-  position: relative;
+
   cursor: pointer;
-  background-color: transparent;
-  transition: background-color 300ms;
+  transition: color 200ms;
 
   &:hover,
   &:focus {
-    background-color: ${({ theme }) => theme.colors.border.primary};
+    color: ${({ theme }) => theme.colors.text.primary};
   }
 `;
 
 const MenuDropdown = styled.ul`
   display: grid;
-
   padding: 0.25rem;
 
   & li {
@@ -46,15 +64,16 @@ const MenuDropdown = styled.ul`
   }
 `;
 
-const MenuDropdownItem = styled(Typography)`
-  padding: 0.5rem;
+const MenuDropdownItem = styled(Link)`
   width: 100%;
 
-  transition: background-color 300ms;
+  padding: 0.5rem;
+
+  transition: background-color 200ms;
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.border.primary};
   }
 `;
 
-export { Wrapper, List, MenuToggle, MenuDropdown, MenuDropdownItem };
+export { Wrapper, List, Link, MenuToggle, MenuDropdown, MenuDropdownItem };
