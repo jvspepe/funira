@@ -3,8 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 import { useTheme } from 'styled-components';
 import { UserCircle } from '@phosphor-icons/react';
-import { useAuth } from '@/contexts/AuthContext';
 import { auth } from '@/lib/config';
+import useAuth from '@/contexts/auth/hooks';
 import Button from '@/components/ui/Button';
 import IconButton from '@/components/ui/IconButton';
 import Menu from '@/components/ui/Menu';
@@ -13,7 +13,7 @@ const ActionUser = () => {
   const [open, setOpen] = useState(false);
   const { colors } = useTheme();
   const navigate = useNavigate();
-  const { userData } = useAuth();
+  const { currentUserData } = useAuth();
 
   const handleSignOut = async () => {
     try {
@@ -38,7 +38,7 @@ const ActionUser = () => {
         </IconButton>
       }
     >
-      {!userData ? (
+      {!currentUserData ? (
         <>
           <Button
             component={Link}

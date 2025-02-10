@@ -1,34 +1,14 @@
-import {
-  ReactNode,
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
-import { User } from 'firebase/auth';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
+import { TAuthContext, AuthContext } from './context';
 import { TUser } from '@/@types/user';
-import { handleCurrentUser } from '@/lib/auth';
 import { getDocument } from '@/lib/database';
+import { handleCurrentUser } from '@/lib/auth';
 
-type TAuthContext = {
-  currentUser: User | null;
-  currentUserData: TUser | null;
+type Props = {
+  children: ReactNode;
 };
 
-const AuthContext = createContext<TAuthContext | null>(null);
-
-const useAuth = () => {
-  const authContextCheck = useContext(AuthContext);
-
-  if (!authContextCheck) {
-    throw new Error('Something went wrong');
-  }
-
-  return authContextCheck;
-};
-
-function AuthProvider({ children }: { children: ReactNode }) {
+const AuthProvider = ({ children }: Props) => {
   const [currentUser, setCurrentUser] =
     useState<TAuthContext['currentUser']>(null);
   const [currentUserData, setCurrentUserData] =
@@ -76,6 +56,6 @@ function AuthProvider({ children }: { children: ReactNode }) {
       {!loading && children}
     </AuthContext.Provider>
   );
-}
+};
 
-export { AuthProvider, useAuth };
+export default AuthProvider;
