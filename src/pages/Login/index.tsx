@@ -1,42 +1,56 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/api/firebase/firebase-config";
-import getAuthError from "@/api/firebase/authentication/auth-errors";
-import Box from "@/components/ui/Box";
-import Button from "@/components/ui/Button";
-import Spinner from "@/components/ui/Spinner";
-import TextInput from "@/components/ui/TextInput";
-import Typography from "@/components/ui/Typography";
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { z } from 'zod';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { handleAuthError, loginUser } from '@/lib/auth';
+import Box from '@/components/ui/Box';
+import Button from '@/components/ui/Button';
+import Spinner from '@/components/ui/Spinner';
+import TextInput from '@/components/ui/TextInput';
+import Typography from '@/components/ui/Typography';
 
-type LoginValues = {
-  email: string;
-  password: string;
+const formSchema = z.object({
+  email: z.string().email(),
+  password: z.string(),
+});
+
+type FormSchema = z.infer<typeof formSchema>;
+
+const defaultValues: FormSchema = {
+  email: '',
+  password: '',
 };
 
 const Login = () => {
+  const [error, setError] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const navigate = useNavigate();
+
   const {
     register,
     reset,
     formState: { errors },
     handleSubmit,
-  } = useForm<LoginValues>();
+  } = useForm<FormSchema>({
+    resolver: zodResolver(formSchema),
+    defaultValues,
+  });
 
-  const navigate = useNavigate();
+  const onSubmit: SubmitHandler<FormSchema> = async ({ email, password }) => {
+    setLoading(true);
 
-  const [authError, setAuthError] = useState<string>("");
-  const [authLoading, setAuthLoading] = useState<boolean>(false);
-
-  const onSubmit: SubmitHandler<LoginValues> = async (data) => {
-    setAuthLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, data.email, data.password);
-      navigate("/");
+      await loginUser(email, password);
+
+      navigate('/');
     } catch (error) {
-      setAuthError(getAuthError(error));
+      setError(handleAuthError(error));
     }
-    setAuthLoading(false);
+
+    setLoading(false);
+
     reset();
   };
 
@@ -60,13 +74,13 @@ const Login = () => {
         p="1rem"
         gridGap="1rem"
         marginX="auto"
-        width={["20rem", "30rem"]}
+        width={['20rem', '30rem']}
         backgroundColor="background.primary"
       >
-        {authError && <Typography textAlign="center">{authError}</Typography>}
+        {error && <Typography textAlign="center">{error}</Typography>}
         <TextInput
-          {...register("email", {
-            required: { value: true, message: "E-mail obrigatório" },
+          {...register('email', {
+            required: { value: true, message: 'E-mail obrigatório' },
           })}
           error={!!errors.email}
           helperText={errors.email && errors.email.message}
@@ -77,8 +91,8 @@ const Login = () => {
           label="E-mail"
         />
         <TextInput
-          {...register("password", {
-            required: { value: true, message: "Senha obrigatória" },
+          {...register('password', {
+            required: { value: true, message: 'Senha obrigatória' },
           })}
           error={!!errors.email}
           helperText={errors.email && errors.email.message}
@@ -88,10 +102,13 @@ const Login = () => {
           placeholder="Senha123"
           label="Senha"
         />
-        <Button type="submit">{authLoading ? <Spinner /> : "Conectar"}</Button>
+        <Button type="submit">{loading ? <Spinner /> : 'Conectar'}</Button>
         <Typography component="span">
-          Não possui uma conta?{" "}
-          <Typography component={Link} to="/criar-conta">
+          Não possui uma conta?{' '}
+          <Typography
+            component={Link}
+            to="/criar-conta"
+          >
             Criar
           </Typography>
         </Typography>

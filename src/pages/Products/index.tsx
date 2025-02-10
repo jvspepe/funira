@@ -1,28 +1,28 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import {
   QueryDocumentSnapshot,
   limit,
   orderBy,
   startAfter,
-} from "firebase/firestore";
-import { TProduct } from "@/@types/product";
-import { firestore } from "@/api/firebase/firebase-config";
-import { getProducts } from "@/api/firebase/firestore/products";
-import Button from "@/components/ui/Button";
-import ProductsFilter from "@/components/ProductsFilter";
-import ProductsHeader from "@/components/HeaderPage";
-import ProductSection from "@/components/ProductDisplay";
-import useGetCategories from "@/hooks/useGetCategories";
-import Container from "./styles";
+} from 'firebase/firestore';
+import { TProduct } from '@/@types/product';
+import { firestore } from '@/lib/config';
+import { getProducts } from '@/lib/firebase/firestore/products';
+import Button from '@/components/ui/Button';
+import ProductsFilter from '@/components/ProductsFilter';
+import ProductsHeader from '@/components/HeaderPage';
+import ProductSection from '@/components/ProductDisplay';
+import useGetCategories from '@/hooks/useGetCategories';
+import Container from './styles';
 
 const sortOptions = {
-  highestPrice: "maior-preço",
-  lowestPrice: "menor-preço",
-  newest: "novo",
-  bestSellers: "mais-vendido",
-  highestRating: "melhor-avaliado",
+  highestPrice: 'maior-preço',
+  lowestPrice: 'menor-preço',
+  newest: 'novo',
+  bestSellers: 'mais-vendido',
+  highestRating: 'melhor-avaliado',
 };
 
 const Products = () => {
@@ -31,7 +31,7 @@ const Products = () => {
   const categories = useGetCategories();
 
   function sortProducts() {
-    const sortParam = searchParams.get("ordem");
+    const sortParam = searchParams.get('ordem');
     switch (sortParam) {
       case sortOptions.newest:
         return products.sort(
@@ -52,7 +52,7 @@ const Products = () => {
   }
 
   const filteredProducts = sortProducts().filter((product) => {
-    const typeParams = searchParams.getAll("tipo");
+    const typeParams = searchParams.getAll('tipo');
     if (!typeParams || typeParams.length === 0) return true;
     return typeParams.includes(product.category);
   });
@@ -67,7 +67,7 @@ const Products = () => {
   async function getAllProducts() {
     try {
       const { databaseProducts, lastDocument } = await getProducts(firestore, [
-        orderBy("name", "asc"),
+        orderBy('name', 'asc'),
         limit(pageSize),
       ]);
 
@@ -83,7 +83,7 @@ const Products = () => {
     try {
       const { databaseProducts, lastDocument, isLastDocument } =
         await getProducts(firestore, [
-          orderBy("name", "asc"),
+          orderBy('name', 'asc'),
           limit(pageSize),
           startAfter(startAfterDoc),
         ]);
@@ -113,9 +113,9 @@ const Products = () => {
           <Button
             onClick={loadMoreProducts}
             variant="secondary"
-            style={{ marginInline: "auto" }}
+            style={{ marginInline: 'auto' }}
           >
-            {loadingMoreProducts ? "Loading" : "Ver mais"}
+            {loadingMoreProducts ? 'Loading' : 'Ver mais'}
           </Button>
         )}
       </Container>

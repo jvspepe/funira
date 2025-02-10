@@ -1,15 +1,15 @@
-import { Timestamp } from "firebase/firestore";
+import { Timestamp } from 'firebase/firestore';
 
 export type TUser = {
-  uid: string;
-  displayName: string;
+  id: string;
+  username: string;
   email: string;
-  role: "cliente" | "admin";
+  role: 'customer' | 'admin';
   createdAt: Timestamp;
 };
 
 export type TUserCredentials = {
-  displayName: string;
+  username: string;
   email: string;
   password: string;
 };

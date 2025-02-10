@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { firestore } from "@/api/firebase/firebase-config";
-import { getProduct } from "@/api/firebase/firestore/products";
-import { TProduct } from "@/@types/product";
-import CallToAction from "@/components/Contact";
-import Features from "@/components/Features";
-import ProductListing from "@/components/ProductListing";
+import { useCallback, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { firestore } from '@/lib/config';
+import { getProduct } from '@/lib/firebase/firestore/products';
+import { TProduct } from '@/@types/product';
+import CallToAction from '@/components/Contact';
+import Features from '@/components/Features';
+import ProductListing from '@/components/ProductListing';
 
 const SingleProduct = () => {
   const { productId } = useParams();

@@ -5,11 +5,11 @@ import {
   useEffect,
   useMemo,
   useState,
-} from "react";
-import { User, onAuthStateChanged } from "firebase/auth";
-import { TUser } from "@/@types/user";
-import { getUser } from "@/api/firebase/firestore/users";
-import { auth } from "@/api/firebase/firebase-config";
+} from 'react';
+import { User } from 'firebase/auth';
+import { TUser } from '@/@types/user';
+import { getUser } from '@/lib/firebase/firestore/users';
+import { handleCurrentUser } from '@/lib/auth';
 
 type TAuthContext = {
   currentUser: User | null;
@@ -22,7 +22,7 @@ const useAuth = () => {
   const authContextCheck = useContext(AuthContext);
 
   if (!authContextCheck) {
-    throw new Error("Something went wrong");
+    throw new Error('Something went wrong');
   }
 
   return authContextCheck;
@@ -30,8 +30,8 @@ const useAuth = () => {
 
 function AuthProvider({ children }: { children: ReactNode }) {
   const [currentUser, setCurrentUser] =
-    useState<TAuthContext["currentUser"]>(null);
-  const [userData, setUserData] = useState<TAuthContext["userData"]>(null);
+    useState<TAuthContext['currentUser']>(null);
+  const [userData, setUserData] = useState<TAuthContext['userData']>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   const value = useMemo(
@@ -52,14 +52,12 @@ function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = handleCurrentUser((user) => {
       setCurrentUser(user);
       setLoading(false);
     });
 
-    return () => {
-      unsubscribe();
-    };
+    return () => unsubscribe();
   }, []);
 
   useEffect(() => {

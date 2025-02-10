@@ -1,13 +1,13 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { signOut } from "firebase/auth";
-import { useTheme } from "styled-components";
-import { UserCircle } from "@phosphor-icons/react";
-import { useAuth } from "@/contexts/AuthContext";
-import { auth } from "@/api/firebase/firebase-config";
-import Button from "@/components/ui/Button";
-import IconButton from "@/components/ui/IconButton";
-import Menu from "@/components/ui/Menu";
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { signOut } from 'firebase/auth';
+import { useTheme } from 'styled-components';
+import { UserCircle } from '@phosphor-icons/react';
+import { useAuth } from '@/contexts/AuthContext';
+import { auth } from '@/lib/config';
+import Button from '@/components/ui/Button';
+import IconButton from '@/components/ui/IconButton';
+import Menu from '@/components/ui/Menu';
 
 const ActionUser = () => {
   const [open, setOpen] = useState(false);
@@ -18,7 +18,7 @@ const ActionUser = () => {
   const handleSignOut = async () => {
     try {
       await signOut(auth);
-      navigate("/");
+      navigate('/');
     } catch (error) {
       throw new Error(String(error));
     }
@@ -31,7 +31,10 @@ const ActionUser = () => {
       position="right"
       toggle={
         <IconButton onClick={() => setOpen(!open)}>
-          <UserCircle color={colors.text.primary} size={24} />
+          <UserCircle
+            color={colors.text.primary}
+            size={24}
+          />
         </IconButton>
       }
     >
@@ -55,7 +58,11 @@ const ActionUser = () => {
           </Button>
         </>
       ) : (
-        <Button onClick={handleSignOut} variant="secondary" size="small">
+        <Button
+          onClick={handleSignOut}
+          variant="secondary"
+          size="small"
+        >
           Sair
         </Button>
       )}
