@@ -8,6 +8,8 @@ import Contact from '@/components/Contact';
 import Newsletter from '@/components/Newsletter';
 import ProductDisplay from '@/components/ProductDisplay';
 
+const QUERY_LIMIT = 4;
+
 const Home = () => {
   const [newProducts, setNewProducts] = useState<TProduct[]>([]);
   const [ratedProducts, setRatedProducts] = useState<TProduct[]>([]);
@@ -18,9 +20,13 @@ const Home = () => {
         getDocuments<TProduct>(
           'products',
           orderBy('createdAt', 'desc'),
-          limit(4)
+          limit(QUERY_LIMIT)
         ),
-        getDocuments<TProduct>('products', orderBy('sales', 'desc'), limit(4)),
+        getDocuments<TProduct>(
+          'products',
+          orderBy('sales', 'desc'),
+          limit(QUERY_LIMIT)
+        ),
       ]);
 
       if (newProducts.data) setNewProducts(newProducts.data.documents);

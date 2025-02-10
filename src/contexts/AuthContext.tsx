@@ -8,12 +8,12 @@ import {
 } from 'react';
 import { User } from 'firebase/auth';
 import { TUser } from '@/@types/user';
-import { getUser } from '@/lib/firebase/firestore/users';
 import { handleCurrentUser } from '@/lib/auth';
+import { getDocument } from '@/lib/database';
 
 type TAuthContext = {
   currentUser: User | null;
-  userData: TUser | null;
+  currentUserData: TUser | null;
 };
 
 const AuthContext = createContext<TAuthContext | null>(null);
@@ -31,21 +31,22 @@ const useAuth = () => {
 function AuthProvider({ children }: { children: ReactNode }) {
   const [currentUser, setCurrentUser] =
     useState<TAuthContext['currentUser']>(null);
-  const [userData, setUserData] = useState<TAuthContext['userData']>(null);
+  const [currentUserData, setCurrentUserData] =
+    useState<TAuthContext['currentUserData']>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   const value = useMemo(
     () => ({
       currentUser,
-      userData,
+      currentUserData,
     }),
-    [currentUser, userData]
+    [currentUser, currentUserData]
   );
 
-  async function getUserData(userUID: string) {
+  async function handleCurrentUserData(userId: string) {
     try {
-      const data = await getUser(userUID);
-      setUserData(data);
+      const { data } = await getDocument<TUser>('users', userId);
+      if (data) setCurrentUserData(data);
     } catch (error) {
       throw new Error(String(error));
     }
@@ -62,11 +63,11 @@ function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (currentUser) {
-      getUserData(currentUser.uid).catch((error) => {
+      handleCurrentUserData(currentUser.uid).catch((error) => {
         throw new Error(String(error));
       });
     } else {
-      setUserData(null);
+      setCurrentUserData(null);
     }
   }, [currentUser]);
 

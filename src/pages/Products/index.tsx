@@ -8,16 +8,17 @@ import {
   startAfter,
 } from 'firebase/firestore';
 import { TProduct } from '@/@types/product';
-import { firestore } from '@/lib/config';
-import { getProducts } from '@/lib/firebase/firestore/products';
+import { getDocuments } from '@/lib/database';
+import useGetCategories from '@/hooks/useGetCategories';
 import Button from '@/components/ui/Button';
 import ProductsFilter from '@/components/ProductsFilter';
 import ProductsHeader from '@/components/HeaderPage';
 import ProductSection from '@/components/ProductDisplay';
-import useGetCategories from '@/hooks/useGetCategories';
 import Container from './styles';
 
-const sortOptions = {
+const PAGE_SIZE = 8;
+
+const SORT_OPTIONS = {
   highestPrice: 'maior-preço',
   lowestPrice: 'menor-preço',
   newest: 'novo',
@@ -27,24 +28,29 @@ const sortOptions = {
 
 const Products = () => {
   const [products, setProducts] = useState<TProduct[]>([]);
+  const [startAfterDoc, setStartAfterDoc] =
+    useState<QueryDocumentSnapshot<TProduct>>();
+  const [isLastDoc, setIsLastDoc] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const { categories } = useGetCategories();
+
   const [searchParams] = useSearchParams();
-  const categories = useGetCategories();
 
   function sortProducts() {
     const sortParam = searchParams.get('ordem');
     switch (sortParam) {
-      case sortOptions.newest:
+      case SORT_OPTIONS.newest:
         return products.sort(
           (a, b) =>
             b.createdAt.toDate().valueOf() - a.createdAt.toDate().valueOf()
         );
-      case sortOptions.lowestPrice:
+      case SORT_OPTIONS.lowestPrice:
         return products.sort((a, b) => a.price - b.price);
-      case sortOptions.highestPrice:
+      case SORT_OPTIONS.highestPrice:
         return products.sort((a, b) => b.price - a.price);
-      case sortOptions.highestRating:
+      case SORT_OPTIONS.highestRating:
         return products.sort((a, b) => b.rating - a.rating);
-      case sortOptions.bestSellers:
+      case SORT_OPTIONS.bestSellers:
         return products.sort((a, b) => b.sales - a.sales);
       default:
         return products.sort((a, b) => a.name.localeCompare(b.name));
@@ -57,48 +63,46 @@ const Products = () => {
     return typeParams.includes(product.category);
   });
 
-  const [startAfterDoc, setStartAfterDoc] =
-    useState<QueryDocumentSnapshot<TProduct>>();
-  const [isLastDoc, setIsLastDoc] = useState(false);
-  const [loadingMoreProducts, setLoadingMoreProducts] =
-    useState<boolean>(false);
-  const pageSize = 8;
-
-  async function getAllProducts() {
+  async function handleGetProducts() {
     try {
-      const { databaseProducts, lastDocument } = await getProducts(firestore, [
+      const { data } = await getDocuments<TProduct>(
+        'products',
         orderBy('name', 'asc'),
-        limit(pageSize),
-      ]);
+        limit(PAGE_SIZE)
+      );
 
-      setProducts(databaseProducts);
-      setStartAfterDoc(lastDocument);
+      if (data) {
+        setProducts(data.documents);
+        setStartAfterDoc(data.lastDocument);
+      }
     } catch (error) {
       throw new Error(String(error));
     }
   }
 
-  async function loadMoreProducts() {
-    setLoadingMoreProducts(true);
+  async function handleLoadProducts() {
+    setLoading(true);
     try {
-      const { databaseProducts, lastDocument, isLastDocument } =
-        await getProducts(firestore, [
-          orderBy('name', 'asc'),
-          limit(pageSize),
-          startAfter(startAfterDoc),
-        ]);
+      const { data } = await getDocuments<TProduct>(
+        'products',
+        orderBy('name', 'asc'),
+        limit(PAGE_SIZE),
+        startAfter(startAfterDoc)
+      );
 
-      setProducts((previous) => [...previous, ...databaseProducts]);
-      setStartAfterDoc(lastDocument);
-      setIsLastDoc(isLastDocument);
+      if (data) {
+        setProducts((previous) => [...previous, ...data.documents]);
+        setStartAfterDoc(data.lastDocument);
+        setIsLastDoc(data.isLastDocument);
+      }
     } catch (error) {
       throw new Error(String(error));
     }
-    setLoadingMoreProducts(false);
+    setLoading(false);
   }
 
   useEffect(() => {
-    getAllProducts().catch((error) => {
+    handleGetProducts().catch((error) => {
       throw new Error(String(error));
     });
   }, []);
@@ -111,11 +115,11 @@ const Products = () => {
         <ProductSection products={filteredProducts} />
         {!isLastDoc && (
           <Button
-            onClick={loadMoreProducts}
+            onClick={handleLoadProducts}
             variant="secondary"
             style={{ marginInline: 'auto' }}
           >
-            {loadingMoreProducts ? 'Loading' : 'Ver mais'}
+            {loading ? 'Loading' : 'Ver mais'}
           </Button>
         )}
       </Container>

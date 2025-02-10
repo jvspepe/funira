@@ -14,6 +14,8 @@ import {
 import { firestore } from '../config';
 import { FirebaseError } from 'firebase/app';
 
+type Collection = 'users' | 'products' | 'categories';
+
 type ReturnData<T> = {
   status: 'success' | 'error' | 'not-found';
   message: string;
@@ -32,7 +34,7 @@ const converter = <T>(): FirestoreDataConverter<T> => {
 };
 
 export const createDocument = async <T extends WithFieldValue<DocumentData>>(
-  collection: string,
+  collection: Collection,
   path: string,
   data: T
 ): Promise<ReturnData<T>> => {
@@ -62,7 +64,7 @@ export const createDocument = async <T extends WithFieldValue<DocumentData>>(
 };
 
 export const getDocument = async <T extends WithFieldValue<DocumentData>>(
-  collection: string,
+  collection: Collection,
   path: string
 ): Promise<ReturnData<T>> => {
   try {
@@ -98,7 +100,7 @@ export const getDocument = async <T extends WithFieldValue<DocumentData>>(
 };
 
 export const getDocuments = async <T>(
-  collection: string,
+  collection: Collection,
   ...constraints: QueryNonFilterConstraint[]
 ): Promise<
   ReturnData<{

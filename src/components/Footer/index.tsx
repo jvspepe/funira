@@ -1,23 +1,23 @@
-import { FormEvent } from "react";
-import { useTheme } from "styled-components";
-import useGetCategories from "@/hooks/useGetCategories";
-import Button from "@/components/ui/Button";
-import Container from "@/components/ui/Container";
-import Copyright from "@/components/Copyright";
-import TextInput from "@/components/ui/TextInput";
-import * as S from "./styles";
+import { FormEvent } from 'react';
+import { useTheme } from 'styled-components';
+import useGetCategories from '@/hooks/useGetCategories';
+import Button from '@/components/ui/Button';
+import Container from '@/components/ui/Container';
+import Copyright from '@/components/Copyright';
+import TextInput from '@/components/ui/TextInput';
+import * as S from './styles';
 
 const productRoutes = [
-  { label: "Maior Preço", value: "maior-preço" },
-  { label: "Menor Preço", value: "menor-preço" },
-  { label: "Novos", value: "novo" },
-  { label: "Mais Vendidos", value: "mais-vendidos" },
-  { label: "Melhor Avaliados", value: "melhor-avaliados" },
+  { label: 'Maior Preço', value: 'maior-preço' },
+  { label: 'Menor Preço', value: 'menor-preço' },
+  { label: 'Novos', value: 'novo' },
+  { label: 'Mais Vendidos', value: 'mais-vendidos' },
+  { label: 'Melhor Avaliados', value: 'melhor-avaliados' },
 ];
-const companyRoutes = ["Sobre", "Contato", "Carreiras"];
+const companyRoutes = ['Sobre', 'Contato', 'Carreiras'];
 
 const Footer = () => {
-  const categories = useGetCategories();
+  const { categories } = useGetCategories();
   const { colors } = useTheme();
 
   return (
@@ -25,7 +25,7 @@ const Footer = () => {
       <Container>
         <S.Footer>
           <S.FooterContainer>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "3rem" }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '3rem' }}>
               <S.FooterList>
                 <S.FooterListHeading>Categories</S.FooterListHeading>
                 {categories.map((item) => (
@@ -51,7 +51,10 @@ const Footer = () => {
               <S.FooterList>
                 <S.FooterListHeading>Nossa Empresa</S.FooterListHeading>
                 {companyRoutes.map((route) => (
-                  <S.FooterListContent key={route} to="/">
+                  <S.FooterListContent
+                    key={route}
+                    to="/"
+                  >
                     {route}
                   </S.FooterListContent>
                 ))}
@@ -65,7 +68,10 @@ const Footer = () => {
                 label="Inscreva-se na nossa lista de e-mails"
                 variant="secondary"
                 inputIcon={
-                  <Button variant="secondary" type="submit">
+                  <Button
+                    variant="secondary"
+                    type="submit"
+                  >
                     Confirmar
                   </Button>
                 }

@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { firestore } from '@/lib/config';
-import { getProduct } from '@/lib/firebase/firestore/products';
+import { getDocument } from '@/lib/database';
 import { TProduct } from '@/@types/product';
 import CallToAction from '@/components/Contact';
 import Features from '@/components/Features';
@@ -12,21 +11,22 @@ const SingleProduct = () => {
 
   const [product, setProduct] = useState<TProduct | null>(null);
 
-  const getSingleProduct = useCallback(async () => {
+  const handleGetProduct = useCallback(async () => {
     if (!productId) return;
     try {
-      const databaseProduct = await getProduct(firestore, productId);
-      setProduct(databaseProduct);
+      const { data } = await getDocument<TProduct>('products', productId);
+
+      if (data) setProduct(data);
     } catch (error) {
       throw new Error(String(error));
     }
   }, [productId]);
 
   useEffect(() => {
-    getSingleProduct().catch((error) => {
+    handleGetProduct().catch((error) => {
       throw new Error(String(error));
     });
-  }, [getSingleProduct]);
+  }, [handleGetProduct]);
   return product ? (
     <>
       <ProductListing product={product} />

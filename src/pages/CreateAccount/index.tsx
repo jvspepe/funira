@@ -25,6 +25,7 @@ const defaultValues: FormSchema = {
   password: '',
   confirmPassword: '',
 };
+
 const CreateAccount = () => {
   const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
