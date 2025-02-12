@@ -10,17 +10,29 @@ import Spinner from '@/components/ui/Spinner';
 import TextInput from '@/components/ui/TextInput';
 import Typography from '@/components/ui/Typography';
 
-const formSchema = z.object({
-  username: z.string(),
-  email: z.string().email(),
-  password: z.string(),
-  confirmPassword: z.string(),
-});
+const formSchema = z
+  .object({
+    firstName: z.string(),
+    lastName: z.string(),
+    email: z.string().email(),
+    password: z.string(),
+    confirmPassword: z.string(),
+  })
+  .superRefine(({ password, confirmPassword }, ctx) => {
+    if (password !== confirmPassword) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'The passwords did not match',
+        path: ['confirmPassword'],
+      });
+    }
+  });
 
 type FormSchema = z.infer<typeof formSchema>;
 
 const defaultValues: FormSchema = {
-  username: '',
+  firstName: '',
+  lastName: '',
   email: '',
   password: '',
   confirmPassword: '',
@@ -40,14 +52,15 @@ const CreateAccount = () => {
   } = useForm<FormSchema>({ resolver: zodResolver(formSchema), defaultValues });
 
   const onSubmit: SubmitHandler<FormSchema> = async ({
-    username,
+    firstName,
+    lastName,
     email,
     password,
   }) => {
     setLoading(true);
 
     try {
-      await createUser(username, email, password);
+      await createUser(`${firstName} ${lastName}`, email, password);
 
       navigate('/');
     } catch (error) {
@@ -83,18 +96,35 @@ const CreateAccount = () => {
         backgroundColor="background.primary"
       >
         {error && <Typography textAlign="center">{error}</Typography>}
-        <TextInput
-          {...register('username', {
-            required: { value: true, message: 'Nome de Usuário obrigatório' },
-          })}
-          error={!!errors.username}
-          helperText={errors.username && errors.username.message}
-          type="text"
-          id="username"
-          name="username"
-          placeholder="Nome de Usuário"
-          label="Nome de Usuário"
-        />
+        <Box
+          display="flex"
+          gridGap="1rem"
+        >
+          <TextInput
+            {...register('firstName', {
+              required: { value: true, message: 'Nome obrigatório' },
+            })}
+            error={!!errors.firstName}
+            helperText={errors.firstName && errors.firstName.message}
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Nome"
+            label="Nome"
+          />
+          <TextInput
+            {...register('lastName', {
+              required: { value: true, message: 'Sobrenome obrigatório' },
+            })}
+            error={!!errors.firstName}
+            helperText={errors.firstName && errors.firstName.message}
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Sobrenome"
+            label="Sobrenome"
+          />
+        </Box>
         <TextInput
           {...register('email')}
           error={!!errors.email}
