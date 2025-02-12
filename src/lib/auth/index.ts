@@ -1,8 +1,11 @@
 /* eslint-disable no-useless-catch */
 import {
   AuthErrorCodes,
+  browserLocalPersistence,
+  browserSessionPersistence,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
+  setPersistence,
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
@@ -52,12 +55,26 @@ export const handleCurrentUser = (callback: (user: User | null) => void) => {
   return unsubscribe;
 };
 
+const handleUserPersistence = async (persistUser: boolean) => {
+  try {
+    await setPersistence(
+      auth,
+      persistUser ? browserLocalPersistence : browserSessionPersistence
+    );
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const createUser = async (
   username: string,
   email: string,
-  password: string
+  password: string,
+  persistUser: boolean = false
 ) => {
   try {
+    await handleUserPersistence(persistUser);
+
     const { user } = await createUserWithEmailAndPassword(
       auth,
       email,
@@ -81,8 +98,14 @@ export const createUser = async (
   }
 };
 
-export const loginUser = async (email: string, password: string) => {
+export const loginUser = async (
+  email: string,
+  password: string,
+  persistUser: boolean = false
+) => {
   try {
+    await handleUserPersistence(persistUser);
+
     await signInWithEmailAndPassword(auth, email, password);
   } catch (error) {
     throw error;

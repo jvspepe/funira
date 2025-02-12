@@ -1,10 +1,10 @@
-import { createGlobalStyle } from "styled-components";
-import ClashDisplayVariableWoff2 from "/fonts/clash-display/ClashDisplay-Variable.woff2";
-import ClashDisplayVariableWoff from "/fonts/clash-display/ClashDisplay-Variable.woff2";
-import SatoshiVariableWoff2 from "/fonts/satoshi/Satoshi-Variable.woff2";
-import SatoshiVariableWoff from "/fonts/satoshi/Satoshi-Variable.woff";
-import SatoshiVariableItalicWoff2 from "/fonts/satoshi/Satoshi-VariableItalic.woff2";
-import SatoshiVariableItalicWoff from "/fonts/satoshi/Satoshi-VariableItalic.woff";
+import { createGlobalStyle } from 'styled-components';
+import ClashDisplayVariableWoff2 from '/fonts/clash-display/ClashDisplay-Variable.woff2';
+import ClashDisplayVariableWoff from '/fonts/clash-display/ClashDisplay-Variable.woff2';
+import SatoshiVariableWoff2 from '/fonts/satoshi/Satoshi-Variable.woff2';
+import SatoshiVariableWoff from '/fonts/satoshi/Satoshi-Variable.woff';
+import SatoshiVariableItalicWoff2 from '/fonts/satoshi/Satoshi-VariableItalic.woff2';
+import SatoshiVariableItalicWoff from '/fonts/satoshi/Satoshi-VariableItalic.woff';
 
 const GlobalStyles = createGlobalStyle`
   @font-face {
@@ -69,6 +69,11 @@ const GlobalStyles = createGlobalStyle`
 
   #root {
     isolation: isolate;
-}`;
+  }
+
+  .firebase-emulator-warning {
+    display: none;
+  }
+`;
 
 export default GlobalStyles;

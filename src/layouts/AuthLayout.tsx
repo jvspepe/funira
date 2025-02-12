@@ -1,12 +1,15 @@
-import { Outlet } from "react-router-dom";
-import Header from "@/components/Header";
+import { Box } from '@chakra-ui/react';
+import { Outlet } from 'react-router-dom';
 
 const AuthLayout = () => {
   return (
-    <>
-      <Header />
+    <Box
+      display="grid"
+      gridTemplateColumns={{ base: '', lg: 'repeat(2, 1fr)' }}
+      height="100dvh"
+    >
       <Outlet />
-    </>
+    </Box>
   );
 };
 
