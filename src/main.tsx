@@ -1,20 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { ChakraProvider } from '@chakra-ui/react';
 import '@fontsource-variable/montserrat';
 import '@fontsource-variable/space-grotesk';
-import App from './App.tsx';
-import MainLayout from './layouts/MainLayout.tsx';
-import Home from './pages/Home/index.tsx';
-import Products from './pages/Products/index.tsx';
-import SingleProduct from './pages/SingleProduct.tsx';
-import About from './pages/About/index.tsx';
-import Cart from './pages/Cart/index.tsx';
-import AuthLayout from './layouts/AuthLayout.tsx';
-import Login from './pages/Login/index.tsx';
-import CreateAccount from './pages/CreateAccount/index.tsx';
-import { Provider } from 'react-redux';
 import { store } from './store/store.ts';
+import App from '@/App.tsx';
+import AuthLayout from '@/layouts/AuthLayout.tsx';
+import MainLayout from '@/layouts/MainLayout.tsx';
+import Home from '@/pages/Home';
+import Products from '@/pages/Products';
+import SingleProduct from '@/pages/SingleProduct';
+import About from '@/pages/About';
+import Cart from '@/pages/Cart';
+import Login from '@/pages/Login';
+import CreateAccount from '@/pages/CreateAccount';
+import AuthProvider from './contexts/auth/index.tsx';
+import theme from './styles/themes/index.ts';
 
 const browserRouter = createBrowserRouter([
   {
@@ -43,8 +46,12 @@ const browserRouter = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <Provider store={store}>
-      <RouterProvider router={browserRouter} />
-    </Provider>
+    <AuthProvider>
+      <Provider store={store}>
+        <ChakraProvider theme={theme}>
+          <RouterProvider router={browserRouter} />
+        </ChakraProvider>
+      </Provider>
+    </AuthProvider>
   </React.StrictMode>
 );
