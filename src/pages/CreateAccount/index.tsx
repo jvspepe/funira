@@ -86,7 +86,11 @@ const CreateAccount = () => {
   };
 
   return (
-    <>
+    <Box
+      flexGrow={1}
+      display="grid"
+      gridTemplateColumns={{ base: '', lg: 'repeat(2, 1fr)' }}
+    >
       <Box
         display="flex"
         alignItems="center"
@@ -100,14 +104,12 @@ const CreateAccount = () => {
           flexDirection="column"
           flexGrow="1"
           maxW="36rem"
-          padding={{ base: '1.25rem', lg: '0' }}
+          padding={{ base: '1.25rem', xl: '0' }}
           gap="1.25rem"
         >
           <Button
             as={RouterLink}
             to="/"
-            position={{ md: 'absolute' }}
-            bottom={{ md: 'calc(100% + 1.25rem)' }}
             display="flex"
             alignItems="center"
             gap="0.5rem"
@@ -369,7 +371,7 @@ const CreateAccount = () => {
         backgroundImage="url(/images/auth-bg.jpg)"
         bgSize="cover"
       ></Box>
-    </>
+    </Box>
   );
 };
 

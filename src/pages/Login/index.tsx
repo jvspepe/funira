@@ -63,7 +63,11 @@ const Login = () => {
   };
 
   return (
-    <>
+    <Box
+      flexGrow={1}
+      display="grid"
+      gridTemplateColumns={{ base: '', lg: 'repeat(2, 1fr)' }}
+    >
       <Box
         display={{ base: 'none', lg: 'block' }}
         backgroundImage="url(/images/auth-bg.jpg)"
@@ -82,14 +86,12 @@ const Login = () => {
           flexDirection="column"
           flexGrow="1"
           maxW="36rem"
-          padding={{ base: '1.25rem', lg: '0' }}
+          padding={{ base: '1.25rem', xl: '0' }}
           gap="1.25rem"
         >
           <Button
             as={RouterLink}
             to="/"
-            position={{ md: 'absolute' }}
-            bottom={{ md: 'calc(100% + 1.25rem)' }}
             display="flex"
             alignItems="center"
             gap="0.5rem"
@@ -104,7 +106,7 @@ const Login = () => {
             flexDirection="column"
             gap="0.5rem"
           >
-            <Heading size="lg">Conecte em sua conta</Heading>
+            <Heading size="md">Conecte em sua conta</Heading>
             <Box
               display="flex"
               alignItems="center"
@@ -284,7 +286,7 @@ const Login = () => {
           </Box>
         </Box>
       </Box>
-    </>
+    </Box>
   );
 };
 

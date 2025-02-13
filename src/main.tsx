@@ -7,8 +7,6 @@ import '@fontsource-variable/montserrat';
 import '@fontsource-variable/space-grotesk';
 import { store } from './store/store.ts';
 import App from '@/App.tsx';
-import AuthLayout from '@/layouts/AuthLayout.tsx';
-import MainLayout from '@/layouts/MainLayout.tsx';
 import Home from '@/pages/Home';
 import Products from '@/pages/Products';
 import SingleProduct from '@/pages/SingleProduct';
@@ -18,13 +16,14 @@ import Login from '@/pages/Login';
 import CreateAccount from '@/pages/CreateAccount';
 import AuthProvider from './contexts/auth/index.tsx';
 import theme from './styles/themes/index.ts';
+import Layout from '@/layouts';
 
 const browserRouter = createBrowserRouter([
   {
     element: <App />,
     children: [
       {
-        element: <MainLayout />,
+        element: <Layout />,
         children: [
           { path: '/', element: <Home /> },
           { path: '/produtos', element: <Products /> },
@@ -34,7 +33,7 @@ const browserRouter = createBrowserRouter([
         ],
       },
       {
-        element: <AuthLayout />,
+        element: <Layout hideFooter />,
         children: [
           { path: '/conectar', element: <Login /> },
           { path: '/criar-conta', element: <CreateAccount /> },
