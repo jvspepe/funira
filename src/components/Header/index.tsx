@@ -15,7 +15,7 @@ import { logoutUser } from '@/lib/auth';
 import useAuth from '@/contexts/auth/hooks';
 import useGetCategories from '@/hooks/useGetCategories';
 import CartDrawer from '@/components/CartDrawer';
-import MobileDrawer from '../MobileDrawer';
+import MobileDrawer from '@/components/MobileDrawer';
 
 const Header = () => {
   const { currentUser } = useAuth();

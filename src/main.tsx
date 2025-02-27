@@ -47,7 +47,10 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <AuthProvider>
       <Provider store={store}>
-        <ChakraProvider theme={theme}>
+        <ChakraProvider
+          theme={theme}
+          toastOptions={{ defaultOptions: { position: 'bottom' } }}
+        >
           <RouterProvider router={browserRouter} />
         </ChakraProvider>
       </Provider>
