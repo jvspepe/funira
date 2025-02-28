@@ -1,8 +1,11 @@
-import { FormEvent } from 'react';
+import { z } from 'zod';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Link } from 'react-router-dom';
 import { useTheme } from 'styled-components';
 import {
   Box,
+  Button,
   Container,
   FormControl,
   FormErrorMessage,
@@ -11,15 +14,10 @@ import {
   Input,
   ListItem,
   UnorderedList,
-  VisuallyHidden,
+  useToast,
 } from '@chakra-ui/react';
 import useGetCategories from '@/hooks/useGetCategories';
-import Button from '@/components/ui/Button';
 import Copyright from '@/components/Copyright';
-import TextInput from '@/components/ui/TextInput';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
 
 const productRoutes = [
   { label: 'Maior Preço', value: 'maior-preço' },
@@ -31,7 +29,10 @@ const productRoutes = [
 const companyRoutes = ['Sobre', 'Contato', 'Carreiras'];
 
 const formSchema = z.object({
-  email: z.string().email().nonempty(),
+  email: z
+    .string()
+    .email({ message: 'E-mail inválido' })
+    .nonempty({ message: 'Campo obrigatório' }),
 });
 
 type FormSchema = z.infer<typeof formSchema>;
@@ -47,16 +48,24 @@ const Footer = () => {
     defaultValues,
     resolver: zodResolver(formSchema),
   });
+
   const { colors } = useTheme();
 
+  const toast = useToast();
+
   const onSubmit: SubmitHandler<FormSchema> = ({ email }) => {
-    console.log(email);
+    toast({
+      title: `E-mail ${email} cadastrado com sucesso`,
+      description: 'Seu e-mail irá receber novidades de nossa empresa',
+      status: 'info',
+      isClosable: true,
+    });
 
     form.reset(defaultValues);
   };
 
   return (
-    <div style={{ backgroundColor: colors.background.tertiary }}>
+    <Box backgroundColor={colors.background.tertiary}>
       <Container
         maxW={{
           sm: '640px',
@@ -81,7 +90,7 @@ const Footer = () => {
             borderBottom="1px solid white"
             paddingBottom="1rem"
           >
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '3rem' }}>
+            <Box style={{ display: 'flex', flexWrap: 'wrap', gap: '3rem' }}>
               <Box
                 display="flex"
                 flexDirection="column"
@@ -175,63 +184,56 @@ const Footer = () => {
                   ))}
                 </UnorderedList>
               </Box>
-            </div>
+            </Box>
             <Box
               as="form"
               onSubmit={form.handleSubmit(onSubmit)}
-              backgroundColor="white"
               display="flex"
+              flexDirection="column"
               gap="0.5rem"
-              padding="0.5rem"
-              borderRadius="base"
+              flexGrow="1"
             >
               <Controller
                 name="email"
                 control={form.control}
                 render={({ field, fieldState }) => (
-                  <FormControl isInvalid={fieldState.error && true}>
-                    <VisuallyHidden>
-                      <FormLabel htmlFor={field.name}>Seu e-mail</FormLabel>
-                    </VisuallyHidden>
-                    <Input
-                      {...field}
-                      id={field.name}
-                      type="email"
-                      placeholder="Digite seu e-mail"
-                    />
-                    {fieldState.error && (
-                      <FormErrorMessage>
-                        {fieldState.error.message}
-                      </FormErrorMessage>
-                    )}
-                  </FormControl>
+                  <>
+                    <FormLabel
+                      htmlFor="newsletter-email"
+                      color="white"
+                      fontWeight="bold"
+                    >
+                      Inscreva-se na nossa lista de e-mails
+                    </FormLabel>
+                    <Box
+                      display="flex"
+                      alignItems="center"
+                      gap="0.5rem"
+                    >
+                      <FormControl isInvalid={fieldState.error && true}>
+                        <Input
+                          {...field}
+                          id="newsletter-email"
+                          type="email"
+                          placeholder="Digite seu e-mail"
+                        />
+                        {fieldState.error && (
+                          <FormErrorMessage>
+                            {fieldState.error.message}
+                          </FormErrorMessage>
+                        )}
+                      </FormControl>
+                      <Button type="submit">Confirmar</Button>
+                    </Box>
+                  </>
                 )}
               />
-              <Button type="submit">Confirmar</Button>
             </Box>
-            <form
-              onSubmit={(event: FormEvent) => event.preventDefault()}
-              style={{ flexGrow: 1 }}
-            >
-              <TextInput
-                label="Inscreva-se na nossa lista de e-mails"
-                variant="secondary"
-                inputIcon={
-                  <Button
-                    variant="secondary"
-                    type="submit"
-                  >
-                    Confirmar
-                  </Button>
-                }
-                placeholder="seu@email.com"
-              />
-            </form>
           </Box>
           <Copyright />
         </Box>
       </Container>
-    </div>
+    </Box>
   );
 };
 
