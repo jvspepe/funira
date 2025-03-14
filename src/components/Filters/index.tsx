@@ -1,92 +1,141 @@
-import { ChangeEvent, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import { TCategory } from "@/@types/categories";
-import SortOption from "@/@types/sort-options";
-import { CaretDown } from "@phosphor-icons/react";
-import Button from "../ui/Button";
-import Checkbox from "../ui/Checkbox";
-import Slider from "@/components/ui/Slider";
-import * as Styled from "./styles";
+import { useRef } from 'react';
+import {
+  Box,
+  Button,
+  Checkbox,
+  CheckboxGroup,
+  Divider,
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerHeader,
+  DrawerOverlay,
+  Stack,
+  useDisclosure,
+} from '@chakra-ui/react';
+import { CheckIcon, ChevronDownIcon, XIcon } from 'lucide-react';
+import { TCategory } from '@/@types/categories';
+import SortOption from '@/@types/sort-options';
 
 type Props = {
+  searchParams: URLSearchParams;
   categories: TCategory[];
   sortOptions: SortOption[];
-  handleChangeFilter(event: ChangeEvent<HTMLInputElement>): void;
+  handleChangeFilter(filters: string[]): void;
+  handleChangeFilterValues(): string[];
   handleChangeSort(value: string): void;
-  handleClearFilter(): void;
 };
 
 const Filters = ({
+  searchParams,
   categories,
   sortOptions,
   handleChangeFilter,
+  handleChangeFilterValues,
   handleChangeSort,
-  handleClearFilter,
 }: Props) => {
-  const [openFilter, setOpenFilter] = useState(false);
-  const [openSort, setOpenSort] = useState(false);
-  const [searchParams] = useSearchParams();
-
-  function handleOpenFilter() {
-    setOpenFilter(!openFilter);
-  }
-
-  function handleOpenSort() {
-    setOpenSort(!openSort);
-  }
+  const filtersDisclosure = useDisclosure();
+  const filtersRef = useRef<HTMLButtonElement>(null);
+  const sortDisclosure = useDisclosure();
+  const sortRef = useRef<HTMLButtonElement>(null);
 
   return (
-    <Styled.Wrapper>
-      <Button onClick={handleOpenFilter} variant="secondary">
+    <Box
+      display={{ base: 'grid', sm: 'none' }}
+      gridTemplateColumns="repeat(2, 1fr)"
+      gap="1rem"
+      padding="0 1.5rem"
+    >
+      <Button
+        onClick={filtersDisclosure.onOpen}
+        ref={filtersRef}
+        rightIcon={<ChevronDownIcon size={16} />}
+      >
         Filtros
-        <CaretDown size={16} />
       </Button>
-      <Slider
-        isActive={openFilter}
-        setIsActive={setOpenFilter}
-        header={<h2>Filtros</h2>}
+      <Drawer
+        isOpen={filtersDisclosure.isOpen}
+        onClose={filtersDisclosure.onClose}
+        placement="bottom"
       >
-        <div>
-          {categories.map((item) => (
-            <Checkbox
-              onChange={handleChangeFilter}
-              key={item.value}
-              id={item.value}
-              name={item.value}
-              value={item.value}
-              checked={searchParams.getAll("tipo").includes(item.value)}
-              label={item.label}
-            />
-          ))}
-        </div>
-        <Button onClick={() => handleClearFilter()} type="button">
-          Limpar Filtros
-        </Button>
-      </Slider>
-      <Button onClick={handleOpenSort} variant="secondary">
-        Ordem
-        <CaretDown size={16} />
-      </Button>
-      <Slider
-        isActive={openSort}
-        setIsActive={setOpenSort}
-        header={<h2>Ordem</h2>}
-      >
-        <div>
-          {sortOptions.map((option) => (
-            <Button
-              onClick={() => handleChangeSort(option.value)}
-              key={option.value}
-              variant="tertiary"
-              size="small"
-              style={{ width: "100%" }}
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader>Filtros</DrawerHeader>
+          <Divider />
+          <DrawerBody>
+            <CheckboxGroup
+              onChange={(value) => {
+                handleChangeFilter(value as string[]);
+              }}
+              value={handleChangeFilterValues()}
             >
-              {option.label}
-            </Button>
-          ))}
-        </div>
-      </Slider>
-    </Styled.Wrapper>
+              <Stack direction="column">
+                {categories.map((category) => (
+                  <Checkbox
+                    key={category.uid}
+                    value={category.value}
+                  >
+                    {category.label}
+                  </Checkbox>
+                ))}
+                <Divider />
+                <Button
+                  onClick={() => handleChangeFilter([])}
+                  variant="outline"
+                  leftIcon={<XIcon size={16} />}
+                >
+                  Limpar filtros
+                </Button>
+              </Stack>
+            </CheckboxGroup>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
+      <Button
+        onClick={sortDisclosure.onOpen}
+        ref={sortRef}
+        leftIcon={<ChevronDownIcon size={16} />}
+      >
+        Ordem
+      </Button>
+      <Drawer
+        isOpen={sortDisclosure.isOpen}
+        onClose={sortDisclosure.onClose}
+        placement="bottom"
+      >
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader>Ordem</DrawerHeader>
+          <Divider />
+          <DrawerBody p={0}>
+            <Stack
+              direction="column"
+              spacing={0}
+              divider={<Divider />}
+            >
+              {sortOptions.map((item) => (
+                <Button
+                  key={item.value}
+                  onClick={() => handleChangeSort(item.value)}
+                  variant="ghost"
+                  leftIcon={
+                    (searchParams.get('ordem') === item.value && (
+                      <CheckIcon size={16} />
+                    )) ||
+                    undefined
+                  }
+                >
+                  {item.label}
+                </Button>
+              ))}
+            </Stack>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
+    </Box>
   );
 };
 

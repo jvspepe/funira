@@ -7,23 +7,22 @@ import {
   orderBy,
   startAfter,
 } from 'firebase/firestore';
+import { Button, Container } from '@chakra-ui/react';
 import { TProduct } from '@/@types/product';
 import { getDocuments } from '@/lib/database';
 import useGetCategories from '@/hooks/useGetCategories';
-import Button from '@/components/ui/Button';
 import ProductsFilter from '@/components/ProductsFilter';
 import ProductsHeader from '@/components/HeaderPage';
-import ProductSection from '@/components/ProductDisplay';
-import Container from './styles';
+import ProductDisplay from '@/components/ProductDisplay';
 
 const PAGE_SIZE = 8;
 
 const SORT_OPTIONS = {
-  highestPrice: 'maior-preço',
-  lowestPrice: 'menor-preço',
+  priceDescending: 'maior-preço',
+  priceAscending: 'menor-preço',
+  soldDescending: 'mais-vendido',
+  ratingDescending: 'melhor-avaliado',
   newest: 'novo',
-  bestSellers: 'mais-vendido',
-  highestRating: 'melhor-avaliado',
 };
 
 const Products = () => {
@@ -44,16 +43,15 @@ const Products = () => {
           (a, b) =>
             b.createdAt.toDate().valueOf() - a.createdAt.toDate().valueOf()
         );
-      case SORT_OPTIONS.lowestPrice:
-        return products.sort((a, b) => a.price - b.price);
-      case SORT_OPTIONS.highestPrice:
+      case SORT_OPTIONS.priceDescending:
         return products.sort((a, b) => b.price - a.price);
-      case SORT_OPTIONS.highestRating:
+      case SORT_OPTIONS.ratingDescending:
         return products.sort((a, b) => b.rating - a.rating);
-      case SORT_OPTIONS.bestSellers:
+      case SORT_OPTIONS.soldDescending:
         return products.sort((a, b) => b.sales - a.sales);
+      case SORT_OPTIONS.priceAscending:
       default:
-        return products.sort((a, b) => a.name.localeCompare(b.name));
+        return products.sort((a, b) => a.price - b.price);
     }
   }
 
@@ -110,15 +108,20 @@ const Products = () => {
   return (
     <>
       <ProductsHeader />
-      <Container>
+      <Container
+        maxW={{
+          sm: '640px',
+          md: '768px',
+          lg: '1024px',
+          xl: '1280px',
+          xxl: '1440px',
+        }}
+        padding="1rem 0"
+      >
         <ProductsFilter categories={categories} />
-        <ProductSection products={filteredProducts} />
+        <ProductDisplay products={filteredProducts} />
         {!isLastDoc && (
-          <Button
-            onClick={handleLoadProducts}
-            variant="secondary"
-            style={{ marginInline: 'auto' }}
-          >
+          <Button onClick={handleLoadProducts}>
             {loading ? 'Loading' : 'Ver mais'}
           </Button>
         )}

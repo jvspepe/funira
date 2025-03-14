@@ -1,29 +1,72 @@
-import { Link } from "react-router-dom";
-import Button from "@/components/ui/Button";
-import * as S from "./styles";
+import { Link } from 'react-router-dom';
+import { Box, Button, Container, Heading, Image, Text } from '@chakra-ui/react';
 
 const Hero = () => {
   return (
-    <S.Wrapper>
-      <S.Container>
-        <S.Section>
-          <S.Content>
-            <S.ContentHeader>
+    <Box
+      backgroundColor=" #f6f6f6"
+      backgroundImage='url("/images/hero.jpg")'
+      backgroundSize="cover"
+      backgroundPosition="50%"
+    >
+      <Container
+        maxW={{
+          sm: '640px',
+          md: '768px',
+          lg: '1024px',
+          xl: '1280px',
+          xxl: '1440px',
+        }}
+        p={0}
+        height="calc(100dvh - 5.25rem)"
+        display="flex"
+        flexDirection="column"
+        alignItems={{ sm: 'end' }}
+        justifyContent={{ sm: 'center' }}
+      >
+        <Box
+          maxWidth="40rem"
+          display="flex"
+          flexDirection="column"
+          gap={{ base: '2rem', sm: '10rem' }}
+          padding={{ base: '1.5rem', sm: '3rem 4rem' }}
+          alignItems={{ sm: 'start' }}
+          backgroundColor="white"
+        >
+          <Box
+            display="flex"
+            flexDirection="column"
+            gap={{ base: '1rem', sm: '1.5rem' }}
+          >
+            <Heading
+              fontSize={{ base: '1.5rem', md: '2rem' }}
+              fontWeight="normal"
+            >
               Artigos de luxo para pessoas que amam design atemporal de
               qualidade.
-            </S.ContentHeader>
-            <S.ContentBody>
+            </Heading>
+            <Text fontSize={{ md: '1.125rem' }}>
               Com a nossa nova coleção, veja mais de 400 peças exclusivas, desde
               artigos para o lar até movéis.
-            </S.ContentBody>
-          </S.Content>
-          <Button component={Link} variant="secondary" to="/produtos">
+            </Text>
+          </Box>
+          <Button
+            as={Link}
+            to="/produtos"
+          >
             Ver coleção
           </Button>
-        </S.Section>
-        <S.Image src="/images/hero.jpg" alt="" aria-hidden />
-      </S.Container>
-    </S.Wrapper>
+        </Box>
+        <Image
+          src="/images/hero.jpg"
+          alt=""
+          aria-hidden
+          flexGrow="1"
+          objectFit="cover"
+          display={{ sm: 'none' }}
+        />
+      </Container>
+    </Box>
   );
 };
 

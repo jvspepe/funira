@@ -1,17 +1,16 @@
-import { ChangeEvent } from "react";
-import { useSearchParams } from "react-router-dom";
-import { TCategory } from "@/@types/categories";
-import SortOption from "@/@types/sort-options";
-import Container from "@/components/ui/Container";
-import Filters from "@/components/Filters";
-import FiltersDesktop from "../FiltersDesktop";
+import { useSearchParams } from 'react-router-dom';
+import { Container } from '@chakra-ui/react';
+import { TCategory } from '@/@types/categories';
+import SortOption from '@/@types/sort-options';
+import Filters from '@/components/Filters';
+import FiltersDesktop from '@/components/FiltersDesktop';
 
 const sortOptions: SortOption[] = [
-  { label: "Maior Preço", value: "maior-preço" },
-  { label: "Menor Preço", value: "menor-preço" },
-  { label: "Novos", value: "novo" },
-  { label: "Mais Vendidos", value: "mais-vendidos" },
-  { label: "Melhor Avaliados", value: "melhor-avaliados" },
+  { label: 'Maior Preço', value: 'maior-preço' },
+  { label: 'Menor Preço', value: 'menor-preço' },
+  { label: 'Novos', value: 'novo' },
+  { label: 'Mais Vendidos', value: 'mais-vendidos' },
+  { label: 'Melhor Avaliados', value: 'melhor-avaliados' },
 ];
 
 type Props = {
@@ -21,49 +20,64 @@ type Props = {
 const ProductsFilter = ({ categories }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  function handleChangeFilter(event: ChangeEvent<HTMLInputElement>) {
-    const typeParams = searchParams.getAll("tipo");
-    if (typeParams.includes(event.target.value)) {
-      setSearchParams({
-        tipo: typeParams.filter((type) => type !== event.target.value),
-      });
-    } else {
-      searchParams.append("tipo", event.target.value);
-      setSearchParams(searchParams);
-    }
+  function handleChangeFilter(filters: string[]) {
+    setSearchParams({
+      tipo: filters,
+    });
   }
 
-  function handleClearFilter() {
-    searchParams.delete("tipo");
-    setSearchParams(searchParams);
+  function handleChangeFilterValues() {
+    const values: string[] = [];
+    const typeParams = searchParams.getAll('tipo');
+
+    if (!typeParams) return [];
+
+    categories.forEach((category) => {
+      if (typeParams.includes(category.value)) {
+        values.push(category.value);
+      }
+    });
+
+    return values;
   }
 
   function handleChangeSort(value: string) {
-    const sortParams = searchParams.get("ordem");
+    const sortParams = searchParams.get('ordem');
     if (sortParams === value) {
-      searchParams.delete("ordem");
+      searchParams.delete('ordem');
       setSearchParams(searchParams);
     } else {
-      searchParams.set("ordem", value);
+      searchParams.set('ordem', value);
       setSearchParams(searchParams);
     }
   }
 
   return (
-    <Container>
+    <Container
+      maxW={{
+        sm: '640px',
+        md: '768px',
+        lg: '1024px',
+        xl: '1280px',
+        xxl: '1440px',
+      }}
+      p={0}
+    >
       <Filters
+        searchParams={searchParams}
         categories={categories}
         sortOptions={sortOptions}
         handleChangeFilter={handleChangeFilter}
+        handleChangeFilterValues={handleChangeFilterValues}
         handleChangeSort={handleChangeSort}
-        handleClearFilter={handleClearFilter}
       />
       <FiltersDesktop
+        searchParams={searchParams}
         categories={categories}
         sortOptions={sortOptions}
         handleChangeFilter={handleChangeFilter}
+        handleChangeFilterValues={handleChangeFilterValues}
         handleChangeSort={handleChangeSort}
-        handleClearFilter={handleClearFilter}
       />
     </Container>
   );

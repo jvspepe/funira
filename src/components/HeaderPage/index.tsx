@@ -1,10 +1,24 @@
-import * as S from "./styles";
+import { Box, Heading } from '@chakra-ui/react';
 
 const ProductsHeader = () => {
   return (
-    <S.Wrapper>
-      <S.Heading>Nossos produtos</S.Heading>
-    </S.Wrapper>
+    <Box
+      backgroundImage='url("/images/product-header.jpg")'
+      backgroundSize="cover"
+      backgroundPosition="center"
+      padding="4rem 0"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+    >
+      <Heading
+        fontSize="2.25rem"
+        fontWeight="normal"
+        color="white"
+      >
+        Nossos produtos
+      </Heading>
+    </Box>
   );
 };
 
