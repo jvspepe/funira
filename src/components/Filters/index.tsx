@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useRef } from 'react';
 import {
   Box,
@@ -22,9 +23,9 @@ type Props = {
   searchParams: URLSearchParams;
   categories: TCategory[];
   sortOptions: SortOption[];
-  handleChangeFilter(filters: string[]): void;
-  handleChangeFilterValues(): string[];
-  handleChangeSort(value: string): void;
+  handleChangeFilter: (filters: string[]) => void;
+  handleChangeFilterValues: () => string[];
+  handleChangeSort: (value: string) => void;
 };
 
 const Filters = ({

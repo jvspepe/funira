@@ -1,19 +1,19 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { TCartProduct } from "@/@types/product";
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { TCartProduct } from '@/@types/product';
 
 type CartState = {
   cart: TCartProduct[];
   total: number;
 };
 
-const LOCAL_STORAGE_CART_SLICE_KEY = "cartState";
+const LOCAL_STORAGE_CART_SLICE_KEY = 'cartState';
 
 function getCartState() {
   if (!localStorage.getItem(LOCAL_STORAGE_CART_SLICE_KEY)) {
     return { cart: [], total: 0 };
   }
   const cartState = JSON.parse(
-    localStorage.getItem(LOCAL_STORAGE_CART_SLICE_KEY) || ""
+    localStorage.getItem(LOCAL_STORAGE_CART_SLICE_KEY) ?? ''
   ) as CartState;
   return cartState;
 }
@@ -32,7 +32,7 @@ function saveToLocalStorage(cartState: CartState) {
 const initialState: CartState = getCartState();
 
 const cartSlice = createSlice({
-  name: "cart",
+  name: 'cart',
   initialState,
   reducers: {
     addToCart(state, action: PayloadAction<TCartProduct>) {

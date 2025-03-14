@@ -70,7 +70,7 @@ export const createUser = async (
   username: string,
   email: string,
   password: string,
-  persistUser: boolean = false
+  persistUser = false
 ) => {
   try {
     await handleUserPersistence(persistUser);
@@ -101,7 +101,7 @@ export const createUser = async (
 export const loginUser = async (
   email: string,
   password: string,
-  persistUser: boolean = false
+  persistUser = false
 ) => {
   try {
     await handleUserPersistence(persistUser);

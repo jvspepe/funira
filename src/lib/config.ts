@@ -1,7 +1,7 @@
 import { FirebaseOptions, initializeApp } from 'firebase/app';
-import { connectAuthEmulator, getAuth } from 'firebase/auth';
-import { connectFirestoreEmulator, getFirestore } from 'firebase/firestore';
-import { connectStorageEmulator, getStorage } from 'firebase/storage';
+import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 
 const firebaseConfig: FirebaseOptions = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -17,10 +17,10 @@ const auth = getAuth(app);
 const firestore = getFirestore(app);
 const storage = getStorage(app);
 
-if (import.meta.env.MODE === 'development') {
-  connectAuthEmulator(auth, 'http://127.0.0.1:9099');
-  connectFirestoreEmulator(firestore, 'localhost', 8080);
-  connectStorageEmulator(storage, 'localhost', 9199);
-}
+// if (import.meta.env.MODE === 'development') {
+//   connectAuthEmulator(auth, 'http://127.0.0.1:9099');
+//   connectFirestoreEmulator(firestore, 'localhost', 8080);
+//   connectStorageEmulator(storage, 'localhost', 9199);
+// }
 
 export { auth, firestore, storage };

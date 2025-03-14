@@ -25,7 +25,7 @@ type ReturnData<T> = {
 const converter = <T>(): FirestoreDataConverter<T> => {
   return {
     toFirestore(data) {
-      return data || {};
+      return data ?? {};
     },
     fromFirestore(snapshot, options) {
       return snapshot.data(options) as T;

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import {
   Box,
   Button,
@@ -17,9 +18,9 @@ type Props = {
   searchParams: URLSearchParams;
   categories: TCategory[];
   sortOptions: SortOption[];
-  handleChangeFilter(filters: string[]): void;
-  handleChangeFilterValues(): string[];
-  handleChangeSort(value: string): void;
+  handleChangeFilter: (filters: string[]) => void;
+  handleChangeFilterValues: () => string[];
+  handleChangeSort: (value: string) => void;
 };
 
 const FiltersDesktop = ({
@@ -41,7 +42,7 @@ const FiltersDesktop = ({
         <MenuList>
           <MenuOptionGroup
             onChange={(value) => {
-              if (!Array.isArray(value)) return [value];
+              if (!Array.isArray(value)) return Array.from(value);
               return handleChangeFilter(value);
             }}
             value={handleChangeFilterValues()}

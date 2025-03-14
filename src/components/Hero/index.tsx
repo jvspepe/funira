@@ -10,7 +10,7 @@ const Hero = () => {
       backgroundPosition="50%"
     >
       <Container
-        maxW={{
+        maxWidth={{
           sm: '640px',
           md: '768px',
           lg: '1024px',
@@ -18,7 +18,7 @@ const Hero = () => {
           xxl: '1440px',
         }}
         p={0}
-        height="calc(100dvh - 5.25rem)"
+        height="calc(100vh - 5.25rem)"
         display="flex"
         flexDirection="column"
         alignItems={{ sm: 'end' }}

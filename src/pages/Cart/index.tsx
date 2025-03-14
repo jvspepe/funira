@@ -1,42 +1,62 @@
 import { Link } from 'react-router-dom';
+import { Box, Button, Container, Text } from '@chakra-ui/react';
 import { useTheme } from 'styled-components';
 import { useAppSelector } from '@/store/store';
 import CartProduct from '@/components/CartProduct';
-import Typography from '@/components/ui/Typography';
-import * as Styled from './styles';
 
 const Cart = () => {
   const { cart, total } = useAppSelector((state) => state.cartReducer);
   const { colors } = useTheme();
 
   return (
-    <Styled.Container>
-      <Styled.Wrapper>
-        <Typography
-          component="h2"
-          fontFamily="heading"
-          fontSize="2xl"
+    <Container
+      maxW={{
+        sm: '640px',
+        md: '768px',
+        lg: '1024px',
+        xl: '1280px',
+        xxl: '1440px',
+      }}
+      padding={{ base: '0', sm: '2rem 0', lg: '4rem 0' }}
+      display="flex"
+      minHeight="calc(100vh - 5rem)"
+      justifyContent={{ sm: 'center' }}
+    >
+      <Box
+        display="flex"
+        flexDirection="column"
+        gap="2rem"
+        width="100%"
+        padding="2rem 1.5rem"
+      >
+        <Text
+          as="h2"
+          fontSize="1.5rem"
         >
           Seu carrinho
-        </Typography>
+        </Text>
         <hr style={{ border: `1px solid ${colors.border.primary}` }} />
         {cart.length !== 0 ? (
-          <Styled.InnerContainer>
+          <Box
+            display="flex"
+            flexDirection="column"
+            gap="2rem"
+            flexGrow="1"
+          >
             {cart.map((item) => (
               <CartProduct
                 key={item.uid}
                 product={item}
               />
             ))}
-          </Styled.InnerContainer>
+          </Box>
         ) : (
-          <Typography
-            component="h2"
-            fontFamily="heading"
-            fontSize="2xl"
+          <Text
+            as="h2"
+            fontSize="1.5rem"
           >
             O Carrinho está vázio...
-          </Typography>
+          </Text>
         )}
         <hr
           style={{
@@ -44,34 +64,36 @@ const Cart = () => {
             marginTop: 'auto',
           }}
         />
-        <Styled.PriceContainer>
-          <Typography
-            component="span"
-            fontFamily="heading"
-            fontSize="xl"
+        <Box
+          display="flex"
+          alignItems="center"
+          gap="0.5rem"
+          alignSelf="end"
+        >
+          <Text
+            as="span"
+            fontSize="1.25rem"
           >
             Total
-          </Typography>
-          <Typography
-            component="span"
-            fontFamily="heading"
-            fontSize="xl"
+          </Text>
+          <Text
+            as="span"
+            fontSize="1.25rem"
           >
-            {' '}
             {Intl.NumberFormat('pt-BR', {
               currency: 'BRL',
               style: 'currency',
             }).format(total)}
-          </Typography>
-        </Styled.PriceContainer>
-        <Styled.Button
-          component={Link}
+          </Text>
+        </Box>
+        <Button
+          as={Link}
           to="/"
         >
           Finalizar compra
-        </Styled.Button>
-      </Styled.Wrapper>
-    </Styled.Container>
+        </Button>
+      </Box>
+    </Container>
   );
 };
 
