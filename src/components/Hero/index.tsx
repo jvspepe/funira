@@ -15,7 +15,7 @@ const Hero = () => {
           md: '768px',
           lg: '1024px',
           xl: '1280px',
-          xxl: '1440px',
+          '2xl': '1440px',
         }}
         p={0}
         height="calc(100vh - 5.25rem)"
@@ -50,11 +50,8 @@ const Hero = () => {
               artigos para o lar até movéis.
             </Text>
           </Box>
-          <Button
-            as={Link}
-            to="/produtos"
-          >
-            Ver coleção
+          <Button asChild>
+            <Link to="/produtos">Ver coleção</Link>
           </Button>
         </Box>
         <Image

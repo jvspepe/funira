@@ -1,14 +1,10 @@
 import { Link } from 'react-router-dom';
 import {
   Button,
+  CloseButton,
   Drawer,
-  DrawerBody,
-  DrawerCloseButton,
-  DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
   IconButton,
+  Portal,
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
@@ -18,55 +14,57 @@ import CartDrawerItem from '@/components/CartDrawerItem';
 
 const CartDrawer = () => {
   const { cart } = useAppSelector((state) => state.cartReducer);
-  const { isOpen, onClose, onOpen } = useDisclosure();
+  const { onOpen } = useDisclosure();
 
   return (
     <>
-      <IconButton
-        onClick={onOpen}
-        aria-label="Abrir carrinho"
-        type="button"
-        variant="ghost"
-        icon={<ShoppingCartIcon />}
-      />
-      <Drawer
-        isOpen={isOpen}
-        onClose={onClose}
-        size={{ base: 'xs', md: 'sm' }}
-      >
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader borderBottom="1px solid #EBE8F4">
-            Meu Carrinho
-          </DrawerHeader>
-          <DrawerBody
-            p={'1.25rem'}
-            display="flex"
-            flexDirection="column"
-            gap="1.25rem"
+      <Drawer.Root size={{ base: 'xs', md: 'sm' }}>
+        <Drawer.Trigger asChild>
+          <IconButton
+            onClick={onOpen}
+            aria-label="Abrir carrinho"
+            type="button"
+            variant="ghost"
           >
-            {cart.length >= 1 ? (
-              cart.map((item) => (
-                <CartDrawerItem
-                  key={item.uid}
-                  product={item}
-                />
-              ))
-            ) : (
-              <Text>Carrinho vazio</Text>
-            )}
-          </DrawerBody>
-          <DrawerFooter borderTop="1px solid #EBE8F4">
-            <Button
-              as={Link}
-              to="/carrinho"
-            >
-              Ir para o checkout
-            </Button>
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
+            <ShoppingCartIcon />
+          </IconButton>
+        </Drawer.Trigger>
+        <Portal>
+          <Drawer.Backdrop />
+          <Drawer.Positioner>
+            <Drawer.Content>
+              <Drawer.CloseTrigger asChild>
+                <CloseButton />
+              </Drawer.CloseTrigger>
+              <Drawer.Header borderBottom="1px solid #EBE8F4">
+                <Drawer.Title>Meu Carrinho</Drawer.Title>
+              </Drawer.Header>
+              <Drawer.Body
+                p={'1.25rem'}
+                display="flex"
+                flexDirection="column"
+                gap="1.25rem"
+              >
+                {cart.length >= 1 ? (
+                  cart.map((item) => (
+                    <CartDrawerItem
+                      key={item.uid}
+                      product={item}
+                    />
+                  ))
+                ) : (
+                  <Text>Carrinho vazio</Text>
+                )}
+              </Drawer.Body>
+              <Drawer.Footer borderTop="1px solid #EBE8F4">
+                <Button asChild>
+                  <Link to="/carrinho">Ir para o checkout</Link>
+                </Button>
+              </Drawer.Footer>
+            </Drawer.Content>
+          </Drawer.Positioner>
+        </Portal>
+      </Drawer.Root>
     </>
   );
 };

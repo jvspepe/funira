@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
@@ -7,20 +6,17 @@ import {
   Box,
   Button,
   Checkbox,
-  Divider,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
+  Field,
   Heading,
   Icon,
-  IconButton,
   Input,
   Link,
-  Spinner,
+  Separator,
   Text,
 } from '@chakra-ui/react';
-import { ArrowLeft, EyeClosed, EyeIcon } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { handleAuthError, loginUser } from '@/lib/auth';
+import { PasswordInput } from '@/components/ui/password-input';
 import GoogleIcon from '@/assets/GoogleIcon';
 
 const formSchema = z.object({
@@ -38,8 +34,6 @@ const defaultValues: FormSchema = {
 };
 
 const Login = () => {
-  const [showPassword, setShowPassword] = useState<boolean>(false);
-
   const navigate = useNavigate();
 
   const form = useForm<FormSchema>({
@@ -91,15 +85,16 @@ const Login = () => {
           gap="1.25rem"
         >
           <Button
-            as={RouterLink}
-            to="/"
-            display="flex"
-            alignItems="center"
-            gap="0.5rem"
+            asChild
+            variant="subtle"
             width="fit-content"
           >
-            <Icon as={ArrowLeft} />
-            Voltar ao início
+            <RouterLink to="/">
+              <Icon>
+                <ArrowLeft />
+              </Icon>
+              Voltar ao início
+            </RouterLink>
           </Button>
           <Box
             display="flex"
@@ -114,11 +109,8 @@ const Login = () => {
               gap="0.5rem"
             >
               <Text>Não possui uma conta?</Text>
-              <Link
-                as={RouterLink}
-                to="/criar-conta"
-              >
-                Crie uma conta
+              <Link asChild>
+                <RouterLink to="/criar-conta">Crie uma conta</RouterLink>
               </Link>
             </Box>
           </Box>
@@ -129,92 +121,60 @@ const Login = () => {
             name="email"
             control={form.control}
             render={({ field, fieldState }) => (
-              <FormControl isInvalid={fieldState.error && true}>
-                <FormLabel htmlFor={field.name}>E-mail</FormLabel>
+              <Field.Root invalid={fieldState.error && true}>
+                <Field.Label htmlFor={field.name}>E-mail</Field.Label>
                 <Input
                   {...field}
                   id={field.name}
                   type="email"
-                  placeholder="fulano@email.com"
+                  placeholder="seu@email.com"
                 />
                 {fieldState.error && (
-                  <FormErrorMessage>
-                    {fieldState.error.message}
-                  </FormErrorMessage>
+                  <Field.ErrorText>{fieldState.error.message}</Field.ErrorText>
                 )}
-              </FormControl>
+              </Field.Root>
             )}
           />
           <Controller
             name="password"
             control={form.control}
             render={({ field, fieldState }) => (
-              <FormControl isInvalid={fieldState.error && true}>
-                <Box
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="space-between"
-                >
-                  <FormLabel htmlFor={field.name}>Senha</FormLabel>
-                  <IconButton
-                    onClick={() => setShowPassword(!showPassword)}
-                    aria-label={
-                      showPassword ? 'Esconder senha' : 'Mostrar Senha'
-                    }
-                    type="button"
-                    variant="ghost"
-                  >
-                    {showPassword ? (
-                      <Icon as={EyeClosed} />
-                    ) : (
-                      <Icon as={EyeIcon} />
-                    )}
-                  </IconButton>
-                </Box>
-                <Input
+              <Field.Root invalid={fieldState.error && true}>
+                <Field.Label htmlFor={field.name}>Senha</Field.Label>
+                <PasswordInput
                   {...field}
                   id={field.name}
-                  type={showPassword ? 'text' : 'password'}
-                  placeholder="Mínimo de 6 caractéres"
+                  placeholder="Sua senha"
                 />
                 {fieldState.error && (
-                  <FormErrorMessage>
-                    {fieldState.error.message}
-                  </FormErrorMessage>
+                  <Field.ErrorText>{fieldState.error.message}</Field.ErrorText>
                 )}
-              </FormControl>
+              </Field.Root>
             )}
           />
           <Controller
             name="persistUser"
             control={form.control}
             render={({ field }) => (
-              <Checkbox
+              <Checkbox.Root
                 onChange={field.onChange}
                 onBlur={field.onBlur}
                 name={field.name}
                 ref={field.ref}
                 checked={field.value}
               >
-                Lembrar de mim?
-              </Checkbox>
+                <Checkbox.HiddenInput />
+                <Checkbox.Control />
+                <Checkbox.Label>Lembrar de mim?</Checkbox.Label>
+              </Checkbox.Root>
             )}
           />
           <Button
             type="submit"
-            disabled={form.formState.isSubmitting}
-            display="flex"
-            alignItems="center"
-            gap="0.5rem"
+            loading={form.formState.isSubmitting}
+            loadingText="Carregando..."
           >
-            {form.formState.isSubmitting ? (
-              <>
-                <Spinner />
-                <span>Carregando...</span>
-              </>
-            ) : (
-              'Confirmar'
-            )}
+            Confirmar
           </Button>
           <Box
             alignSelf="center"
@@ -228,9 +188,9 @@ const Login = () => {
               alignItems="center"
               gap="1.25rem"
             >
-              <Divider />
+              <Separator flexGrow="1" />
               <Text>Ou</Text>
-              <Divider />
+              <Separator flexGrow="1" />
             </Box>
             <Box
               display="flex"
@@ -247,16 +207,11 @@ const Login = () => {
                 <Button
                   type="button"
                   variant="outline"
-                  display="flex"
-                  alignItems="center"
-                  w="full"
-                  gap="0.5rem"
+                  width="full"
                 >
-                  <Icon
-                    as={GoogleIcon}
-                    height="1.5rem"
-                    width="1.5rem"
-                  />
+                  <Icon>
+                    <GoogleIcon />
+                  </Icon>
                   <span>Continue com o Google</span>
                 </Button>
               </Box>

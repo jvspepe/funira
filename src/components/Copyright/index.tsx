@@ -23,47 +23,53 @@ const Copyright = () => {
         color="white"
       >
         <IconButton
-          as={Link}
-          href="https://www.linkedin.com/"
-          target="_blank"
-          aria-label="Link para página do Linked In de Funira"
+          asChild
           variant="ghost"
-          icon={
+        >
+          <Link
+            href="https://www.linkedin.com/"
+            target="_blank"
+            aria-label="Link para página do Linked In de Funira"
+          >
             <Icon
               as={LinkedInIcon}
               height="1.5rem"
               width="1.5rem"
             />
-          }
-        />
+          </Link>
+        </IconButton>
         <IconButton
-          as={Link}
-          href="https://www.linkedin.com/"
-          target="_blank"
-          aria-label="Link para página do Facebook In de Funira"
+          asChild
           variant="ghost"
-          icon={
+        >
+          <Link
+            href="https://www.linkedin.com/"
+            target="_blank"
+            aria-label="Link para página do Facebook In de Funira"
+          >
             <Icon
               as={FacebookIcon}
               height="1.5rem"
               width="1.5rem"
             />
-          }
-        />
+          </Link>
+        </IconButton>
         <IconButton
-          as={Link}
-          href="https://www.linkedin.com/"
-          target="_blank"
-          aria-label="Link para página do Instagram In de Funira"
+          asChild
           variant="ghost"
-          icon={
+        >
+          <Link
+            href="https://www.linkedin.com/"
+            target="_blank"
+            aria-label="Link para página do Instagram In de Funira"
+          >
             <Icon
               as={InstagramIcon}
               height="1.5rem"
               width="1.5rem"
             />
-          }
-        />
+          </Link>
+        </IconButton>
       </Box>
     </Box>
   );

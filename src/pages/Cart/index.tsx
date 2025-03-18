@@ -1,12 +1,10 @@
 import { Link } from 'react-router-dom';
 import { Box, Button, Container, Text } from '@chakra-ui/react';
-import { useTheme } from 'styled-components';
 import { useAppSelector } from '@/store/store';
 import CartProduct from '@/components/CartProduct';
 
 const Cart = () => {
   const { cart, total } = useAppSelector((state) => state.cartReducer);
-  const { colors } = useTheme();
 
   return (
     <Container
@@ -15,7 +13,7 @@ const Cart = () => {
         md: '768px',
         lg: '1024px',
         xl: '1280px',
-        xxl: '1440px',
+        '2xl': '1440px',
       }}
       padding={{ base: '0', sm: '2rem 0', lg: '4rem 0' }}
       display="flex"
@@ -35,7 +33,7 @@ const Cart = () => {
         >
           Seu carrinho
         </Text>
-        <hr style={{ border: `1px solid ${colors.border.primary}` }} />
+        <hr style={{ border: `1px solid black` }} />
         {cart.length !== 0 ? (
           <Box
             display="flex"
@@ -60,7 +58,7 @@ const Cart = () => {
         )}
         <hr
           style={{
-            border: `1px solid ${colors.border.primary}`,
+            border: `1px solid black`,
             marginTop: 'auto',
           }}
         />
@@ -86,11 +84,8 @@ const Cart = () => {
             }).format(total)}
           </Text>
         </Box>
-        <Button
-          as={Link}
-          to="/"
-        >
-          Finalizar compra
+        <Button asChild>
+          <Link to="/">Finalizar compra</Link>
         </Button>
       </Box>
     </Container>

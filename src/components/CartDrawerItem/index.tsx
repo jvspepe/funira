@@ -1,19 +1,10 @@
 import { useState } from 'react';
-import {
-  Box,
-  IconButton,
-  Image,
-  NumberDecrementStepper,
-  NumberIncrementStepper,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  Text,
-} from '@chakra-ui/react';
+import { Box, IconButton, Image, Text } from '@chakra-ui/react';
 import { XIcon } from 'lucide-react';
 import { TCartProduct } from '@/@types/product';
 import { useAppDispatch } from '@/store/store';
 import { removeFromCart } from '@/store/cartSlice';
+import Stepper from '../ui/Stepper';
 
 type Props = {
   product: TCartProduct;
@@ -64,20 +55,15 @@ const CartDrawerItem = ({ product }: Props) => {
             aria-label="Remover do carrinho"
             type="button"
             size="xs"
-            icon={<XIcon />}
-          />
+          >
+            <XIcon />
+          </IconButton>
         </Box>
-        <NumberInput
-          defaultValue={productQuantity}
-          onChange={(_, value) => setProductQuantity(value)}
-          min={1}
-        >
-          <NumberInputField />
-          <NumberInputStepper>
-            <NumberIncrementStepper />
-            <NumberDecrementStepper />
-          </NumberInputStepper>
-        </NumberInput>
+        <Stepper
+          value={productQuantity}
+          setValue={setProductQuantity}
+          minValue={1}
+        />
       </Box>
     </Box>
   );

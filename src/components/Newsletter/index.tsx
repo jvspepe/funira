@@ -5,16 +5,14 @@ import {
   Box,
   Button,
   Container,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
+  Field,
   Heading,
   Input,
   Text,
-  useToast,
   VisuallyHidden,
 } from '@chakra-ui/react';
 import { CircleCheck } from 'lucide-react';
+import { toaster } from '@/components/ui/toaster';
 
 const benefits = ['Ofertas Exclusivas', 'Eventos', 'Descontos'];
 
@@ -34,15 +32,11 @@ const Newsletter = () => {
     resolver: zodResolver(formSchema),
   });
 
-  const toast = useToast();
-
   const onSubmit: SubmitHandler<FormSchema> = ({ email }) => {
-    toast({
+    toaster.create({
       title: 'E-mail cadastrado com sucesso',
       description: `O e-mail ${email} irá receber notícias e promoções da nossa loja!`,
-      status: 'success',
-      duration: 5000,
-      isClosable: true,
+      type: 'success',
     });
 
     form.reset(defaultValues);
@@ -59,7 +53,7 @@ const Newsletter = () => {
           md: '768px',
           lg: '1024px',
           xl: '1280px',
-          xxl: '1440px',
+          '2xl': '1440px',
         }}
         p={0}
       >
@@ -133,9 +127,9 @@ const Newsletter = () => {
                 name="email"
                 control={form.control}
                 render={({ field, fieldState }) => (
-                  <FormControl isInvalid={fieldState.error && true}>
+                  <Field.Root invalid={fieldState.error && true}>
                     <VisuallyHidden>
-                      <FormLabel htmlFor={field.name}>Seu e-mail</FormLabel>
+                      <Field.Label htmlFor={field.name}>Seu e-mail</Field.Label>
                     </VisuallyHidden>
                     <Input
                       {...field}
@@ -144,11 +138,11 @@ const Newsletter = () => {
                       placeholder="Digite seu e-mail"
                     />
                     {fieldState.error && (
-                      <FormErrorMessage>
+                      <Field.ErrorText>
                         {fieldState.error.message}
-                      </FormErrorMessage>
+                      </Field.ErrorText>
                     )}
-                  </FormControl>
+                  </Field.Root>
                 )}
               />
               <Button type="submit">Confirmar</Button>

@@ -3,7 +3,7 @@ import {
   Box,
   Button,
   Container,
-  Divider,
+  Separator,
   Heading,
   Image,
   Text,
@@ -30,7 +30,7 @@ const ProductListing = ({ product }: Props) => {
           md: '768px',
           lg: '1024px',
           xl: '1280px',
-          xxl: '1440px',
+          '2xl': '1440px',
         }}
         display="grid"
         gridTemplateColumns={{ lg: 'repeat(2, 1fr)' }}
@@ -121,7 +121,7 @@ const ProductListing = ({ product }: Props) => {
                   {product.dimensions?.height}cm
                 </Text>
               </Box>
-              <Divider
+              <Separator
                 orientation="vertical"
                 borderColor="#DCDCDC"
               />
@@ -141,7 +141,7 @@ const ProductListing = ({ product }: Props) => {
                   {product.dimensions?.width}cm
                 </Text>
               </Box>
-              <Divider
+              <Separator
                 orientation="vertical"
                 borderColor="#DCDCDC"
               />

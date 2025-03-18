@@ -1,15 +1,16 @@
-import { ComponentPropsWithoutRef } from 'react';
+'use client';
 
-type Props = ComponentPropsWithoutRef<'svg'>;
+import { createIcon } from '@chakra-ui/react';
 
-const LinkedInIcon = ({ ...props }: Props) => {
-  return (
-    <svg
-      viewBox="0 0 256 256"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="#000000"
-      {...props}
-    >
+const LinkedInIcon = createIcon({
+  displayName: 'LinkedInIcon',
+  defaultProps: {
+    xmlns: 'http://www.w3.org/2000/svg',
+    fill: '#000000',
+  },
+  viewBox: '0 0 256 256',
+  path: (
+    <>
       <g
         id="SVGRepo_bgCarrier"
         strokeWidth="0"
@@ -31,8 +32,7 @@ const LinkedInIcon = ({ ...props }: Props) => {
           ></path>
         </g>
       </g>
-    </svg>
-  );
-};
-
+    </>
+  ),
+});
 export default LinkedInIcon;

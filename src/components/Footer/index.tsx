@@ -2,20 +2,16 @@ import { z } from 'zod';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Link } from 'react-router-dom';
-import { useTheme } from 'styled-components';
 import {
   Box,
   Button,
   Container,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
+  Field,
   Heading,
   Input,
-  ListItem,
-  UnorderedList,
-  useToast,
+  List,
 } from '@chakra-ui/react';
+import { toaster } from '@/components/ui/toaster';
 import useGetCategories from '@/hooks/useGetCategories';
 import Copyright from '@/components/Copyright';
 
@@ -49,30 +45,25 @@ const Footer = () => {
     resolver: zodResolver(formSchema),
   });
 
-  const { colors } = useTheme();
-
-  const toast = useToast();
-
   const onSubmit: SubmitHandler<FormSchema> = ({ email }) => {
-    toast({
+    toaster.create({
       title: `E-mail ${email} cadastrado com sucesso`,
       description: 'Seu e-mail irá receber novidades de nossa empresa',
-      status: 'info',
-      isClosable: true,
+      type: 'info',
     });
 
     form.reset(defaultValues);
   };
 
   return (
-    <Box backgroundColor={colors.background.tertiary}>
+    <Box backgroundColor="purple.800">
       <Container
         maxW={{
           sm: '640px',
           md: '768px',
           lg: '1024px',
           xl: '1280px',
-          xxl: '1440px',
+          '2xl': '1440px',
         }}
         p={0}
       >
@@ -102,25 +93,27 @@ const Footer = () => {
                 >
                   Categorias
                 </Heading>
-                <UnorderedList
+                <List.Root
+                  as="ul"
                   display="flex"
                   flexDirection="column"
                   gap="0.5rem"
-                  styleType="none"
+                  listStyle="none"
                   margin="0"
                 >
                   {categories.map((item) => (
-                    <ListItem
+                    <List.Item
                       key={item.uid}
-                      as={Link}
-                      to={`/produtos?tipo=${item.value}`}
+                      asChild
                       color="white"
                       fontSize="0.875rem"
                     >
-                      {item.label}
-                    </ListItem>
+                      <Link to={`/produtos?tipo=${item.value}`}>
+                        {item.label}
+                      </Link>
+                    </List.Item>
                   ))}
-                </UnorderedList>
+                </List.Root>
               </Box>
               <Box
                 display="flex"
@@ -133,25 +126,26 @@ const Footer = () => {
                 >
                   Menu
                 </Heading>
-                <UnorderedList
+                <List.Root
                   display="flex"
                   flexDirection="column"
                   gap="0.5rem"
-                  styleType="none"
+                  listStyle="none"
                   margin="0"
                 >
                   {productRoutes.map((route) => (
-                    <ListItem
+                    <List.Item
                       key={route.value}
-                      as={Link}
-                      to={`/produtos?ordem=${route.value}`}
+                      asChild
                       color="white"
                       fontSize="0.875rem"
                     >
-                      {route.label}
-                    </ListItem>
+                      <Link to={`/produtos?ordem=${route.value}`}>
+                        {route.label}
+                      </Link>
+                    </List.Item>
                   ))}
-                </UnorderedList>
+                </List.Root>
               </Box>
               <Box
                 display="flex"
@@ -164,25 +158,24 @@ const Footer = () => {
                 >
                   Nossa Empresa
                 </Heading>
-                <UnorderedList
+                <List.Root
                   display="flex"
                   flexDirection="column"
                   gap="0.5rem"
-                  styleType="none"
+                  listStyle="none"
                   margin="0"
                 >
                   {companyRoutes.map((route) => (
-                    <ListItem
+                    <List.Item
                       key={route}
-                      as={Link}
-                      to="/"
+                      asChild
                       color="white"
                       fontSize="0.875rem"
                     >
-                      {route}
-                    </ListItem>
+                      <Link to="/">{route}</Link>
+                    </List.Item>
                   ))}
-                </UnorderedList>
+                </List.Root>
               </Box>
             </Box>
             <Box
@@ -197,35 +190,33 @@ const Footer = () => {
                 name="email"
                 control={form.control}
                 render={({ field, fieldState }) => (
-                  <>
-                    <FormLabel
-                      htmlFor="newsletter-email"
-                      color="white"
-                      fontWeight="bold"
-                    >
-                      Inscreva-se na nossa lista de e-mails
-                    </FormLabel>
-                    <Box
-                      display="flex"
-                      alignItems="center"
-                      gap="0.5rem"
-                    >
-                      <FormControl isInvalid={fieldState.error && true}>
-                        <Input
-                          {...field}
-                          id="newsletter-email"
-                          type="email"
-                          placeholder="Digite seu e-mail"
-                        />
-                        {fieldState.error && (
-                          <FormErrorMessage>
-                            {fieldState.error.message}
-                          </FormErrorMessage>
-                        )}
-                      </FormControl>
-                      <Button type="submit">Confirmar</Button>
-                    </Box>
-                  </>
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    gap="0.5rem"
+                  >
+                    <Field.Root invalid={fieldState.error && true}>
+                      <Field.Label
+                        htmlFor="newsletter-email"
+                        color="white"
+                        fontWeight="bold"
+                      >
+                        Inscreva-se na nossa lista de e-mails
+                      </Field.Label>
+                      <Input
+                        {...field}
+                        id="newsletter-email"
+                        type="email"
+                        placeholder="Digite seu e-mail"
+                      />
+                      {fieldState.error && (
+                        <Field.ErrorText>
+                          {fieldState.error.message}
+                        </Field.ErrorText>
+                      )}
+                    </Field.Root>
+                    <Button type="submit">Confirmar</Button>
+                  </Box>
                 )}
               />
             </Box>

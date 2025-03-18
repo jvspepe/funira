@@ -6,9 +6,7 @@ import {
   IconButton,
   Link,
   Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
+  Portal,
 } from '@chakra-ui/react';
 import { CircleUserRound } from 'lucide-react';
 import { logoutUser } from '@/lib/auth';
@@ -39,31 +37,30 @@ const Header = () => {
       as="header"
       position="sticky"
       top="0"
-      zIndex={9999}
+      zIndex={99}
       bgColor="#FAFAFA"
     >
       <Container
-        maxW={{
+        maxWidth={{
           sm: '640px',
           md: '768px',
           lg: '1024px',
           xl: '1280px',
-          xxl: '1440px',
+          '2xl': '1440px',
         }}
-        p={0}
+        padding={0}
       >
         <Box
           display="flex"
           alignItems="center"
           justifyContent="space-between"
-          padding="1.5rem"
+          padding={{ base: '1.5rem', md: '1.5rem 0' }}
         >
           <Link
-            as={RouterLink}
-            to="/"
+            asChild
             fontSize="1.5rem"
           >
-            Funira
+            <RouterLink to="/">Funira</RouterLink>
           </Link>
           <Box
             as="ul"
@@ -72,46 +69,43 @@ const Header = () => {
             listStyleType="none"
           >
             <Box as="li">
-              <Link
-                as={RouterLink}
-                to="/"
-              >
-                Início
+              <Link asChild>
+                <RouterLink to="/">Início</RouterLink>
               </Link>
             </Box>
             <Box as="li">
-              <Menu placement="bottom">
-                <MenuButton
-                  as={Button}
-                  variant="link"
-                >
-                  Produtos
-                </MenuButton>
-                <MenuList>
-                  <MenuItem
-                    as={RouterLink}
-                    to="/produtos"
-                  >
-                    Ver todos
-                  </MenuItem>
-                  {categories.map((category) => (
-                    <MenuItem
-                      key={category.label}
-                      as={RouterLink}
-                      to={`produtos?tipo=${category.value}`}
-                    >
-                      {category.label}
-                    </MenuItem>
-                  ))}
-                </MenuList>
-              </Menu>
+              <Menu.Root>
+                <Menu.Trigger asChild>
+                  <Button variant="plain">Produtos</Button>
+                </Menu.Trigger>
+                <Portal>
+                  <Menu.Positioner>
+                    <Menu.Content>
+                      <Menu.Item
+                        asChild
+                        value="produtos"
+                      >
+                        <RouterLink to="/produtos">Ver todos</RouterLink>
+                      </Menu.Item>
+                      {categories.map((category) => (
+                        <Menu.Item
+                          key={category.label}
+                          asChild
+                          value={category.label}
+                        >
+                          <RouterLink to={`produtos?tipo=${category.value}`}>
+                            {category.label}
+                          </RouterLink>
+                        </Menu.Item>
+                      ))}
+                    </Menu.Content>
+                  </Menu.Positioner>
+                </Portal>
+              </Menu.Root>
             </Box>
             <Box as="li">
-              <Link
-                as={RouterLink}
-                to="/sobre"
-              >
-                Sobre
+              <Link asChild>
+                <RouterLink to="/sobre">Sobre</RouterLink>
               </Link>
             </Box>
           </Box>
@@ -121,35 +115,46 @@ const Header = () => {
             gap="0.5rem"
           >
             <CartDrawer />
-            <Menu placement="bottom-end">
-              <MenuButton
-                as={IconButton}
-                aria-label="Menu de usuário"
-                variant="ghost"
-                icon={<CircleUserRound />}
-                display={{ base: 'none', lg: 'flex' }}
-              />
-              <MenuList>
-                {!currentUser ? (
-                  <>
-                    <MenuItem
-                      as={RouterLink}
-                      to="/conectar"
-                    >
-                      Conectar
-                    </MenuItem>
-                    <MenuItem
-                      as={RouterLink}
-                      to="/criar-conta"
-                    >
-                      Criar Conta
-                    </MenuItem>
-                  </>
-                ) : (
-                  <MenuItem onClick={handleSignOut}>Sair</MenuItem>
-                )}
-              </MenuList>
-            </Menu>
+            <Menu.Root>
+              <Menu.Trigger asChild>
+                <IconButton
+                  aria-label="Menu de usuário"
+                  variant="ghost"
+                  display={{ base: 'none', lg: 'flex' }}
+                >
+                  <CircleUserRound />
+                </IconButton>
+              </Menu.Trigger>
+              <Portal>
+                <Menu.Positioner>
+                  <Menu.Content>
+                    {!currentUser ? (
+                      <>
+                        <Menu.Item
+                          asChild
+                          value="conectar"
+                        >
+                          <RouterLink to="/conectar">Conectar</RouterLink>
+                        </Menu.Item>
+                        <Menu.Item
+                          asChild
+                          value="criar-conta"
+                        >
+                          <RouterLink to="/criar-conta">Criar Conta</RouterLink>
+                        </Menu.Item>
+                      </>
+                    ) : (
+                      <Menu.Item
+                        onClick={handleSignOut}
+                        value="sign-out"
+                      >
+                        Sair
+                      </Menu.Item>
+                    )}
+                  </Menu.Content>
+                </Menu.Positioner>
+              </Portal>
+            </Menu.Root>
             <MobileDrawer categories={categories} />
           </Box>
         </Box>

@@ -1,15 +1,16 @@
-import { ComponentPropsWithoutRef } from 'react';
+'use client';
 
-type Props = ComponentPropsWithoutRef<'svg'>;
+import { createIcon } from '@chakra-ui/react';
 
-const InstagramIcon = ({ ...props }: Props) => {
-  return (
-    <svg
-      viewBox="0 0 3364.7 3364.7"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="#000000"
-      {...props}
-    >
+const InstagramIcon = createIcon({
+  displayName: 'InstagramIcon',
+  defaultProps: {
+    xmlns: 'http://www.w3.org/2000/svg',
+    fill: '#000000',
+  },
+  viewBox: '0 0 3364.7 3364.7',
+  path: (
+    <>
       <g
         id="SVGRepo_bgCarrier"
         strokeWidth="0"
@@ -68,8 +69,8 @@ const InstagramIcon = ({ ...props }: Props) => {
           fill="#ffffff"
         ></path>
       </g>
-    </svg>
-  );
-};
+    </>
+  ),
+});
 
 export default InstagramIcon;

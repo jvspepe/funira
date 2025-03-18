@@ -1,15 +1,16 @@
-import { ComponentPropsWithoutRef } from 'react';
+'use client';
 
-type Props = ComponentPropsWithoutRef<'svg'>;
+import { createIcon } from '@chakra-ui/react';
 
-const FacebookIcon = ({ ...props }: Props) => {
-  return (
-    <svg
-      viewBox="0 0 266.895 266.895"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="#000000"
-      {...props}
-    >
+const FacebookIcon = createIcon({
+  displayName: 'FacebookIcon',
+  defaultProps: {
+    xmlns: 'http://www.w3.org/2000/svg',
+    fill: '#000000',
+  },
+  viewBox: '0 0 266.895 266.895',
+  path: (
+    <>
       <g
         id="SVGRepo_bgCarrier"
         strokeWidth="0"
@@ -29,8 +30,8 @@ const FacebookIcon = ({ ...props }: Props) => {
           fill="#ffffff"
         ></path>
       </g>
-    </svg>
-  );
-};
+    </>
+  ),
+});
 
 export default FacebookIcon;

@@ -1,22 +1,13 @@
-import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Accordion,
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
   Box,
   Button,
+  CloseButton,
   Drawer,
-  DrawerBody,
-  DrawerCloseButton,
-  DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
   IconButton,
-  useDisclosure,
+  Portal,
+  Separator,
 } from '@chakra-ui/react';
 import { MenuIcon } from 'lucide-react';
 import { TCategory } from '@/@types/categories';
@@ -26,142 +17,125 @@ type Props = {
 };
 
 const MobileDrawer = ({ categories }: Props) => {
-  const buttonRef = useRef(null);
-
-  const { isOpen, onClose, onOpen } = useDisclosure();
-
   return (
-    <>
-      <IconButton
-        onClick={onOpen}
-        ref={buttonRef}
-        type="button"
-        aria-label="Abrir menu"
-        variant="ghost"
-        display={{ base: 'flex', md: 'none' }}
-        icon={<MenuIcon />}
-      />
-      <Drawer
-        isOpen={isOpen}
-        onClose={onClose}
-        finalFocusRef={buttonRef}
-        placement="right"
-      >
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader borderBottom="1px solid #EBE8F4">
-            Navegação
-          </DrawerHeader>
-          <DrawerBody paddingInline={0}>
-            <Box
-              as="ul"
-              display="flex"
-              flexDirection="column"
-              justifyContent="center"
-              listStyleType="none"
-            >
-              <Box as="li">
-                <Button
-                  as={Link}
-                  to="/"
-                  variant="ghost"
-                  size="lg"
-                  width="full"
-                >
-                  Início
-                </Button>
-              </Box>
-              <Box as="li">
-                <Accordion allowToggle>
-                  <AccordionItem>
-                    <AccordionButton
-                      as={Button}
-                      variant="ghost"
-                      size="lg"
-                      width="full"
-                      display="flex"
-                      alignItems="center"
-                      gap="0.5rem"
-                    >
-                      Produtos
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel>
-                      <Box
-                        as="ul"
-                        display="flex"
-                        flexDirection="column"
-                        justifyContent="center"
-                        listStyleType="none"
-                      >
-                        <Box as="li">
+    <Drawer.Root>
+      <Drawer.Trigger asChild>
+        <IconButton
+          type="button"
+          aria-label="Abrir menu"
+          variant="ghost"
+          display={{ base: 'flex', md: 'none' }}
+        >
+          <MenuIcon />
+        </IconButton>
+      </Drawer.Trigger>
+      <Portal>
+        <Drawer.Backdrop />
+        <Drawer.Positioner>
+          <Drawer.Content>
+            <Drawer.CloseTrigger asChild>
+              <CloseButton />
+            </Drawer.CloseTrigger>
+            <Drawer.Header>
+              <Drawer.Title>Navegação</Drawer.Title>
+            </Drawer.Header>
+            <Drawer.Body paddingInline={0}>
+              <Box
+                as="ul"
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
+                listStyleType="none"
+              >
+                <Box as="li">
+                  <Button
+                    asChild
+                    variant="ghost"
+                    size="lg"
+                    width="full"
+                  >
+                    <Link to="/">Início</Link>
+                  </Button>
+                </Box>
+                <Separator />
+                <Box as="li">
+                  <Accordion.Root collapsible>
+                    <Accordion.Item value="products">
+                      <Accordion.ItemTrigger asChild>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                        >
+                          Produtos
+                        </Button>
+                        {/* <Accordion.ItemIndicator /> */}
+                      </Accordion.ItemTrigger>
+                      <Accordion.ItemContent as="ul">
+                        <Accordion.ItemBody
+                          as="li"
+                          width="full"
+                          padding="0"
+                        >
                           <Button
-                            as={Link}
-                            to="/produtos"
+                            asChild
+                            variant="ghost"
                             width="full"
                           >
-                            Ver todos
+                            <Link to="/produtos">Ver todos</Link>
                           </Button>
-                        </Box>
+                        </Accordion.ItemBody>
                         {categories.map((category) => (
-                          <Box
-                            key={category.label}
+                          <Accordion.ItemBody
+                            key={category.uid}
                             as="li"
+                            width="full"
+                            padding="0"
                           >
                             <Button
-                              as={Link}
-                              to={`produtos?tipo=${category.value}`}
+                              asChild
+                              variant="ghost"
                               width="full"
                             >
-                              {category.label}
+                              <Link to={`produtos?tipo=${category.value}`}>
+                                {category.label}
+                              </Link>
                             </Button>
-                          </Box>
+                          </Accordion.ItemBody>
                         ))}
-                      </Box>
-                    </AccordionPanel>
-                  </AccordionItem>
-                </Accordion>
+                      </Accordion.ItemContent>
+                    </Accordion.Item>
+                  </Accordion.Root>
+                </Box>
+                <Box as="li">
+                  <Button
+                    asChild
+                    variant="ghost"
+                    size="lg"
+                    width="full"
+                  >
+                    <Link to="/sobre">Sobre</Link>
+                  </Button>
+                </Box>
               </Box>
-              <Box as="li">
-                <Button
-                  as={Link}
-                  to="/sobre"
-                  variant="ghost"
-                  size="lg"
-                  width="full"
-                >
-                  Sobre
-                </Button>
-              </Box>
-            </Box>
-          </DrawerBody>
-          <DrawerFooter>
-            <Box
-              display="flex"
-              alignItems="center"
-              gap="1rem"
-              w={'full'}
-            >
+            </Drawer.Body>
+            <Drawer.Footer>
               <Button
-                as={Link}
-                to="/conectar"
+                asChild
                 flexGrow={1}
               >
-                Conectar
+                <Link to="/conectar">Conectar</Link>
               </Button>
               <Button
-                as={Link}
-                to="/criar-conta"
+                asChild
                 flexGrow={1}
               >
-                Criar Conta
+                <Link to="/criar-conta">Criar Conta</Link>
               </Button>
-            </Box>
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
-    </>
+            </Drawer.Footer>
+          </Drawer.Content>
+        </Drawer.Positioner>
+      </Portal>
+    </Drawer.Root>
   );
 };
 

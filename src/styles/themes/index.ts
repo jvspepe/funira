@@ -1,15 +1,19 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { extendTheme } from '@chakra-ui/react';
+import { createSystem, defaultConfig, defineConfig } from '@chakra-ui/react';
 
 const breakpoints = {
-  sm: '640px',
-  md: '768px',
-  lg: '1024px',
-  xl: '1280px',
-  xxl: '1440px',
-} as const;
+  sm: '40rem',
+  md: '48rem',
+  lg: '64rem',
+  xl: '80rem',
+  '2xl': '90rem',
+};
 
-const theme = extendTheme({ breakpoints });
+const config = defineConfig({
+  theme: {
+    breakpoints,
+  },
+});
+
+const theme = createSystem(defaultConfig, config);
 
 export default theme;

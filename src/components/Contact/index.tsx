@@ -1,9 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Box, Button, Container, Heading, Image, Text } from '@chakra-ui/react';
-import { useTheme } from 'styled-components';
 
 const Contact = () => {
-  const { colors } = useTheme();
   return (
     <Container
       maxW={{
@@ -11,7 +9,7 @@ const Contact = () => {
         md: '768px',
         lg: '1024px',
         xl: '1280px',
-        xxl: '1440px',
+        '2xl': '1440px',
       }}
       p={0}
     >
@@ -24,7 +22,7 @@ const Contact = () => {
         padding={{ base: '2rem 1.5rem', sm: '2rem 0' }}
       >
         <Box
-          backgroundColor={colors.background.tertiary}
+          backgroundColor="purple.800"
           display="flex"
           flexDirection="column"
           gap="1.25rem"
@@ -47,11 +45,8 @@ const Contact = () => {
             pela criação e design de peças para o lar meticulosamente
             elaboradas.
           </Text>
-          <Button
-            as={Link}
-            to="/"
-          >
-            Entrar em contato
+          <Button asChild>
+            <Link to="/">Entrar em contato</Link>
           </Button>
         </Box>
         <Image

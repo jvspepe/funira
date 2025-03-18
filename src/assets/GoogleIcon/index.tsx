@@ -1,16 +1,17 @@
-import { ComponentPropsWithoutRef } from 'react';
+'use client';
 
-type Props = ComponentPropsWithoutRef<'svg'>;
+import { createIcon } from '@chakra-ui/react';
 
-const GoogleIcon = ({ ...props }: Props) => {
-  return (
-    <svg
-      viewBox="-3 0 262 262"
-      xmlns="http://www.w3.org/2000/svg"
-      preserveAspectRatio="xMidYMid"
-      fill="#000000"
-      {...props}
-    >
+const GoogleIcon = createIcon({
+  displayName: 'GoogleIcon',
+  viewBox: '-3 0 262 262',
+  defaultProps: {
+    xmlns: 'http://www.w3.org/2000/svg',
+    preserveAspectRatio: 'xMidYMid',
+    fill: '#000000',
+  },
+  path: (
+    <>
       <g
         id="SVGRepo_bgCarrier"
         strokeWidth="0"
@@ -38,8 +39,8 @@ const GoogleIcon = ({ ...props }: Props) => {
           fill="#EB4335"
         ></path>
       </g>
-    </svg>
-  );
-};
+    </>
+  ),
+});
 
 export default GoogleIcon;

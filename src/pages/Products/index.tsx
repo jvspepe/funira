@@ -7,17 +7,20 @@ import {
   orderBy,
   startAfter,
 } from 'firebase/firestore';
-import { Button, Container } from '@chakra-ui/react';
+import { Button, Container, Grid, GridItem } from '@chakra-ui/react';
 import { TProduct } from '@/@types/product';
 import { getDocuments } from '@/lib/database';
 import useGetCategories from '@/hooks/useGetCategories';
-import ProductsFilter from '@/components/ProductsFilter';
 import ProductsHeader from '@/components/HeaderPage';
 import ProductDisplay from '@/components/ProductDisplay';
+import ProductFilters from '@/components/product-filters';
+import ProductSortOptions from '@/components/product-sort-options';
 
 const PAGE_SIZE = 8;
 
 const SORT_OPTIONS = {
+  alphabeticalAscending: 'a-z',
+  alphabeticalDescending: 'z-a',
   priceDescending: 'maior-preço',
   priceAscending: 'menor-preço',
   soldDescending: 'mais-vendido',
@@ -33,7 +36,7 @@ const Products = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const { categories } = useGetCategories();
 
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   function sortProducts() {
     const sortParam = searchParams.get('ordem');
@@ -50,8 +53,12 @@ const Products = () => {
       case SORT_OPTIONS.soldDescending:
         return products.sort((a, b) => b.sales - a.sales);
       case SORT_OPTIONS.priceAscending:
-      default:
         return products.sort((a, b) => a.price - b.price);
+      case SORT_OPTIONS.alphabeticalDescending:
+        return products.sort((a, b) => a.name.localeCompare(b.name) * -1);
+      case SORT_OPTIONS.alphabeticalAscending:
+      default:
+        return products.sort((a, b) => a.name.localeCompare(b.name));
     }
   }
 
@@ -99,6 +106,18 @@ const Products = () => {
     setLoading(false);
   }
 
+  function handleChangeSort(value: string) {
+    const sortParams = searchParams.get('ordem');
+
+    if (sortParams === value) {
+      searchParams.delete('ordem');
+      setSearchParams(searchParams);
+    } else {
+      searchParams.set('ordem', value);
+      setSearchParams(searchParams);
+    }
+  }
+
   useEffect(() => {
     handleGetProducts().catch((error) => {
       throw new Error(String(error));
@@ -114,17 +133,40 @@ const Products = () => {
           md: '768px',
           lg: '1024px',
           xl: '1280px',
-          xxl: '1440px',
+          '2xl': '1440px',
         }}
-        padding="1rem 0"
+        padding={{ base: '1.25rem', md: '1.25rem 0' }}
       >
-        <ProductsFilter categories={categories} />
-        <ProductDisplay products={filteredProducts} />
-        {!isLastDoc && (
-          <Button onClick={handleLoadProducts}>
-            {loading ? 'Loading' : 'Ver mais'}
-          </Button>
-        )}
+        <Grid
+          templateAreas={{
+            base: `'filters sort' 'products products'`,
+            md: `'filters sort' 'filters products'`,
+          }}
+          gridAutoColumns={{ base: '1fr', md: 'initial' }}
+          gap="1.25rem"
+          position="relative"
+        >
+          <GridItem area={'filters'}>
+            <ProductFilters categories={categories} />
+          </GridItem>
+          <GridItem
+            area={'sort'}
+            justifySelf={{ md: 'end' }}
+          >
+            <ProductSortOptions handleChangeSort={handleChangeSort} />
+          </GridItem>
+          <GridItem
+            area={'products'}
+            flexGrow="1"
+          >
+            <ProductDisplay products={filteredProducts} />
+            {!isLastDoc && (
+              <Button onClick={handleLoadProducts}>
+                {loading ? 'Loading' : 'Ver mais'}
+              </Button>
+            )}
+          </GridItem>
+        </Grid>
       </Container>
     </>
   );
