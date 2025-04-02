@@ -4,12 +4,6 @@ export type TUser = {
   id: string;
   username: string;
   email: string;
-  role: 'customer' | 'admin';
+  role: 'user' | 'administrator';
   createdAt: Timestamp;
-};
-
-export type TUserCredentials = {
-  username: string;
-  email: string;
-  password: string;
 };

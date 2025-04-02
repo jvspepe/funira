@@ -1,6 +1,6 @@
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
-import { RouterProvider } from 'react-router-dom';
+import { RouterProvider } from 'react-router';
 import '@fontsource-variable/montserrat';
 import '@fontsource-variable/space-grotesk';
 import router from '@/routes';

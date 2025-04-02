@@ -17,15 +17,15 @@ import { FirebaseError } from 'firebase/app';
 type Collection = 'users' | 'products' | 'categories';
 
 type ReturnData<T> = {
-  status: 'success' | 'error' | 'not-found';
+  status: 'success' | 'fail' | 'error';
   message: string;
   data?: T;
 };
 
-const converter = <T>(): FirestoreDataConverter<T> => {
+const converter = <T extends DocumentData>(): FirestoreDataConverter<T, T> => {
   return {
-    toFirestore(data) {
-      return data ?? {};
+    toFirestore(data: WithFieldValue<T>) {
+      return data;
     },
     fromFirestore(snapshot, options) {
       return snapshot.data(options) as T;
@@ -33,7 +33,7 @@ const converter = <T>(): FirestoreDataConverter<T> => {
   };
 };
 
-export const createDocument = async <T extends WithFieldValue<DocumentData>>(
+export const createDocument = async <T extends DocumentData>(
   collection: Collection,
   path: string,
   data: T
@@ -74,7 +74,7 @@ export const getDocument = async <T extends WithFieldValue<DocumentData>>(
 
     if (!document.exists()) {
       return {
-        status: 'not-found',
+        status: 'fail',
         message: 'Document does not exists',
       };
     }
@@ -99,7 +99,7 @@ export const getDocument = async <T extends WithFieldValue<DocumentData>>(
   }
 };
 
-export const getDocuments = async <T>(
+export const getDocuments = async <T extends DocumentData>(
   collection: Collection,
   ...constraints: QueryNonFilterConstraint[]
 ): Promise<
@@ -125,7 +125,7 @@ export const getDocuments = async <T>(
 
     if (snapshot.empty)
       return {
-        status: 'not-found',
+        status: 'fail',
         message: 'No documents found',
       };
 

@@ -1,12 +1,12 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router';
 import App from '@/App.tsx';
-import Home from '@/pages/Home';
-import Products from '@/pages/Products';
-import SingleProduct from '@/pages/SingleProduct';
-import About from '@/pages/About';
-import Cart from '@/pages/Cart';
-import Login from '@/pages/Login';
-import CreateAccount from '@/pages/CreateAccount';
+import Home from '@/pages/home';
+import Product from '@/pages/product';
+import Products from '@/pages/products';
+import About from '@/pages/about';
+import Checkout from '@/pages/checkout';
+import Login from '@/pages/login';
+import CreateAccount from '@/pages/register';
 import Layout from '@/layouts';
 
 const router = createBrowserRouter([
@@ -18,8 +18,11 @@ const router = createBrowserRouter([
         children: [
           { path: '/', element: <Home /> },
           { path: '/produtos', element: <Products /> },
-          { path: '/produtos/:productId', element: <SingleProduct /> },
-          { path: '/carrinho', element: <Cart /> },
+          {
+            path: '/produtos/:id',
+            element: <Product />,
+          },
+          { path: '/carrinho', element: <Checkout /> },
           { path: '/sobre', element: <About /> },
         ],
       },

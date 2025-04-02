@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router';
 import { Provider as ReduxProvider } from 'react-redux';
 import { Provider as ChakraProvider } from '@/components/ui/provider';
 import { store } from './store/store';
