@@ -7,8 +7,8 @@ const CheckoutDisplay = () => {
   return (
     <Stack
       separator={<Separator />}
-      gap="1.25rem"
-      paddingInlineEnd={'1.25rem'}
+      gap="{spacing.6}"
+      paddingInlineEnd={'{spacing.6}'}
     >
       {cart.map((item) => (
         <CheckoutItem

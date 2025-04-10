@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Box, Heading, IconButton, Image, Text } from '@chakra-ui/react';
 import { XIcon } from 'lucide-react';
-import { TCartProduct } from '@/@types/product';
+import { CartProduct } from '@/@types/models';
 import { changeQuantity } from '@/store/cartSlice';
 import { useAppDispatch } from '@/store/store';
 import NumberStepper from '@/components/ui/number-stepper';
 
 type Props = {
-  product: TCartProduct;
+  product: CartProduct;
 };
 
 const CheckoutItem = ({ product }: Props) => {
@@ -16,23 +16,23 @@ const CheckoutItem = ({ product }: Props) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(changeQuantity({ uid: product.uid, quantity: value }));
-  }, [value, dispatch, product.uid]);
+    dispatch(changeQuantity({ uid: product.id, quantity: value }));
+  }, [value, dispatch, product.id]);
 
   return (
     <Box
       display="flex"
-      gap="0.625rem"
+      gap="{spacing.2}"
     >
       <Image
-        src={product.images[0]}
+        src={product.imageCover}
         maxWidth={{ base: '10rem', sm: '15rem' }}
       />
       <Box
         display="flex"
         flexDirection="column"
         justifyContent="space-between"
-        gap="0.625rem"
+        gap="{spacing.2}"
         width="100%"
       >
         <Box
@@ -43,7 +43,7 @@ const CheckoutItem = ({ product }: Props) => {
           <Box
             display="flex"
             flexDirection="column"
-            gap="0.25rem"
+            gap="{spacing.2}"
           >
             <Heading
               as="h2"
@@ -74,8 +74,6 @@ const CheckoutItem = ({ product }: Props) => {
           value={value}
           setValue={setValue}
           minValue={1}
-          // onValueDecrease={() => dispatch(decreaseQuantity(product.uid))}
-          // onValueIncrease={() => dispatch(increaseQuantity(product.uid))}
         />
       </Box>
     </Box>

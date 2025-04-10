@@ -11,7 +11,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Box,
   Button,
-  Checkbox,
   Separator,
   Heading,
   Icon,
@@ -21,9 +20,10 @@ import {
 } from '@chakra-ui/react';
 import { ArrowLeft } from 'lucide-react';
 import { createUser, handleAuthError } from '@/lib/auth';
-import PasswordInput from '@/components/ui/password-input';
+import Checkbox from '@/components/ui/checkbox';
 import GoogleLogin from '@/components/google-login';
 import TextInput from '@/components/ui/text-input';
+import PasswordInput from '@/components/ui/password-input';
 
 const formSchema = z
   .object({
@@ -98,9 +98,9 @@ const RegisterForm = () => {
         display="flex"
         flexDirection="column"
         flexGrow="1"
-        maxW="36rem"
-        padding={{ base: '1.25rem', xl: '0' }}
-        gap="1.25rem"
+        maxWidth="{sizes.xl}"
+        padding={{ base: '{spacing.6}', xl: '0' }}
+        gap="{spacing.6}"
       >
         <Button
           asChild
@@ -108,7 +108,7 @@ const RegisterForm = () => {
           width="fit-content"
         >
           <RouterLink to="/">
-            <Icon>
+            <Icon aria-hidden>
               <ArrowLeft />
             </Icon>
             Voltar ao início
@@ -118,17 +118,21 @@ const RegisterForm = () => {
           display="flex"
           justifyContent="center"
           flexDirection="column"
-          gap="0.5rem"
+          gap="{spacing.2}"
         >
-          <Heading size="lg">Crie sua conta</Heading>
-
-          <Box
-            display="flex"
-            alignItems="center"
-            gap="0.5rem"
-          >
-            <Text>Já possui uma conta?</Text>
-            <Link asChild>
+          <Heading size="2xl">Crie sua conta</Heading>
+          <Box>
+            <Text
+              as="span"
+              color="fg.muted"
+            >
+              Já possui uma conta?
+            </Text>{' '}
+            <Link
+              asChild
+              color="fg.muted"
+              _hover={{ color: 'blue.500' }}
+            >
               <RouterLink to="/conectar">Conectar</RouterLink>
             </Link>
           </Box>
@@ -145,7 +149,7 @@ const RegisterForm = () => {
         )}
         <Box
           display="flex"
-          gap="1rem"
+          gap="{spacing.6}"
         >
           <Controller
             name="firstName"
@@ -234,17 +238,15 @@ const RegisterForm = () => {
           name="persistUser"
           control={form.control}
           render={({ field }) => (
-            <Checkbox.Root
+            <Checkbox
               onChange={field.onChange}
               onBlur={field.onBlur}
               name={field.name}
               ref={field.ref}
               checked={field.value}
             >
-              <Checkbox.HiddenInput />
-              <Checkbox.Control />
-              <Checkbox.Label>Lembrar de mim?</Checkbox.Label>
-            </Checkbox.Root>
+              Lembrar de mim?
+            </Checkbox>
           )}
         />
         <Button
@@ -254,7 +256,7 @@ const RegisterForm = () => {
           disabled={googleLoading}
           display="flex"
           alignItems="center"
-          gap="0.5rem"
+          gap="{spacing.2}"
         >
           Confirmar
         </Button>
@@ -262,13 +264,13 @@ const RegisterForm = () => {
           alignSelf="center"
           display="flex"
           flexDirection="column"
-          gap="1.25rem"
+          gap="{spacing.6}"
           width="full"
         >
           <Box
             display="flex"
             alignItems="center"
-            gap="1.25rem"
+            gap="{spacing.6}"
           >
             <Separator flexGrow="1" />
             <Text>Ou</Text>

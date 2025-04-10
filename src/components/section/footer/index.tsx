@@ -1,4 +1,4 @@
-import { Link } from 'react-router';
+import { Link as RouterLink } from 'react-router';
 import { z } from 'zod';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -10,6 +10,9 @@ import {
   Heading,
   Input,
   List,
+  Link,
+  Separator,
+  Group,
 } from '@chakra-ui/react';
 import { toaster } from '@/components/ui/toaster';
 import useGetCategories from '@/hooks/useGetCategories';
@@ -56,27 +59,28 @@ const Footer = () => {
   };
 
   return (
-    <Box backgroundColor="purple.800">
+    <Box backgroundColor="purple.900">
       <Container>
         <Box
           as="footer"
           display="grid"
-          gap="1.25rem"
-          paddingBlock="2.5rem 1.5rem"
-          paddingInline={{ base: '1.5rem', sm: '0' }}
+          gap="{spacing.6}"
+          paddingBlock="{spacing.6}"
         >
           <Box
             display="flex"
             flexDirection={{ base: 'column', lg: 'row' }}
-            gap="3rem"
-            borderBottom="1px solid white"
-            paddingBottom="1rem"
+            gap="{spacing.12}"
           >
-            <Box style={{ display: 'flex', flexWrap: 'wrap', gap: '3rem' }}>
+            <Box
+              display="flex"
+              flexWrap="wrap"
+              gap="{spacing.12}"
+            >
               <Box
                 display="flex"
                 flexDirection="column"
-                gap="0.75rem"
+                gap="{spacing.2}"
               >
                 <Heading
                   color="white"
@@ -88,7 +92,7 @@ const Footer = () => {
                   as="ul"
                   display="flex"
                   flexDirection="column"
-                  gap="0.5rem"
+                  gap="{spacing.2}"
                   listStyle="none"
                   margin="0"
                 >
@@ -99,8 +103,10 @@ const Footer = () => {
                       color="white"
                       fontSize="0.875rem"
                     >
-                      <Link to={`/produtos?tipo=${item.value}`}>
-                        {item.label}
+                      <Link asChild>
+                        <RouterLink to={`/produtos?tipo=${item.value}`}>
+                          {item.label}
+                        </RouterLink>
                       </Link>
                     </List.Item>
                   ))}
@@ -109,7 +115,7 @@ const Footer = () => {
               <Box
                 display="flex"
                 flexDirection="column"
-                gap="0.75rem"
+                gap="{spacing.2}"
               >
                 <Heading
                   color="white"
@@ -120,7 +126,7 @@ const Footer = () => {
                 <List.Root
                   display="flex"
                   flexDirection="column"
-                  gap="0.5rem"
+                  gap="{spacing.2}"
                   listStyle="none"
                   margin="0"
                 >
@@ -131,8 +137,10 @@ const Footer = () => {
                       color="white"
                       fontSize="0.875rem"
                     >
-                      <Link to={`/produtos?ordem=${route.value}`}>
-                        {route.label}
+                      <Link asChild>
+                        <RouterLink to={`/produtos?ordem=${route.value}`}>
+                          {route.label}
+                        </RouterLink>
                       </Link>
                     </List.Item>
                   ))}
@@ -141,7 +149,7 @@ const Footer = () => {
               <Box
                 display="flex"
                 flexDirection="column"
-                gap="0.75rem"
+                gap="{spacing.2}"
               >
                 <Heading
                   color="white"
@@ -152,7 +160,7 @@ const Footer = () => {
                 <List.Root
                   display="flex"
                   flexDirection="column"
-                  gap="0.5rem"
+                  gap="{spacing.2}"
                   listStyle="none"
                   margin="0"
                 >
@@ -163,55 +171,60 @@ const Footer = () => {
                       color="white"
                       fontSize="0.875rem"
                     >
-                      <Link to="/">{route}</Link>
+                      <Link asChild>
+                        <RouterLink to="/">{route}</RouterLink>
+                      </Link>
                     </List.Item>
                   ))}
                 </List.Root>
               </Box>
             </Box>
-            <Box
+            <Group
               as="form"
               onSubmit={form.handleSubmit(onSubmit)}
-              display="flex"
-              flexDirection="column"
-              gap="0.5rem"
               flexGrow="1"
+              height="fit-content"
+              attached
             >
               <Controller
                 name="email"
                 control={form.control}
                 render={({ field, fieldState }) => (
-                  <Box
-                    display="flex"
-                    alignItems="center"
-                    gap="0.5rem"
-                  >
-                    <Field.Root invalid={fieldState.error && true}>
+                  <Field.Root invalid={fieldState.error && true}>
+                    <Heading asChild>
                       <Field.Label
                         htmlFor="newsletter-email"
                         color="white"
-                        fontWeight="bold"
+                        fontSize="md"
                       >
                         Inscreva-se na nossa lista de e-mails
                       </Field.Label>
-                      <Input
-                        {...field}
-                        id="newsletter-email"
-                        type="email"
-                        placeholder="Digite seu e-mail"
-                      />
-                      {fieldState.error && (
-                        <Field.ErrorText>
-                          {fieldState.error.message}
-                        </Field.ErrorText>
-                      )}
-                    </Field.Root>
-                    <Button type="submit">Confirmar</Button>
-                  </Box>
+                    </Heading>
+                    <Input
+                      {...field}
+                      id="newsletter-email"
+                      type="email"
+                      placeholder="Digite seu e-mail"
+                      variant="subtle"
+                      borderRightRadius="0"
+                    />
+                    {fieldState.error && (
+                      <Field.ErrorText>
+                        {fieldState.error.message}
+                      </Field.ErrorText>
+                    )}
+                  </Field.Root>
                 )}
               />
-            </Box>
+              <Button
+                type="submit"
+                alignSelf={'end'}
+              >
+                Confirmar
+              </Button>
+            </Group>
           </Box>
+          <Separator />
           <Copyright />
         </Box>
       </Container>

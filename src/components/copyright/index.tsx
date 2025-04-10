@@ -24,7 +24,10 @@ const Copyright = () => {
       >
         <IconButton
           asChild
-          variant="ghost"
+          variant="plain"
+          _hover={{
+            backgroundColor: 'rgba(255, 255, 255, 0.125)',
+          }}
         >
           <Link
             href="https://www.linkedin.com/"
@@ -40,7 +43,10 @@ const Copyright = () => {
         </IconButton>
         <IconButton
           asChild
-          variant="ghost"
+          variant="plain"
+          _hover={{
+            backgroundColor: 'rgba(255, 255, 255, 0.125)',
+          }}
         >
           <Link
             href="https://www.linkedin.com/"
@@ -56,7 +62,10 @@ const Copyright = () => {
         </IconButton>
         <IconButton
           asChild
-          variant="ghost"
+          variant="plain"
+          _hover={{
+            backgroundColor: 'rgba(255, 255, 255, 0.125)',
+          }}
         >
           <Link
             href="https://www.linkedin.com/"

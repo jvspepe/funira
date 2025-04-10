@@ -6,12 +6,14 @@ import {
   Button,
   Container,
   Field,
+  Group,
   Heading,
+  Icon,
   Input,
   Text,
   VisuallyHidden,
 } from '@chakra-ui/react';
-import { CircleCheck } from 'lucide-react';
+import { CircleCheckIcon } from 'lucide-react';
 import { toaster } from '@/components/ui/toaster';
 
 const benefits = ['Ofertas Exclusivas', 'Eventos', 'Descontos'];
@@ -50,7 +52,7 @@ const Newsletter = () => {
       <Container>
         <Box
           display="flex"
-          padding="1.5rem"
+          paddingBlock="{spacing.6}"
           alignItems={{ sm: 'center' }}
           justifyContent={{ sm: 'center' }}
         >
@@ -58,27 +60,27 @@ const Newsletter = () => {
             as="section"
             display="flex"
             flexDirection="column"
-            gap="1.25rem"
+            gap="{spacing.6}"
             padding={{ sm: '5rem 0' }}
           >
             <Box
               display="flex"
               flexDirection="column"
-              gap="0.75rem"
+              gap="{spacing.4}"
               maxWidth="35rem"
               textAlign={{ sm: 'center' }}
             >
               <Heading
                 as="h4"
                 color="white"
-                fontSize={{ base: '1.5rem', xl: '2rem' }}
+                fontSize={{ base: '2xl', xl: '2rem' }}
                 fontWeight="normal"
               >
                 Junte-se ao clube e aproveite os benefícios.
               </Heading>
               <Text
                 color="white"
-                fontSize={{ base: '0.875rem', xl: '1.125rem' }}
+                fontSize={{ base: 'sm', xl: 'lg' }}
               >
                 Cadastre-se para receber nossa newsletter e receba ofertas
                 exclusivas em novas coleções, liquidações, lojas pop-up e muito
@@ -88,7 +90,7 @@ const Newsletter = () => {
             <Box
               display="flex"
               flexDirection={{ base: 'column', sm: 'row' }}
-              gap="0.5rem"
+              gap="{spacing.4}"
               alignSelf={{ sm: 'center' }}
             >
               {benefits.map((benefit) => (
@@ -98,21 +100,19 @@ const Newsletter = () => {
                   color="white"
                   display="flex"
                   alignItems="center"
-                  gap="0.5rem"
+                  gap="{spacing.2}"
                 >
-                  <CircleCheck size={16} />
+                  <Icon size="md">
+                    <CircleCheckIcon />
+                  </Icon>
                   {benefit}
                 </Box>
               ))}
             </Box>
-            <Box
+            <Group
               as="form"
               onSubmit={form.handleSubmit(onSubmit)}
-              backgroundColor="white"
-              display="flex"
-              gap="0.5rem"
-              padding="0.5rem"
-              borderRadius="base"
+              attached
             >
               <Controller
                 name="email"
@@ -127,7 +127,11 @@ const Newsletter = () => {
                       id={field.name}
                       type="email"
                       placeholder="Digite seu e-mail"
+                      variant="subtle"
+                      borderRightRadius="0"
+                      size="xl"
                     />
+
                     {fieldState.error && (
                       <Field.ErrorText>
                         {fieldState.error.message}
@@ -136,8 +140,13 @@ const Newsletter = () => {
                   </Field.Root>
                 )}
               />
-              <Button type="submit">Confirmar</Button>
-            </Box>
+              <Button
+                type="submit"
+                size="xl"
+              >
+                Confirmar
+              </Button>
+            </Group>
           </Box>
         </Box>
       </Container>

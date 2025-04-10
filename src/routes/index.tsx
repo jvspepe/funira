@@ -7,6 +7,7 @@ import About from '@/pages/about';
 import Checkout from '@/pages/checkout';
 import Login from '@/pages/login';
 import CreateAccount from '@/pages/register';
+import CreateProduct from '@/pages/admin/create-product/create-product';
 import Layout from '@/layouts';
 
 const router = createBrowserRouter([
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
           { path: '/conectar', element: <Login /> },
           { path: '/criar-conta', element: <CreateAccount /> },
         ],
+      },
+      {
+        path: '/admin',
+        children: [{ index: true, element: <CreateProduct /> }],
       },
     ],
   },

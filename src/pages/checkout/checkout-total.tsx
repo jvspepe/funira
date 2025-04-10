@@ -1,4 +1,4 @@
-import { Badge, Button, Card, Link, Text } from '@chakra-ui/react';
+import { Badge, Button, Card, Text } from '@chakra-ui/react';
 import { useAppSelector } from '@/store/store';
 
 const CheckoutTotal = () => {

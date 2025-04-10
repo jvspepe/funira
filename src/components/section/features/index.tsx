@@ -1,7 +1,7 @@
 import { Box, Heading } from '@chakra-ui/react';
 import { CircleCheck, CreditCard, Leaf, Truck } from 'lucide-react';
 import Feature from '@/@types/feature';
-import FeatureCard from '@/components/feature-card';
+import FeatureCard from '@/components/section/features/feature-card';
 
 const featureList: Feature[] = [
   {
@@ -33,7 +33,7 @@ const Features = () => {
       display="flex"
       flexDirection="column"
       gap="2rem"
-      padding={{ base: '3rem 1.5rem', sm: '3rem 0' }}
+      paddingBlock={'{spacing.12}'}
     >
       <Heading
         as="h2"
@@ -45,7 +45,7 @@ const Features = () => {
       </Heading>
       <Box
         display="grid"
-        gap="1.5rem"
+        gap="{spacing.6}"
         gridTemplateColumns={{ sm: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }}
       >
         {featureList.map((feature) => (

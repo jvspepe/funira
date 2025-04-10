@@ -1,11 +1,11 @@
 import { Link } from 'react-router';
 import { Box, Button, Heading } from '@chakra-ui/react';
-import type { TProduct } from '@/@types/product';
+import type { Product } from '@/@types/models';
 import ProductCard from '@/components/product-card';
 
 type Props = {
   title?: string;
-  products: TProduct[];
+  products: Product[];
   link?: string;
 };
 

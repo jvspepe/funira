@@ -6,14 +6,22 @@ import {
   orderBy,
   startAfter,
 } from 'firebase/firestore';
-import { Button, Container, Grid, GridItem } from '@chakra-ui/react';
-import { TProduct } from '@/@types/product';
+import {
+  Button,
+  Container,
+  EmptyState,
+  Grid,
+  GridItem,
+  VStack,
+} from '@chakra-ui/react';
+import { FrownIcon } from 'lucide-react';
+import type { Product } from '@/@types/models';
 import { getDocuments } from '@/lib/database';
 import useGetCategories from '@/hooks/useGetCategories';
 import ProductsHeader from '@/components/HeaderPage';
-import ProductDisplay from '@/components/product-display';
 import ProductFilters from '@/components/product-filters';
 import ProductSortOptions from '@/components/product-sort-options';
+import ProductCard from '@/components/product-card';
 
 const PAGE_SIZE = 8;
 
@@ -28,13 +36,12 @@ const SORT_OPTIONS = {
 };
 
 const Products = () => {
-  const [products, setProducts] = useState<TProduct[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [startAfterDoc, setStartAfterDoc] =
-    useState<QueryDocumentSnapshot<TProduct>>();
+    useState<QueryDocumentSnapshot<Product>>();
   const [isLastDoc, setIsLastDoc] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const { categories } = useGetCategories();
-
   const [searchParams, setSearchParams] = useSearchParams();
 
   function sortProducts() {
@@ -48,7 +55,7 @@ const Products = () => {
       case SORT_OPTIONS.priceDescending:
         return products.sort((a, b) => b.price - a.price);
       case SORT_OPTIONS.ratingDescending:
-        return products.sort((a, b) => b.rating - a.rating);
+        return products.sort((a, b) => b.ratingsAverage - a.ratingsAverage);
       case SORT_OPTIONS.soldDescending:
         return products.sort((a, b) => b.sales - a.sales);
       case SORT_OPTIONS.priceAscending:
@@ -69,7 +76,7 @@ const Products = () => {
 
   async function handleGetProducts() {
     try {
-      const { data } = await getDocuments<TProduct>(
+      const { data } = await getDocuments<Product>(
         'products',
         orderBy('name', 'asc'),
         limit(PAGE_SIZE)
@@ -78,6 +85,7 @@ const Products = () => {
       if (data) {
         setProducts(data.documents);
         setStartAfterDoc(data.lastDocument);
+        setIsLastDoc(data.isLastDocument);
       }
     } catch (error) {
       throw new Error(String(error));
@@ -87,7 +95,7 @@ const Products = () => {
   async function handleLoadProducts() {
     setLoading(true);
     try {
-      const { data } = await getDocuments<TProduct>(
+      const { data } = await getDocuments<Product>(
         'products',
         orderBy('name', 'asc'),
         limit(PAGE_SIZE),
@@ -126,42 +134,81 @@ const Products = () => {
   return (
     <>
       <ProductsHeader />
-      <Container display="flex">
+      <Container
+        display="flex"
+        flexGrow="1"
+      >
         <Grid
-          templateAreas={{
-            base: `'filters sort' 'products products'`,
-            md: `'filters sort' 'filters products'`,
-          }}
-          gridAutoColumns={{ base: '1fr', md: 'initial' }}
-          gap="1.25rem"
+          templateColumns={{ base: 'repeat(2, 1fr)', lg: 'repeat(5, 1fr)' }}
+          gap="{spacing.6}"
           position="relative"
-          paddingY="1.25rem"
+          paddingY="{spacing.6}"
+          width="full"
         >
-          <GridItem area={'filters'}>
+          <GridItem
+            colSpan={1}
+            rowSpan={{ lg: 2 }}
+          >
             <ProductFilters categories={categories} />
           </GridItem>
           <GridItem
-            area={'sort'}
-            justifySelf={{ md: 'end' }}
+            colSpan={{ base: 1, lg: 4 }}
+            justifySelf={{ lg: 'end' }}
           >
             <ProductSortOptions handleChangeSort={handleChangeSort} />
           </GridItem>
-          <GridItem
-            area={'products'}
-            display="grid"
-            gap="1.25rem"
-          >
-            <ProductDisplay products={filteredProducts} />
-            {!isLastDoc && (
-              <Button
-                onClick={handleLoadProducts}
-                width="fit-content"
-                justifySelf="center"
+          {!filteredProducts || filteredProducts.length === 0 ? (
+            <GridItem colSpan={3}>
+              <EmptyState.Root
+                size="lg"
+                alignItems={'start'}
+                justifyContent={'start'}
               >
-                {loading ? 'Loading' : 'Ver mais'}
-              </Button>
-            )}
-          </GridItem>
+                <EmptyState.Content gap="{spacing.2}">
+                  <EmptyState.Indicator>
+                    <FrownIcon />
+                  </EmptyState.Indicator>
+                  <VStack textAlign="center">
+                    <EmptyState.Title>
+                      Nenhum produto encontrado
+                    </EmptyState.Title>
+                    <EmptyState.Description>
+                      Tente ajustar sua pesquisa ou remover alguns filtros
+                    </EmptyState.Description>
+                  </VStack>
+                </EmptyState.Content>
+              </EmptyState.Root>
+            </GridItem>
+          ) : (
+            <GridItem colSpan={{ base: 2, lg: 4 }}>
+              <Grid
+                templateColumns={{
+                  base: 'repeat(2, 1fr)',
+                  lg: 'repeat(4, 1fr)',
+                }}
+                gridAutoRows="1fr"
+                gap="{spacing.6}"
+              >
+                {filteredProducts.map((product) => (
+                  <GridItem
+                    key={product.id}
+                    display="flex"
+                  >
+                    <ProductCard product={product} />
+                  </GridItem>
+                ))}
+              </Grid>
+              {!isLastDoc && (
+                <Button
+                  onClick={handleLoadProducts}
+                  width="fit-content"
+                  justifySelf="center"
+                >
+                  {loading ? 'Loading' : 'Ver mais'}
+                </Button>
+              )}
+            </GridItem>
+          )}
         </Grid>
       </Container>
     </>

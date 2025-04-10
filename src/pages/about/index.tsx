@@ -1,5 +1,5 @@
 import { Container, Heading } from '@chakra-ui/react';
-import Newsletter from '@/components/newsletter';
+import Newsletter from '@/components/section/newsletter';
 
 const About = () => {
   return (

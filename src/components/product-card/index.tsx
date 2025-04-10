@@ -1,9 +1,9 @@
-import { Link } from 'react-router';
+import { Link as RouterLink } from 'react-router';
 import { Box, Heading, Image, Text } from '@chakra-ui/react';
-import { TProduct } from '@/@types/product';
+import type { Product } from '@/@types/models';
 
 type Props = {
-  product: TProduct;
+  product: Product;
 };
 
 const ProductCard = ({ product }: Props) => {
@@ -12,33 +12,32 @@ const ProductCard = ({ product }: Props) => {
       asChild
       display="flex"
       flexDirection="column"
-      gap="1.5rem"
+      gap="{spacing.2}"
     >
-      <Link to={`/produtos/${product.uid}`}>
+      <RouterLink to={`/produtos/${product.id}`}>
         <Image
-          src={product.images[0]}
+          src={product.imageCover}
           alt=""
         />
-
         <Box
           display="flex"
           flexDirection="column"
-          gap="0.5rem"
         >
           <Heading
-            fontSize={{ base: '1.125rem', lg: '1.25rem' }}
+            as="h3"
+            fontSize={{ base: '{fontSizes.md}', md: '{fontSizes.xl}' }}
             fontWeight="normal"
           >
             {product.name}
           </Heading>
-          <Text fontSize={{ base: '0.875rem', lg: '1.125rem' }}>
+          <Text color="fg.muted">
             {Intl.NumberFormat('pt-BR', {
               currency: 'BRL',
               style: 'currency',
             }).format(product.price)}
           </Text>
         </Box>
-      </Link>
+      </RouterLink>
     </Box>
   );
 };

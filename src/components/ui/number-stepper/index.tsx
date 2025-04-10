@@ -48,7 +48,7 @@ const NumberStepper = ({
         unstyled
         spinOnPress={false}
       >
-        <HStack gap="0.625rem">
+        <HStack gap="{spacing.2}">
           <NumberInput.DecrementTrigger
             asChild
             onClick={onValueDecrease}
@@ -63,7 +63,7 @@ const NumberStepper = ({
           <NumberInput.ValueText
             textAlign="center"
             fontSize="lg"
-            minW="1.25rem"
+            minW="{spacing.6}"
           />
           <NumberInput.IncrementTrigger
             asChild

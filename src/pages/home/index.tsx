@@ -1,29 +1,29 @@
 import { useEffect, useState } from 'react';
 import { limit, orderBy } from 'firebase/firestore';
 import { Container } from '@chakra-ui/react';
+import type { Product } from '@/@types/models';
 import { getDocuments } from '@/lib/database';
-import { TProduct } from '@/@types/product';
-import Hero from '@/components/hero';
-import Features from '@/components/features';
+import Hero from '@/components/section/hero';
+import Features from '@/components/section/features';
 import Contact from '@/components/contact';
-import Newsletter from '@/components/newsletter';
+import Newsletter from '@/components/section/newsletter';
 import ProductDisplay from '@/components/product-display';
 
 const QUERY_LIMIT = 4;
 
 const Home = () => {
-  const [newProducts, setNewProducts] = useState<TProduct[]>([]);
-  const [ratedProducts, setRatedProducts] = useState<TProduct[]>([]);
+  const [newProducts, setNewProducts] = useState<Product[]>([]);
+  const [ratedProducts, setRatedProducts] = useState<Product[]>([]);
 
   async function handleProducts() {
     try {
       const [newProducts, highestRatedProducts] = await Promise.all([
-        getDocuments<TProduct>(
+        getDocuments<Product>(
           'products',
           orderBy('createdAt', 'desc'),
           limit(QUERY_LIMIT)
         ),
-        getDocuments<TProduct>(
+        getDocuments<Product>(
           'products',
           orderBy('sales', 'desc'),
           limit(QUERY_LIMIT)
@@ -49,14 +49,14 @@ const Home = () => {
       <Container>
         <Features />
         <ProductDisplay
-          title="Novos Produtos"
           products={newProducts}
           link="/produtos?ordem=novo"
+          title="Novos Produtos"
         />
         <ProductDisplay
-          title="Produtos Populares"
           products={ratedProducts}
           link="/produtos?ordem=mais-vendido"
+          title="Produtos Populares"
         />
         <Contact />
       </Container>

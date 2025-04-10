@@ -38,13 +38,13 @@ const CartDrawer = () => {
               <Drawer.CloseTrigger asChild>
                 <CloseButton />
               </Drawer.CloseTrigger>
-              <Drawer.Header borderBottom="1px solid #EBE8F4">
+              <Drawer.Header borderBottom="{borders.sm} #EBE8F4">
                 <Drawer.Title>Meu Carrinho</Drawer.Title>
               </Drawer.Header>
-              <Drawer.Body paddingY="1.25rem">
+              <Drawer.Body paddingBlock="{spacing.6}">
                 <Stack
                   separator={<Separator />}
-                  gap="1.25rem"
+                  gap="{spacing.6}"
                 >
                   {cart.length >= 1 ? (
                     cart.map((item) => (
@@ -59,7 +59,7 @@ const CartDrawer = () => {
                 </Stack>
               </Drawer.Body>
               <Drawer.Footer
-                p="1.25rem"
+                padding="{spacing.6}"
                 borderTop="1px solid #EBE8F4"
               >
                 <Button asChild>

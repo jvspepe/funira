@@ -45,7 +45,7 @@ const ProductFilters = ({ categories }: Props) => {
   return (
     <>
       <Box
-        display={{ base: 'none', md: 'block' }}
+        display={{ base: 'none', lg: 'block' }}
         height="full"
         minWidth="10rem"
       >
@@ -74,7 +74,7 @@ const ProductFilters = ({ categories }: Props) => {
       <Drawer.Root placement="bottom">
         <Drawer.Trigger
           asChild
-          display={{ md: 'none' }}
+          display={{ lg: 'none' }}
           width="full"
         >
           <Button variant="surface">

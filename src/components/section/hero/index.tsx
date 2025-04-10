@@ -11,7 +11,7 @@ const Hero = () => {
     >
       <Container
         padding="0"
-        height="calc(100vh - 5.25rem)"
+        height="calc(100vh - 5.5rem)"
         display="flex"
         flexDirection="column"
         alignItems={{ sm: 'end' }}

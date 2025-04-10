@@ -8,20 +8,20 @@ const Contact = () => {
       display="grid"
       gridTemplateColumns={{ base: 'none', sm: 'repeat(2, 1fr)' }}
       gridTemplateRows={{ base: 'repeat(2, 1fr)', sm: 'none' }}
-      gap="1.5rem"
-      padding={{ base: '2rem 1.5rem', sm: '2rem 0' }}
+      gap="{spacing.6}"
+      paddingBlock="{spacing.8}"
     >
       <Box
-        backgroundColor="purple.800"
+        backgroundColor="purple.900"
         display="flex"
         flexDirection="column"
-        gap="1.25rem"
-        padding="2rem 1.5rem"
+        gap="{spacing.4}"
+        padding="{spacing.8} {spacing.6}"
         alignItems={{ md: 'start' }}
         color="white"
       >
         <Heading
-          fontSize={{ base: '1.25rem', xl: '2rem' }}
+          fontSize={{ base: '1.25rem', xl: '{spacing.8}' }}
           fontWeight="normal"
         >
           Começou com uma ideia
@@ -34,7 +34,10 @@ const Contact = () => {
           qualidade acessíveis ao mercado em geral, refletindo nossa paixão pela
           criação e design de peças para o lar meticulosamente elaboradas.
         </Text>
-        <Button asChild>
+        <Button
+          asChild
+          variant="subtle"
+        >
           <Link to="/">Entrar em contato</Link>
         </Button>
       </Box>

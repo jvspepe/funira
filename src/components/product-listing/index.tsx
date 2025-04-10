@@ -13,19 +13,19 @@ import { toaster } from '@/components/ui/toaster';
 import { PackageCheckIcon } from 'lucide-react';
 import { useAppDispatch } from '@/store/store';
 import { addToCart } from '@/store/cartSlice';
-import type { TProduct } from '@/@types/product';
+import type { Product } from '@/@types/models';
 import NumberStepper from '@/components/ui/number-stepper';
 
 const STATUS_DURATION = 2000;
 
-type Props = { product: TProduct };
+type Props = { product: Product };
 
 const ProductListing = ({ product }: Props) => {
   const [buttonStatus, setButtonStatus] = useState('');
   const [quantity, setQuantity] = useState<number>(1);
   const dispatch = useAppDispatch();
 
-  const handleAddToCart = (product: TProduct) => {
+  const handleAddToCart = (product: Product) => {
     setButtonStatus('success');
     dispatch(addToCart({ ...product, quantity }));
     toaster.create({
@@ -48,7 +48,7 @@ const ProductListing = ({ product }: Props) => {
         // height={{ lg: 'calc(100dvh - 5.5rem)' }}
       >
         <Image
-          src={product.images[0]}
+          src={product.imageCover}
           alt=""
           objectFit="cover"
           width="full"

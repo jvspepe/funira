@@ -23,7 +23,7 @@ const ProductSortOptions = ({ handleChangeSort }: Props) => {
         <Button
           type="button"
           variant="surface"
-          width={{ base: 'full', md: 'fit-content' }}
+          width={{ base: 'full', lg: 'fit-content' }}
         >
           <Icon size="sm">
             <ListFilterIcon />

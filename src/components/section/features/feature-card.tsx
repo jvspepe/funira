@@ -11,8 +11,8 @@ const FeatureCard = ({ feature }: Props) => {
       height="100%"
       display="flex"
       flexDirection="column"
-      gap="1.25rem"
-      padding="2rem 1.5rem"
+      gap="{spacing.6}"
+      padding="{spacing.8} {spacing.6}"
       bgColor="#F5F5F5"
       boxShadow="0 1px 2px 0 rgb(0 0 0 / 0.05)"
     >

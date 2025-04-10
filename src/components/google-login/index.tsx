@@ -31,7 +31,6 @@ const GoogleLogin = ({ loading, setLoading }: Props) => {
       display="flex"
       alignItems="center"
       justifyContent="center"
-      gap="0.5rem"
     >
       <Button
         onClick={handleLoginUserWithGoogle}
@@ -40,6 +39,7 @@ const GoogleLogin = ({ loading, setLoading }: Props) => {
         loading={loading}
         loadingText="Carregando..."
         width="full"
+        gap="{spacing.3}"
       >
         <Icon>
           <GoogleIcon />

@@ -1,9 +1,9 @@
+import { CartProduct } from '@/@types/models';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import type { TCartProduct } from '@/@types/product';
 
 type CartState = {
-  cart: TCartProduct[];
+  cart: CartProduct[];
   total: number;
 };
 
@@ -21,7 +21,7 @@ function getCartState(): CartState {
   return cartState;
 }
 
-function calculateTotal(cart: TCartProduct[]) {
+function calculateTotal(cart: CartProduct[]) {
   return cart.reduce(
     (accumulator, product) => accumulator + product.price * product.quantity,
     0
@@ -38,11 +38,11 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addToCart(state, action: PayloadAction<TCartProduct>) {
+    addToCart(state, action: PayloadAction<CartProduct>) {
       const draft = state;
 
       const cartItemIndex = draft.cart.findIndex(
-        (product) => product.uid === action.payload.uid
+        (product) => product.id === action.payload.id
       );
 
       if (cartItemIndex >= 0) {
@@ -60,7 +60,7 @@ const cartSlice = createSlice({
       const draft = state;
 
       const productIndex = draft.cart.findIndex(
-        (product) => product.uid === action.payload
+        (product) => product.id === action.payload
       );
 
       draft.cart[productIndex].quantity += 1;
@@ -75,7 +75,7 @@ const cartSlice = createSlice({
       const draft = state;
 
       const productIndex = draft.cart.findIndex(
-        (product) => product.uid === action.payload
+        (product) => product.id === action.payload
       );
 
       if (draft.cart[productIndex].quantity === 1) {
@@ -97,7 +97,7 @@ const cartSlice = createSlice({
       const draft = state;
 
       const cartItemIndex = draft.cart.findIndex(
-        (item) => item.uid === action.payload.uid
+        (item) => item.id === action.payload.uid
       );
 
       if (cartItemIndex >= 0) {
@@ -116,7 +116,7 @@ const cartSlice = createSlice({
       const draft = state;
 
       const productIndex = draft.cart.findIndex(
-        (product) => product.uid === action.payload
+        (product) => product.id === action.payload
       );
 
       draft.cart.splice(productIndex, 1);

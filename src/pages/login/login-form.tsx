@@ -7,7 +7,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Box,
   Button,
-  Checkbox,
   Code,
   Heading,
   Icon,
@@ -17,6 +16,7 @@ import {
 } from '@chakra-ui/react';
 import { ArrowLeftIcon } from 'lucide-react';
 import { handleAuthError, loginUser } from '@/lib/auth';
+import Checkbox from '@/components/ui/checkbox';
 import PasswordInput from '@/components/ui/password-input';
 import TextInput from '@/components/ui/text-input';
 import GoogleLogin from '@/components/google-login';
@@ -70,9 +70,9 @@ const LoginForm = () => {
         display="flex"
         flexDirection="column"
         flexGrow="1"
-        maxW="36rem"
-        padding={{ base: '1.25rem', xl: '0' }}
-        gap="1.25rem"
+        maxWidth="{sizes.xl}"
+        padding={{ base: '{spacing.6}', xl: '0' }}
+        gap="{spacing.6}"
       >
         <Button
           asChild
@@ -90,15 +90,11 @@ const LoginForm = () => {
           display="flex"
           justifyContent="center"
           flexDirection="column"
-          gap="0.5rem"
+          gap="{spacing.2}"
         >
           <Heading size="md">Conecte em sua conta</Heading>
-          <Box
-            display="flex"
-            alignItems="center"
-            gap="0.5rem"
-          >
-            <Text>Não possui uma conta?</Text>
+          <Box>
+            <Text as="span">Não possui uma conta?</Text>{' '}
             <Link asChild>
               <RouterLink to="/criar-conta">Crie uma conta</RouterLink>
             </Link>
@@ -150,17 +146,15 @@ const LoginForm = () => {
           name="persistUser"
           control={form.control}
           render={({ field }) => (
-            <Checkbox.Root
+            <Checkbox
               onChange={field.onChange}
               onBlur={field.onBlur}
               name={field.name}
               ref={field.ref}
               checked={field.value}
             >
-              <Checkbox.HiddenInput />
-              <Checkbox.Control />
-              <Checkbox.Label>Lembrar de mim?</Checkbox.Label>
-            </Checkbox.Root>
+              Lembrar de mim?
+            </Checkbox>
           )}
         />
         <Button
@@ -174,13 +168,13 @@ const LoginForm = () => {
           alignSelf="center"
           display="flex"
           flexDirection="column"
-          gap="1.25rem"
+          gap="{spacing.6}"
           width="full"
         >
           <Box
             display="flex"
             alignItems="center"
-            gap="1.25rem"
+            gap="{spacing.6}"
           >
             <Separator flexGrow="1" />
             <Text>Ou</Text>

@@ -10,18 +10,18 @@ const Checkout = () => {
     <Container
       display="flex"
       minHeight="calc(100vh - 5.5rem)"
-      paddingY="1.25rem"
+      paddingY="{spacing.6}"
     >
       <Box
         display="flex"
-        gap="1.25rem"
+        gap="{spacing.6}"
         flexGrow="1"
         flexDirection={{ base: 'column', lg: 'row' }}
       >
         <Box
           display="flex"
           flexDirection="column"
-          gap="1.25rem"
+          gap="{spacing.6}"
           flexGrow="1"
           overflowY="auto"
         >

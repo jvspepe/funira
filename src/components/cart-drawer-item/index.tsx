@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Box, IconButton, Image, Text } from '@chakra-ui/react';
 import { XIcon } from 'lucide-react';
-import { TCartProduct } from '@/@types/product';
+import type { CartProduct } from '@/@types/models';
 import { useAppDispatch } from '@/store/store';
 import { changeQuantity, removeFromCart } from '@/store/cartSlice';
 import NumberStepper from '@/components/ui/number-stepper';
 
 type Props = {
-  product: TCartProduct;
+  product: CartProduct;
 };
 
 const CartDrawerItem = ({ product }: Props) => {
@@ -18,16 +18,16 @@ const CartDrawerItem = ({ product }: Props) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(changeQuantity({ uid: product.uid, quantity: productQuantity }));
-  }, [productQuantity, dispatch, product.uid]);
+    dispatch(changeQuantity({ uid: product.id, quantity: productQuantity }));
+  }, [productQuantity, dispatch, product.id]);
 
   return (
     <Box
       display="grid"
       gridTemplateColumns="repeat(2, 1fr)"
-      gap="0.75rem"
+      gap="{spacing.4}"
     >
-      <Image src={product.images[0]} />
+      <Image src={product.imageCover} />
       <Box
         display="flex"
         flexDirection="column"
@@ -37,12 +37,12 @@ const CartDrawerItem = ({ product }: Props) => {
           alignItems="start"
           justifyContent="space-between"
           flexGrow="1"
-          gap="0.25rem"
+          gap="{spacing.2}"
         >
           <Box
             display="flex"
             flexDirection="column"
-            gap="0.25rem"
+            gap="{spacing.2}"
           >
             <Text fontSize={{ base: '0.75rem', md: '1rem' }}>
               {product.name}
@@ -55,7 +55,7 @@ const CartDrawerItem = ({ product }: Props) => {
             </Text>
           </Box>
           <IconButton
-            onClick={() => dispatch(removeFromCart(product.uid))}
+            onClick={() => dispatch(removeFromCart(product.id))}
             aria-label="Remover do carrinho"
             type="button"
             size="xs"

@@ -39,18 +39,18 @@ const Header = () => {
       top="0"
       zIndex={99}
       backgroundColor="white"
-      shadow="0 1px 2px 0 rgb(0 0 0 / 0.05)"
+      borderBottom="{borders.sm} {colors.border}"
     >
       <Container>
         <Box
           display="flex"
           alignItems="center"
           justifyContent="space-between"
-          paddingY="1.5rem"
+          paddingY="{spacing.6}"
         >
           <Link
             asChild
-            fontSize="1.5rem"
+            fontSize="{spacing.6}"
           >
             <RouterLink to="/">Funira</RouterLink>
           </Link>
@@ -106,10 +106,10 @@ const Header = () => {
           <Box
             display="flex"
             alignItems="center"
-            gap="0.5rem"
+            gap="{spacing.2}"
           >
             <CartDrawer />
-            <Menu.Root>
+            <Menu.Root positioning={{ placement: 'bottom-end' }}>
               <Menu.Trigger asChild>
                 <IconButton
                   aria-label="Menu de usuário"
