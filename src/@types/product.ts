@@ -1,7 +1,7 @@
-import { Timestamp } from "firebase/firestore";
+import { Timestamp } from 'firebase/firestore';
 
 type TProduct = {
-  uid: string;
+  id: string;
   images: string[];
   name: string;
   price: number;

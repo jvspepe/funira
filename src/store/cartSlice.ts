@@ -1,19 +1,19 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { TCartProduct } from "@/@types/product";
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { TCartProduct } from '@/@types/product';
 
 type CartState = {
   cart: TCartProduct[];
   total: number;
 };
 
-const LOCAL_STORAGE_CART_SLICE_KEY = "cartState";
+const LOCAL_STORAGE_CART_SLICE_KEY = 'cartState';
 
 function getCartState() {
   if (!localStorage.getItem(LOCAL_STORAGE_CART_SLICE_KEY)) {
     return { cart: [], total: 0 };
   }
   const cartState = JSON.parse(
-    localStorage.getItem(LOCAL_STORAGE_CART_SLICE_KEY) || ""
+    localStorage.getItem(LOCAL_STORAGE_CART_SLICE_KEY) || ''
   ) as CartState;
   return cartState;
 }
@@ -32,14 +32,14 @@ function saveToLocalStorage(cartState: CartState) {
 const initialState: CartState = getCartState();
 
 const cartSlice = createSlice({
-  name: "cart",
+  name: 'cart',
   initialState,
   reducers: {
     addToCart(state, action: PayloadAction<TCartProduct>) {
       const draft = state;
 
       const isProductInCart = draft.cart.findIndex(
-        (product) => product.uid === action.payload.uid
+        (product) => product.id === action.payload.uid
       );
 
       if (isProductInCart >= 0) {
@@ -54,7 +54,7 @@ const cartSlice = createSlice({
     increaseQuantity(state, action: PayloadAction<string>) {
       const draft = state;
       const productIndex = draft.cart.findIndex(
-        (product) => product.uid === action.payload
+        (product) => product.id === action.payload
       );
       draft.cart[productIndex].quantity += 1;
       draft.total = calculateTotal(draft.cart);
@@ -64,7 +64,7 @@ const cartSlice = createSlice({
     decreaseQuantity(state, action: PayloadAction<string>) {
       const draft = state;
       const productIndex = draft.cart.findIndex(
-        (product) => product.uid === action.payload
+        (product) => product.id === action.payload
       );
       if (draft.cart[productIndex].quantity === 1) {
         draft.cart.splice(productIndex, 1);
@@ -78,7 +78,7 @@ const cartSlice = createSlice({
     removeFromCart(state, action) {
       const draft = state;
       const productIndex = draft.cart.findIndex(
-        (product) => product.uid === action.payload
+        (product) => product.id === action.payload
       );
       draft.cart.splice(productIndex, 1);
       draft.total = calculateTotal(draft.cart);

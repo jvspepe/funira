@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { X } from "@phosphor-icons/react";
-import { useAppDispatch } from "@/store/store";
-import { removeFromCart } from "@/store/cartSlice";
-import { TCartProduct } from "@/@types/product";
-import IconButton from "@/components/ui/IconButton";
-import Stepper from "@/components/ui/Stepper";
-import * as S from "./styles";
+import { useState } from 'react';
+import { X } from '@phosphor-icons/react';
+import { useAppDispatch } from '@/store/store';
+import { removeFromCart } from '@/store/cartSlice';
+import { TCartProduct } from '@/@types/product';
+import IconButton from '@/components/ui/IconButton';
+import Stepper from '@/components/ui/Stepper';
+import * as S from './styles';
 
 type Props = { product: TCartProduct };
 
@@ -15,13 +15,16 @@ const CartMenuItem = ({ product }: Props) => {
 
   return (
     <S.Wrapper>
-      <S.Image src={product.images[0]} alt="" />
+      <S.Image
+        src={product.images[0]}
+        alt=""
+      />
       <S.ItemWrapper>
         <S.ItemHeader>{product.name}</S.ItemHeader>
         <S.ItemPrice>
-          {Intl.NumberFormat("pt-BR", {
-            currency: "BRL",
-            style: "currency",
+          {Intl.NumberFormat('pt-BR', {
+            currency: 'BRL',
+            style: 'currency',
           }).format(product.price)}
         </S.ItemPrice>
         <S.Controls>
@@ -31,7 +34,7 @@ const CartMenuItem = ({ product }: Props) => {
             minValue={1}
             size="small"
           />
-          <IconButton onClick={() => dispatch(removeFromCart(product.uid))}>
+          <IconButton onClick={() => dispatch(removeFromCart(product.id))}>
             <X size={20} />
           </IconButton>
         </S.Controls>
