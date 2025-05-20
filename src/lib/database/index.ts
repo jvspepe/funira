@@ -10,22 +10,18 @@ import {
   setDoc,
   WithFieldValue,
   QueryDocumentSnapshot,
+  updateDoc,
 } from 'firebase/firestore';
 import { firestore } from '../config';
 import { FirebaseError } from 'firebase/app';
+import type { ReturnData } from '@/@types/models';
 
 type Collection = 'users' | 'products' | 'categories';
 
-type ReturnData<T> = {
-  status: 'success' | 'error' | 'not-found';
-  message: string;
-  data?: T;
-};
-
 const converter = <T>(): FirestoreDataConverter<T> => {
   return {
-    toFirestore(data) {
-      return data || {};
+    toFirestore(data: WithFieldValue<T>) {
+      return data ?? {};
     },
     fromFirestore(snapshot, options) {
       return snapshot.data(options) as T;
@@ -33,7 +29,7 @@ const converter = <T>(): FirestoreDataConverter<T> => {
   };
 };
 
-export const createDocument = async <T extends WithFieldValue<DocumentData>>(
+export const createDocument = async <T extends DocumentData>(
   collection: Collection,
   path: string,
   data: T
@@ -47,6 +43,7 @@ export const createDocument = async <T extends WithFieldValue<DocumentData>>(
     return {
       status: 'success',
       message: 'Document created successfully',
+      data,
     };
   } catch (error) {
     if (error instanceof FirebaseError) {
@@ -74,7 +71,7 @@ export const getDocument = async <T extends WithFieldValue<DocumentData>>(
 
     if (!document.exists()) {
       return {
-        status: 'not-found',
+        status: 'fail',
         message: 'Document does not exists',
       };
     }
@@ -99,7 +96,7 @@ export const getDocument = async <T extends WithFieldValue<DocumentData>>(
   }
 };
 
-export const getDocuments = async <T>(
+export const getDocuments = async <T extends DocumentData>(
   collection: Collection,
   ...constraints: QueryNonFilterConstraint[]
 ): Promise<
@@ -125,13 +122,13 @@ export const getDocuments = async <T>(
 
     if (snapshot.empty)
       return {
-        status: 'not-found',
+        status: 'fail',
         message: 'No documents found',
       };
 
     snapshot.forEach((element) => documents.push(element.data()));
-    lastDocument = snapshot.docs[snapshot.size - 1];
-    isLastDocument = snapshot.size < 1;
+    lastDocument = snapshot.docs[snapshot.docs.length - 1];
+    isLastDocument = snapshot.docs.length < 1;
 
     return {
       status: 'success',
@@ -153,6 +150,27 @@ export const getDocuments = async <T>(
         status: 'error',
         message: JSON.stringify(error),
       };
+    }
+  }
+};
+
+export const updateDocument = async <T>(
+  collection: Collection,
+  path: string,
+  data: Partial<T> & Record<string, unknown>
+) => {
+  try {
+    await updateDoc(
+      doc(firestore, collection, path).withConverter(converter<T>()),
+      data
+    );
+  } catch (error) {
+    if (error instanceof FirebaseError) {
+      console.log(`Firebase Error ${error.code}: ${error.message}`);
+    } else if (error instanceof Error) {
+      console.log(error.message);
+    } else {
+      console.log(error);
     }
   }
 };

@@ -1,7 +1,7 @@
-import { ReactNode } from "react";
+import { ElementType } from 'react';
 
 type Feature = {
-  icon: ReactNode;
+  icon: ElementType;
   title: string;
   details: string;
 };

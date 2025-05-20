@@ -1,21 +1,23 @@
 /* eslint-disable no-useless-catch */
+import { FirebaseError } from 'firebase/app';
 import {
   AuthErrorCodes,
   browserLocalPersistence,
   browserSessionPersistence,
   createUserWithEmailAndPassword,
+  GoogleAuthProvider,
   onAuthStateChanged,
   setPersistence,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
   updateProfile,
-  User,
 } from 'firebase/auth';
+import type { User as FirebaseUser } from 'firebase/auth';
 import { Timestamp } from 'firebase/firestore';
-import { TUser } from '@/@types/user';
+import type { User } from '@/@types/models';
 import { auth } from '@/lib/config';
-import { createDocument } from '@/lib/database';
-import { FirebaseError } from 'firebase/app';
+import { createDocument, getDocument } from '@/lib/database';
 
 export const handleAuthError = (error: unknown) => {
   let message = '';
@@ -39,6 +41,12 @@ export const handleAuthError = (error: unknown) => {
       case AuthErrorCodes.WEAK_PASSWORD:
         message = 'Senha muito fraca';
         break;
+      case AuthErrorCodes.POPUP_CLOSED_BY_USER:
+        message = 'Operação cancelada';
+        break;
+      case AuthErrorCodes.POPUP_BLOCKED:
+        message = 'Operação bloqueada';
+        break;
       default:
         message = 'Algo deu errado';
         break;
@@ -47,7 +55,9 @@ export const handleAuthError = (error: unknown) => {
   return message;
 };
 
-export const handleCurrentUser = (callback: (user: User | null) => void) => {
+export const handleCurrentUser = (
+  callback: (user: FirebaseUser | null) => void
+) => {
   const unsubscribe = onAuthStateChanged(auth, (currentUser) =>
     callback(currentUser)
   );
@@ -70,7 +80,7 @@ export const createUser = async (
   username: string,
   email: string,
   password: string,
-  persistUser: boolean = false
+  persistUser = false
 ) => {
   try {
     await handleUserPersistence(persistUser);
@@ -82,11 +92,11 @@ export const createUser = async (
     );
 
     await Promise.all([
-      createDocument<TUser>('users', user.uid, {
+      createDocument<User>('users', user.uid, {
         id: user.uid,
         username,
         email,
-        role: 'customer',
+        role: 'user',
         createdAt: Timestamp.now(),
       }),
       updateProfile(user, {
@@ -101,7 +111,7 @@ export const createUser = async (
 export const loginUser = async (
   email: string,
   password: string,
-  persistUser: boolean = false
+  persistUser = false
 ) => {
   try {
     await handleUserPersistence(persistUser);
@@ -115,6 +125,32 @@ export const loginUser = async (
 export const logoutUser = async () => {
   try {
     await signOut(auth);
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const loginUserWithGoogle = async (persistUser = false) => {
+  try {
+    await handleUserPersistence(persistUser);
+
+    const { user } = await signInWithPopup(auth, new GoogleAuthProvider());
+
+    const document = await getDocument<User>('users', user.uid);
+
+    switch (document.status) {
+      case 'fail':
+        return await createDocument<User>('users', user.uid, {
+          id: user.uid,
+          email: user.email ?? '',
+          username: user.displayName ?? '',
+          role: 'user',
+          createdAt: Timestamp.now(),
+        });
+      case 'success':
+      case 'error':
+        return document;
+    }
   } catch (error) {
     throw error;
   }
