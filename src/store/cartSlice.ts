@@ -1,22 +1,13 @@
-<<<<<<< HEAD
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { TCartProduct } from '@/@types/product';
-=======
 import { CartProduct } from '@/@types/models';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
->>>>>>> feat/chakraui-3-migration
 
 type CartState = {
   cart: CartProduct[];
   total: number;
 };
 
-<<<<<<< HEAD
-const LOCAL_STORAGE_CART_SLICE_KEY = 'cartState';
-=======
 const LOCAL_STORAGE_CART_KEY = 'funira-cart';
->>>>>>> feat/chakraui-3-migration
 
 function getCartState(): CartState {
   if (!localStorage.getItem(LOCAL_STORAGE_CART_KEY)) {
@@ -24,11 +15,7 @@ function getCartState(): CartState {
   }
 
   const cartState = JSON.parse(
-<<<<<<< HEAD
-    localStorage.getItem(LOCAL_STORAGE_CART_SLICE_KEY) || ''
-=======
     localStorage.getItem(LOCAL_STORAGE_CART_KEY) ?? ''
->>>>>>> feat/chakraui-3-migration
   ) as CartState;
 
   return cartState;
@@ -54,13 +41,8 @@ const cartSlice = createSlice({
     addToCart(state, action: PayloadAction<CartProduct>) {
       const draft = state;
 
-<<<<<<< HEAD
-      const isProductInCart = draft.cart.findIndex(
-        (product) => product.id === action.payload.uid
-=======
       const cartItemIndex = draft.cart.findIndex(
         (product) => product.id === action.payload.id
->>>>>>> feat/chakraui-3-migration
       );
 
       if (cartItemIndex >= 0) {
