@@ -4,6 +4,7 @@ import reactX from 'eslint-plugin-react-x';
 import reactDom from 'eslint-plugin-react-dom';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
+import pluginQuery from '@tanstack/eslint-plugin-query';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
@@ -28,11 +29,13 @@ export default tseslint.config(
       'react-dom': reactDom,
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
+      '@tanstack/query': pluginQuery,
     },
     rules: {
       ...reactX.configs['recommended-typescript'].rules,
       ...reactDom.configs.recommended.rules,
       ...reactHooks.configs.recommended.rules,
+      ...pluginQuery.configs.recommended.rules,
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true },

@@ -12,7 +12,7 @@ const CheckoutDisplay = () => {
     >
       {cart.map((item) => (
         <CheckoutItem
-          key={item.uid}
+          key={item.id}
           product={item}
         />
       ))}

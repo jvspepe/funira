@@ -2,7 +2,7 @@
 
 import { createIcon } from '@chakra-ui/react';
 
-const FacebookIcon = createIcon({
+export const FacebookIcon = createIcon({
   displayName: 'FacebookIcon',
   defaultProps: {
     xmlns: 'http://www.w3.org/2000/svg',
@@ -33,5 +33,3 @@ const FacebookIcon = createIcon({
     </>
   ),
 });
-
-export default FacebookIcon;

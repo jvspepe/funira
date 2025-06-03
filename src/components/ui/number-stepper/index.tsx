@@ -1,14 +1,15 @@
-import { Dispatch, SetStateAction } from 'react';
+import { type Dispatch, type SetStateAction } from 'react';
 import {
-  Box,
+  Flex,
+  Heading,
   HStack,
+  Icon,
   IconButton,
   NumberInput,
-  Heading,
 } from '@chakra-ui/react';
 import { MinusIcon, PlusIcon } from 'lucide-react';
 
-type Props = {
+interface NumberStepperProps {
   label?: string;
   value: number;
   setValue: Dispatch<SetStateAction<number>>;
@@ -16,9 +17,9 @@ type Props = {
   onValueIncrease?: () => void;
   minValue?: number;
   maxValue?: number;
-};
+}
 
-const NumberStepper = ({
+export function NumberStepper({
   label,
   value,
   setValue,
@@ -26,15 +27,15 @@ const NumberStepper = ({
   onValueIncrease,
   minValue,
   maxValue,
-}: Props) => {
+}: NumberStepperProps) {
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
+    <Flex
+      direction="column"
+      gap="{spacing.4}"
     >
       {label && (
         <Heading
-          fontSize={'1rem'}
+          size="md"
           fontWeight="normal"
         >
           {label}
@@ -47,39 +48,46 @@ const NumberStepper = ({
         max={maxValue}
         unstyled
         spinOnPress={false}
+        width={{ base: 'full', md: 'fit-content' }}
       >
-        <HStack gap="{spacing.2}">
+        <HStack
+          backgroundColor="bg.subtle"
+          borderRadius="{radii.l2}"
+          justifyContent="space-between"
+        >
           <NumberInput.DecrementTrigger
             asChild
             onClick={onValueDecrease}
           >
             <IconButton
-              variant="outline"
-              size="xs"
+              variant="subtle"
+              size="lg"
             >
-              <MinusIcon />
+              <Icon>
+                <MinusIcon />
+              </Icon>
             </IconButton>
           </NumberInput.DecrementTrigger>
           <NumberInput.ValueText
             textAlign="center"
-            fontSize="lg"
-            minW="{spacing.6}"
+            fontSize="md"
+            minW="{spacing.8}"
           />
           <NumberInput.IncrementTrigger
             asChild
             onClick={onValueIncrease}
           >
             <IconButton
-              variant="outline"
-              size="xs"
+              variant="subtle"
+              size="lg"
             >
-              <PlusIcon />
+              <Icon>
+                <PlusIcon />
+              </Icon>
             </IconButton>
           </NumberInput.IncrementTrigger>
         </HStack>
       </NumberInput.Root>
-    </Box>
+    </Flex>
   );
-};
-
-export default NumberStepper;
+}

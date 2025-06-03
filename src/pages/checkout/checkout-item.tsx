@@ -4,7 +4,7 @@ import { XIcon } from 'lucide-react';
 import { CartProduct } from '@/@types/models';
 import { changeQuantity } from '@/store/cartSlice';
 import { useAppDispatch } from '@/store/store';
-import NumberStepper from '@/components/ui/number-stepper';
+import { NumberStepper } from '@/components/ui/number-stepper';
 
 type Props = {
   product: CartProduct;
@@ -50,7 +50,7 @@ const CheckoutItem = ({ product }: Props) => {
               fontSize="1rem"
               fontWeight="normal"
             >
-              {product.name}
+              {product.name.pt}
             </Heading>
             <Text>
               {Intl.NumberFormat('pt-BR', {

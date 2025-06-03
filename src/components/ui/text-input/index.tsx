@@ -1,27 +1,41 @@
-import { Ref } from 'react';
-import { Field as ChakraField, Input, InputProps } from '@chakra-ui/react';
+import { ReactNode, Ref } from 'react';
+import {
+  type InputProps,
+  Field as ChakraField,
+  Input,
+  VisuallyHidden,
+} from '@chakra-ui/react';
 
-type Props = InputProps & {
+interface TextInputProps extends InputProps {
   ref?: Ref<HTMLInputElement>;
-  label?: React.ReactNode;
-  helperText?: React.ReactNode;
+  label: ReactNode;
+  hideLabel?: boolean;
+  helperText?: ReactNode;
   error?: boolean;
-  errorText?: React.ReactNode;
-  optionalText?: React.ReactNode;
-};
+  errorText?: ReactNode;
+  optionalText?: ReactNode;
+}
 
-const TextInput = ({
+export function TextInput({
   ref,
   label,
+  hideLabel,
   helperText,
   error,
   errorText,
   optionalText,
   ...props
-}: Props) => {
+}: TextInputProps) {
   return (
     <ChakraField.Root invalid={error}>
-      {label && (
+      {hideLabel ? (
+        <VisuallyHidden>
+          <ChakraField.Label>
+            {label}
+            <ChakraField.RequiredIndicator fallback={optionalText} />
+          </ChakraField.Label>
+        </VisuallyHidden>
+      ) : (
         <ChakraField.Label>
           {label}
           <ChakraField.RequiredIndicator fallback={optionalText} />
@@ -37,6 +51,4 @@ const TextInput = ({
       {errorText && <ChakraField.ErrorText>{errorText}</ChakraField.ErrorText>}
     </ChakraField.Root>
   );
-};
-
-export default TextInput;
+}

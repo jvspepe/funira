@@ -3,6 +3,7 @@ import {
   defaultConfig,
   defineConfig,
   defineRecipe,
+  defineTokens,
 } from '@chakra-ui/react';
 
 const breakpoints = {
@@ -12,6 +13,10 @@ const breakpoints = {
   xl: '80rem',
   '2xl': '80rem',
 };
+
+const sizes = defineTokens.sizes({
+  '22': { value: '5.75rem' },
+});
 
 const containerRecipe = defineRecipe({
   base: {
@@ -40,13 +45,20 @@ const linkRecipe = defineRecipe({
 });
 
 const config = defineConfig({
+  globalCss: {
+    '.firebase-emulator-warning': {
+      display: 'none',
+    },
+  },
   theme: {
     breakpoints,
     recipes: {
       container: containerRecipe,
       link: linkRecipe,
     },
-    tokens: {},
+    tokens: {
+      sizes,
+    },
   },
 });
 

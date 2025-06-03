@@ -1,20 +1,19 @@
-import { Box, Heading, Icon, Text } from '@chakra-ui/react';
+import { Flex, Heading, Icon, Text } from '@chakra-ui/react';
 import Feature from '@/@types/feature';
 
 type Props = {
   feature: Feature;
 };
 
-const FeatureCard = ({ feature }: Props) => {
+export function FeatureCard({ feature }: Props) {
   return (
-    <Box
+    <Flex
       height="100%"
-      display="flex"
-      flexDirection="column"
+      direction="column"
       gap="{spacing.6}"
-      padding="{spacing.8} {spacing.6}"
-      bgColor="#F5F5F5"
-      boxShadow="0 1px 2px 0 rgb(0 0 0 / 0.05)"
+      padding="{spacing.6}"
+      bgColor="bg.muted"
+      borderRadius="{radii.l2}"
     >
       <Icon
         as={feature.icon}
@@ -23,14 +22,12 @@ const FeatureCard = ({ feature }: Props) => {
       />
       <Heading
         as="h3"
-        fontSize="1.25rem"
+        size="xl"
         fontWeight="normal"
       >
         {feature.title}
       </Heading>
       <Text>{feature.details}</Text>
-    </Box>
+    </Flex>
   );
-};
-
-export default FeatureCard;
+}

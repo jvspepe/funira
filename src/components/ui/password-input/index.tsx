@@ -1,8 +1,11 @@
 'use client';
 
-import type { ReactNode, Ref } from 'react';
-import { useRef } from 'react';
-import type { ButtonProps, GroupProps, InputProps } from '@chakra-ui/react';
+import { type ReactNode, type Ref, useRef } from 'react';
+import {
+  type ButtonProps,
+  type GroupProps,
+  type InputProps,
+} from '@chakra-ui/react';
 import {
   Field,
   IconButton,
@@ -13,10 +16,10 @@ import {
 } from '@chakra-ui/react';
 import { EyeIcon, EyeOff } from 'lucide-react';
 
-const VisibilityTrigger = ({
+function VisibilityTrigger({
   ref,
   ...props
-}: ButtonProps & { ref?: Ref<HTMLButtonElement> }) => {
+}: ButtonProps & { ref?: Ref<HTMLButtonElement> }) {
   return (
     <IconButton
       tabIndex={-1}
@@ -30,29 +33,28 @@ const VisibilityTrigger = ({
       {...props}
     />
   );
-};
+}
 
-type PasswordVisibilityProps = {
+interface PasswordVisibilityProps {
   defaultVisible?: boolean;
   visible?: boolean;
   onVisibleChange?: (visible: boolean) => void;
   visibilityIcon?: { on: ReactNode; off: ReactNode };
-};
+}
 
-type PasswordInputProps = InputProps &
-  PasswordVisibilityProps & {
-    rootProps?: GroupProps;
-    label?: string;
-    error?: boolean;
-    helperText?: ReactNode;
-    errorText?: ReactNode;
-    optionalText?: ReactNode;
-  };
+interface PasswordInputProps extends InputProps, PasswordVisibilityProps {
+  rootProps?: GroupProps;
+  label?: string;
+  error?: boolean;
+  helperText?: ReactNode;
+  errorText?: ReactNode;
+  optionalText?: ReactNode;
+}
 
-const PasswordInput = ({
+export function PasswordInput({
   ref,
   ...props
-}: PasswordInputProps & { ref?: Ref<HTMLInputElement> }) => {
+}: PasswordInputProps & { ref?: Ref<HTMLInputElement> }) {
   const {
     rootProps,
     defaultVisible,
@@ -106,9 +108,7 @@ const PasswordInput = ({
       {props.errorText && <Field.ErrorText>{props.errorText}</Field.ErrorText>}
     </Field.Root>
   );
-};
-
-export default PasswordInput;
+}
 
 // interface PasswordStrengthMeterProps extends StackProps {
 //   max?: number;

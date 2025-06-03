@@ -1,7 +1,7 @@
-import { Box, Heading } from '@chakra-ui/react';
+import { Flex, Grid, Heading } from '@chakra-ui/react';
 import { CircleCheck, CreditCard, Leaf, Truck } from 'lucide-react';
 import Feature from '@/@types/feature';
-import FeatureCard from '@/components/section/features/feature-card';
+import { FeatureCard } from '@/components/section/features/feature-card';
 
 const featureList: Feature[] = [
   {
@@ -27,26 +27,21 @@ const featureList: Feature[] = [
   },
 ];
 
-const Features = () => {
+export function Features() {
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      gap="2rem"
-      paddingBlock={'{spacing.12}'}
+    <Flex
+      direction="column"
+      gap="{spacing.8}"
     >
       <Heading
-        as="h2"
-        fontSize={{ base: '1.25rem', md: '1.5rem' }}
+        size="xl"
         fontWeight="normal"
-        alignSelf="center"
       >
         O que faz de nossa marca diferente
       </Heading>
-      <Box
-        display="grid"
+      <Grid
         gap="{spacing.6}"
-        gridTemplateColumns={{ sm: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }}
+        templateColumns={{ sm: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }}
       >
         {featureList.map((feature) => (
           <FeatureCard
@@ -54,9 +49,7 @@ const Features = () => {
             feature={feature}
           />
         ))}
-      </Box>
-    </Box>
+      </Grid>
+    </Flex>
   );
-};
-
-export default Features;
+}

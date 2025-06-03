@@ -1,16 +1,14 @@
-import { InputHTMLAttributes, ReactNode, Ref } from 'react';
+import { type InputHTMLAttributes, type ReactNode, Ref } from 'react';
 import { Checkbox as ChakraCheckbox } from '@chakra-ui/react';
 
 interface CheckboxProps extends ChakraCheckbox.RootProps {
+  ref?: Ref<HTMLInputElement>;
   icon?: ReactNode;
   inputProps?: InputHTMLAttributes<HTMLInputElement>;
   rootRef?: Ref<HTMLLabelElement>;
 }
 
-const Checkbox = ({
-  ref,
-  ...props
-}: CheckboxProps & { ref?: Ref<HTMLInputElement | null> }) => {
+export function Checkbox({ ref, ...props }: CheckboxProps) {
   const { icon, children, inputProps, rootRef, ...rest } = props;
   return (
     <ChakraCheckbox.Root
@@ -30,6 +28,4 @@ const Checkbox = ({
       )}
     </ChakraCheckbox.Root>
   );
-};
-
-export default Checkbox;
+}

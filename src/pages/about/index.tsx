@@ -1,19 +1,13 @@
-import { Container, Heading } from '@chakra-ui/react';
-import Newsletter from '@/components/section/newsletter';
+import { Box, Container, Heading } from '@chakra-ui/react';
+import { Newsletter } from '@/components/section/newsletter';
 
-const About = () => {
+export function About() {
   return (
-    <div>
-      <Container>
-        <Heading>
-          Uma marca construída com amor pelo artesanato, qualidade e excelente
-          atendimento ao cliente.
-        </Heading>
+    <Box>
+      <Container minHeight="calc(100dvh - {sizes.22})">
+        <Heading>Página ainda está sendo construída</Heading>
       </Container>
-
       <Newsletter />
-    </div>
+    </Box>
   );
-};
-
-export default About;
+}

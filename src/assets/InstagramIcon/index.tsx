@@ -2,7 +2,7 @@
 
 import { createIcon } from '@chakra-ui/react';
 
-const InstagramIcon = createIcon({
+export const InstagramIcon = createIcon({
   displayName: 'InstagramIcon',
   defaultProps: {
     xmlns: 'http://www.w3.org/2000/svg',
@@ -72,5 +72,3 @@ const InstagramIcon = createIcon({
     </>
   ),
 });
-
-export default InstagramIcon;

@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
-import { Box, IconButton, Image, Text } from '@chakra-ui/react';
-import { XIcon } from 'lucide-react';
-import type { CartProduct } from '@/@types/models';
+import { Flex, Grid, Icon, IconButton, Image, Text } from '@chakra-ui/react';
+import { TrashIcon } from 'lucide-react';
+import { type CartProduct } from '@/@types/models';
 import { useAppDispatch } from '@/store/store';
 import { changeQuantity, removeFromCart } from '@/store/cartSlice';
-import NumberStepper from '@/components/ui/number-stepper';
+import { NumberStepper } from '@/components/ui/number-stepper';
 
-type Props = {
+interface CartDrawerItemProps {
   product: CartProduct;
-};
+}
 
-const CartDrawerItem = ({ product }: Props) => {
+const CartDrawerItem = ({ product }: CartDrawerItemProps) => {
   const [productQuantity, setProductQuantity] = useState<number>(
     product.quantity
   );
@@ -22,30 +22,28 @@ const CartDrawerItem = ({ product }: Props) => {
   }, [productQuantity, dispatch, product.id]);
 
   return (
-    <Box
-      display="grid"
-      gridTemplateColumns="repeat(2, 1fr)"
+    <Grid
+      templateColumns="repeat(2, 1fr)"
       gap="{spacing.4}"
     >
-      <Image src={product.imageCover} />
-      <Box
-        display="flex"
-        flexDirection="column"
-      >
-        <Box
-          display="flex"
-          alignItems="start"
-          justifyContent="space-between"
-          flexGrow="1"
+      <Image
+        src={product.imageCover}
+        alt={`Imagem do produto ${product.name.pt}`}
+        borderRadius="{radii.l2}"
+      />
+      <Flex direction="column">
+        <Flex
+          align="start"
+          justify="space-between"
+          grow="1"
           gap="{spacing.2}"
         >
-          <Box
-            display="flex"
-            flexDirection="column"
+          <Flex
+            direction="column"
             gap="{spacing.2}"
           >
-            <Text fontSize={{ base: '0.75rem', md: '1rem' }}>
-              {product.name}
+            <Text textStyle={{ base: 'md', md: '1rem' }}>
+              {product.name.pt}
             </Text>
             <Text fontSize={{ base: '0.75rem', md: '1rem' }}>
               {Intl.NumberFormat('pt-br', {
@@ -53,23 +51,27 @@ const CartDrawerItem = ({ product }: Props) => {
                 style: 'currency',
               }).format(product.price)}
             </Text>
-          </Box>
+          </Flex>
           <IconButton
             onClick={() => dispatch(removeFromCart(product.id))}
             aria-label="Remover do carrinho"
             type="button"
+            variant="ghost"
             size="xs"
+            colorPalette="red"
           >
-            <XIcon />
+            <Icon>
+              <TrashIcon />
+            </Icon>
           </IconButton>
-        </Box>
+        </Flex>
         <NumberStepper
           value={productQuantity}
           setValue={setProductQuantity}
           minValue={1}
         />
-      </Box>
-    </Box>
+      </Flex>
+    </Grid>
   );
 };
 

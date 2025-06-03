@@ -1,11 +1,11 @@
 import { Outlet } from 'react-router';
 import { Provider as ReduxProvider } from 'react-redux';
 import { Provider as ChakraProvider } from '@/components/ui/provider';
-import { store } from './store/store';
 import { Toaster } from '@/components/ui/toaster';
-import AuthProvider from './contexts/auth';
+import { AuthProvider } from '@/features/auth/contexts';
+import { store } from './store/store';
 
-const App = () => {
+export function App() {
   return (
     <AuthProvider>
       <ReduxProvider store={store}>
@@ -16,6 +16,4 @@ const App = () => {
       </ReduxProvider>
     </AuthProvider>
   );
-};
-
-export default App;
+}

@@ -1,22 +1,19 @@
 import { Link as RouterLink } from 'react-router';
-import { z } from 'zod';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { useQuery } from '@tanstack/react-query';
 import {
   Box,
-  Button,
   Container,
-  Field,
   Heading,
-  Input,
   List,
   Link,
   Separator,
-  Group,
+  Flex,
+  Grid,
 } from '@chakra-ui/react';
-import { toaster } from '@/components/ui/toaster';
-import useGetCategories from '@/hooks/useGetCategories';
-import Copyright from '@/components/copyright';
+import { paths } from '@/config/paths';
+import { getCategories } from '@/features/categories/services';
+import { Copyright } from '@/components/section/copyright';
+import { FooterForm } from './footer-form';
 
 const productRoutes = [
   { label: 'Maior Preço', value: 'maior-preço' },
@@ -27,67 +24,33 @@ const productRoutes = [
 ];
 const companyRoutes = ['Sobre', 'Contato', 'Carreiras'];
 
-const formSchema = z.object({
-  email: z
-    .string()
-    .email({ message: 'E-mail inválido' })
-    .nonempty({ message: 'Campo obrigatório' }),
-});
-
-type FormSchema = z.infer<typeof formSchema>;
-
-const defaultValues: FormSchema = {
-  email: '',
-};
-
-const Footer = () => {
-  const { categories } = useGetCategories();
-
-  const form = useForm<FormSchema>({
-    defaultValues,
-    resolver: zodResolver(formSchema),
+export function Footer() {
+  const categoriesQuery = useQuery({
+    queryKey: ['categories'],
+    queryFn: getCategories,
   });
 
-  const onSubmit: SubmitHandler<FormSchema> = ({ email }) => {
-    toaster.create({
-      title: `E-mail ${email} cadastrado com sucesso`,
-      description: 'Seu e-mail irá receber novidades de nossa empresa',
-      type: 'info',
-    });
-
-    form.reset(defaultValues);
-  };
-
   return (
-    <Box backgroundColor="purple.900">
+    <Box>
       <Container>
-        <Box
+        <Grid
           as="footer"
-          display="grid"
           gap="{spacing.6}"
           paddingBlock="{spacing.6}"
         >
-          <Box
-            display="flex"
-            flexDirection={{ base: 'column', lg: 'row' }}
+          <Flex
+            direction={{ base: 'column', lg: 'row' }}
             gap="{spacing.12}"
           >
-            <Box
-              display="flex"
-              flexWrap="wrap"
+            <Flex
+              wrap="wrap"
               gap="{spacing.12}"
             >
-              <Box
-                display="flex"
-                flexDirection="column"
+              <Flex
+                direction="column"
                 gap="{spacing.2}"
               >
-                <Heading
-                  color="white"
-                  fontSize="md"
-                >
-                  Categorias
-                </Heading>
+                <Heading size="md">Categorias</Heading>
                 <List.Root
                   as="ul"
                   display="flex"
@@ -96,33 +59,28 @@ const Footer = () => {
                   listStyle="none"
                   margin="0"
                 >
-                  {categories.map((item) => (
+                  {categoriesQuery.data?.map((item) => (
                     <List.Item
-                      key={item.uid}
+                      key={item.id}
                       asChild
-                      color="white"
                       fontSize="0.875rem"
                     >
                       <Link asChild>
-                        <RouterLink to={`/produtos?tipo=${item.value}`}>
-                          {item.label}
+                        <RouterLink
+                          to={`${paths.user.products}?tipo=${item.value}`}
+                        >
+                          {item.label.pt}
                         </RouterLink>
                       </Link>
                     </List.Item>
                   ))}
                 </List.Root>
-              </Box>
-              <Box
-                display="flex"
-                flexDirection="column"
+              </Flex>
+              <Flex
+                direction="column"
                 gap="{spacing.2}"
               >
-                <Heading
-                  color="white"
-                  fontSize="md"
-                >
-                  Menu
-                </Heading>
+                <Heading size="md">Menu</Heading>
                 <List.Root
                   display="flex"
                   flexDirection="column"
@@ -134,7 +92,6 @@ const Footer = () => {
                     <List.Item
                       key={route.value}
                       asChild
-                      color="white"
                       fontSize="0.875rem"
                     >
                       <Link asChild>
@@ -145,18 +102,12 @@ const Footer = () => {
                     </List.Item>
                   ))}
                 </List.Root>
-              </Box>
-              <Box
-                display="flex"
-                flexDirection="column"
+              </Flex>
+              <Flex
+                direction="column"
                 gap="{spacing.2}"
               >
-                <Heading
-                  color="white"
-                  fontSize="md"
-                >
-                  Nossa Empresa
-                </Heading>
+                <Heading size="md">Nossa Empresa</Heading>
                 <List.Root
                   display="flex"
                   flexDirection="column"
@@ -168,7 +119,6 @@ const Footer = () => {
                     <List.Item
                       key={route}
                       asChild
-                      color="white"
                       fontSize="0.875rem"
                     >
                       <Link asChild>
@@ -177,59 +127,14 @@ const Footer = () => {
                     </List.Item>
                   ))}
                 </List.Root>
-              </Box>
-            </Box>
-            <Group
-              as="form"
-              onSubmit={form.handleSubmit(onSubmit)}
-              flexGrow="1"
-              height="fit-content"
-              attached
-            >
-              <Controller
-                name="email"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <Field.Root invalid={fieldState.error && true}>
-                    <Heading asChild>
-                      <Field.Label
-                        htmlFor="newsletter-email"
-                        color="white"
-                        fontSize="md"
-                      >
-                        Inscreva-se na nossa lista de e-mails
-                      </Field.Label>
-                    </Heading>
-                    <Input
-                      {...field}
-                      id="newsletter-email"
-                      type="email"
-                      placeholder="Digite seu e-mail"
-                      variant="subtle"
-                      borderRightRadius="0"
-                    />
-                    {fieldState.error && (
-                      <Field.ErrorText>
-                        {fieldState.error.message}
-                      </Field.ErrorText>
-                    )}
-                  </Field.Root>
-                )}
-              />
-              <Button
-                type="submit"
-                alignSelf={'end'}
-              >
-                Confirmar
-              </Button>
-            </Group>
-          </Box>
+              </Flex>
+            </Flex>
+            <FooterForm />
+          </Flex>
           <Separator />
           <Copyright />
-        </Box>
+        </Grid>
       </Container>
     </Box>
   );
-};
-
-export default Footer;
+}
