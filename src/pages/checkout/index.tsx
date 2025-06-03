@@ -3,7 +3,7 @@ import { useAppSelector } from '@/store/store';
 import CheckoutTotal from './checkout-total';
 import CheckoutDisplay from './checkout-display';
 
-const Checkout = () => {
+export function Checkout() {
   const { cart } = useAppSelector((state) => state.cartReducer);
 
   return (
@@ -46,6 +46,4 @@ const Checkout = () => {
       </Box>
     </Container>
   );
-};
-
-export default Checkout;
+}

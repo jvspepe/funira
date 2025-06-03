@@ -1,50 +1,68 @@
 import { Link } from 'react-router';
 import {
-  Accordion,
   Box,
   Button,
   CloseButton,
+  Collapsible,
   Drawer,
+  Flex,
+  Icon,
   IconButton,
   Portal,
-  Separator,
+  Text,
+  useCollapsible,
 } from '@chakra-ui/react';
-import { MenuIcon } from 'lucide-react';
-import { TCategory } from '@/@types/categories';
+import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  HomeIcon,
+  LibraryBigIcon,
+  MenuIcon,
+  SofaIcon,
+} from 'lucide-react';
+import { type Category } from '@/@types/models';
+import { paths } from '@/config/paths';
 
-type Props = {
-  categories: TCategory[];
-};
+interface MobileDrawerProps {
+  categories: Category[];
+}
 
-const MobileDrawer = ({ categories }: Props) => {
+export function MobileDrawer({ categories }: MobileDrawerProps) {
+  const collapsible = useCollapsible();
+
   return (
-    <Drawer.Root>
+    <Drawer.Root
+      placement="start"
+      size="xs"
+    >
       <Drawer.Trigger asChild>
         <IconButton
           type="button"
           aria-label="Abrir menu"
           variant="ghost"
+          size="lg"
           display={{ base: 'flex', md: 'none' }}
         >
-          <MenuIcon />
+          <Icon>
+            <MenuIcon />
+          </Icon>
         </IconButton>
       </Drawer.Trigger>
       <Portal>
         <Drawer.Backdrop />
         <Drawer.Positioner>
           <Drawer.Content>
-            <Drawer.CloseTrigger asChild>
-              <CloseButton />
-            </Drawer.CloseTrigger>
             <Drawer.Header>
               <Drawer.Title>Navegação</Drawer.Title>
+              <Drawer.CloseTrigger asChild>
+                <CloseButton size="lg" />
+              </Drawer.CloseTrigger>
             </Drawer.Header>
-            <Drawer.Body paddingInline={0}>
-              <Box
+            <Drawer.Body paddingInline="{spacing.6}">
+              <Flex
                 as="ul"
-                display="flex"
-                flexDirection="column"
-                justifyContent="center"
+                direction="column"
+                justify="center"
                 listStyleType="none"
               >
                 <Box as="li">
@@ -53,58 +71,74 @@ const MobileDrawer = ({ categories }: Props) => {
                     variant="ghost"
                     size="lg"
                     width="full"
+                    justifyContent="start"
                   >
-                    <Link to="/">Início</Link>
+                    <Link to={paths.user.home}>
+                      <Icon>
+                        <HomeIcon />
+                      </Icon>
+                      Início
+                    </Link>
                   </Button>
                 </Box>
-                <Separator />
                 <Box as="li">
-                  <Accordion.Root collapsible>
-                    <Accordion.Item value="products">
-                      <Accordion.ItemTrigger asChild>
+                  <Collapsible.Root
+                    open={collapsible.open}
+                    onOpenChange={(event) => collapsible.setOpen(event.open)}
+                  >
+                    <Collapsible.Trigger asChild>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="lg"
+                        width="full"
+                        justifyContent="space-between"
+                        borderBottomRadius={collapsible.open ? 0 : undefined}
+                      >
+                        <Box
+                          as="span"
+                          display="flex"
+                          alignItems="center"
+                          gap="{spacing.3}"
+                        >
+                          <Icon>
+                            <SofaIcon />
+                          </Icon>
+                          <Text>Produtos</Text>
+                        </Box>
+                        <Icon size="sm">
+                          {collapsible.open ? (
+                            <ChevronUpIcon />
+                          ) : (
+                            <ChevronDownIcon />
+                          )}
+                        </Icon>
+                      </Button>
+                    </Collapsible.Trigger>
+                    <Collapsible.Content
+                      backgroundColor="bg.subtle"
+                      borderBottomRadius="{radii.l2}"
+                    >
+                      {categories.map((category) => (
                         <Button
-                          type="button"
+                          key={category.id}
+                          asChild
                           variant="ghost"
-                        >
-                          Produtos
-                        </Button>
-                        {/* <Accordion.ItemIndicator /> */}
-                      </Accordion.ItemTrigger>
-                      <Accordion.ItemContent as="ul">
-                        <Accordion.ItemBody
-                          as="li"
+                          size="lg"
                           width="full"
-                          padding="0"
+                          justifyContent="start"
+                          borderRadius="none"
+                          _last={{ borderBottomRadius: '{radii.l2}' }}
                         >
-                          <Button
-                            asChild
-                            variant="ghost"
-                            width="full"
+                          <Link
+                            to={`${paths.user.products}?tipo=${category.value}`}
                           >
-                            <Link to="/produtos">Ver todos</Link>
-                          </Button>
-                        </Accordion.ItemBody>
-                        {categories.map((category) => (
-                          <Accordion.ItemBody
-                            key={category.uid}
-                            as="li"
-                            width="full"
-                            padding="0"
-                          >
-                            <Button
-                              asChild
-                              variant="ghost"
-                              width="full"
-                            >
-                              <Link to={`produtos?tipo=${category.value}`}>
-                                {category.label}
-                              </Link>
-                            </Button>
-                          </Accordion.ItemBody>
-                        ))}
-                      </Accordion.ItemContent>
-                    </Accordion.Item>
-                  </Accordion.Root>
+                            {category.label.pt}
+                          </Link>
+                        </Button>
+                      ))}
+                    </Collapsible.Content>
+                  </Collapsible.Root>
                 </Box>
                 <Box as="li">
                   <Button
@@ -112,31 +146,21 @@ const MobileDrawer = ({ categories }: Props) => {
                     variant="ghost"
                     size="lg"
                     width="full"
+                    justifyContent="start"
                   >
-                    <Link to="/sobre">Sobre</Link>
+                    <Link to={paths.user.about}>
+                      <Icon>
+                        <LibraryBigIcon />
+                      </Icon>
+                      Sobre
+                    </Link>
                   </Button>
                 </Box>
-              </Box>
+              </Flex>
             </Drawer.Body>
-            <Drawer.Footer>
-              <Button
-                asChild
-                flexGrow={1}
-              >
-                <Link to="/conectar">Conectar</Link>
-              </Button>
-              <Button
-                asChild
-                flexGrow={1}
-              >
-                <Link to="/criar-conta">Criar Conta</Link>
-              </Button>
-            </Drawer.Footer>
           </Drawer.Content>
         </Drawer.Positioner>
       </Portal>
     </Drawer.Root>
   );
-};
-
-export default MobileDrawer;
+}

@@ -1,71 +1,29 @@
-import { z } from 'zod';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  Box,
-  Button,
-  Container,
-  Field,
-  Group,
-  Heading,
-  Icon,
-  Input,
-  Text,
-  VisuallyHidden,
-} from '@chakra-ui/react';
+import { Box, Container, Flex, Heading, Icon, Text } from '@chakra-ui/react';
 import { CircleCheckIcon } from 'lucide-react';
-import { toaster } from '@/components/ui/toaster';
+import { NewsletterForm } from './newsletter-form';
 
 const benefits = ['Ofertas Exclusivas', 'Eventos', 'Descontos'];
 
-const formSchema = z.object({
-  email: z.string().email().nonempty(),
-});
-
-type FormSchema = z.infer<typeof formSchema>;
-
-const defaultValues: FormSchema = {
-  email: '',
-};
-
-const Newsletter = () => {
-  const form = useForm<FormSchema>({
-    defaultValues,
-    resolver: zodResolver(formSchema),
-  });
-
-  const onSubmit: SubmitHandler<FormSchema> = ({ email }) => {
-    toaster.create({
-      title: 'E-mail cadastrado com sucesso',
-      description: `O e-mail ${email} irá receber notícias e promoções da nossa loja!`,
-      type: 'success',
-    });
-
-    form.reset(defaultValues);
-  };
-
+export function Newsletter() {
   return (
     <Box
       backgroundImage="url('/images/newsletter.jpg')"
       backgroundSize="cover"
     >
       <Container>
-        <Box
-          display="flex"
+        <Flex
+          align={{ sm: 'center' }}
+          justify={{ sm: 'center' }}
           paddingBlock="{spacing.6}"
-          alignItems={{ sm: 'center' }}
-          justifyContent={{ sm: 'center' }}
         >
-          <Box
+          <Flex
             as="section"
-            display="flex"
-            flexDirection="column"
+            direction="column"
             gap="{spacing.6}"
             padding={{ sm: '5rem 0' }}
           >
-            <Box
-              display="flex"
-              flexDirection="column"
+            <Flex
+              direction="column"
               gap="{spacing.4}"
               maxWidth="35rem"
               textAlign={{ sm: 'center' }}
@@ -86,7 +44,7 @@ const Newsletter = () => {
                 exclusivas em novas coleções, liquidações, lojas pop-up e muito
                 mais.
               </Text>
-            </Box>
+            </Flex>
             <Box
               display="flex"
               flexDirection={{ base: 'column', sm: 'row' }}
@@ -109,49 +67,10 @@ const Newsletter = () => {
                 </Box>
               ))}
             </Box>
-            <Group
-              as="form"
-              onSubmit={form.handleSubmit(onSubmit)}
-              attached
-            >
-              <Controller
-                name="email"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <Field.Root invalid={fieldState.error && true}>
-                    <VisuallyHidden>
-                      <Field.Label htmlFor={field.name}>Seu e-mail</Field.Label>
-                    </VisuallyHidden>
-                    <Input
-                      {...field}
-                      id={field.name}
-                      type="email"
-                      placeholder="Digite seu e-mail"
-                      variant="subtle"
-                      borderRightRadius="0"
-                      size="xl"
-                    />
-
-                    {fieldState.error && (
-                      <Field.ErrorText>
-                        {fieldState.error.message}
-                      </Field.ErrorText>
-                    )}
-                  </Field.Root>
-                )}
-              />
-              <Button
-                type="submit"
-                size="xl"
-              >
-                Confirmar
-              </Button>
-            </Group>
-          </Box>
-        </Box>
+            <NewsletterForm />
+          </Flex>
+        </Flex>
       </Container>
     </Box>
   );
-};
-
-export default Newsletter;
+}

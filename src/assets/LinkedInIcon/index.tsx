@@ -2,7 +2,7 @@
 
 import { createIcon } from '@chakra-ui/react';
 
-const LinkedInIcon = createIcon({
+export const LinkedInIcon = createIcon({
   displayName: 'LinkedInIcon',
   defaultProps: {
     xmlns: 'http://www.w3.org/2000/svg',
@@ -35,4 +35,3 @@ const LinkedInIcon = createIcon({
     </>
   ),
 });
-export default LinkedInIcon;

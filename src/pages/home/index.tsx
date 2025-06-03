@@ -1,68 +1,75 @@
-import { useEffect, useState } from 'react';
-import { limit, orderBy } from 'firebase/firestore';
-import { Container } from '@chakra-ui/react';
-import type { Product } from '@/@types/models';
-import { getDocuments } from '@/lib/database';
-import Hero from '@/components/section/hero';
-import Features from '@/components/section/features';
-import Contact from '@/components/contact';
-import Newsletter from '@/components/section/newsletter';
-import ProductDisplay from '@/components/product-display';
+import { Suspense } from 'react';
+import { useQueries } from '@tanstack/react-query';
+import { Container, Flex } from '@chakra-ui/react';
+import { getProducts } from '@/features/products/services';
+import { Contact } from '@/components/section/contact';
+import { Features } from '@/components/section/features';
+import { Hero } from '@/components/section/hero';
+import { Newsletter } from '@/components/section/newsletter';
+import { ProductsSection } from '@/features/products/components/products-section';
+import { ProductsSectionSkeleton } from '@/features/products/components/products-section/skeleton';
 
 const QUERY_LIMIT = 4;
 
-const Home = () => {
-  const [newProducts, setNewProducts] = useState<Product[]>([]);
-  const [ratedProducts, setRatedProducts] = useState<Product[]>([]);
-
-  async function handleProducts() {
-    try {
-      const [newProducts, highestRatedProducts] = await Promise.all([
-        getDocuments<Product>(
-          'products',
-          orderBy('createdAt', 'desc'),
-          limit(QUERY_LIMIT)
-        ),
-        getDocuments<Product>(
-          'products',
-          orderBy('sales', 'desc'),
-          limit(QUERY_LIMIT)
-        ),
-      ]);
-
-      if (newProducts.data) setNewProducts(newProducts.data.documents);
-
-      if (highestRatedProducts.data)
-        setRatedProducts(highestRatedProducts.data.documents);
-    } catch (error) {
-      throw new Error(String(error));
-    }
-  }
-
-  useEffect(() => {
-    handleProducts().catch((error) => console.log(error));
-  }, []);
+export function HomePage() {
+  const [latestProductsQuery, bestSellingProductsQuery] = useQueries({
+    queries: [
+      {
+        queryKey: ['products', 'latest'],
+        queryFn: async () =>
+          await getProducts({
+            limitBy: QUERY_LIMIT,
+            sortBy: ['createdAt', 'desc'],
+          }),
+      },
+      {
+        queryKey: ['products', 'best-selling'],
+        queryFn: async () =>
+          await getProducts({
+            limitBy: QUERY_LIMIT,
+            sortBy: ['sales', 'desc'],
+          }),
+      },
+    ],
+  });
 
   return (
-    <>
+    <Flex
+      direction="column"
+      gap="{spacing.12}"
+    >
       <Hero />
-      <Container>
+      <Container
+        display="flex"
+        flexDirection="column"
+        gap="{spacing.12}"
+      >
         <Features />
-        <ProductDisplay
-          products={newProducts}
-          link="/produtos?ordem=novo"
-          title="Novos Produtos"
-        />
-        <ProductDisplay
-          products={ratedProducts}
-          link="/produtos?ordem=mais-vendido"
-          title="Produtos Populares"
-        />
+        {latestProductsQuery.isLoading || bestSellingProductsQuery.isLoading ? (
+          'Carregando informações'
+        ) : !latestProductsQuery.data || !bestSellingProductsQuery.data ? (
+          'Nenhum produto encontrado'
+        ) : (
+          <>
+            <Suspense fallback={<ProductsSectionSkeleton />}>
+              <ProductsSection
+                products={latestProductsQuery.data}
+                link="/produtos?ordem=novo"
+                title="Novos Produtos"
+              />
+            </Suspense>
+            <Suspense fallback={<ProductsSectionSkeleton />}>
+              <ProductsSection
+                products={bestSellingProductsQuery.data}
+                link="/produtos?ordem=mais-vendido"
+                title="Produtos Populares"
+              />
+            </Suspense>
+          </>
+        )}
         <Contact />
       </Container>
       <Newsletter />
-    </>
+    </Flex>
   );
-};
-
-export default Home;
+}

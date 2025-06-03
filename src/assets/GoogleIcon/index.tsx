@@ -2,7 +2,7 @@
 
 import { createIcon } from '@chakra-ui/react';
 
-const GoogleIcon = createIcon({
+export const GoogleIcon = createIcon({
   displayName: 'GoogleIcon',
   viewBox: '-3 0 262 262',
   defaultProps: {
@@ -42,5 +42,3 @@ const GoogleIcon = createIcon({
     </>
   ),
 });
-
-export default GoogleIcon;
