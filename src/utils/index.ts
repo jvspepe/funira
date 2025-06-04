@@ -3,11 +3,11 @@ import { Product } from '@/@types/models';
 const SORT_OPTIONS = {
   alphabeticalAscending: 'a-z',
   alphabeticalDescending: 'z-a',
-  priceDescending: 'maior-preço',
-  priceAscending: 'menor-preço',
-  soldDescending: 'mais-vendido',
-  ratingDescending: 'melhor-avaliado',
-  newest: 'novo',
+  priceDescending: 'highest-price',
+  priceAscending: 'lowest-price',
+  soldDescending: 'best-selling',
+  ratingDescending: 'best-rated',
+  newest: 'latest',
 };
 
 export function sortProducts(sortValue: string | null, products: Product[]) {

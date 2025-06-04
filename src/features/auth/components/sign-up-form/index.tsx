@@ -7,6 +7,7 @@ import {
   useForm,
 } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useTranslation } from 'react-i18next';
 import {
   Box,
   Button,
@@ -17,6 +18,7 @@ import {
   Text,
   Code,
   Flex,
+  Input,
 } from '@chakra-ui/react';
 import { ArrowLeft } from 'lucide-react';
 import { paths } from '@/config/paths';
@@ -29,8 +31,8 @@ import {
 } from './validation';
 import { SignInWithGoogle } from '@/features/auth/components/sign-in-with-google';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Field } from '@/components/ui/field';
 import { PasswordInput } from '@/components/ui/password-input';
-import { TextInput } from '@/components/ui/text-input';
 
 export function SignUpForm() {
   const [googleLoading, setGoogleLoading] = useState<boolean>(false);
@@ -42,6 +44,8 @@ export function SignUpForm() {
     defaultValues: signUpDefaultValues,
     resolver: zodResolver(signUpSchema),
   });
+
+  const { t } = useTranslation();
 
   const onSubmit: SubmitHandler<SignUpSchema> = async ({
     firstName,
@@ -87,7 +91,7 @@ export function SignUpForm() {
             <Icon aria-hidden>
               <ArrowLeft />
             </Icon>
-            Voltar ao início
+            {t('common:buttons.back')}
           </RouterLink>
         </Button>
         <Flex
@@ -95,20 +99,21 @@ export function SignUpForm() {
           direction="column"
           gap="{spacing.2}"
         >
-          <Heading size="2xl">Crie sua conta</Heading>
+          <Heading size="2xl">{t('auth.sign-up.heading')}</Heading>
           <Box>
             <Text
               as="span"
               color="fg.muted"
             >
-              Já possui uma conta?
+              {t('auth.sign-up.prompt')}
             </Text>{' '}
             <Link
               asChild
               color="fg.muted"
-              _hover={{ color: 'blue.500' }}
             >
-              <RouterLink to={paths.user.signIn}>Conectar</RouterLink>
+              <RouterLink to={paths.user.signIn}>
+                {t('auth.sign-in.heading')}
+              </RouterLink>
             </Link>
           </Box>
         </Flex>
@@ -127,32 +132,38 @@ export function SignUpForm() {
             name="firstName"
             control={form.control}
             render={({ field, fieldState }) => (
-              <TextInput
-                {...field}
-                type="text"
-                label="Nome"
-                error={fieldState.error ? true : undefined}
+              <Field
+                label={t('common:inputs.firstName')}
+                invalid={!!fieldState.error}
                 errorText={
                   fieldState.error ? fieldState.error.message : undefined
                 }
-                placeholder="Seu nome"
-              />
+              >
+                <Input
+                  {...field}
+                  type="text"
+                  placeholder={t('common:inputs.firstNamePlaceholder')}
+                />
+              </Field>
             )}
           />
           <Controller
             name="lastName"
             control={form.control}
             render={({ field, fieldState }) => (
-              <TextInput
-                {...field}
-                type="text"
-                label="Sobrenome"
-                error={fieldState.error ? true : undefined}
+              <Field
+                label={t('common:inputs.lastName')}
+                invalid={!!fieldState.error}
                 errorText={
                   fieldState.error ? fieldState.error.message : undefined
                 }
-                placeholder="Seu sobrenome"
-              />
+              >
+                <Input
+                  {...field}
+                  type="text"
+                  placeholder={t('common:inputs.lastNamePlaceholder')}
+                />
+              </Field>
             )}
           />
         </Flex>
@@ -160,50 +171,59 @@ export function SignUpForm() {
           name="email"
           control={form.control}
           render={({ field, fieldState }) => (
-            <TextInput
-              {...field}
-              type="email"
-              label="E-mail"
-              error={fieldState.error ? true : undefined}
+            <Field
+              label={t('common:inputs.email')}
+              invalid={!!fieldState.error}
               errorText={
                 fieldState.error ? fieldState.error.message : undefined
               }
-              placeholder="seu@email"
-            />
+            >
+              <Input
+                {...field}
+                type="email"
+                placeholder={t('common:inputs.emailPlaceholder')}
+              />
+            </Field>
           )}
         />
         <Controller
           name="password"
           control={form.control}
           render={({ field, fieldState }) => (
-            <PasswordInput
-              {...field}
-              id={field.name}
-              visible={showPassword}
-              onVisibleChange={setShowPassword}
-              error={fieldState.error ? true : undefined}
+            <Field
+              label={t('common:inputs.password')}
+              invalid={!!fieldState.error}
               errorText={
                 fieldState.error ? fieldState.error.message : undefined
               }
-              label="Senha"
-              placeholder="Mínimo de 6 caractéres"
-            />
+            >
+              <PasswordInput
+                {...field}
+                id={field.name}
+                visible={showPassword}
+                onVisibleChange={setShowPassword}
+                placeholder={t('common:inputs.passwordPlaceholder')}
+              />
+            </Field>
           )}
         />
         <Controller
           name="confirmPassword"
           control={form.control}
           render={({ field, fieldState }) => (
-            <TextInput
-              {...field}
-              type={showPassword ? 'text' : 'password'}
-              label="Confirmar senha"
-              error={fieldState.error ? true : undefined}
+            <Field
+              label={t('common:inputs.confirmPassword')}
+              invalid={!!fieldState.error}
               errorText={
                 fieldState.error ? fieldState.error.message : undefined
               }
-              placeholder="Mínimo de 6 caractéres"
-            />
+            >
+              <Input
+                {...field}
+                type={showPassword ? 'text' : 'password'}
+                placeholder={t('common:inputs.passwordPlaceholder')}
+              />
+            </Field>
           )}
         />
         <Controller
@@ -217,20 +237,20 @@ export function SignUpForm() {
               ref={field.ref}
               checked={field.value}
             >
-              Lembrar de mim?
+              {t('common:inputs.rememberUser')}
             </Checkbox>
           )}
         />
         <Button
           type="submit"
           loading={form.formState.isSubmitting}
-          loadingText="Carregando..."
+          loadingText={t('buttons.loading')}
           disabled={googleLoading}
           display="flex"
           alignItems="center"
           gap="{spacing.2}"
         >
-          Confirmar
+          {t('common:buttons.confirm')}
         </Button>
         <Flex
           width="full"
@@ -243,7 +263,7 @@ export function SignUpForm() {
             gap="{spacing.6}"
           >
             <Separator flexGrow="1" />
-            <Text>Ou</Text>
+            <Text>{t('common:or')}</Text>
             <Separator flexGrow="1" />
           </Flex>
           <SignInWithGoogle

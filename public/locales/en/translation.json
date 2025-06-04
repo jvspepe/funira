@@ -1,0 +1,81 @@
+{
+  "auth": {
+    "sign-in": {
+      "heading": "Sign in to your account",
+      "prompt": "Don't have an account?"
+    },
+    "sign-up": {
+      "heading": "Create your account",
+      "prompt": "Already have an account?"
+    }
+  },
+  "navigation": {
+    "home": "Home",
+    "products": "Products",
+    "about": "About us"
+  },
+  "categories": {
+    "all": "See all",
+    "empty": "No categories found"
+  },
+  "home": {
+    "hero": {
+      "title": "Luxury homeware for people who love timeless design quality",
+      "content": "With our new collection, view over 400 bespoke pieces from homeware through to furniture today",
+      "button": "See collection"
+    }
+  },
+  "features": {
+    "heading": "What makes our brand different",
+    "items": [
+      {
+        "title": "Next day delivery",
+        "details": "Order before 3pm and get your order the next day as standard"
+      },
+      {
+        "title": "Made by true artisans",
+        "details": "Handmade crafted goods made with real passion and craftmanship"
+      },
+      {
+        "title": "Unbeatable prices",
+        "details": "For our materials and quality you won't find better prices anywhere"
+      },
+      {
+        "title": "Helping nature",
+        "details": "We use 100% recycled to ensure our footprint is more manageable"
+      }
+    ]
+  },
+  "contact": {
+    "title": "It started with a small idea",
+    "content": "A global brand with local beginnings, our story begain in a small studio in South London in early 2014"
+  },
+  "newsletter": {
+    "heading": "Join the club and get the benefits",
+    "content": "Sign up for our newsletter and receive exclusive offers on new ranges, sales, pop up stores and more",
+    "benefits": ["Exclusive offers", "Events", "Discounts"]
+  },
+  "footer": {
+    "categories": {
+      "title": "Categories"
+    },
+    "menu": {
+      "title": "Menu",
+      "items": {
+        "highest-price": "Highest Price",
+        "lowest-price": "Lowest Price",
+        "latest": "Latest",
+        "best-selling": "Best Sellers",
+        "best-rated": "Best Rated"
+      }
+    },
+    "company": {
+      "title": "Company",
+      "items": ["Our Company", "About", "Contact", "Careers"]
+    }
+  },
+  "mobileDrawer": {
+    "openMenu": "Open menu",
+    "navigation": "Navigation"
+  }
+}

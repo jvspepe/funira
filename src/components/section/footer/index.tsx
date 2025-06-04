@@ -1,5 +1,6 @@
 import { Link as RouterLink } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import {
   Box,
   Container,
@@ -15,16 +16,19 @@ import { getCategories } from '@/features/categories/services';
 import { Copyright } from '@/components/section/copyright';
 import { FooterForm } from './footer-form';
 
-const productRoutes = [
-  { label: 'Maior Preço', value: 'maior-preço' },
-  { label: 'Menor Preço', value: 'menor-preço' },
-  { label: 'Novos', value: 'novo' },
-  { label: 'Mais Vendidos', value: 'mais-vendidos' },
-  { label: 'Melhor Avaliados', value: 'melhor-avaliados' },
-];
-const companyRoutes = ['Sobre', 'Contato', 'Carreiras'];
-
 export function Footer() {
+  const { t, i18n } = useTranslation();
+
+  const productRoutes = t('footer.menu.items', {
+    returnObjects: true,
+  }) as Record<string, string>[];
+
+  const companyRoutes = t('footer.company.items', {
+    returnObjects: true,
+  }) as string[];
+
+  const currentLang = i18n.language as 'pt' | 'en';
+
   const categoriesQuery = useQuery({
     queryKey: ['categories'],
     queryFn: getCategories,
@@ -50,7 +54,7 @@ export function Footer() {
                 direction="column"
                 gap="{spacing.2}"
               >
-                <Heading size="md">Categorias</Heading>
+                <Heading size="md">{t('footer.categories.title')}</Heading>
                 <List.Root
                   as="ul"
                   display="flex"
@@ -69,7 +73,7 @@ export function Footer() {
                         <RouterLink
                           to={`${paths.user.products}?tipo=${item.value}`}
                         >
-                          {item.label.pt}
+                          {item.label[currentLang] || item.label.en}
                         </RouterLink>
                       </Link>
                     </List.Item>
@@ -80,7 +84,7 @@ export function Footer() {
                 direction="column"
                 gap="{spacing.2}"
               >
-                <Heading size="md">Menu</Heading>
+                <Heading size="md">{t('footer.menu.title')}</Heading>
                 <List.Root
                   display="flex"
                   flexDirection="column"
@@ -88,15 +92,15 @@ export function Footer() {
                   listStyle="none"
                   margin="0"
                 >
-                  {productRoutes.map((route) => (
+                  {Object.keys(productRoutes).map((key) => (
                     <List.Item
-                      key={route.value}
+                      key={key}
                       asChild
                       fontSize="0.875rem"
                     >
                       <Link asChild>
-                        <RouterLink to={`/produtos?ordem=${route.value}`}>
-                          {route.label}
+                        <RouterLink to={`${paths.user.products}?sort=${key}`}>
+                          {t(`footer.menu.items.${key}`)}
                         </RouterLink>
                       </Link>
                     </List.Item>
@@ -107,7 +111,7 @@ export function Footer() {
                 direction="column"
                 gap="{spacing.2}"
               >
-                <Heading size="md">Nossa Empresa</Heading>
+                <Heading size="md">{t('footer.company.title')}</Heading>
                 <List.Root
                   display="flex"
                   flexDirection="column"

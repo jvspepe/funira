@@ -10,9 +10,13 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
+    fallbackLng: 'en',
+    supportedLngs: ['pt', 'en'],
+    ns: ['translation', 'common'],
     debug: env.MODE === 'development',
-    fallbackLng: 'pt',
     interpolation: {
       escapeValue: false,
     },
   });
+
+export default i18n;

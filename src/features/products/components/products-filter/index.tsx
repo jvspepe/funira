@@ -30,7 +30,7 @@ export function ProductsFilter({ categories }: ProductsFilterProps) {
 
   function handleChangeFilterValues() {
     const values: string[] = [];
-    const typeParams = searchParams.getAll('tipo');
+    const typeParams = searchParams.getAll('type');
 
     if (!typeParams) return [];
 

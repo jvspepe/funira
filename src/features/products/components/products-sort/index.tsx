@@ -1,22 +1,18 @@
+import { useTranslation } from 'react-i18next';
 import { Button, Icon, Menu, Portal } from '@chakra-ui/react';
 import { ListFilterIcon } from 'lucide-react';
-import SortOption from '@/@types/sort-options';
-
-const sortOptions: SortOption[] = [
-  { label: 'A-Z', value: 'a-z' },
-  { label: 'Z-A', value: 'z-a' },
-  { label: 'Maior Preço', value: 'maior-preço' },
-  { label: 'Menor Preço', value: 'menor-preço' },
-  { label: 'Novos', value: 'novo' },
-  { label: 'Mais Vendidos', value: 'mais-vendidos' },
-  { label: 'Melhor Avaliados', value: 'melhor-avaliados' },
-];
 
 interface ProductsSortProps {
   handleChangeSort: (value: string) => void;
 }
 
 export function ProductsSort({ handleChangeSort }: ProductsSortProps) {
+  const { t } = useTranslation();
+
+  const productRoutes = t('footer.menu.items', {
+    returnObjects: true,
+  }) as Record<string, string>[];
+
   return (
     <Menu.Root>
       <Menu.Trigger asChild>
@@ -34,13 +30,13 @@ export function ProductsSort({ handleChangeSort }: ProductsSortProps) {
       <Portal>
         <Menu.Positioner>
           <Menu.Content>
-            {sortOptions.map((sortOption) => (
+            {Object.keys(productRoutes).map((key) => (
               <Menu.Item
-                key={sortOption.value}
-                value={sortOption.value}
-                onClick={() => handleChangeSort(sortOption.value)}
+                key={key}
+                value={key}
+                onClick={() => handleChangeSort(key)}
               >
-                {sortOption.label}
+                {t(`footer.menu.items.${key}`)}
               </Menu.Item>
             ))}
           </Menu.Content>

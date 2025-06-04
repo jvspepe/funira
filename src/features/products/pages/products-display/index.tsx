@@ -33,17 +33,15 @@ export function ProductsDisplay() {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const sortParam = searchParams.get('ordem');
-  const typeParams = searchParams.getAll('tipo');
+  const sortParam = searchParams.get('sort');
+  const typeParams = searchParams.getAll('type');
 
   function handleChangeSort(value: string) {
-    const sortParams = searchParams.get('ordem');
-
-    if (sortParams === value) {
-      searchParams.delete('ordem');
+    if (sortParam === value) {
+      searchParams.delete('sort');
       setSearchParams(searchParams);
     } else {
-      searchParams.set('ordem', value);
+      searchParams.set('sort', value);
       setSearchParams(searchParams);
     }
   }

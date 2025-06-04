@@ -15,8 +15,11 @@ import { getCategories } from '@/features/categories/services';
 import { CartDrawer } from '@/components/cart-drawer';
 import { MobileDrawer } from '@/components/mobile-drawer';
 import { UserMenu } from '@/components/user-menu';
+import { useTranslation } from 'react-i18next';
 
 export function Header() {
+  const { t, i18n } = useTranslation();
+
   const categoriesQuery = useQuery({
     queryKey: ['categories'],
     queryFn: getCategories,
@@ -52,7 +55,7 @@ export function Header() {
           >
             <Box as="li">
               <Link asChild>
-                <NavLink to={paths.user.home}>Início</NavLink>
+                <NavLink to={paths.user.home}>{t('navigation.home')}</NavLink>
               </Link>
             </Box>
             <Box as="li">
@@ -63,7 +66,7 @@ export function Header() {
                       type="button"
                       unstyled
                     >
-                      Produtos
+                      {t('navigation.products')}
                     </Button>
                   </Link>
                 </Menu.Trigger>
@@ -78,15 +81,15 @@ export function Header() {
                           <Spinner />
                         </Flex>
                       ) : !categoriesQuery.data ? (
-                        'Nenhuma categoria encontrada'
+                        t('categories.empty')
                       ) : (
                         <>
                           <Menu.Item
                             asChild
-                            value="produtos"
+                            value={paths.user.products}
                           >
                             <RouterLink to={paths.user.products}>
-                              Ver todos
+                              {t('categories.all')}
                             </RouterLink>
                           </Menu.Item>
                           {categoriesQuery.data.map((category) => (
@@ -98,7 +101,8 @@ export function Header() {
                               <RouterLink
                                 to={`${paths.user.products}?tipo=${category.value}`}
                               >
-                                {category.label.pt}
+                                {category.label[i18n.language as 'en' | 'pt'] ??
+                                  category.label.en}
                               </RouterLink>
                             </Menu.Item>
                           ))}
@@ -111,7 +115,7 @@ export function Header() {
             </Box>
             <Box as="li">
               <Link asChild>
-                <NavLink to={paths.user.about}>Sobre</NavLink>
+                <NavLink to={paths.user.about}>{t('navigation.about')}</NavLink>
               </Link>
             </Box>
           </Box>

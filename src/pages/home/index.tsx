@@ -1,6 +1,8 @@
 import { Suspense } from 'react';
 import { useQueries } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { Container, Flex } from '@chakra-ui/react';
+import { paths } from '@/config/paths';
 import { getProducts } from '@/features/products/services';
 import { Contact } from '@/components/section/contact';
 import { Features } from '@/components/section/features';
@@ -33,6 +35,8 @@ export function HomePage() {
     ],
   });
 
+  const { t } = useTranslation();
+
   return (
     <Flex
       direction="column"
@@ -54,15 +58,15 @@ export function HomePage() {
             <Suspense fallback={<ProductsSectionSkeleton />}>
               <ProductsSection
                 products={latestProductsQuery.data}
-                link="/produtos?ordem=novo"
-                title="Novos Produtos"
+                link={`${paths.user.products}?sort=latest`}
+                title={t('footer.menu.items.latest')}
               />
             </Suspense>
             <Suspense fallback={<ProductsSectionSkeleton />}>
               <ProductsSection
                 products={bestSellingProductsQuery.data}
-                link="/produtos?ordem=mais-vendido"
-                title="Produtos Populares"
+                link={`${paths.user.products}?sort=best-selling`}
+                title={t('footer.menu.items.best-selling')}
               />
             </Suspense>
           </>

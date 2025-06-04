@@ -1,7 +1,10 @@
 import { Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import { Button, Flex, Grid, Heading, Image, Text } from '@chakra-ui/react';
 
 export function Contact() {
+  const { t } = useTranslation();
+
   return (
     <Grid
       as="section"
@@ -21,20 +24,19 @@ export function Contact() {
           fontSize={{ base: '{fontSizes.xl}', xl: '2rem' }}
           fontWeight="normal"
         >
-          Começou com uma pequena ideia
+          {t('contact.title')}
         </Heading>
         <Text
           textStyle={{ base: 'sm', xl: 'lg' }}
           flexGrow="1"
         >
-          Uma marca global com origens locais, nossa história começou em um
-          pequeno estúdio no sul de Londres no início de 2014
+          {t('contact.content')}
         </Text>
         <Button
           asChild
           size="lg"
         >
-          <Link to="/">Entrar em contato</Link>
+          <Link to="/">{t('home.hero.button')}</Link>
         </Button>
       </Flex>
       <Image

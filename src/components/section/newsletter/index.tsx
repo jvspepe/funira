@@ -1,10 +1,15 @@
 import { Box, Container, Flex, Heading, Icon, Text } from '@chakra-ui/react';
 import { CircleCheckIcon } from 'lucide-react';
 import { NewsletterForm } from './newsletter-form';
-
-const benefits = ['Ofertas Exclusivas', 'Eventos', 'Descontos'];
+import { useTranslation } from 'react-i18next';
 
 export function Newsletter() {
+  const { t } = useTranslation();
+
+  const benefits = t('newsletter.benefits', {
+    returnObjects: true,
+  }) as string[];
+
   return (
     <Box
       backgroundImage="url('/images/newsletter.jpg')"
@@ -34,15 +39,13 @@ export function Newsletter() {
                 fontSize={{ base: '2xl', xl: '2rem' }}
                 fontWeight="normal"
               >
-                Junte-se ao clube e aproveite os benefícios.
+                {t('newsletter.heading')}
               </Heading>
               <Text
                 color="white"
                 fontSize={{ base: 'sm', xl: 'lg' }}
               >
-                Cadastre-se para receber nossa newsletter e receba ofertas
-                exclusivas em novas coleções, liquidações, lojas pop-up e muito
-                mais.
+                {t('newsletter.content')}
               </Text>
             </Flex>
             <Box

@@ -1,4 +1,5 @@
 import { Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import {
   Box,
   Button,
@@ -29,6 +30,7 @@ interface MobileDrawerProps {
 
 export function MobileDrawer({ categories }: MobileDrawerProps) {
   const collapsible = useCollapsible();
+  const { t, i18n } = useTranslation();
 
   return (
     <Drawer.Root
@@ -38,7 +40,7 @@ export function MobileDrawer({ categories }: MobileDrawerProps) {
       <Drawer.Trigger asChild>
         <IconButton
           type="button"
-          aria-label="Abrir menu"
+          aria-label={t('mobileDrawer.openMenu', 'Abrir menu')}
           variant="ghost"
           size="lg"
           display={{ base: 'flex', md: 'none' }}
@@ -53,7 +55,9 @@ export function MobileDrawer({ categories }: MobileDrawerProps) {
         <Drawer.Positioner>
           <Drawer.Content>
             <Drawer.Header>
-              <Drawer.Title>Navegação</Drawer.Title>
+              <Drawer.Title>
+                {t('mobileDrawer.navigation', 'Navegação')}
+              </Drawer.Title>
               <Drawer.CloseTrigger asChild>
                 <CloseButton size="lg" />
               </Drawer.CloseTrigger>
@@ -77,7 +81,7 @@ export function MobileDrawer({ categories }: MobileDrawerProps) {
                       <Icon>
                         <HomeIcon />
                       </Icon>
-                      Início
+                      {t('navigation.home', 'Início')}
                     </Link>
                   </Button>
                 </Box>
@@ -104,7 +108,7 @@ export function MobileDrawer({ categories }: MobileDrawerProps) {
                           <Icon>
                             <SofaIcon />
                           </Icon>
-                          <Text>Produtos</Text>
+                          <Text>{t('navigation.products')}</Text>
                         </Box>
                         <Icon size="sm">
                           {collapsible.open ? (
@@ -133,7 +137,8 @@ export function MobileDrawer({ categories }: MobileDrawerProps) {
                           <Link
                             to={`${paths.user.products}?tipo=${category.value}`}
                           >
-                            {category.label.pt}
+                            {category.label[i18n.language as 'pt' | 'en'] ||
+                              category.label.en}
                           </Link>
                         </Button>
                       ))}
@@ -152,7 +157,7 @@ export function MobileDrawer({ categories }: MobileDrawerProps) {
                       <Icon>
                         <LibraryBigIcon />
                       </Icon>
-                      Sobre
+                      {t('navigation.about')}
                     </Link>
                   </Button>
                 </Box>

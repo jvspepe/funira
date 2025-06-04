@@ -52,7 +52,7 @@ export async function signUp(
       id: user.uid,
       username,
       email,
-      role: 'user',
+      role: 'customer',
       createdAt: Timestamp.now(),
     }),
   ]);
@@ -80,7 +80,7 @@ export async function signInWithGoogle(rememberUser = false) {
       id: user.uid,
       email: user.email ?? '',
       username: user.displayName ?? '',
-      role: 'user',
+      role: 'customer',
       createdAt: Timestamp.now(),
     });
   }
