@@ -7,7 +7,6 @@ import {
   type InputProps,
 } from '@chakra-ui/react';
 import {
-  Field,
   IconButton,
   Input,
   InputGroup,
@@ -35,26 +34,25 @@ function VisibilityTrigger({
   );
 }
 
-interface PasswordVisibilityProps {
+type PasswordVisibilityProps = {
   defaultVisible?: boolean;
   visible?: boolean;
   onVisibleChange?: (visible: boolean) => void;
   visibilityIcon?: { on: ReactNode; off: ReactNode };
-}
+};
 
-interface PasswordInputProps extends InputProps, PasswordVisibilityProps {
-  rootProps?: GroupProps;
-  label?: string;
-  error?: boolean;
-  helperText?: ReactNode;
-  errorText?: ReactNode;
-  optionalText?: ReactNode;
-}
+type PasswordInputProps = InputProps &
+  PasswordVisibilityProps & {
+    ref?: Ref<HTMLInputElement>;
+    rootProps?: GroupProps;
+    label?: string;
+    error?: boolean;
+    helperText?: ReactNode;
+    errorText?: ReactNode;
+    optionalText?: ReactNode;
+  };
 
-export function PasswordInput({
-  ref,
-  ...props
-}: PasswordInputProps & { ref?: Ref<HTMLInputElement> }) {
+export function PasswordInput({ ref, ...props }: PasswordInputProps) {
   const {
     rootProps,
     defaultVisible,
@@ -73,13 +71,7 @@ export function PasswordInput({
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <Field.Root invalid={props.error}>
-      {props.label && (
-        <Field.Label>
-          {props.label}
-          <Field.RequiredIndicator fallback={props.optionalText} />
-        </Field.Label>
-      )}
+    <>
       <InputGroup
         endElement={
           <VisibilityTrigger
@@ -102,11 +94,7 @@ export function PasswordInput({
           type={visible ? 'text' : 'password'}
         />
       </InputGroup>
-      {props.helperText && (
-        <Field.HelperText>{props.helperText}</Field.HelperText>
-      )}
-      {props.errorText && <Field.ErrorText>{props.errorText}</Field.ErrorText>}
-    </Field.Root>
+    </>
   );
 }
 

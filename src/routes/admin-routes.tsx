@@ -8,6 +8,7 @@ import { CreateProduct } from '@/features/admin/pages/create-product';
 import { AdminCategories } from '@/features/admin/pages/categories';
 import { AdminSignIn } from '@/features/admin/pages/sign-in';
 import { AdminUsers } from '@/features/admin/routes/users';
+import { EditProductPage } from '@/features/admin/pages/edit-product';
 
 export const adminRoutes: RouteObject[] = [
   {
@@ -33,12 +34,16 @@ export const adminRoutes: RouteObject[] = [
             element: <AdminProducts />,
           },
           {
-            path: paths.admin.categories,
-            element: <AdminCategories />,
-          },
-          {
             path: paths.admin.createProduct,
             element: <CreateProduct />,
+          },
+          {
+            path: paths.admin.editProduct,
+            element: <EditProductPage />,
+          },
+          {
+            path: paths.admin.categories,
+            element: <AdminCategories />,
           },
         ],
       },

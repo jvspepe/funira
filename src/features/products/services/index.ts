@@ -119,7 +119,7 @@ export async function getProducts({
 
 export async function updateProduct(product: Partial<Product>) {
   if (!product.id) {
-    throw new Error('Product id is required to update a product.');
+    throw new Error('Missing required field: ID');
   }
 
   await updateDoc(

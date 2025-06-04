@@ -1,0 +1,21 @@
+{
+  "inputs": {
+    "firstName": "First Name",
+    "firstNamePlaceholder": "Enter your first name",
+    "lastName": "Last Name",
+    "lastNamePlaceholder": "Enter your last name",
+    "email": "E-mail",
+    "emailPlaceholder": "Enter your email",
+    "password": "Password",
+    "passwordPlaceholder": "Minimum 6 characters",
+    "confirmPassword": "Confirm Password",
+    "rememberUser": "Remember Me"
+  },
+  "buttons": {
+    "confirm": "Confirm",
+    "loading": "Loading...",
+    "google-auth": "Sign in with Google",
+    "back": "Go back"
+  },
+  "or": "Or"
+}

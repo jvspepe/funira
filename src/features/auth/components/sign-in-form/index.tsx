@@ -7,6 +7,7 @@ import {
   useForm,
 } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useTranslation } from 'react-i18next';
 import {
   Box,
   Button,
@@ -14,6 +15,7 @@ import {
   Flex,
   Heading,
   Icon,
+  Input,
   Link,
   Separator,
   Text,
@@ -30,7 +32,7 @@ import {
 import { SignInWithGoogle } from '@/features/auth/components/sign-in-with-google';
 import { Checkbox } from '@/components/ui/checkbox';
 import { PasswordInput } from '@/components/ui/password-input';
-import { TextInput } from '@/components/ui/text-input';
+import { Field } from '@/components/ui/field';
 
 export function SignInForm() {
   const [googleLoading, setGoogleLoading] = useState<boolean>(false);
@@ -41,6 +43,8 @@ export function SignInForm() {
     defaultValues: signInDefaultValues,
     resolver: zodResolver(signInSchema),
   });
+
+  const { t } = useTranslation();
 
   const onSubmit: SubmitHandler<SignInSchema> = async ({
     email,
@@ -79,7 +83,7 @@ export function SignInForm() {
             <Icon>
               <ArrowLeftIcon />
             </Icon>
-            Voltar ao início
+            {t('common:buttons.back')}
           </RouterLink>
         </Button>
         <Flex
@@ -87,11 +91,13 @@ export function SignInForm() {
           direction="column"
           gap="{spacing.2}"
         >
-          <Heading size="md">Conecte em sua conta</Heading>
+          <Heading size="md">{t('auth.sign-in.heading')}</Heading>
           <Box>
-            <Text as="span">Não possui uma conta?</Text>{' '}
+            <Text as="span">{t('auth.sign-in.prompt')}</Text>{' '}
             <Link asChild>
-              <RouterLink to={paths.user.signUp}>Crie uma conta</RouterLink>
+              <RouterLink to={paths.user.signUp}>
+                {t('auth.sign-up.heading')}
+              </RouterLink>
             </Link>
           </Box>
         </Flex>
@@ -109,16 +115,19 @@ export function SignInForm() {
           name="email"
           control={form.control}
           render={({ field, fieldState }) => (
-            <TextInput
-              {...field}
-              type="email"
-              label="E-mail"
-              error={fieldState.error ? true : undefined}
+            <Field
+              label={t('common:inputs.email')}
+              invalid={fieldState.error ? true : undefined}
               errorText={
                 fieldState.error ? fieldState.error.message : undefined
               }
-              placeholder="seu@email"
-            />
+            >
+              <Input
+                {...field}
+                type="email"
+                placeholder={t('common:inputs.emailPlaceholder')}
+              />
+            </Field>
           )}
         />
         <Controller
@@ -132,8 +141,8 @@ export function SignInForm() {
               errorText={
                 fieldState.error ? fieldState.error.message : undefined
               }
-              label="Senha"
-              placeholder="Mínimo de 6 caractéres"
+              label={t('common:inputs.password')}
+              placeholder={t('common:inputs.passwordPlaceholder')}
             />
           )}
         />
@@ -148,16 +157,16 @@ export function SignInForm() {
               ref={field.ref}
               checked={field.value}
             >
-              Lembrar de mim?
+              {t('common:inputs.rememberUser')}
             </Checkbox>
           )}
         />
         <Button
           type="submit"
           loading={form.formState.isSubmitting}
-          loadingText="Carregando..."
+          loadingText={t('buttons.loading')}
         >
-          Confirmar
+          {t('common:buttons.confirm')}
         </Button>
         <Flex
           width="full"
@@ -170,7 +179,7 @@ export function SignInForm() {
             gap="{spacing.6}"
           >
             <Separator flexGrow="1" />
-            <Text>Ou</Text>
+            <Text>{t('common:or')}</Text>
             <Separator flexGrow="1" />
           </Flex>
           <SignInWithGoogle

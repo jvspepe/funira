@@ -1,33 +1,24 @@
 import { Flex, Grid, Heading } from '@chakra-ui/react';
 import { CircleCheck, CreditCard, Leaf, Truck } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import Feature from '@/@types/feature';
 import { FeatureCard } from '@/components/section/features/feature-card';
 
-const featureList: Feature[] = [
-  {
-    icon: Truck,
-    title: 'Entrega no Dia Seguinte',
-    details: 'Faça pedidos antes das 15:00 e receba no dia seguinte',
-  },
-  {
-    icon: CircleCheck,
-    title: 'Feito por verdadeiros artesãos',
-    details: 'Produtos artesanais feitos com verdadeira paixão e habilidade',
-  },
-  {
-    icon: CreditCard,
-    title: 'Preços Imbatíveis',
-    details:
-      'Com nossos materiais e qualidade, você não encontrará preços melhores em nenhum outro lugar',
-  },
-  {
-    icon: Leaf,
-    title: 'Ajudando a Natureza',
-    details: 'Criamos com consciência, utilizando materiais 100% reciclados.',
-  },
-];
+const featureIcons = [Truck, CircleCheck, CreditCard, Leaf];
 
 export function Features() {
+  const { t } = useTranslation();
+
+  // Create our feature list from translations and icons
+  const translatedFeatures = t('features.items', {
+    returnObjects: true,
+  }) as Omit<Feature, 'icon'>[];
+
+  const featureList: Feature[] = translatedFeatures.map((feature, index) => ({
+    icon: featureIcons[index],
+    ...feature,
+  }));
+
   return (
     <Flex
       direction="column"
@@ -37,7 +28,7 @@ export function Features() {
         size="xl"
         fontWeight="normal"
       >
-        O que faz de nossa marca diferente
+        {t('features.heading')}
       </Heading>
       <Grid
         gap="{spacing.6}"

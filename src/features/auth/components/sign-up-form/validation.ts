@@ -1,14 +1,14 @@
-import { DefaultValues } from 'react-hook-form';
 import { z } from 'zod';
+import { DefaultValues } from 'react-hook-form';
+import { UserSchema } from '@/@types/models';
 
-export const signUpSchema = z
-  .object({
+export const signUpSchema = UserSchema.pick({ email: true })
+  .extend({
     firstName: z.string().nonempty('Campo obrigatório'),
     lastName: z.string().nonempty('Campo obrigatório'),
-    email: z.string().email('E-mail inválido').nonempty('Campo obrigatório'),
     password: z.string().nonempty('Campo obrigatório'),
     confirmPassword: z.string().nonempty('Campo obrigatório'),
-    rememberUser: z.boolean(),
+    rememberUser: z.boolean().default(false),
   })
   .superRefine(({ password, confirmPassword }, ctx) => {
     if (password !== confirmPassword) {

@@ -1,4 +1,5 @@
 import { Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import {
   Box,
   Button,
@@ -11,6 +12,8 @@ import {
 import { paths } from '@/config/paths';
 
 export function Hero() {
+  const { t } = useTranslation();
+
   return (
     <Box
       backgroundColor="bg.panel"
@@ -43,20 +46,16 @@ export function Hero() {
               fontSize={{ base: '1.5rem', md: '2rem' }}
               fontWeight="normal"
             >
-              Artigos de luxo para pessoas que amam design atemporal de
-              qualidade.
+              {t('home.hero.title')}
             </Heading>
-            <Text textStyle={{ md: 'lg' }}>
-              Com a nossa nova coleção, veja mais de 400 peças exclusivas, desde
-              artigos para o lar até movéis.
-            </Text>
+            <Text textStyle={{ md: 'lg' }}>{t('home.hero.content')}</Text>
           </Flex>
           <Button
             asChild
             variant="subtle"
             size="lg"
           >
-            <Link to={paths.user.home}>Ver coleção</Link>
+            <Link to={paths.user.products}>{t('home.hero.button')}</Link>
           </Button>
         </Flex>
         <Image

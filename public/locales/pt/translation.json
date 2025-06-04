@@ -1,0 +1,81 @@
+{
+  "auth": {
+    "sign-in": {
+      "heading": "Conecte em sua conta",
+      "prompt": "Não tem uma conta?"
+    },
+    "sign-up": {
+      "heading": "Crie sua conta",
+      "prompt": "Já possui uma conta?"
+    }
+  },
+  "navigation": {
+    "home": "Início",
+    "products": "Produtos",
+    "about": "Sobre nós"
+  },
+  "categories": {
+    "all": "Ver todos",
+    "empty": "Nenhuma categoria encontrada"
+  },
+  "home": {
+    "hero": {
+      "title": "Artigos de luxo para pessoas que amam design atemporal de qualidade",
+      "content": "Com a nossa nova coleção, veja mais de 400 peças exclusivas, desde artigos para o lar até móveis",
+      "button": "Ver coleção"
+    }
+  },
+  "features": {
+    "heading": "O que faz de nossa marca diferente",
+    "items": [
+      {
+        "title": "Entrega no Dia Seguinte",
+        "details": "Faça pedidos antes das 15:00 e receba no dia seguinte"
+      },
+      {
+        "title": "Feito por verdadeiros artesãos",
+        "details": "Produtos artesanais feitos com verdadeira paixão e habilidade"
+      },
+      {
+        "title": "Preços Imbatíveis",
+        "details": "Com nossos materiais e qualidade, você não encontrará preços melhores em nenhum outro lugar"
+      },
+      {
+        "title": "Ajudando a Natureza",
+        "details": "Criamos com consciência, utilizando materiais 100% reciclados"
+      }
+    ]
+  },
+  "contact": {
+    "title": "Começou com uma pequena ideia",
+    "content": " Uma marca global com origens locais, nossa história começou em um pequeno estúdio no sul de Londres no início de 2014"
+  },
+  "newsletter": {
+    "heading": "Junte-se ao clube e aproveite os benefícios",
+    "content": "Cadastre-se para receber nossa newsletter e receba ofertas exclusivas em novas coleções, liquidações, lojas pop-up e muito mais",
+    "benefits": ["Ofertas Exclusivas", "Eventos", "Descontos"]
+  },
+  "footer": {
+    "categories": {
+      "title": "Categorias"
+    },
+    "menu": {
+      "title": "Menu",
+      "items": {
+        "highest-price": "Maior Preço",
+        "lowest-price": "Menor Preço",
+        "latest": "Novos",
+        "best-selling": "Mais Vendidos",
+        "best-rated": "Melhor Avaliados"
+      }
+    },
+    "company": {
+      "title": "Empresa",
+      "items": ["Nossa Empresa", "Sobre", "Contato", "Carreiras"]
+    }
+  },
+  "mobileDrawer": {
+    "openMenu": "Abrir menu",
+    "navigation": "Navegação"
+  }
+}

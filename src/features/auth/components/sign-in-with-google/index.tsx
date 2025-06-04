@@ -1,6 +1,7 @@
 import { type Dispatch, type SetStateAction } from 'react';
 import { useNavigate } from 'react-router';
 import { useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { Box, Button, Icon, Text } from '@chakra-ui/react';
 import { type SignInSchema } from '@/features/auth/components/sign-in-form/validation';
 import { type SignUpSchema } from '@/features/auth/components/sign-up-form/validation';
@@ -18,7 +19,10 @@ export function SignInWithGoogle({
   setLoading,
 }: SignInWithGoogleProps) {
   const navigate = useNavigate();
+
   const form = useFormContext<SignInSchema | SignUpSchema>();
+
+  const { t } = useTranslation();
 
   const handleLoginUserWithGoogle = async () => {
     setLoading(true);
@@ -48,7 +52,7 @@ export function SignInWithGoogle({
         <Icon>
           <GoogleIcon />
         </Icon>
-        <Text textStyle="sm">Continue com o Google</Text>
+        <Text textStyle="sm">{t('common:buttons.google-auth')}</Text>
       </Button>
     </Box>
   );
