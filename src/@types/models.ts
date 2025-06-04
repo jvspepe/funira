@@ -1,4 +1,5 @@
 import { Timestamp } from 'firebase/firestore';
+import { z } from 'zod';
 
 type LocalizedString = {
   en: string;
@@ -11,13 +12,15 @@ export type ReturnData<T> = {
   data?: T;
 };
 
-export interface User {
-  id: string;
-  email: string;
-  username: string;
-  role: 'user' | 'admin';
-  createdAt: Timestamp;
-}
+export const UserSchema = z.object({
+  id: z.string().nonempty(),
+  email: z.string().email().nonempty(),
+  username: z.string().nonempty(),
+  role: z.enum(['customer', 'admin']),
+  createdAt: z.instanceof(Timestamp).default(Timestamp.now()),
+});
+
+export type User = z.infer<typeof UserSchema>;
 
 export interface Category {
   id: string;

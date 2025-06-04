@@ -14,6 +14,7 @@ export const paths = {
     users: '/admin/users',
     products: '/admin/products',
     createProduct: '/admin/create-product',
+    editProduct: '/admin/edit-product/:productId',
     categories: '/admin/categories',
   },
 } as const;
