@@ -1,5 +1,6 @@
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useTranslation } from 'react-i18next';
 import { Button, Field, Heading, Input, Group } from '@chakra-ui/react';
 import { toaster } from '@/components/ui/toaster';
 import {
@@ -14,11 +15,12 @@ export function FooterForm() {
     resolver: zodResolver(footerFormSchema),
   });
 
-  const onSubmit: SubmitHandler<FooterFormSchema> = ({ email }) => {
+  const { t } = useTranslation();
+
+  const onSubmit: SubmitHandler<FooterFormSchema> = () => {
     toaster.create({
-      title: `E-mail ${email} cadastrado com sucesso`,
-      description: 'Seu e-mail irá receber novidades de nossa empresa',
-      type: 'info',
+      title: t('footer.mailing.success'),
+      type: 'success',
     });
 
     form.reset(footerFormDefaultValues);
@@ -42,16 +44,16 @@ export function FooterForm() {
                 htmlFor={field.name}
                 fontSize="md"
               >
-                Inscreva-se na nossa lista de e-mails
+                {t('footer.mailing.title')}
               </Field.Label>
             </Heading>
             <Input
               {...field}
               id={field.name}
               type="email"
-              placeholder="Digite seu e-mail"
               variant="subtle"
               borderRightRadius="0"
+              placeholder={t('common:inputs.emailPlaceholder')}
             />
             {fieldState.error && (
               <Field.ErrorText>{fieldState.error.message}</Field.ErrorText>
@@ -63,7 +65,7 @@ export function FooterForm() {
         type="submit"
         alignSelf={'end'}
       >
-        Confirmar
+        {t('common:buttons.confirm')}
       </Button>
     </Group>
   );

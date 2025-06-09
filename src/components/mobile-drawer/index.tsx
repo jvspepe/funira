@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { type Category } from '@/@types/models';
 import { paths } from '@/config/paths';
+import { TYPE_PARAM } from '@/config/constants';
 
 interface MobileDrawerProps {
   categories: Category[];
@@ -40,7 +41,7 @@ export function MobileDrawer({ categories }: MobileDrawerProps) {
       <Drawer.Trigger asChild>
         <IconButton
           type="button"
-          aria-label={t('mobileDrawer.openMenu', 'Abrir menu')}
+          aria-label={t('mobileDrawer.openMenu')}
           variant="ghost"
           size="lg"
           display={{ base: 'flex', md: 'none' }}
@@ -55,9 +56,7 @@ export function MobileDrawer({ categories }: MobileDrawerProps) {
         <Drawer.Positioner>
           <Drawer.Content>
             <Drawer.Header>
-              <Drawer.Title>
-                {t('mobileDrawer.navigation', 'Navegação')}
-              </Drawer.Title>
+              <Drawer.Title>{t('mobileDrawer.navigation')}</Drawer.Title>
               <Drawer.CloseTrigger asChild>
                 <CloseButton size="lg" />
               </Drawer.CloseTrigger>
@@ -81,7 +80,7 @@ export function MobileDrawer({ categories }: MobileDrawerProps) {
                       <Icon>
                         <HomeIcon />
                       </Icon>
-                      {t('navigation.home', 'Início')}
+                      {t('navigation.home')}
                     </Link>
                   </Button>
                 </Box>
@@ -135,7 +134,7 @@ export function MobileDrawer({ categories }: MobileDrawerProps) {
                           _last={{ borderBottomRadius: '{radii.l2}' }}
                         >
                           <Link
-                            to={`${paths.user.products}?tipo=${category.value}`}
+                            to={`${paths.user.products}?${TYPE_PARAM}=${category.value}`}
                           >
                             {category.label[i18n.language as 'pt' | 'en'] ||
                               category.label.en}

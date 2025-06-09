@@ -1,15 +1,14 @@
-import { AdminSignInForm } from '@/features/admin/components/sign-in-form';
-import { Box } from '@chakra-ui/react';
+import { AdminSignInForm } from '@/features/admin/pages/sign-in/sign-in-form';
+import { Flex } from '@chakra-ui/react';
 
 export function AdminSignIn() {
   return (
-    <Box
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
+    <Flex
+      align="center"
+      justify="center"
       minHeight="100dvh"
     >
       <AdminSignInForm />
-    </Box>
+    </Flex>
   );
 }

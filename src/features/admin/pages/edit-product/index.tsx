@@ -1,7 +1,7 @@
 import { getProduct } from '@/features/products/services';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router';
-import { EditProductForm } from '@/features/admin/components/edit-product-form';
+import { EditProductForm } from './edit-product-form';
 
 export function EditProductPage() {
   const { productId } = useParams();

@@ -53,7 +53,11 @@
   "newsletter": {
     "heading": "Join the club and get the benefits",
     "content": "Sign up for our newsletter and receive exclusive offers on new ranges, sales, pop up stores and more",
-    "benefits": ["Exclusive offers", "Events", "Discounts"]
+    "benefits": ["Exclusive offers", "Events", "Discounts"],
+    "success": {
+      "title": "Welcome to the club",
+      "description": "The email {{email}} will receive exclusive news and promotions from our store!"
+    }
   },
   "footer": {
     "categories": {
@@ -72,10 +76,68 @@
     "company": {
       "title": "Company",
       "items": ["Our Company", "About", "Contact", "Careers"]
+    },
+    "mailing": {
+      "title": "Join our mailing list",
+      "success": "Thank you for subscribing"
     }
   },
   "mobileDrawer": {
     "openMenu": "Open menu",
     "navigation": "Navigation"
+  },
+  "cart": {
+    "heading": "Your cart",
+    "total": "Total",
+    "price": "Price",
+    "quantity": "Quantity",
+    "state": {
+      "open": "Open cart",
+      "close": "Close cart",
+      "empty": "Your cart is empty",
+      "quantity": "{{quantity}} item",
+      "quantity_other": "{{quantity}} items"
+    },
+    "buttons": {
+      "add": "Add to cart",
+      "remove": "Remove from cart",
+      "finish": "Finish order"
+    },
+    "links": {
+      "checkout": "Go to checkout"
+    }
+  },
+  "products": {
+    "details": {
+      "name": "Name",
+      "summary": "Summary",
+      "description": "Description",
+      "price": "Price",
+      "category": "Category",
+      "categoryPlaceholder": "Select a category",
+      "dimensions": "Dimensions",
+      "depth": "Depth",
+      "width": "Width",
+      "height": "Height",
+      "file": "<1>Drag files or click here (max 5 files)</1><2>.png, .jpg up to 5MB</2>",
+      "submit": "Create Product"
+    },
+    "state": {
+      "not-found": "No product found",
+      "not-found_other": "No products found"
+    },
+    "actions": {
+      "create": "Add a new product",
+      "create-success": "Product added successfully",
+      "update": "Edit a product",
+      "update-success": "Product updated successfully",
+      "delete": "Remove a product",
+      "filter": "Filter",
+      "filters": "Filters",
+      "filters-clear": "Clear filters",
+      "filter-by": "Filter by",
+      "sort": "Sort",
+      "see-more": "See more"
+    }
   }
 }

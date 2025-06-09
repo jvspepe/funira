@@ -15,7 +15,13 @@
     "confirm": "Confirmar",
     "loading": "Carregando...",
     "google-auth": "Entrar com o Google",
-    "back": "Voltar"
+    "back": "Voltar",
+    "sign-in": "Conectar",
+    "sign-up": "Criar conta",
+    "sign-out": "Sair"
   },
-  "or": "Ou"
+  "or": "Ou",
+  "state": {
+    "loading": "Carregando..."
+  }
 }

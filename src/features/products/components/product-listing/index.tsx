@@ -16,6 +16,7 @@ import { toaster } from '@/components/ui/toaster';
 import { addToCart } from '@/store/cartSlice';
 import { useAppDispatch } from '@/store/store';
 import { NumberStepper } from '@/components/ui/number-stepper';
+import { useTranslation } from 'react-i18next';
 
 const STATUS_DURATION = 2000;
 
@@ -28,6 +29,10 @@ export function ProductListing({ product }: ProductListingProps) {
   const [quantity, setQuantity] = useState<number>(1);
 
   const dispatch = useAppDispatch();
+
+  const { t, i18n } = useTranslation();
+
+  const resolvedLanguage = i18n.resolvedLanguage as 'en' | 'pt';
 
   const handleAddToCart = (product: Product) => {
     setButtonStatus('success');
@@ -83,17 +88,20 @@ export function ProductListing({ product }: ProductListingProps) {
               size={{ base: '2xl', xl: '4xl' }}
               fontWeight="normal"
             >
-              {product.name.pt}
+              {product.name[resolvedLanguage]}
             </Heading>
             <Text
               as="span"
               textStyle="xl"
               color="fg.muted"
             >
-              {Intl.NumberFormat('pt-BR', {
-                currency: 'BRL',
-                style: 'currency',
-              }).format(product.price)}
+              {Intl.NumberFormat(
+                resolvedLanguage === 'pt' ? 'pt-BR' : 'en-US',
+                {
+                  currency: resolvedLanguage === 'pt' ? 'BRL' : 'USD',
+                  style: 'currency',
+                }
+              ).format(product.price)}
             </Text>
           </Flex>
           <Flex
@@ -105,13 +113,13 @@ export function ProductListing({ product }: ProductListingProps) {
               size="md"
               fontWeight="normal"
             >
-              Descrição do produto
+              {t('products.details.description')}
             </Heading>
             <Text
               textStyle={{ base: 'sm', md: 'md' }}
               color="fg.muted"
             >
-              {product.description?.pt ?? ''}
+              {product.description?.[resolvedLanguage] ?? ''}
             </Text>
           </Flex>
           <Flex
@@ -124,7 +132,7 @@ export function ProductListing({ product }: ProductListingProps) {
               size="md"
               fontWeight="normal"
             >
-              Dimensões
+              {t('products.details.dimensions')}
             </Heading>
             <Flex
               justify="space-between"
@@ -140,7 +148,7 @@ export function ProductListing({ product }: ProductListingProps) {
                   size={{ base: 'sm', md: 'md' }}
                   fontWeight="normal"
                 >
-                  Altura
+                  {t('products.details.height')}
                 </Heading>
                 <Text textStyle={{ base: 'xs', md: 'sm' }}>
                   {product.dimensions?.height}cm
@@ -159,7 +167,7 @@ export function ProductListing({ product }: ProductListingProps) {
                   size={{ base: 'sm', md: 'md' }}
                   fontWeight="normal"
                 >
-                  Largura
+                  {t('products.details.width')}
                 </Heading>
                 <Text textStyle={{ base: 'xs', md: 'sm' }}>
                   {product.dimensions?.width}cm
@@ -179,7 +187,7 @@ export function ProductListing({ product }: ProductListingProps) {
                   size={{ base: 'sm', md: 'md' }}
                   fontWeight="normal"
                 >
-                  Comprimento
+                  {t('products.details.depth')}
                 </Heading>
                 <Text textStyle={{ base: 'xs', md: 'sm' }}>
                   {product.dimensions?.depth}cm
@@ -194,7 +202,7 @@ export function ProductListing({ product }: ProductListingProps) {
             gap="1rem"
           >
             <NumberStepper
-              label="Quantidade"
+              label={t('cart.quantity')}
               value={quantity}
               setValue={(value) => setQuantity(value)}
               minValue={1}
@@ -208,7 +216,7 @@ export function ProductListing({ product }: ProductListingProps) {
               <Icon size="sm">
                 <ShoppingCartIcon />
               </Icon>
-              <Box as="span">Adicionar ao carrinho</Box>
+              <Box as="span">{t('cart.buttons.add')}</Box>
             </Button>
           </Flex>
         </Flex>

@@ -5,6 +5,7 @@ import { type CartProduct } from '@/@types/models';
 import { useAppDispatch } from '@/store/store';
 import { changeQuantity, removeFromCart } from '@/store/cartSlice';
 import { NumberStepper } from '@/components/ui/number-stepper';
+import { useTranslation } from 'react-i18next';
 
 interface CartDrawerItemProps {
   product: CartProduct;
@@ -17,6 +18,8 @@ const CartDrawerItem = ({ product }: CartDrawerItemProps) => {
 
   const dispatch = useAppDispatch();
 
+  const { t, i18n } = useTranslation();
+
   useEffect(() => {
     dispatch(changeQuantity({ uid: product.id, quantity: productQuantity }));
   }, [productQuantity, dispatch, product.id]);
@@ -28,7 +31,7 @@ const CartDrawerItem = ({ product }: CartDrawerItemProps) => {
     >
       <Image
         src={product.imageCover}
-        alt={`Imagem do produto ${product.name.pt}`}
+        alt={`${product.name[i18n.resolvedLanguage as 'en' | 'pt']}`}
         borderRadius="{radii.l2}"
       />
       <Flex direction="column">
@@ -43,7 +46,7 @@ const CartDrawerItem = ({ product }: CartDrawerItemProps) => {
             gap="{spacing.2}"
           >
             <Text textStyle={{ base: 'md', md: '1rem' }}>
-              {product.name.pt}
+              {product.name[i18n.resolvedLanguage as 'en' | 'pt']}
             </Text>
             <Text fontSize={{ base: '0.75rem', md: '1rem' }}>
               {Intl.NumberFormat('pt-br', {
@@ -54,7 +57,7 @@ const CartDrawerItem = ({ product }: CartDrawerItemProps) => {
           </Flex>
           <IconButton
             onClick={() => dispatch(removeFromCart(product.id))}
-            aria-label="Remover do carrinho"
+            aria-label={t('cart.buttons.remove')}
             type="button"
             variant="ghost"
             size="xs"

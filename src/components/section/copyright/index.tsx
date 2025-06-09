@@ -7,17 +7,17 @@ const socialLinks = [
   {
     href: 'https://www.linkedin.com/',
     icon: <LinkedInIcon />,
-    label: 'Link para página do Linked In de Funira',
+    label: 'Link Linked In Funira',
   },
   {
     href: 'https://www.facebook.com/',
     icon: <FacebookIcon />,
-    label: 'Link para página do Facebook de Funira',
+    label: 'Link Facebook Funira',
   },
   {
     href: 'https://www.instagram.com/',
     icon: <InstagramIcon />,
-    label: 'Link para página do Instagram de Funira',
+    label: 'Link Instagram Funira',
   },
 ];
 

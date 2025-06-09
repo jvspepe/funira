@@ -1,8 +1,11 @@
 import { Badge, Button, Card, Text } from '@chakra-ui/react';
 import { useAppSelector } from '@/store/store';
+import { useTranslation } from 'react-i18next';
 
 const CheckoutTotal = () => {
   const { cart, total } = useAppSelector((state) => state.cartReducer);
+
+  const { t, i18n } = useTranslation();
 
   return (
     <Card.Root
@@ -14,21 +17,25 @@ const CheckoutTotal = () => {
         flexDirection="row"
         alignItems="center"
       >
-        <Card.Title>Total</Card.Title>
-        <Badge variant="surface">{cart.length} items</Badge>
+        <Card.Title>{t('cart.total')}</Card.Title>
+        <Badge variant="surface">
+          {t('cart.state.quantity', { quantity: cart.length })}
+        </Badge>
       </Card.Header>
       <Card.Body>
         <Text as="span">
-          Preço:{' '}
-          {Intl.NumberFormat('pt-BR', {
-            currency: 'BRL',
-            style: 'currency',
-          }).format(total)}
+          {t('cart.price')}:{' '}
+          {Intl.NumberFormat(
+            i18n.resolvedLanguage === 'pt' ? 'pt-BR' : 'en-US',
+            {
+              currency: i18n.resolvedLanguage === 'pt' ? 'BRL' : 'USD',
+              style: 'currency',
+            }
+          ).format(total)}
         </Text>
-        <Text as="span">Frete: Grátis</Text>
       </Card.Body>
       <Card.Footer alignSelf="end">
-        <Button type="button">Finalizar compra</Button>
+        <Button type="button">{t('cart.buttons.finish')}</Button>
       </Card.Footer>
     </Card.Root>
   );
