@@ -4,6 +4,7 @@ import { type Product } from '@/@types/models';
 import { ProductCard } from '@/features/products/components/product-card';
 import { ProductCardSkeleton } from '../product-card/skeleton';
 import { Suspense } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface ProductsSectionProps {
   title?: string;
@@ -16,6 +17,8 @@ export function ProductsSection({
   products,
   link,
 }: ProductsSectionProps) {
+  const { t } = useTranslation();
+
   return (
     <Grid gap="{spacing.8}">
       <Grid gap={{ base: '{spacing.4}', md: '{spacing.6}' }}>
@@ -33,7 +36,9 @@ export function ProductsSection({
           autoRows="1fr"
         >
           {!products ||
-            (products.length === 0 && <Text>Nenhum produto encontrado</Text>)}
+            (products.length === 0 && (
+              <Text>{t('products.not-found_other')}</Text>
+            ))}
           {products.map((product) => (
             <Suspense
               key={product.id}
@@ -51,7 +56,7 @@ export function ProductsSection({
           justifySelf="center"
           width={{ base: 'full', md: 'fit-content' }}
         >
-          <Link to={link}>Ver mais</Link>
+          <Link to={link}>{t('products.actions.see-more')}</Link>
         </Button>
       )}
     </Grid>

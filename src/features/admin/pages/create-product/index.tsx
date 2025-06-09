@@ -1,4 +1,4 @@
-import CreateProductForm from './create-product-form';
+import { CreateProductForm } from './create-product-form';
 
 export function CreateProduct() {
   return (

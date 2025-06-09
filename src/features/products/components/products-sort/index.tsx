@@ -24,7 +24,7 @@ export function ProductsSort({ handleChangeSort }: ProductsSortProps) {
           <Icon size="sm">
             <ListFilterIcon />
           </Icon>
-          Ordenar
+          {t('products.actions.sort')}
         </Button>
       </Menu.Trigger>
       <Portal>

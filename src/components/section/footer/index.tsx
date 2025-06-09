@@ -11,6 +11,7 @@ import {
   Flex,
   Grid,
 } from '@chakra-ui/react';
+import { SORT_PARAM, TYPE_PARAM } from '@/config/constants';
 import { paths } from '@/config/paths';
 import { getCategories } from '@/features/categories/services';
 import { Copyright } from '@/components/section/copyright';
@@ -71,7 +72,7 @@ export function Footer() {
                     >
                       <Link asChild>
                         <RouterLink
-                          to={`${paths.user.products}?tipo=${item.value}`}
+                          to={`${paths.user.products}?${TYPE_PARAM}=${item.value}`}
                         >
                           {item.label[currentLang] || item.label.en}
                         </RouterLink>
@@ -99,7 +100,9 @@ export function Footer() {
                       fontSize="0.875rem"
                     >
                       <Link asChild>
-                        <RouterLink to={`${paths.user.products}?sort=${key}`}>
+                        <RouterLink
+                          to={`${paths.user.products}?${SORT_PARAM}=${key}`}
+                        >
                           {t(`footer.menu.items.${key}`)}
                         </RouterLink>
                       </Link>

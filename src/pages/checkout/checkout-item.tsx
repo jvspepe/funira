@@ -5,6 +5,7 @@ import { CartProduct } from '@/@types/models';
 import { changeQuantity } from '@/store/cartSlice';
 import { useAppDispatch } from '@/store/store';
 import { NumberStepper } from '@/components/ui/number-stepper';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   product: CartProduct;
@@ -14,6 +15,8 @@ const CheckoutItem = ({ product }: Props) => {
   const [value, setValue] = useState(product.quantity);
 
   const dispatch = useAppDispatch();
+
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     dispatch(changeQuantity({ uid: product.id, quantity: value }));
@@ -50,13 +53,16 @@ const CheckoutItem = ({ product }: Props) => {
               fontSize="1rem"
               fontWeight="normal"
             >
-              {product.name.pt}
+              {product.name[i18n.resolvedLanguage as 'en' | 'pt']}
             </Heading>
             <Text>
-              {Intl.NumberFormat('pt-BR', {
-                currency: 'BRL',
-                style: 'currency',
-              }).format(product.price)}
+              {Intl.NumberFormat(
+                i18n.resolvedLanguage === 'pt' ? 'pt-BR' : 'en-US',
+                {
+                  currency: i18n.resolvedLanguage === 'pt' ? 'BRL' : 'USD',
+                  style: 'currency',
+                }
+              ).format(product.price)}
             </Text>
           </Box>
           <IconButton
@@ -70,7 +76,7 @@ const CheckoutItem = ({ product }: Props) => {
           </IconButton>
         </Box>
         <NumberStepper
-          label="Quantidade"
+          label={t('cart.quantity')}
           value={value}
           setValue={setValue}
           minValue={1}

@@ -50,9 +50,9 @@ export function HomePage() {
       >
         <Features />
         {latestProductsQuery.isLoading || bestSellingProductsQuery.isLoading ? (
-          'Carregando informações'
+          t('common:state.loading')
         ) : !latestProductsQuery.data || !bestSellingProductsQuery.data ? (
-          'Nenhum produto encontrado'
+          t('common:state.error')
         ) : (
           <>
             <Suspense fallback={<ProductsSectionSkeleton />}>

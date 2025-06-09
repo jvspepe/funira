@@ -53,7 +53,11 @@
   "newsletter": {
     "heading": "Junte-se ao clube e aproveite os benefícios",
     "content": "Cadastre-se para receber nossa newsletter e receba ofertas exclusivas em novas coleções, liquidações, lojas pop-up e muito mais",
-    "benefits": ["Ofertas Exclusivas", "Eventos", "Descontos"]
+    "benefits": ["Ofertas Exclusivas", "Eventos", "Descontos"],
+    "success": {
+      "title": "Bem-vindo ao clube",
+      "description": "O e-mail {{email}} irá receber notícias e promoções exclusivas de nossa loja!"
+    }
   },
   "footer": {
     "categories": {
@@ -72,10 +76,68 @@
     "company": {
       "title": "Empresa",
       "items": ["Nossa Empresa", "Sobre", "Contato", "Carreiras"]
+    },
+    "mailing": {
+      "title": "Junte-se à nossa lista de e-mails",
+      "success": "Obrigado por se inscrever"
     }
   },
   "mobileDrawer": {
     "openMenu": "Abrir menu",
     "navigation": "Navegação"
+  },
+  "cart": {
+    "heading": "Seu carrinho",
+    "total": "Total",
+    "price": "Preço",
+    "quantity": "Quantidade",
+    "state": {
+      "open": "Abrir carrinho",
+      "close": "Fechar carrinho",
+      "empty": "Seu carrinho está vazio",
+      "quantity": "{{quantity}} item",
+      "quantity_other": "{{quantity}} itens"
+    },
+    "buttons": {
+      "add": "Adicionar ao carrinho",
+      "remove": "Remover do carrinho",
+      "finish": "Finalizar pedido"
+    },
+    "links": {
+      "checkout": "Ir para checkout"
+    }
+  },
+  "products": {
+    "details": {
+      "name": "Nome",
+      "summary": "Resumo",
+      "description": "Descrição",
+      "price": "Preço",
+      "category": "Categoria",
+      "categoryPlaceholder": "Selecionar uma categoria",
+      "dimensions": "Dimensões",
+      "depth": "Profundidade",
+      "width": "Largura",
+      "height": "Altura",
+      "file": "<1>Arraste arquivos ou clique aqui (máximo 5 arquivos)</1><2>.png, .jpg até 5MB</2>",
+      "submit": "Criar Produto"
+    },
+    "state": {
+      "not-found": "Nenhum produto encontrado",
+      "not-found_other": "Nenhum produto encontrado"
+    },
+    "actions": {
+      "create": "Adicionar um novo produto",
+      "create-success": "Produto adicionado com sucesso",
+      "update": "Editar um produto",
+      "update-success": "Produto atualizado com sucesso",
+      "delete": "Excluir um produto",
+      "filter": "Filtrar",
+      "filters": "Filtros",
+      "filters-clear": "Limpar filtros",
+      "filter-by": "Filtrar por",
+      "sort": "Ordenar",
+      "see-more": "Ver mais"
+    }
   }
 }

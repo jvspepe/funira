@@ -14,6 +14,8 @@ import {
 } from '@chakra-ui/react';
 import { SlidersHorizontalIcon, XIcon } from 'lucide-react';
 import { type Category } from '@/@types/models';
+import { TYPE_PARAM } from '@/config/constants';
+import { useTranslation } from 'react-i18next';
 
 interface ProductsFilterProps {
   categories: Category[];
@@ -22,15 +24,19 @@ interface ProductsFilterProps {
 export function ProductsFilter({ categories }: ProductsFilterProps) {
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const { t, i18n } = useTranslation();
+
+  const resolvedLanguage = i18n.resolvedLanguage as 'en' | 'pt';
+
   const handleChangeFilter = (filters: string[]) => {
     setSearchParams({
-      tipo: filters,
+      [TYPE_PARAM]: filters,
     });
   };
 
   function handleChangeFilterValues() {
     const values: string[] = [];
-    const typeParams = searchParams.getAll('type');
+    const typeParams = searchParams.getAll(TYPE_PARAM);
 
     if (!typeParams) return [];
 
@@ -50,7 +56,7 @@ export function ProductsFilter({ categories }: ProductsFilterProps) {
         minWidth="10rem"
       >
         <Stack>
-          <Heading>Filtrar por</Heading>
+          <Heading>{t('products.actions.filter-by')}</Heading>
           <Stack>
             <Heading>Tipo</Heading>
             <CheckboxGroup
@@ -64,7 +70,9 @@ export function ProductsFilter({ categories }: ProductsFilterProps) {
                 >
                   <Checkbox.HiddenInput />
                   <Checkbox.Control />
-                  <Checkbox.Label>{category.label.pt}</Checkbox.Label>
+                  <Checkbox.Label>
+                    {category.label[resolvedLanguage]}
+                  </Checkbox.Label>
                 </Checkbox.Root>
               ))}
             </CheckboxGroup>
@@ -81,7 +89,7 @@ export function ProductsFilter({ categories }: ProductsFilterProps) {
             <Icon size="sm">
               <SlidersHorizontalIcon />
             </Icon>
-            Filtrar
+            {t('products.actions.filter')}
           </Button>
         </Drawer.Trigger>
         <Portal>
@@ -91,7 +99,7 @@ export function ProductsFilter({ categories }: ProductsFilterProps) {
               <Drawer.CloseTrigger asChild>
                 <CloseButton />
               </Drawer.CloseTrigger>
-              <Drawer.Header>Filtros</Drawer.Header>
+              <Drawer.Header>{t('products.actions.filters')}</Drawer.Header>
               <Separator />
               <Drawer.Body>
                 <CheckboxGroup
@@ -105,7 +113,9 @@ export function ProductsFilter({ categories }: ProductsFilterProps) {
                     >
                       <Checkbox.HiddenInput />
                       <Checkbox.Control />
-                      <Checkbox.Label>{category.label.pt}</Checkbox.Label>
+                      <Checkbox.Label>
+                        {category.label[resolvedLanguage]}
+                      </Checkbox.Label>
                     </Checkbox.Root>
                   ))}
                   <Separator />
@@ -114,7 +124,7 @@ export function ProductsFilter({ categories }: ProductsFilterProps) {
                     variant="outline"
                   >
                     <XIcon size={16} />
-                    Limpar filtros
+                    {t('products.actions.filters-clear')}
                   </Button>
                 </CheckboxGroup>
               </Drawer.Body>

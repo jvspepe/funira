@@ -16,6 +16,7 @@ import { CartDrawer } from '@/components/cart-drawer';
 import { MobileDrawer } from '@/components/mobile-drawer';
 import { UserMenu } from '@/components/user-menu';
 import { useTranslation } from 'react-i18next';
+import { TYPE_PARAM } from '@/config/constants';
 
 export function Header() {
   const { t, i18n } = useTranslation();
@@ -99,7 +100,7 @@ export function Header() {
                               value={category.value}
                             >
                               <RouterLink
-                                to={`${paths.user.products}?tipo=${category.value}`}
+                                to={`${paths.user.products}?${TYPE_PARAM}=${category.value}`}
                               >
                                 {category.label[i18n.language as 'en' | 'pt'] ??
                                   category.label.en}

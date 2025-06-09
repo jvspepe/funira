@@ -7,6 +7,7 @@ import {
   newsletterFormSchema,
   newsletterFormDefaultValues,
 } from './validation';
+import { useTranslation } from 'react-i18next';
 
 export function NewsletterForm() {
   const form = useForm<NewsletterFormSchema>({
@@ -14,10 +15,14 @@ export function NewsletterForm() {
     resolver: zodResolver(newsletterFormSchema),
   });
 
+  const { t } = useTranslation();
+
   const onSubmit: SubmitHandler<NewsletterFormSchema> = ({ email }) => {
     toaster.create({
-      title: 'E-mail cadastrado com sucesso',
-      description: `O e-mail ${email} irá receber notícias e promoções da nossa loja!`,
+      title: t('newsletter.success.title'),
+      description: t('newsletter.success.description', {
+        email,
+      }),
       type: 'success',
     });
 
@@ -42,7 +47,7 @@ export function NewsletterForm() {
               {...field}
               id={field.name}
               type="email"
-              placeholder="Digite seu e-mail"
+              placeholder={t('common:inputs.emailPlaceholder')}
               variant="subtle"
               borderRightRadius="0"
               size="xl"

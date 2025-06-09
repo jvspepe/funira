@@ -15,7 +15,15 @@
     "confirm": "Confirm",
     "loading": "Loading...",
     "google-auth": "Sign in with Google",
-    "back": "Go back"
+    "back": "Go back",
+    "sign-in": "Sign in",
+    "sign-up": "Sign up",
+    "sign-out": "Sign out"
   },
-  "or": "Or"
+  "or": "Or",
+  "state": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success"
+  }
 }

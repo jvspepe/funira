@@ -2,9 +2,12 @@ import { Box, Container, Text } from '@chakra-ui/react';
 import { useAppSelector } from '@/store/store';
 import CheckoutTotal from './checkout-total';
 import CheckoutDisplay from './checkout-display';
+import { useTranslation } from 'react-i18next';
 
 export function Checkout() {
   const { cart } = useAppSelector((state) => state.cartReducer);
+
+  const { t } = useTranslation();
 
   return (
     <Container
@@ -29,7 +32,7 @@ export function Checkout() {
             as="h2"
             fontSize="1.5rem"
           >
-            Meu carrinho
+            {t('cart.heading')}
           </Text>
           {cart.length !== 0 ? (
             <CheckoutDisplay />
@@ -38,7 +41,7 @@ export function Checkout() {
               as="h2"
               fontSize="1.5rem"
             >
-              O Carrinho está vázio...
+              {t('cart.state.empty')}
             </Text>
           )}
         </Box>

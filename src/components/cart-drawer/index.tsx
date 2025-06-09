@@ -14,10 +14,14 @@ import {
 import { ShoppingCartIcon } from 'lucide-react';
 import { useAppSelector } from '@/store/store';
 import CartDrawerItem from '@/components/cart-drawer-item';
+import { useTranslation } from 'react-i18next';
+import { paths } from '@/config/paths';
 
 export function CartDrawer() {
   const { cart } = useAppSelector((state) => state.cartReducer);
   const { onOpen } = useDisclosure();
+
+  const { t } = useTranslation();
 
   return (
     <>
@@ -25,13 +29,13 @@ export function CartDrawer() {
         <Drawer.Trigger asChild>
           <IconButton
             onClick={onOpen}
-            aria-label="Abrir carrinho"
+            aria-label={t('cart.state.open')}
             type="button"
             variant="ghost"
             size="lg"
           >
             <Icon>
-              <ShoppingCartIcon />
+              <ShoppingCartIcon aria-hidden />
             </Icon>
           </IconButton>
         </Drawer.Trigger>
@@ -43,7 +47,7 @@ export function CartDrawer() {
                 <CloseButton size="lg" />
               </Drawer.CloseTrigger>
               <Drawer.Header>
-                <Drawer.Title>Meu Carrinho</Drawer.Title>
+                <Drawer.Title>{t('cart.heading')}</Drawer.Title>
               </Drawer.Header>
               <Separator />
 
@@ -60,14 +64,14 @@ export function CartDrawer() {
                       />
                     ))
                   ) : (
-                    <Text>Carrinho vazio</Text>
+                    <Text>{t('cart.state.empty')}</Text>
                   )}
                 </Stack>
               </Drawer.Body>
               <Separator />
               <Drawer.Footer padding="{spacing.6}">
                 <Button asChild>
-                  <Link to="/carrinho">Ir para o checkout</Link>
+                  <Link to={paths.user.cart}>{t('cart.links.checkout')}</Link>
                 </Button>
               </Drawer.Footer>
             </Drawer.Content>
