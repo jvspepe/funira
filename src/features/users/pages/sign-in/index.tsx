@@ -1,5 +1,5 @@
 import { Box, Flex, Grid } from '@chakra-ui/react';
-import { SignInForm } from '@/features/auth/components/sign-in-form';
+import { SignInForm } from '@/features/users/pages/sign-in/sign-in-form';
 
 export function SignInPage() {
   return (

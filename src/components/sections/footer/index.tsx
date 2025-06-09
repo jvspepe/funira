@@ -14,7 +14,7 @@ import {
 import { SORT_PARAM, TYPE_PARAM } from '@/config/constants';
 import { paths } from '@/config/paths';
 import { getCategories } from '@/features/categories/services';
-import { Copyright } from '@/components/section/copyright';
+import { Copyright } from '@/components/sections/copyright';
 import { FooterForm } from './footer-form';
 
 export function Footer() {

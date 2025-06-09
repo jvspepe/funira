@@ -1,6 +1,6 @@
 import { type ReactNode, useEffect, useMemo, useState } from 'react';
 import { type IAuthContext, AuthContext } from './auth-context';
-import { handleCurrentUser } from '@/features/auth/services';
+import { handleCurrentUser } from '@/features/users/services';
 import { getUser } from '@/features/users/services';
 
 interface AuthProviderProps {

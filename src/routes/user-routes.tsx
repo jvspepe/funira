@@ -6,8 +6,8 @@ import { Checkout } from '@/pages/checkout';
 import { HomePage } from '@/pages/home';
 import { ProductDetails } from '@/features/products/pages/product-details';
 import { ProductsDisplay } from '@/features/products/pages/products-display';
-import { SignInPage } from '@/features/auth/pages/sign-in';
-import { SignUpPage } from '@/features/auth/pages/sign-up';
+import { SignInPage } from '@/features/users/pages/sign-in';
+import { SignUpPage } from '@/features/users/pages/sign-up';
 
 export const userRoutes: RouteObject[] = [
   {

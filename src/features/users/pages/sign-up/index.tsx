@@ -1,5 +1,5 @@
 import { Box, Flex, Grid } from '@chakra-ui/react';
-import { SignUpForm } from '@/features/auth/components/sign-up-form';
+import { SignUpForm } from '@/features/users/pages/sign-up/sign-up-form';
 
 export function SignUpPage() {
   return (
