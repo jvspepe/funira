@@ -75,7 +75,12 @@ export function ProductsDisplay() {
           </GridItem>
           {productsQuery.isLoading ? (
             'Carregando informações'
-          ) : !productsQuery.data || productsQuery.data.length === 0 ? (
+          ) : !productsQuery.data ||
+            productsQuery.data.length === 0 ||
+            filterProducts(
+              typeParams,
+              sortProducts(sortParam, productsQuery.data)
+            ).length === 0 ? (
             <GridItem colSpan={3}>
               <EmptyState.Root
                 size="lg"
