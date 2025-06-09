@@ -113,6 +113,7 @@
       "summary": "Resumo",
       "description": "Descrição",
       "price": "Preço",
+      "price-amount": "{{amount, currency(BRL)}}",
       "category": "Categoria",
       "categoryPlaceholder": "Selecionar uma categoria",
       "dimensions": "Dimensões",
