@@ -113,6 +113,7 @@
       "summary": "Summary",
       "description": "Description",
       "price": "Price",
+      "price-amount": "{{amount, currency(USD)}}",
       "category": "Category",
       "categoryPlaceholder": "Select a category",
       "dimensions": "Dimensions",

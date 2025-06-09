@@ -1,10 +1,8 @@
 import { Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import { Button, Grid, Heading, Text } from '@chakra-ui/react';
 import { type Product } from '@/@types/models';
 import { ProductCard } from '@/features/products/components/product-card';
-import { ProductCardSkeleton } from '../product-card/skeleton';
-import { Suspense } from 'react';
-import { useTranslation } from 'react-i18next';
 
 interface ProductsSectionProps {
   title?: string;
@@ -40,12 +38,10 @@ export function ProductsSection({
               <Text>{t('products.not-found_other')}</Text>
             ))}
           {products.map((product) => (
-            <Suspense
+            <ProductCard
               key={product.id}
-              fallback={<ProductCardSkeleton />}
-            >
-              <ProductCard product={product} />
-            </Suspense>
+              product={product}
+            />
           ))}
         </Grid>
       </Grid>

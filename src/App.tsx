@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router';
+import { Outlet, ScrollRestoration } from 'react-router';
 import { Provider as ReduxProvider } from 'react-redux';
 import { Provider as ChakraProvider } from '@/components/ui/provider';
 import { Toaster } from '@/components/ui/toaster';
@@ -10,6 +10,7 @@ export function App() {
     <AuthProvider>
       <ReduxProvider store={store}>
         <ChakraProvider defaultTheme="light">
+          <ScrollRestoration />
           <Outlet />
           <Toaster />
         </ChakraProvider>

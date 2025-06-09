@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import { useParams } from 'react-router';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import {
   Box,
   Button,
@@ -7,25 +10,25 @@ import {
   Heading,
   Image,
   Text,
-  Icon,
   Flex,
 } from '@chakra-ui/react';
-import { ShoppingCartIcon } from 'lucide-react';
 import { type Product } from '@/@types/models';
-import { toaster } from '@/components/ui/toaster';
-import { addToCart } from '@/store/cartSlice';
 import { useAppDispatch } from '@/store/store';
+import { addToCart } from '@/store/cartSlice';
+import { getProduct } from '@/features/products/services';
+import { toaster } from '@/components/ui/toaster';
 import { NumberStepper } from '@/components/ui/number-stepper';
-import { useTranslation } from 'react-i18next';
 
 const STATUS_DURATION = 2000;
 
-interface ProductListingProps {
-  product: Product;
-}
+export function ProductListing() {
+  const { id } = useParams();
 
-export function ProductListing({ product }: ProductListingProps) {
-  const [buttonStatus, setButtonStatus] = useState('');
+  const productQuery = useSuspenseQuery({
+    queryKey: ['product', id],
+    queryFn: async () => await getProduct(id!),
+  });
+
   const [quantity, setQuantity] = useState<number>(1);
 
   const dispatch = useAppDispatch();
@@ -35,8 +38,6 @@ export function ProductListing({ product }: ProductListingProps) {
   const resolvedLanguage = i18n.resolvedLanguage as 'en' | 'pt';
 
   const handleAddToCart = (product: Product) => {
-    setButtonStatus('success');
-
     dispatch(addToCart({ ...product, quantity }));
 
     toaster.create({
@@ -44,10 +45,6 @@ export function ProductListing({ product }: ProductListingProps) {
       type: 'success',
       duration: STATUS_DURATION,
     });
-
-    setTimeout(() => {
-      setButtonStatus('');
-    }, STATUS_DURATION);
   };
 
   return (
@@ -61,7 +58,7 @@ export function ProductListing({ product }: ProductListingProps) {
         minHeight="calc(100dvh - {sizes.22})"
       >
         <Image
-          src={product.imageCover}
+          src={productQuery.data.imageCover}
           alt=""
           objectFit="cover"
           width="full"
@@ -88,20 +85,16 @@ export function ProductListing({ product }: ProductListingProps) {
               size={{ base: '2xl', xl: '4xl' }}
               fontWeight="normal"
             >
-              {product.name[resolvedLanguage]}
+              {productQuery.data.name[resolvedLanguage]}
             </Heading>
             <Text
               as="span"
               textStyle="xl"
               color="fg.muted"
             >
-              {Intl.NumberFormat(
-                resolvedLanguage === 'pt' ? 'pt-BR' : 'en-US',
-                {
-                  currency: resolvedLanguage === 'pt' ? 'BRL' : 'USD',
-                  style: 'currency',
-                }
-              ).format(product.price)}
+              {t('products.details.price-amount', {
+                amount: productQuery.data.price,
+              })}
             </Text>
           </Flex>
           <Flex
@@ -119,7 +112,7 @@ export function ProductListing({ product }: ProductListingProps) {
               textStyle={{ base: 'sm', md: 'md' }}
               color="fg.muted"
             >
-              {product.description?.[resolvedLanguage] ?? ''}
+              {productQuery.data.description?.[resolvedLanguage] ?? ''}
             </Text>
           </Flex>
           <Flex
@@ -151,7 +144,7 @@ export function ProductListing({ product }: ProductListingProps) {
                   {t('products.details.height')}
                 </Heading>
                 <Text textStyle={{ base: 'xs', md: 'sm' }}>
-                  {product.dimensions?.height}cm
+                  {productQuery.data.dimensions?.height}cm
                 </Text>
               </Flex>
               <Separator
@@ -170,7 +163,7 @@ export function ProductListing({ product }: ProductListingProps) {
                   {t('products.details.width')}
                 </Heading>
                 <Text textStyle={{ base: 'xs', md: 'sm' }}>
-                  {product.dimensions?.width}cm
+                  {productQuery.data.dimensions?.width}cm
                 </Text>
               </Flex>
               <Separator
@@ -190,7 +183,7 @@ export function ProductListing({ product }: ProductListingProps) {
                   {t('products.details.depth')}
                 </Heading>
                 <Text textStyle={{ base: 'xs', md: 'sm' }}>
-                  {product.dimensions?.depth}cm
+                  {productQuery.data.dimensions?.depth}cm
                 </Text>
               </Box>
             </Flex>
@@ -208,14 +201,10 @@ export function ProductListing({ product }: ProductListingProps) {
               minValue={1}
             />
             <Button
-              onClick={() => handleAddToCart(product)}
+              onClick={() => handleAddToCart(productQuery.data)}
               type="button"
               size="lg"
-              colorPalette={buttonStatus === 'success' ? 'green' : undefined}
             >
-              <Icon size="sm">
-                <ShoppingCartIcon />
-              </Icon>
               <Box as="span">{t('cart.buttons.add')}</Box>
             </Button>
           </Flex>

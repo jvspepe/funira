@@ -65,3 +65,10 @@ export function generateRandomRating(min: number, max: number): number {
   const rating = Math.random() * (max - min) + min;
   return parseFloat(rating.toFixed(1));
 }
+
+export function formatProductPrice(price: number, language?: string): string {
+  return Intl.NumberFormat(language ?? 'en-US', {
+    style: 'currency',
+    currency: !language ? 'USD' : language === 'pt' ? 'BRL' : 'USD',
+  }).format(price);
+}
