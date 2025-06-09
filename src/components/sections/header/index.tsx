@@ -1,5 +1,6 @@
 import { NavLink, Link as RouterLink } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import {
   Box,
   Button,
@@ -10,13 +11,12 @@ import {
   Portal,
   Spinner,
 } from '@chakra-ui/react';
+import { TYPE_PARAM } from '@/config/constants';
 import { paths } from '@/config/paths';
 import { getCategories } from '@/features/categories/services';
-import { CartDrawer } from '@/components/cart-drawer';
-import { MobileDrawer } from '@/components/mobile-drawer';
-import { UserMenu } from '@/components/user-menu';
-import { useTranslation } from 'react-i18next';
-import { TYPE_PARAM } from '@/config/constants';
+import { CartDrawer } from '@/features/cart/components/cart-drawer';
+import { MobileDrawer } from '@/components/sections/header/mobile-drawer';
+import { UserMenu } from '@/features/users/components/user-menu';
 
 export function Header() {
   const { t, i18n } = useTranslation();

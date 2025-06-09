@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router';
 import { Flex } from '@chakra-ui/react';
-import { Header } from '@/components/section/header';
-import { Footer } from '@/components/section/footer';
+import { Header } from '@/components/sections/header';
+import { Footer } from '@/components/sections/footer';
 
 interface Props {
   hideHeader?: boolean;

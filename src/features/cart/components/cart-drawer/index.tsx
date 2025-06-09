@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react';
 import { ShoppingCartIcon } from 'lucide-react';
 import { useAppSelector } from '@/store/store';
-import CartDrawerItem from '@/components/cart-drawer-item';
+import CartDrawerItem from '@/features/cart/components/cart-drawer-item';
 import { useTranslation } from 'react-i18next';
 import { paths } from '@/config/paths';
 

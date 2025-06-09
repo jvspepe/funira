@@ -9,8 +9,8 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { LogOutIcon, MenuIcon } from 'lucide-react';
-import { signOut } from '@/features/auth/services';
-import { useAuth } from '@/features/auth/hooks/use-auth';
+import { signOut } from '@/features/users/services';
+import { useAuth } from '@/features/users/hooks/use-auth';
 
 export function AdminHeader() {
   const { currentUserData } = useAuth();

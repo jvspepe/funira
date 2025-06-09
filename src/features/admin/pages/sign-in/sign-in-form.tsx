@@ -10,7 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Code, Heading, Icon, Text } from '@chakra-ui/react';
 import { ArrowLeftIcon } from 'lucide-react';
 import { type SignInSchema, signInSchema } from './validation';
-import { signIn } from '@/features/auth/services';
+import { signIn } from '@/features/users/services';
 import { handleAuthError } from '@/features/utils';
 import { Checkbox } from '@/components/ui/checkbox';
 import { PasswordInput } from '@/components/ui/password-input';

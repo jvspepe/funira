@@ -2,8 +2,8 @@ import { useParams } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
 import { Container, Flex } from '@chakra-ui/react';
 import { getProduct } from '@/features/products/services';
-import { Contact } from '@/components/section/contact';
-import { Features } from '@/components/section/features';
+import { Contact } from '@/components/sections/contact';
+import { Features } from '@/components/sections/features';
 import { ProductListing } from '@/features/products/components/product-listing';
 
 export function ProductDetails() {

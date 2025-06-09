@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { DefaultValues } from 'react-hook-form';
 
 export const signInSchema = z.object({
   email: z.string().email('E-mail inválido').nonempty('Campo obrigatório'),
@@ -8,9 +7,3 @@ export const signInSchema = z.object({
 });
 
 export type SignInSchema = z.infer<typeof signInSchema>;
-
-export const signInDefaultValues: DefaultValues<SignInSchema> = {
-  email: '',
-  password: '',
-  rememberUser: false,
-};

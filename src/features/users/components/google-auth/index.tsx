@@ -3,21 +3,18 @@ import { useNavigate } from 'react-router';
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Box, Button, Icon, Text } from '@chakra-ui/react';
-import { type SignInSchema } from '@/features/auth/components/sign-in-form/validation';
-import { type SignUpSchema } from '@/features/auth/components/sign-up-form/validation';
-import { signInWithGoogle } from '@/features/auth/services';
+import { type SignInSchema } from '@/features/users/pages/sign-in/sign-in-validation';
+import { type SignUpSchema } from '@/features/users/pages/sign-up/sign-up-validation';
+import { signInWithGoogle } from '@/features/users/services/auth';
 import { handleAuthError } from '@/features/utils';
 import { GoogleIcon } from '@/assets/GoogleIcon';
 
-interface SignInWithGoogleProps {
+interface GoogleAuthProps {
   loading: boolean;
   setLoading: Dispatch<SetStateAction<boolean>>;
 }
 
-export function SignInWithGoogle({
-  loading,
-  setLoading,
-}: SignInWithGoogleProps) {
+export function GoogleAuth({ loading, setLoading }: GoogleAuthProps) {
   const navigate = useNavigate();
 
   const form = useFormContext<SignInSchema | SignUpSchema>();

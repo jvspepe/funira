@@ -3,6 +3,7 @@ import { Link as RouterLink, useNavigate } from 'react-router';
 import {
   type SubmitHandler,
   Controller,
+  DefaultValues,
   FormProvider,
   useForm,
 } from 'react-hook-form';
@@ -11,62 +12,56 @@ import { useTranslation } from 'react-i18next';
 import {
   Box,
   Button,
-  Separator,
-  Heading,
-  Icon,
-  Link,
-  Text,
   Code,
   Flex,
+  Heading,
+  Icon,
   Input,
+  Link,
+  Separator,
+  Text,
 } from '@chakra-ui/react';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeftIcon } from 'lucide-react';
 import { paths } from '@/config/paths';
-import { signUp } from '@/features/auth/services';
+import { signIn } from '@/features/users/services';
 import { handleAuthError } from '@/features/utils';
-import {
-  type SignUpSchema,
-  signUpDefaultValues,
-  signUpSchema,
-} from './validation';
-import { SignInWithGoogle } from '@/features/auth/components/sign-in-with-google';
+import { type SignInSchema, signInSchema } from './sign-in-validation';
+import { GoogleAuth } from '@/features/users/components/google-auth';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Field } from '@/components/ui/field';
 import { PasswordInput } from '@/components/ui/password-input';
+import { Field } from '@/components/ui/field';
 
-export function SignUpForm() {
+const signInDefaultValues: DefaultValues<SignInSchema> = {
+  email: '',
+  password: '',
+  rememberUser: false,
+};
+
+export function SignInForm() {
   const [googleLoading, setGoogleLoading] = useState<boolean>(false);
-  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
-  const form = useForm<SignUpSchema>({
-    defaultValues: signUpDefaultValues,
-    resolver: zodResolver(signUpSchema),
+  const form = useForm<SignInSchema>({
+    defaultValues: signInDefaultValues,
+    resolver: zodResolver(signInSchema),
   });
 
   const { t } = useTranslation();
 
-  const onSubmit: SubmitHandler<SignUpSchema> = async ({
-    firstName,
-    lastName,
+  const onSubmit: SubmitHandler<SignInSchema> = async ({
     email,
     password,
     rememberUser,
   }) => {
     try {
-      await signUp(
-        firstName.concat(' ', lastName),
-        email,
-        password,
-        rememberUser
-      );
+      await signIn(email, password, rememberUser);
 
       void navigate('/');
     } catch (error) {
       form.setError('root', { message: handleAuthError(error) });
     } finally {
-      form.reset(signUpDefaultValues);
+      form.reset(signInDefaultValues);
     }
   };
 
@@ -79,8 +74,8 @@ export function SignUpForm() {
         maxWidth="{sizes.xl}"
         direction="column"
         grow="1"
-        padding={{ base: '{spacing.6}', xl: '0' }}
         gap="{spacing.6}"
+        padding={{ base: '{spacing.6}', xl: '0' }}
       >
         <Button
           asChild
@@ -89,7 +84,7 @@ export function SignUpForm() {
         >
           <RouterLink to={paths.user.home}>
             <Icon aria-hidden>
-              <ArrowLeft />
+              <ArrowLeftIcon />
             </Icon>
             {t('common:buttons.back')}
           </RouterLink>
@@ -99,20 +94,12 @@ export function SignUpForm() {
           direction="column"
           gap="{spacing.2}"
         >
-          <Heading size="2xl">{t('auth.sign-up.heading')}</Heading>
+          <Heading size="md">{t('auth.sign-in.heading')}</Heading>
           <Box>
-            <Text
-              as="span"
-              color="fg.muted"
-            >
-              {t('auth.sign-up.prompt')}
-            </Text>{' '}
-            <Link
-              asChild
-              color="fg.muted"
-            >
-              <RouterLink to={paths.user.signIn}>
-                {t('auth.sign-in.heading')}
+            <Text as="span">{t('auth.sign-in.prompt')}</Text>{' '}
+            <Link asChild>
+              <RouterLink to={paths.user.signUp}>
+                {t('auth.sign-up.heading')}
               </RouterLink>
             </Link>
           </Box>
@@ -127,53 +114,13 @@ export function SignUpForm() {
             {form.formState.errors.root.message}
           </Code>
         )}
-        <Flex gap="{spacing.6}">
-          <Controller
-            name="firstName"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <Field
-                label={t('common:inputs.firstName')}
-                invalid={!!fieldState.error}
-                errorText={
-                  fieldState.error ? fieldState.error.message : undefined
-                }
-              >
-                <Input
-                  {...field}
-                  type="text"
-                  placeholder={t('common:inputs.firstNamePlaceholder')}
-                />
-              </Field>
-            )}
-          />
-          <Controller
-            name="lastName"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <Field
-                label={t('common:inputs.lastName')}
-                invalid={!!fieldState.error}
-                errorText={
-                  fieldState.error ? fieldState.error.message : undefined
-                }
-              >
-                <Input
-                  {...field}
-                  type="text"
-                  placeholder={t('common:inputs.lastNamePlaceholder')}
-                />
-              </Field>
-            )}
-          />
-        </Flex>
         <Controller
           name="email"
           control={form.control}
           render={({ field, fieldState }) => (
             <Field
               label={t('common:inputs.email')}
-              invalid={!!fieldState.error}
+              invalid={fieldState.error ? true : undefined}
               errorText={
                 fieldState.error ? fieldState.error.message : undefined
               }
@@ -190,40 +137,16 @@ export function SignUpForm() {
           name="password"
           control={form.control}
           render={({ field, fieldState }) => (
-            <Field
+            <PasswordInput
+              {...field}
+              id={field.name}
+              error={fieldState.error ? true : undefined}
+              errorText={
+                fieldState.error ? fieldState.error.message : undefined
+              }
               label={t('common:inputs.password')}
-              invalid={!!fieldState.error}
-              errorText={
-                fieldState.error ? fieldState.error.message : undefined
-              }
-            >
-              <PasswordInput
-                {...field}
-                id={field.name}
-                visible={showPassword}
-                onVisibleChange={setShowPassword}
-                placeholder={t('common:inputs.passwordPlaceholder')}
-              />
-            </Field>
-          )}
-        />
-        <Controller
-          name="confirmPassword"
-          control={form.control}
-          render={({ field, fieldState }) => (
-            <Field
-              label={t('common:inputs.confirmPassword')}
-              invalid={!!fieldState.error}
-              errorText={
-                fieldState.error ? fieldState.error.message : undefined
-              }
-            >
-              <Input
-                {...field}
-                type={showPassword ? 'text' : 'password'}
-                placeholder={t('common:inputs.passwordPlaceholder')}
-              />
-            </Field>
+              placeholder={t('common:inputs.passwordPlaceholder')}
+            />
           )}
         />
         <Controller
@@ -245,10 +168,6 @@ export function SignUpForm() {
           type="submit"
           loading={form.formState.isSubmitting}
           loadingText={t('buttons.loading')}
-          disabled={googleLoading}
-          display="flex"
-          alignItems="center"
-          gap="{spacing.2}"
         >
           {t('common:buttons.confirm')}
         </Button>
@@ -266,7 +185,7 @@ export function SignUpForm() {
             <Text>{t('common:or')}</Text>
             <Separator flexGrow="1" />
           </Flex>
-          <SignInWithGoogle
+          <GoogleAuth
             loading={googleLoading}
             setLoading={setGoogleLoading}
           />

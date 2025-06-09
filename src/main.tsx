@@ -8,7 +8,7 @@ import '@fontsource-variable/montserrat';
 /*  @ts-expect-error: CSS module */
 import '@fontsource-variable/space-grotesk';
 import { router } from '@/routes';
-import './locales';
+import './features/localization';
 
 const root = document.getElementById('root');
 

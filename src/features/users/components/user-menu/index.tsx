@@ -1,8 +1,8 @@
 import { Link } from 'react-router';
 import { Icon, IconButton, Menu, Portal } from '@chakra-ui/react';
 import { CircleUserIcon } from 'lucide-react';
-import { useAuth } from '@/features/auth/hooks/use-auth';
-import { signOut } from '@/features/auth/services';
+import { useAuth } from '@/features/users/hooks/use-auth';
+import { signOut } from '@/features/users/services';
 import { useTranslation } from 'react-i18next';
 import { paths } from '@/config/paths';
 

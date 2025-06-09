@@ -8,6 +8,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { FrownIcon } from 'lucide-react';
+import { SORT_PARAM, TYPE_PARAM } from '@/config/constants';
 import { getProducts } from '@/features/products/services';
 import { getCategories } from '@/features/categories/services';
 import { filterProducts, sortProducts } from '@/utils';
@@ -33,15 +34,15 @@ export function ProductsDisplay() {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const sortParam = searchParams.get('sort');
-  const typeParams = searchParams.getAll('type');
+  const sortParam = searchParams.get(SORT_PARAM);
+  const typeParams = searchParams.getAll(TYPE_PARAM);
 
   function handleChangeSort(value: string) {
     if (sortParam === value) {
-      searchParams.delete('sort');
+      searchParams.delete(SORT_PARAM);
       setSearchParams(searchParams);
     } else {
-      searchParams.set('sort', value);
+      searchParams.set(SORT_PARAM, value);
       setSearchParams(searchParams);
     }
   }
@@ -118,36 +119,6 @@ export function ProductsDisplay() {
                   </GridItem>
                 ))}
               </Grid>
-              {/* <Pagination.Root
-                count={data.totalSize!}
-                pageSize={2}
-                defaultPage={1}
-              >
-                <ButtonGroup
-                  variant="ghost"
-                  size="sm"
-                >
-                  <Pagination.PrevTrigger asChild>
-                    <IconButton>
-                      <ChevronLeftIcon />
-                    </IconButton>
-                  </Pagination.PrevTrigger>
-                  <Pagination.Items
-                    render={(page) => (
-                      <IconButton
-                        variant={{ base: 'ghost', _selected: 'outline' }}
-                      >
-                        {page.value}
-                      </IconButton>
-                    )}
-                  />
-                  <Pagination.NextTrigger asChild>
-                    <IconButton>
-                      <ChevronRightIcon />
-                    </IconButton>
-                  </Pagination.NextTrigger>
-                </ButtonGroup>
-              </Pagination.Root> */}
             </GridItem>
           )}
         </Grid>

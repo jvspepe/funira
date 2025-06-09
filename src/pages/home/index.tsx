@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { Container, Flex } from '@chakra-ui/react';
 import { paths } from '@/config/paths';
 import { getProducts } from '@/features/products/services';
-import { Contact } from '@/components/section/contact';
-import { Features } from '@/components/section/features';
-import { Hero } from '@/components/section/hero';
-import { Newsletter } from '@/components/section/newsletter';
+import { Contact } from '@/components/sections/contact';
+import { Features } from '@/components/sections/features';
+import { Hero } from '@/components/sections/hero';
+import { Newsletter } from '@/components/sections/newsletter';
 import { ProductsSection } from '@/features/products/components/products-section';
 import { ProductsSectionSkeleton } from '@/features/products/components/products-section/skeleton';
 
