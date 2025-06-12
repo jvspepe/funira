@@ -58,7 +58,7 @@ export function ProductsFilter({ categories }: ProductsFilterProps) {
         <Stack>
           <Heading>{t('products.actions.filter-by')}</Heading>
           <Stack>
-            <Heading>Tipo</Heading>
+            <Heading>{t('products.type')}</Heading>
             <CheckboxGroup
               onValueChange={(values) => handleChangeFilter(values)}
               value={handleChangeFilterValues()}
