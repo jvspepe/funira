@@ -108,6 +108,8 @@
     }
   },
   "products": {
+    "header": "Nossos produtos",
+    "type": "Tipo",
     "details": {
       "name": "Nome",
       "summary": "Resumo",
