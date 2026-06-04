@@ -1,21 +1,16 @@
-import { Box, Flex, Grid } from '@chakra-ui/react';
-import { SignInForm } from '@/features/users/pages/sign-in/sign-in-form';
+import { Box, Flex, Grid } from "@chakra-ui/react";
+
+import { SignInForm } from "@/features/users/pages/sign-in/sign-in-form";
 
 export function SignInPage() {
   return (
-    <Grid
-      flexGrow={1}
-      templateColumns={{ base: '', lg: 'repeat(2, 1fr)' }}
-    >
+    <Grid flexGrow={1} templateColumns={{ base: "", lg: "repeat(2, 1fr)" }}>
       <Box
-        display={{ base: 'none', lg: 'block' }}
+        display={{ base: "none", lg: "block" }}
         backgroundImage="url(/images/auth-bg.jpg)"
         backgroundSize="cover"
       ></Box>
-      <Flex
-        align="center"
-        justify="center"
-      >
+      <Flex align="center" justify="center">
         <SignInForm />
       </Flex>
     </Grid>

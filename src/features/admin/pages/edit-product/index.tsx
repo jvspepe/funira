@@ -1,14 +1,16 @@
-import { getProduct } from '@/features/products/services';
-import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router';
-import { EditProductForm } from './edit-product-form';
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "react-router";
+
+import { getProduct } from "@/features/products/services";
+
+import { EditProductForm } from "./edit-product-form";
 
 export function EditProductPage() {
   const { productId } = useParams();
 
   const productQuery = useQuery({
-    queryKey: ['product', productId],
     queryFn: async () => await getProduct(productId!),
+    queryKey: ["product", productId],
   });
 
   if (productQuery.isLoading) {

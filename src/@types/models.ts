@@ -1,23 +1,23 @@
-import { Timestamp } from 'firebase/firestore';
-import { z } from 'zod';
+import { Timestamp } from "firebase/firestore";
+import { z } from "zod";
 
-type LocalizedString = {
+interface LocalizedString {
   en: string;
   pt: string;
-};
+}
 
-export type ReturnData<T> = {
-  status: 'success' | 'fail' | 'error';
+export interface ReturnData<T> {
+  status: "success" | "fail" | "error";
   message?: string;
   data?: T;
-};
+}
 
 export const UserSchema = z.object({
-  id: z.string().nonempty(),
-  email: z.string().email().nonempty(),
-  username: z.string().nonempty(),
-  role: z.enum(['customer', 'admin']),
   createdAt: z.instanceof(Timestamp).default(Timestamp.now()),
+  email: z.string().email().nonempty(),
+  id: z.string().nonempty(),
+  role: z.enum(["customer", "admin"]),
+  username: z.string().nonempty(),
 });
 
 export type User = z.infer<typeof UserSchema>;

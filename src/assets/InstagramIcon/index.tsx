@@ -1,20 +1,16 @@
-'use client';
+"use client";
 
-import { createIcon } from '@chakra-ui/react';
+import { createIcon } from "@chakra-ui/react";
 
 export const InstagramIcon = createIcon({
-  displayName: 'InstagramIcon',
   defaultProps: {
-    xmlns: 'http://www.w3.org/2000/svg',
-    fill: '#000000',
+    fill: "#000000",
+    xmlns: "http://www.w3.org/2000/svg",
   },
-  viewBox: '0 0 3364.7 3364.7',
+  displayName: "InstagramIcon",
   path: (
     <>
-      <g
-        id="SVGRepo_bgCarrier"
-        strokeWidth="0"
-      ></g>
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g
         id="SVGRepo_tracerCarrier"
         strokeLinecap="round"
@@ -29,14 +25,8 @@ export const InstagramIcon = createIcon({
             r="4271.92"
             gradientUnits="userSpaceOnUse"
           >
-            <stop
-              offset=".09"
-              stopColor="#fa8f21"
-            ></stop>
-            <stop
-              offset=".78"
-              stopColor="#d82d7e"
-            ></stop>
+            <stop offset=".09" stopColor="#fa8f21"></stop>
+            <stop offset=".78" stopColor="#d82d7e"></stop>
           </radialGradient>
           <radialGradient
             id="1"
@@ -45,15 +35,8 @@ export const InstagramIcon = createIcon({
             r="3759.33"
             gradientUnits="userSpaceOnUse"
           >
-            <stop
-              offset=".64"
-              stopColor="#8c3aaa"
-              stopOpacity="0"
-            ></stop>
-            <stop
-              offset="1"
-              stopColor="#8c3aaa"
-            ></stop>
+            <stop offset=".64" stopColor="#8c3aaa" stopOpacity="0"></stop>
+            <stop offset="1" stopColor="#8c3aaa"></stop>
           </radialGradient>
         </defs>
         <path
@@ -71,4 +54,5 @@ export const InstagramIcon = createIcon({
       </g>
     </>
   ),
+  viewBox: "0 0 3364.7 3364.7",
 });

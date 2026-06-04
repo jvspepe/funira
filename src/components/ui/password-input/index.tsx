@@ -1,19 +1,16 @@
-'use client';
+"use client";
 
-import { type ReactNode, type Ref, useRef } from 'react';
-import {
-  type ButtonProps,
-  type GroupProps,
-  type InputProps,
-} from '@chakra-ui/react';
+import type { ButtonProps, GroupProps, InputProps } from "@chakra-ui/react";
 import {
   IconButton,
   Input,
   InputGroup,
   mergeRefs,
   useControllableState,
-} from '@chakra-ui/react';
-import { EyeIcon, EyeOff } from 'lucide-react';
+} from "@chakra-ui/react";
+import { EyeIcon, EyeOff } from "lucide-react";
+import { useRef } from "react";
+import type { ReactNode, Ref } from "react";
 
 function VisibilityTrigger({
   ref,
@@ -34,12 +31,12 @@ function VisibilityTrigger({
   );
 }
 
-type PasswordVisibilityProps = {
+interface PasswordVisibilityProps {
   defaultVisible?: boolean;
   visible?: boolean;
   onVisibleChange?: (visible: boolean) => void;
   visibilityIcon?: { on: ReactNode; off: ReactNode };
-};
+}
 
 type PasswordInputProps = InputProps &
   PasswordVisibilityProps & {
@@ -58,14 +55,14 @@ export function PasswordInput({ ref, ...props }: PasswordInputProps) {
     defaultVisible,
     visible: visibleProp,
     onVisibleChange,
-    visibilityIcon = { on: <EyeIcon />, off: <EyeOff /> },
+    visibilityIcon = { off: <EyeOff />, on: <EyeIcon /> },
     ...rest
   } = props;
 
   const [visible, setVisible] = useControllableState({
-    value: visibleProp,
     defaultValue: defaultVisible ?? false,
     onChange: onVisibleChange,
+    value: visibleProp,
   });
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -77,8 +74,12 @@ export function PasswordInput({ ref, ...props }: PasswordInputProps) {
           <VisibilityTrigger
             disabled={rest.disabled}
             onPointerDown={(e) => {
-              if (rest.disabled) return;
-              if (e.button !== 0) return;
+              if (rest.disabled) {
+                return;
+              }
+              if (e.button !== 0) {
+                return;
+              }
               e.preventDefault();
               setVisible(!visible);
             }}
@@ -91,7 +92,7 @@ export function PasswordInput({ ref, ...props }: PasswordInputProps) {
         <Input
           {...rest}
           ref={mergeRefs(ref, inputRef)}
-          type={visible ? 'text' : 'password'}
+          type={visible ? "text" : "password"}
         />
       </InputGroup>
     </>

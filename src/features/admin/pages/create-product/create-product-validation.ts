@@ -1,17 +1,8 @@
-import { DefaultValues } from 'react-hook-form';
-import { z } from 'zod';
+import type { DefaultValues } from "react-hook-form";
+import { z } from "zod";
 
 export const createProductSchema = z.object({
-  name: z.object({
-    en: z.string(),
-    pt: z.string().nonempty(),
-  }),
-  price: z.string().nonempty(),
   category: z.string().nonempty().array(),
-  summary: z.object({
-    en: z.string(),
-    pt: z.string().nonempty(),
-  }),
   description: z.object({
     en: z.string(),
     pt: z.string().nonempty(),
@@ -22,29 +13,38 @@ export const createProductSchema = z.object({
     width: z.string().nonempty(),
   }),
   imageCover: z.instanceof(FileList).nullable(),
+  name: z.object({
+    en: z.string(),
+    pt: z.string().nonempty(),
+  }),
+  price: z.string().nonempty(),
+  summary: z.object({
+    en: z.string(),
+    pt: z.string().nonempty(),
+  }),
 });
 
 export type CreateProductSchema = z.infer<typeof createProductSchema>;
 
 export const defaultValues: DefaultValues<CreateProductSchema> = {
-  name: {
-    en: '',
-    pt: '',
-  },
-  price: '0',
   category: [],
-  summary: {
-    en: '',
-    pt: '',
-  },
   description: {
-    en: '',
-    pt: '',
+    en: "",
+    pt: "",
   },
   dimensions: {
-    depth: '',
-    height: '',
-    width: '',
+    depth: "",
+    height: "",
+    width: "",
   },
   imageCover: null,
+  name: {
+    en: "",
+    pt: "",
+  },
+  price: "0",
+  summary: {
+    en: "",
+    pt: "",
+  },
 };

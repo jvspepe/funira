@@ -1,6 +1,6 @@
-import { useTranslation } from 'react-i18next';
-import { Button, Icon, Menu, Portal } from '@chakra-ui/react';
-import { ListFilterIcon } from 'lucide-react';
+import { Button, Icon, Menu, Portal } from "@chakra-ui/react";
+import { ListFilterIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface ProductsSortProps {
   handleChangeSort: (value: string) => void;
@@ -9,7 +9,7 @@ interface ProductsSortProps {
 export function ProductsSort({ handleChangeSort }: ProductsSortProps) {
   const { t } = useTranslation();
 
-  const productRoutes = t('footer.menu.items', {
+  const productRoutes = t("footer.menu.items", {
     returnObjects: true,
   }) as Record<string, string>[];
 
@@ -19,12 +19,12 @@ export function ProductsSort({ handleChangeSort }: ProductsSortProps) {
         <Button
           type="button"
           variant="surface"
-          width={{ base: 'full', lg: 'fit-content' }}
+          width={{ base: "full", lg: "fit-content" }}
         >
           <Icon size="sm">
             <ListFilterIcon />
           </Icon>
-          {t('products.actions.sort')}
+          {t("products.actions.sort")}
         </Button>
       </Menu.Trigger>
       <Portal>

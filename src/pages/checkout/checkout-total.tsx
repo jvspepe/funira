@@ -1,6 +1,7 @@
-import { Badge, Button, Card, Text } from '@chakra-ui/react';
-import { useAppSelector } from '@/store/store';
-import { useTranslation } from 'react-i18next';
+import { Badge, Button, Card, Text } from "@chakra-ui/react";
+import { useTranslation } from "react-i18next";
+
+import { useAppSelector } from "@/store/store";
 
 const CheckoutTotal = () => {
   const { cart, total } = useAppSelector((state) => state.cartReducer);
@@ -8,34 +9,27 @@ const CheckoutTotal = () => {
   const { t, i18n } = useTranslation();
 
   return (
-    <Card.Root
-      minWidth="20rem"
-      height="fit-content"
-    >
-      <Card.Header
-        display="flex"
-        flexDirection="row"
-        alignItems="center"
-      >
-        <Card.Title>{t('cart.total')}</Card.Title>
+    <Card.Root minWidth="20rem" height="fit-content">
+      <Card.Header display="flex" flexDirection="row" alignItems="center">
+        <Card.Title>{t("cart.total")}</Card.Title>
         <Badge variant="surface">
-          {t('cart.state.quantity', { quantity: cart.length })}
+          {t("cart.state.quantity", { quantity: cart.length })}
         </Badge>
       </Card.Header>
       <Card.Body>
         <Text as="span">
-          {t('cart.price')}:{' '}
+          {t("cart.price")}:{" "}
           {Intl.NumberFormat(
-            i18n.resolvedLanguage === 'pt' ? 'pt-BR' : 'en-US',
+            i18n.resolvedLanguage === "pt" ? "pt-BR" : "en-US",
             {
-              currency: i18n.resolvedLanguage === 'pt' ? 'BRL' : 'USD',
-              style: 'currency',
+              currency: i18n.resolvedLanguage === "pt" ? "BRL" : "USD",
+              style: "currency",
             }
           ).format(total)}
         </Text>
       </Card.Body>
       <Card.Footer alignSelf="end">
-        <Button type="button">{t('cart.buttons.finish')}</Button>
+        <Button type="button">{t("cart.buttons.finish")}</Button>
       </Card.Footer>
     </Card.Root>
   );

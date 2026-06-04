@@ -1,20 +1,16 @@
-'use client';
+"use client";
 
-import { createIcon } from '@chakra-ui/react';
+import { createIcon } from "@chakra-ui/react";
 
 export const FacebookIcon = createIcon({
-  displayName: 'FacebookIcon',
   defaultProps: {
-    xmlns: 'http://www.w3.org/2000/svg',
-    fill: '#000000',
+    fill: "#000000",
+    xmlns: "http://www.w3.org/2000/svg",
   },
-  viewBox: '0 0 266.895 266.895',
+  displayName: "FacebookIcon",
   path: (
     <>
-      <g
-        id="SVGRepo_bgCarrier"
-        strokeWidth="0"
-      ></g>
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g
         id="SVGRepo_tracerCarrier"
         strokeLinecap="round"
@@ -32,4 +28,5 @@ export const FacebookIcon = createIcon({
       </g>
     </>
   ),
+  viewBox: "0 0 266.895 266.895",
 });

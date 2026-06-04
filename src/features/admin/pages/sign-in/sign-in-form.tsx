@@ -1,24 +1,22 @@
-import { Link as RouterLink, useNavigate } from 'react-router';
-import {
-  type SubmitHandler,
-  type DefaultValues,
-  Controller,
-  FormProvider,
-  useForm,
-} from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Box, Button, Code, Heading, Icon, Text } from '@chakra-ui/react';
-import { ArrowLeftIcon } from 'lucide-react';
-import { type SignInSchema, signInSchema } from './validation';
-import { signIn } from '@/features/users/services';
-import { handleAuthError } from '@/features/utils';
-import { Checkbox } from '@/components/ui/checkbox';
-import { PasswordInput } from '@/components/ui/password-input';
-import { TextInput } from '@/components/ui/text-input';
+import { Box, Button, Code, Heading, Icon, Text } from "@chakra-ui/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ArrowLeftIcon } from "lucide-react";
+import { Controller, FormProvider, useForm } from "react-hook-form";
+import type { SubmitHandler, DefaultValues } from "react-hook-form";
+import { Link as RouterLink, useNavigate } from "react-router";
+
+import { Checkbox } from "@/components/ui/checkbox";
+import { PasswordInput } from "@/components/ui/password-input";
+import { TextInput } from "@/components/ui/text-input";
+import { signIn } from "@/features/users/services";
+import { handleAuthError } from "@/features/utils";
+
+import { signInSchema } from "./validation";
+import type { SignInSchema } from "./validation";
 
 const defaultValues: DefaultValues<SignInSchema> = {
-  email: '',
-  password: '',
+  email: "",
+  password: "",
   rememberUser: false,
 };
 
@@ -38,9 +36,9 @@ export function AdminSignInForm() {
     try {
       await signIn(email, password, rememberUser);
 
-      void navigate('/admin');
+      void navigate("/admin");
     } catch (error) {
-      form.setError('root', { message: handleAuthError(error) });
+      form.setError("root", { message: handleAuthError(error) });
     } finally {
       form.reset();
     }
@@ -56,14 +54,10 @@ export function AdminSignInForm() {
         flexDirection="column"
         flexGrow="1"
         maxWidth="{sizes.xl}"
-        padding={{ base: '{spacing.6}', xl: '0' }}
+        padding={{ base: "{spacing.6}", xl: "0" }}
         gap="{spacing.6}"
       >
-        <Button
-          asChild
-          variant="subtle"
-          width="fit-content"
-        >
+        <Button asChild variant="subtle" width="fit-content">
           <RouterLink to="/">
             <Icon>
               <ArrowLeftIcon />

@@ -1,9 +1,10 @@
-import { Flex, Heading, Icon, Text } from '@chakra-ui/react';
-import Feature from '@/@types/feature';
+import { Flex, Heading, Icon, Text } from "@chakra-ui/react";
 
-type Props = {
+import type Feature from "@/@types/feature";
+
+interface Props {
   feature: Feature;
-};
+}
 
 export function FeatureCard({ feature }: Props) {
   return (
@@ -15,16 +16,8 @@ export function FeatureCard({ feature }: Props) {
       bgColor="bg.muted"
       borderRadius="{radii.l2}"
     >
-      <Icon
-        as={feature.icon}
-        height="1.5rem"
-        width="1.5rem"
-      />
-      <Heading
-        as="h3"
-        size="xl"
-        fontWeight="normal"
-      >
+      <Icon as={feature.icon} height="1.5rem" width="1.5rem" />
+      <Heading as="h3" size="xl" fontWeight="normal">
         {feature.title}
       </Heading>
       <Text>{feature.details}</Text>

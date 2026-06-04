@@ -1,13 +1,3 @@
-import { useState } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router';
-import {
-  type SubmitHandler,
-  Controller,
-  FormProvider,
-  useForm,
-} from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useTranslation } from 'react-i18next';
 import {
   Box,
   Button,
@@ -19,20 +9,25 @@ import {
   Code,
   Flex,
   Input,
-} from '@chakra-ui/react';
-import { ArrowLeft } from 'lucide-react';
-import { paths } from '@/config/paths';
-import { signUp } from '@/features/users/services';
-import { handleAuthError } from '@/features/utils';
-import {
-  type SignUpSchema,
-  signUpDefaultValues,
-  signUpSchema,
-} from './sign-up-validation';
-import { GoogleAuth } from '@/features/users/components/google-auth';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Field } from '@/components/ui/field';
-import { PasswordInput } from '@/components/ui/password-input';
+} from "@chakra-ui/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ArrowLeft } from "lucide-react";
+import { useState } from "react";
+import { Controller, FormProvider, useForm } from "react-hook-form";
+import type { SubmitHandler } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { Link as RouterLink, useNavigate } from "react-router";
+
+import { Checkbox } from "@/components/ui/checkbox";
+import { Field } from "@/components/ui/field";
+import { PasswordInput } from "@/components/ui/password-input";
+import { paths } from "@/config/paths";
+import { GoogleAuth } from "@/features/users/components/google-auth";
+import { signUp } from "@/features/users/services";
+import { handleAuthError } from "@/features/utils";
+
+import { signUpDefaultValues, signUpSchema } from "./sign-up-validation";
+import type { SignUpSchema } from "./sign-up-validation";
 
 export function SignUpForm() {
   const [googleLoading, setGoogleLoading] = useState<boolean>(false);
@@ -56,15 +51,15 @@ export function SignUpForm() {
   }) => {
     try {
       await signUp(
-        firstName.concat(' ', lastName),
+        firstName.concat(" ", lastName),
         email,
         password,
         rememberUser
       );
 
-      void navigate('/');
+      void navigate("/");
     } catch (error) {
-      form.setError('root', { message: handleAuthError(error) });
+      form.setError("root", { message: handleAuthError(error) });
     } finally {
       form.reset(signUpDefaultValues);
     }
@@ -79,40 +74,26 @@ export function SignUpForm() {
         maxWidth="{sizes.xl}"
         direction="column"
         grow="1"
-        padding={{ base: '{spacing.6}', xl: '0' }}
+        padding={{ base: "{spacing.6}", xl: "0" }}
         gap="{spacing.6}"
       >
-        <Button
-          asChild
-          variant="subtle"
-          width="fit-content"
-        >
+        <Button asChild variant="subtle" width="fit-content">
           <RouterLink to={paths.user.home}>
             <Icon aria-hidden>
               <ArrowLeft />
             </Icon>
-            {t('common:buttons.back')}
+            {t("common:buttons.back")}
           </RouterLink>
         </Button>
-        <Flex
-          justify="center"
-          direction="column"
-          gap="{spacing.2}"
-        >
-          <Heading size="2xl">{t('auth.sign-up.heading')}</Heading>
+        <Flex justify="center" direction="column" gap="{spacing.2}">
+          <Heading size="2xl">{t("auth.sign-up.heading")}</Heading>
           <Box>
-            <Text
-              as="span"
-              color="fg.muted"
-            >
-              {t('auth.sign-up.prompt')}
-            </Text>{' '}
-            <Link
-              asChild
-              color="fg.muted"
-            >
+            <Text as="span" color="fg.muted">
+              {t("auth.sign-up.prompt")}
+            </Text>{" "}
+            <Link asChild color="fg.muted">
               <RouterLink to={paths.user.signIn}>
-                {t('auth.sign-in.heading')}
+                {t("auth.sign-in.heading")}
               </RouterLink>
             </Link>
           </Box>
@@ -133,7 +114,7 @@ export function SignUpForm() {
             control={form.control}
             render={({ field, fieldState }) => (
               <Field
-                label={t('common:inputs.firstName')}
+                label={t("common:inputs.firstName")}
                 invalid={!!fieldState.error}
                 errorText={
                   fieldState.error ? fieldState.error.message : undefined
@@ -142,7 +123,7 @@ export function SignUpForm() {
                 <Input
                   {...field}
                   type="text"
-                  placeholder={t('common:inputs.firstNamePlaceholder')}
+                  placeholder={t("common:inputs.firstNamePlaceholder")}
                 />
               </Field>
             )}
@@ -152,7 +133,7 @@ export function SignUpForm() {
             control={form.control}
             render={({ field, fieldState }) => (
               <Field
-                label={t('common:inputs.lastName')}
+                label={t("common:inputs.lastName")}
                 invalid={!!fieldState.error}
                 errorText={
                   fieldState.error ? fieldState.error.message : undefined
@@ -161,7 +142,7 @@ export function SignUpForm() {
                 <Input
                   {...field}
                   type="text"
-                  placeholder={t('common:inputs.lastNamePlaceholder')}
+                  placeholder={t("common:inputs.lastNamePlaceholder")}
                 />
               </Field>
             )}
@@ -172,7 +153,7 @@ export function SignUpForm() {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field
-              label={t('common:inputs.email')}
+              label={t("common:inputs.email")}
               invalid={!!fieldState.error}
               errorText={
                 fieldState.error ? fieldState.error.message : undefined
@@ -181,7 +162,7 @@ export function SignUpForm() {
               <Input
                 {...field}
                 type="email"
-                placeholder={t('common:inputs.emailPlaceholder')}
+                placeholder={t("common:inputs.emailPlaceholder")}
               />
             </Field>
           )}
@@ -191,7 +172,7 @@ export function SignUpForm() {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field
-              label={t('common:inputs.password')}
+              label={t("common:inputs.password")}
               invalid={!!fieldState.error}
               errorText={
                 fieldState.error ? fieldState.error.message : undefined
@@ -202,7 +183,7 @@ export function SignUpForm() {
                 id={field.name}
                 visible={showPassword}
                 onVisibleChange={setShowPassword}
-                placeholder={t('common:inputs.passwordPlaceholder')}
+                placeholder={t("common:inputs.passwordPlaceholder")}
               />
             </Field>
           )}
@@ -212,7 +193,7 @@ export function SignUpForm() {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field
-              label={t('common:inputs.confirmPassword')}
+              label={t("common:inputs.confirmPassword")}
               invalid={!!fieldState.error}
               errorText={
                 fieldState.error ? fieldState.error.message : undefined
@@ -220,8 +201,8 @@ export function SignUpForm() {
             >
               <Input
                 {...field}
-                type={showPassword ? 'text' : 'password'}
-                placeholder={t('common:inputs.passwordPlaceholder')}
+                type={showPassword ? "text" : "password"}
+                placeholder={t("common:inputs.passwordPlaceholder")}
               />
             </Field>
           )}
@@ -237,20 +218,20 @@ export function SignUpForm() {
               ref={field.ref}
               checked={field.value}
             >
-              {t('common:inputs.rememberUser')}
+              {t("common:inputs.rememberUser")}
             </Checkbox>
           )}
         />
         <Button
           type="submit"
           loading={form.formState.isSubmitting}
-          loadingText={t('buttons.loading')}
+          loadingText={t("buttons.loading")}
           disabled={googleLoading}
           display="flex"
           alignItems="center"
           gap="{spacing.2}"
         >
-          {t('common:buttons.confirm')}
+          {t("common:buttons.confirm")}
         </Button>
         <Flex
           width="full"
@@ -258,18 +239,12 @@ export function SignUpForm() {
           gap="{spacing.6}"
           alignSelf="center"
         >
-          <Flex
-            align="center"
-            gap="{spacing.6}"
-          >
+          <Flex align="center" gap="{spacing.6}">
             <Separator flexGrow="1" />
-            <Text>{t('common:or')}</Text>
+            <Text>{t("common:or")}</Text>
             <Separator flexGrow="1" />
           </Flex>
-          <GoogleAuth
-            loading={googleLoading}
-            setLoading={setGoogleLoading}
-          />
+          <GoogleAuth loading={googleLoading} setLoading={setGoogleLoading} />
         </Flex>
       </Flex>
     </FormProvider>

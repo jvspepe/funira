@@ -1,7 +1,11 @@
-import { type ReactNode, useEffect, useMemo, useState } from 'react';
-import { type IAuthContext, AuthContext } from './auth-context';
-import { handleCurrentUser } from '@/features/users/services';
-import { getUser } from '@/features/users/services';
+import { useEffect, useMemo, useState } from "react";
+import type { ReactNode } from "react";
+
+import { handleCurrentUser } from "@/features/users/services";
+import { getUser } from "@/features/users/services";
+
+import { AuthContext } from "./auth-context";
+import type { IAuthContext } from "./auth-context";
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -9,10 +13,10 @@ interface AuthProviderProps {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [currentUser, setCurrentUser] =
-    useState<IAuthContext['currentUser']>(null);
+    useState<IAuthContext["currentUser"]>(null);
 
   const [currentUserData, setCurrentUserData] =
-    useState<IAuthContext['currentUserData']>(null);
+    useState<IAuthContext["currentUserData"]>(null);
 
   const [loading, setLoading] = useState<boolean>(true);
 

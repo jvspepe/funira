@@ -1,5 +1,6 @@
-import { User } from '@/@types/models';
-import { Table, Text } from '@chakra-ui/react';
+import { Table, Text } from "@chakra-ui/react";
+
+import type { User } from "@/@types/models";
 
 interface AdminUsersTableProps {
   users: User[];
@@ -7,11 +8,7 @@ interface AdminUsersTableProps {
 
 export function AdminUsersTable({ users }: AdminUsersTableProps) {
   return (
-    <Table.Root
-      size="sm"
-      variant="outline"
-      showColumnBorder
-    >
+    <Table.Root size="sm" variant="outline" showColumnBorder>
       <Table.Header>
         <Table.Row>
           <Table.ColumnHeader>ID</Table.ColumnHeader>

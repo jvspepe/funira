@@ -1,6 +1,3 @@
-import { Link as RouterLink } from 'react-router';
-import { useQuery } from '@tanstack/react-query';
-import { useTranslation } from 'react-i18next';
 import {
   Box,
   Container,
@@ -10,52 +7,44 @@ import {
   Separator,
   Flex,
   Grid,
-} from '@chakra-ui/react';
-import { SORT_PARAM, TYPE_PARAM } from '@/config/constants';
-import { paths } from '@/config/paths';
-import { getCategories } from '@/features/categories/services';
-import { Copyright } from '@/components/sections/copyright';
-import { FooterForm } from './footer-form';
+} from "@chakra-ui/react";
+import { useQuery } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
+import { Link as RouterLink } from "react-router";
+
+import { Copyright } from "@/components/sections/copyright";
+import { SORT_PARAM, TYPE_PARAM } from "@/config/constants";
+import { paths } from "@/config/paths";
+import { getCategories } from "@/features/categories/services";
+
+import { FooterForm } from "./footer-form";
 
 export function Footer() {
   const { t, i18n } = useTranslation();
 
-  const productRoutes = t('footer.menu.items', {
+  const productRoutes = t("footer.menu.items", {
     returnObjects: true,
   }) as Record<string, string>[];
 
-  const companyRoutes = t('footer.company.items', {
+  const companyRoutes = t("footer.company.items", {
     returnObjects: true,
   }) as string[];
 
-  const currentLang = i18n.language as 'pt' | 'en';
+  const currentLang = i18n.language as "pt" | "en";
 
   const categoriesQuery = useQuery({
-    queryKey: ['categories'],
     queryFn: getCategories,
+    queryKey: ["categories"],
   });
 
   return (
     <Box>
       <Container>
-        <Grid
-          as="footer"
-          gap="{spacing.6}"
-          paddingBlock="{spacing.6}"
-        >
-          <Flex
-            direction={{ base: 'column', lg: 'row' }}
-            gap="{spacing.12}"
-          >
-            <Flex
-              wrap="wrap"
-              gap="{spacing.12}"
-            >
-              <Flex
-                direction="column"
-                gap="{spacing.2}"
-              >
-                <Heading size="md">{t('footer.categories.title')}</Heading>
+        <Grid as="footer" gap="{spacing.6}" paddingBlock="{spacing.6}">
+          <Flex direction={{ base: "column", lg: "row" }} gap="{spacing.12}">
+            <Flex wrap="wrap" gap="{spacing.12}">
+              <Flex direction="column" gap="{spacing.2}">
+                <Heading size="md">{t("footer.categories.title")}</Heading>
                 <List.Root
                   as="ul"
                   display="flex"
@@ -65,11 +54,7 @@ export function Footer() {
                   margin="0"
                 >
                   {categoriesQuery.data?.map((item) => (
-                    <List.Item
-                      key={item.id}
-                      asChild
-                      fontSize="0.875rem"
-                    >
+                    <List.Item key={item.id} asChild fontSize="0.875rem">
                       <Link asChild>
                         <RouterLink
                           to={`${paths.user.products}?${TYPE_PARAM}=${item.value}`}
@@ -81,11 +66,8 @@ export function Footer() {
                   ))}
                 </List.Root>
               </Flex>
-              <Flex
-                direction="column"
-                gap="{spacing.2}"
-              >
-                <Heading size="md">{t('footer.menu.title')}</Heading>
+              <Flex direction="column" gap="{spacing.2}">
+                <Heading size="md">{t("footer.menu.title")}</Heading>
                 <List.Root
                   display="flex"
                   flexDirection="column"
@@ -94,11 +76,7 @@ export function Footer() {
                   margin="0"
                 >
                   {Object.keys(productRoutes).map((key) => (
-                    <List.Item
-                      key={key}
-                      asChild
-                      fontSize="0.875rem"
-                    >
+                    <List.Item key={key} asChild fontSize="0.875rem">
                       <Link asChild>
                         <RouterLink
                           to={`${paths.user.products}?${SORT_PARAM}=${key}`}
@@ -110,11 +88,8 @@ export function Footer() {
                   ))}
                 </List.Root>
               </Flex>
-              <Flex
-                direction="column"
-                gap="{spacing.2}"
-              >
-                <Heading size="md">{t('footer.company.title')}</Heading>
+              <Flex direction="column" gap="{spacing.2}">
+                <Heading size="md">{t("footer.company.title")}</Heading>
                 <List.Root
                   display="flex"
                   flexDirection="column"
@@ -123,11 +98,7 @@ export function Footer() {
                   margin="0"
                 >
                   {companyRoutes.map((route) => (
-                    <List.Item
-                      key={route}
-                      asChild
-                      fontSize="0.875rem"
-                    >
+                    <List.Item key={route} asChild fontSize="0.875rem">
                       <Link asChild>
                         <RouterLink to="/">{route}</RouterLink>
                       </Link>

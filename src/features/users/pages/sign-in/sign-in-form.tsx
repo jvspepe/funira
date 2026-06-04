@@ -1,14 +1,3 @@
-import { useState } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router';
-import {
-  type SubmitHandler,
-  Controller,
-  DefaultValues,
-  FormProvider,
-  useForm,
-} from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useTranslation } from 'react-i18next';
 import {
   Box,
   Button,
@@ -20,20 +9,30 @@ import {
   Link,
   Separator,
   Text,
-} from '@chakra-ui/react';
-import { ArrowLeftIcon } from 'lucide-react';
-import { paths } from '@/config/paths';
-import { signIn } from '@/features/users/services';
-import { handleAuthError } from '@/features/utils';
-import { type SignInSchema, signInSchema } from './sign-in-validation';
-import { GoogleAuth } from '@/features/users/components/google-auth';
-import { Checkbox } from '@/components/ui/checkbox';
-import { PasswordInput } from '@/components/ui/password-input';
-import { Field } from '@/components/ui/field';
+} from "@chakra-ui/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ArrowLeftIcon } from "lucide-react";
+import { useState } from "react";
+import type { DefaultValues } from "react-hook-form";
+import { Controller, FormProvider, useForm } from "react-hook-form";
+import type { SubmitHandler } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { Link as RouterLink, useNavigate } from "react-router";
+
+import { Checkbox } from "@/components/ui/checkbox";
+import { Field } from "@/components/ui/field";
+import { PasswordInput } from "@/components/ui/password-input";
+import { paths } from "@/config/paths";
+import { GoogleAuth } from "@/features/users/components/google-auth";
+import { signIn } from "@/features/users/services";
+import { handleAuthError } from "@/features/utils";
+
+import { signInSchema } from "./sign-in-validation";
+import type { SignInSchema } from "./sign-in-validation";
 
 const signInDefaultValues: DefaultValues<SignInSchema> = {
-  email: '',
-  password: '',
+  email: "",
+  password: "",
   rememberUser: false,
 };
 
@@ -57,9 +56,9 @@ export function SignInForm() {
     try {
       await signIn(email, password, rememberUser);
 
-      void navigate('/');
+      void navigate("/");
     } catch (error) {
-      form.setError('root', { message: handleAuthError(error) });
+      form.setError("root", { message: handleAuthError(error) });
     } finally {
       form.reset(signInDefaultValues);
     }
@@ -75,31 +74,23 @@ export function SignInForm() {
         direction="column"
         grow="1"
         gap="{spacing.6}"
-        padding={{ base: '{spacing.6}', xl: '0' }}
+        padding={{ base: "{spacing.6}", xl: "0" }}
       >
-        <Button
-          asChild
-          variant="subtle"
-          width="fit-content"
-        >
+        <Button asChild variant="subtle" width="fit-content">
           <RouterLink to={paths.user.home}>
             <Icon aria-hidden>
               <ArrowLeftIcon />
             </Icon>
-            {t('common:buttons.back')}
+            {t("common:buttons.back")}
           </RouterLink>
         </Button>
-        <Flex
-          justify="center"
-          direction="column"
-          gap="{spacing.2}"
-        >
-          <Heading size="md">{t('auth.sign-in.heading')}</Heading>
+        <Flex justify="center" direction="column" gap="{spacing.2}">
+          <Heading size="md">{t("auth.sign-in.heading")}</Heading>
           <Box>
-            <Text as="span">{t('auth.sign-in.prompt')}</Text>{' '}
+            <Text as="span">{t("auth.sign-in.prompt")}</Text>{" "}
             <Link asChild>
               <RouterLink to={paths.user.signUp}>
-                {t('auth.sign-up.heading')}
+                {t("auth.sign-up.heading")}
               </RouterLink>
             </Link>
           </Box>
@@ -119,7 +110,7 @@ export function SignInForm() {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field
-              label={t('common:inputs.email')}
+              label={t("common:inputs.email")}
               invalid={fieldState.error ? true : undefined}
               errorText={
                 fieldState.error ? fieldState.error.message : undefined
@@ -128,7 +119,7 @@ export function SignInForm() {
               <Input
                 {...field}
                 type="email"
-                placeholder={t('common:inputs.emailPlaceholder')}
+                placeholder={t("common:inputs.emailPlaceholder")}
               />
             </Field>
           )}
@@ -144,8 +135,8 @@ export function SignInForm() {
               errorText={
                 fieldState.error ? fieldState.error.message : undefined
               }
-              label={t('common:inputs.password')}
-              placeholder={t('common:inputs.passwordPlaceholder')}
+              label={t("common:inputs.password")}
+              placeholder={t("common:inputs.passwordPlaceholder")}
             />
           )}
         />
@@ -160,16 +151,16 @@ export function SignInForm() {
               ref={field.ref}
               checked={field.value}
             >
-              {t('common:inputs.rememberUser')}
+              {t("common:inputs.rememberUser")}
             </Checkbox>
           )}
         />
         <Button
           type="submit"
           loading={form.formState.isSubmitting}
-          loadingText={t('buttons.loading')}
+          loadingText={t("buttons.loading")}
         >
-          {t('common:buttons.confirm')}
+          {t("common:buttons.confirm")}
         </Button>
         <Flex
           width="full"
@@ -177,18 +168,12 @@ export function SignInForm() {
           gap="{spacing.6}"
           alignSelf="center"
         >
-          <Flex
-            align="center"
-            gap="{spacing.6}"
-          >
+          <Flex align="center" gap="{spacing.6}">
             <Separator flexGrow="1" />
-            <Text>{t('common:or')}</Text>
+            <Text>{t("common:or")}</Text>
             <Separator flexGrow="1" />
           </Flex>
-          <GoogleAuth
-            loading={googleLoading}
-            setLoading={setGoogleLoading}
-          />
+          <GoogleAuth loading={googleLoading} setLoading={setGoogleLoading} />
         </Flex>
       </Flex>
     </FormProvider>

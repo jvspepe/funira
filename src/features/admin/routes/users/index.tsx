@@ -1,16 +1,17 @@
-import { useQuery } from '@tanstack/react-query';
-import { Box, Card, Field, Input } from '@chakra-ui/react';
-import { getUsers } from '@/features/users/services';
-import { AdminUsersTable } from '@/features/admin/components/admin-users-table';
+import { Box, Card, Field, Input } from "@chakra-ui/react";
+import { useQuery } from "@tanstack/react-query";
+
+import { AdminUsersTable } from "@/features/admin/components/admin-users-table";
+import { getUsers } from "@/features/users/services";
 
 export function AdminUsers() {
   const usersQuery = useQuery({
-    queryKey: ['users'],
     queryFn: getUsers,
+    queryKey: ["users"],
   });
 
   if (usersQuery.isLoading) {
-    return 'Carregando';
+    return "Carregando";
   }
 
   if (usersQuery.isError) {
@@ -18,7 +19,7 @@ export function AdminUsers() {
   }
 
   if (!usersQuery.data) {
-    return 'Nenhum dado encontrado';
+    return "Nenhum dado encontrado";
   }
 
   return (
@@ -27,16 +28,8 @@ export function AdminUsers() {
         <Card.Header>
           <Card.Title>Usuários</Card.Title>
         </Card.Header>
-        <Card.Body
-          display="flex"
-          flexDirection="column"
-          gap="1rem"
-        >
-          <Box
-            display="flex"
-            alignItems="end"
-            justifyContent="space-between"
-          >
+        <Card.Body display="flex" flexDirection="column" gap="1rem">
+          <Box display="flex" alignItems="end" justifyContent="space-between">
             <Field.Root w="fit">
               <Field.Label>
                 Buscar usuário

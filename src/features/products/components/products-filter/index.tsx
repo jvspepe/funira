@@ -1,4 +1,3 @@
-import { useSearchParams } from 'react-router';
 import {
   Box,
   Button,
@@ -11,11 +10,13 @@ import {
   Portal,
   Separator,
   Stack,
-} from '@chakra-ui/react';
-import { SlidersHorizontalIcon, XIcon } from 'lucide-react';
-import { type Category } from '@/@types/models';
-import { TYPE_PARAM } from '@/config/constants';
-import { useTranslation } from 'react-i18next';
+} from "@chakra-ui/react";
+import { SlidersHorizontalIcon, XIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router";
+
+import type { Category } from "@/@types/models";
+import { TYPE_PARAM } from "@/config/constants";
 
 interface ProductsFilterProps {
   categories: Category[];
@@ -26,7 +27,7 @@ export function ProductsFilter({ categories }: ProductsFilterProps) {
 
   const { t, i18n } = useTranslation();
 
-  const resolvedLanguage = i18n.resolvedLanguage as 'en' | 'pt';
+  const resolvedLanguage = i18n.resolvedLanguage as "en" | "pt";
 
   const handleChangeFilter = (filters: string[]) => {
     setSearchParams({
@@ -38,7 +39,9 @@ export function ProductsFilter({ categories }: ProductsFilterProps) {
     const values: string[] = [];
     const typeParams = searchParams.getAll(TYPE_PARAM);
 
-    if (!typeParams) return [];
+    if (!typeParams) {
+      return [];
+    }
 
     categories.forEach((category) => {
       if (typeParams.includes(category.value)) {
@@ -51,23 +54,20 @@ export function ProductsFilter({ categories }: ProductsFilterProps) {
   return (
     <>
       <Box
-        display={{ base: 'none', lg: 'block' }}
+        display={{ base: "none", lg: "block" }}
         height="full"
         minWidth="10rem"
       >
         <Stack>
-          <Heading>{t('products.actions.filter-by')}</Heading>
+          <Heading>{t("products.actions.filter-by")}</Heading>
           <Stack>
-            <Heading>{t('products.type')}</Heading>
+            <Heading>{t("products.type")}</Heading>
             <CheckboxGroup
               onValueChange={(values) => handleChangeFilter(values)}
               value={handleChangeFilterValues()}
             >
               {categories.map((category) => (
-                <Checkbox.Root
-                  key={category.id}
-                  value={category.value}
-                >
+                <Checkbox.Root key={category.id} value={category.value}>
                   <Checkbox.HiddenInput />
                   <Checkbox.Control />
                   <Checkbox.Label>
@@ -80,16 +80,12 @@ export function ProductsFilter({ categories }: ProductsFilterProps) {
         </Stack>
       </Box>
       <Drawer.Root placement="bottom">
-        <Drawer.Trigger
-          asChild
-          display={{ lg: 'none' }}
-          width="full"
-        >
+        <Drawer.Trigger asChild display={{ lg: "none" }} width="full">
           <Button variant="surface">
             <Icon size="sm">
               <SlidersHorizontalIcon />
             </Icon>
-            {t('products.actions.filter')}
+            {t("products.actions.filter")}
           </Button>
         </Drawer.Trigger>
         <Portal>
@@ -99,7 +95,7 @@ export function ProductsFilter({ categories }: ProductsFilterProps) {
               <Drawer.CloseTrigger asChild>
                 <CloseButton />
               </Drawer.CloseTrigger>
-              <Drawer.Header>{t('products.actions.filters')}</Drawer.Header>
+              <Drawer.Header>{t("products.actions.filters")}</Drawer.Header>
               <Separator />
               <Drawer.Body>
                 <CheckboxGroup
@@ -107,10 +103,7 @@ export function ProductsFilter({ categories }: ProductsFilterProps) {
                   value={handleChangeFilterValues()}
                 >
                   {categories.map((category) => (
-                    <Checkbox.Root
-                      key={category.id}
-                      value={category.value}
-                    >
+                    <Checkbox.Root key={category.id} value={category.value}>
                       <Checkbox.HiddenInput />
                       <Checkbox.Control />
                       <Checkbox.Label>
@@ -124,7 +117,7 @@ export function ProductsFilter({ categories }: ProductsFilterProps) {
                     variant="outline"
                   >
                     <XIcon size={16} />
-                    {t('products.actions.filters-clear')}
+                    {t("products.actions.filters-clear")}
                   </Button>
                 </CheckboxGroup>
               </Drawer.Body>

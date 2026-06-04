@@ -1,4 +1,3 @@
-import { Controller, useFormContext } from 'react-hook-form';
 import {
   createListCollection,
   Field,
@@ -7,31 +6,30 @@ import {
   Portal,
   Select,
   VisuallyHidden,
-} from '@chakra-ui/react';
-import { FormSchema } from '@/features/admin/pages/products';
+} from "@chakra-ui/react";
+import { Controller, useFormContext } from "react-hook-form";
+
+import type { FormSchema } from "@/features/admin/pages/products";
 
 const options = createListCollection({
   items: [
-    { label: 'ID', value: 'id' },
-    { label: 'Nome', value: 'name' },
-    { label: 'Categoria', value: 'category' },
+    { label: "ID", value: "id" },
+    { label: "Nome", value: "name" },
+    { label: "Categoria", value: "category" },
   ],
 });
 
 export function AdminProductSearch() {
   const form = useFormContext<FormSchema>();
 
-  const label = form.watch('label');
+  const label = form.watch("label");
 
   const currentOptionLabel = options.items.find(
     (item) => item.value === label[0]
   )?.label;
 
   return (
-    <Group
-      attached
-      alignItems="end"
-    >
+    <Group attached alignItems="end">
       <Controller
         control={form.control}
         name="label"
@@ -60,10 +58,7 @@ export function AdminProductSearch() {
               <Select.Positioner>
                 <Select.Content>
                   {options.items.map((option) => (
-                    <Select.Item
-                      item={option}
-                      key={option.value}
-                    >
+                    <Select.Item item={option} key={option.value}>
                       {option.label}
                       <Select.ItemIndicator />
                     </Select.Item>

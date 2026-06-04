@@ -1,22 +1,20 @@
-import slugify from 'slugify';
-import {
-  type SubmitHandler,
-  type DefaultValues,
-  Controller,
-  FormProvider,
-  useForm,
-} from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Button, CloseButton, Dialog } from '@chakra-ui/react';
-import { type CreateCategorySchema, createCategorySchema } from './validation';
-import { createCategory } from '@/features/categories/services';
-import { toaster } from '@/components/ui/toaster';
-import { TextInput } from '@/components/ui/text-input';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { Button, CloseButton, Dialog } from "@chakra-ui/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Controller, FormProvider, useForm } from "react-hook-form";
+import type { SubmitHandler, DefaultValues } from "react-hook-form";
+import slugify from "slugify";
+
+import { TextInput } from "@/components/ui/text-input";
+import { toaster } from "@/components/ui/toaster";
+import { createCategory } from "@/features/categories/services";
+
+import { createCategorySchema } from "./validation";
+import type { CreateCategorySchema } from "./validation";
 
 const defaultValues: DefaultValues<CreateCategorySchema> = {
-  en: '',
-  pt: '',
+  en: "",
+  pt: "",
 };
 
 export function CreateCategoryForm() {
@@ -26,7 +24,7 @@ export function CreateCategoryForm() {
     mutationFn: createCategory,
     onSuccess: () => {
       void queryClient.invalidateQueries({
-        queryKey: ['categories'],
+        queryKey: ["categories"],
       });
     },
   });
@@ -46,39 +44,32 @@ export function CreateCategoryForm() {
         value: slugify(en, { lower: true }),
       }),
       {
-        success: {
-          title: 'Sucesso',
-          description: 'Categoria criada com sucesso',
-        },
         error(arg) {
           return {
-            title: 'Erro',
             description: arg.message,
+            title: "Erro",
           };
         },
-        loading: {
-          title: 'Adicionando categoria',
-          description: 'Carregando',
-        },
         finally: () => form.reset(defaultValues),
+        loading: {
+          description: "Carregando",
+          title: "Adicionando categoria",
+        },
+        success: {
+          description: "Categoria criada com sucesso",
+          title: "Sucesso",
+        },
       }
     );
   };
 
   return (
     <FormProvider {...form}>
-      <Dialog.Content
-        as="form"
-        onSubmit={form.handleSubmit(onSubmit)}
-      >
+      <Dialog.Content as="form" onSubmit={form.handleSubmit(onSubmit)}>
         <Dialog.Header>
           <Dialog.Title>Nova categoria</Dialog.Title>
         </Dialog.Header>
-        <Dialog.Body
-          display="flex"
-          flexDirection="column"
-          gap="1rem"
-        >
+        <Dialog.Body display="flex" flexDirection="column" gap="1rem">
           <Controller
             control={form.control}
             name="pt"
@@ -110,10 +101,7 @@ export function CreateCategoryForm() {
         </Dialog.Body>
         <Dialog.Footer>
           <Dialog.ActionTrigger asChild>
-            <Button
-              type="button"
-              variant="outline"
-            >
+            <Button type="button" variant="outline">
               Cancelar
             </Button>
           </Dialog.ActionTrigger>

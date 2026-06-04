@@ -1,5 +1,3 @@
-import { Link } from 'react-router';
-import { useTranslation } from 'react-i18next';
 import {
   Box,
   Button,
@@ -12,7 +10,7 @@ import {
   Portal,
   Text,
   useCollapsible,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 import {
   ChevronDownIcon,
   ChevronUpIcon,
@@ -20,10 +18,13 @@ import {
   LibraryBigIcon,
   MenuIcon,
   SofaIcon,
-} from 'lucide-react';
-import { type Category } from '@/@types/models';
-import { paths } from '@/config/paths';
-import { TYPE_PARAM } from '@/config/constants';
+} from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router";
+
+import type { Category } from "@/@types/models";
+import { TYPE_PARAM } from "@/config/constants";
+import { paths } from "@/config/paths";
 
 interface MobileDrawerProps {
   categories: Category[];
@@ -34,17 +35,14 @@ export function MobileDrawer({ categories }: MobileDrawerProps) {
   const { t, i18n } = useTranslation();
 
   return (
-    <Drawer.Root
-      placement="start"
-      size="xs"
-    >
+    <Drawer.Root placement="start" size="xs">
       <Drawer.Trigger asChild>
         <IconButton
           type="button"
-          aria-label={t('mobileDrawer.openMenu')}
+          aria-label={t("mobileDrawer.openMenu")}
           variant="ghost"
           size="lg"
-          display={{ base: 'flex', md: 'none' }}
+          display={{ base: "flex", md: "none" }}
         >
           <Icon>
             <MenuIcon />
@@ -56,7 +54,7 @@ export function MobileDrawer({ categories }: MobileDrawerProps) {
         <Drawer.Positioner>
           <Drawer.Content>
             <Drawer.Header>
-              <Drawer.Title>{t('mobileDrawer.navigation')}</Drawer.Title>
+              <Drawer.Title>{t("mobileDrawer.navigation")}</Drawer.Title>
               <Drawer.CloseTrigger asChild>
                 <CloseButton size="lg" />
               </Drawer.CloseTrigger>
@@ -80,7 +78,7 @@ export function MobileDrawer({ categories }: MobileDrawerProps) {
                       <Icon>
                         <HomeIcon />
                       </Icon>
-                      {t('navigation.home')}
+                      {t("navigation.home")}
                     </Link>
                   </Button>
                 </Box>
@@ -107,7 +105,7 @@ export function MobileDrawer({ categories }: MobileDrawerProps) {
                           <Icon>
                             <SofaIcon />
                           </Icon>
-                          <Text>{t('navigation.products')}</Text>
+                          <Text>{t("navigation.products")}</Text>
                         </Box>
                         <Icon size="sm">
                           {collapsible.open ? (
@@ -131,12 +129,12 @@ export function MobileDrawer({ categories }: MobileDrawerProps) {
                           width="full"
                           justifyContent="start"
                           borderRadius="none"
-                          _last={{ borderBottomRadius: '{radii.l2}' }}
+                          _last={{ borderBottomRadius: "{radii.l2}" }}
                         >
                           <Link
                             to={`${paths.user.products}?${TYPE_PARAM}=${category.value}`}
                           >
-                            {category.label[i18n.language as 'pt' | 'en'] ||
+                            {category.label[i18n.language as "pt" | "en"] ||
                               category.label.en}
                           </Link>
                         </Button>
@@ -156,7 +154,7 @@ export function MobileDrawer({ categories }: MobileDrawerProps) {
                       <Icon>
                         <LibraryBigIcon />
                       </Icon>
-                      {t('navigation.about')}
+                      {t("navigation.about")}
                     </Link>
                   </Button>
                 </Box>

@@ -1,5 +1,6 @@
-import { Box, Container, Heading } from '@chakra-ui/react';
-import { Newsletter } from '@/components/sections/newsletter';
+import { Box, Container, Heading } from "@chakra-ui/react";
+
+import { Newsletter } from "@/components/sections/newsletter";
 
 export function About() {
   return (

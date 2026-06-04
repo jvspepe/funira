@@ -1,5 +1,4 @@
 import {
-  type User,
   GoogleAuthProvider,
   browserLocalPersistence,
   browserSessionPersistence,
@@ -13,15 +12,17 @@ import {
   onAuthStateChanged,
   signInWithPopup,
   deleteUser as authDeleteUser,
-} from 'firebase/auth';
-import { Timestamp } from 'firebase/firestore';
-import { env } from '@/config/env';
-import { auth } from '@/config/app';
+} from "firebase/auth";
+import type { User } from "firebase/auth";
+import { Timestamp } from "firebase/firestore";
+
+import { auth } from "@/config/app";
+import { env } from "@/config/env";
 import {
   checkUserExists,
   createUser,
   deleteUser,
-} from '@/features/users/services';
+} from "@/features/users/services";
 
 export function handleCurrentUser(fn: (user: User | null) => void) {
   const unsub = onAuthStateChanged(auth, (user) => fn(user));
@@ -49,11 +50,11 @@ export async function signUp(
   await Promise.all([
     updateProfile(user, { displayName: username }),
     createUser({
-      id: user.uid,
-      username,
-      email,
-      role: 'customer',
       createdAt: Timestamp.now(),
+      email,
+      id: user.uid,
+      role: "customer",
+      username,
     }),
   ]);
 }
@@ -77,11 +78,11 @@ export async function signInWithGoogle(rememberUser = false) {
 
   if (!(await checkUserExists(user.uid))) {
     await createUser({
-      id: user.uid,
-      email: user.email ?? '',
-      username: user.displayName ?? '',
-      role: 'customer',
       createdAt: Timestamp.now(),
+      email: user.email ?? "",
+      id: user.uid,
+      role: "customer",
+      username: user.displayName ?? "",
     });
   }
 }

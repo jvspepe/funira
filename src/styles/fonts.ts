@@ -1,7 +1,7 @@
-export type Fonts = {
+export interface Fonts {
   body: string;
   heading: string;
-};
+}
 
 const fonts: Fonts = {
   body: `"Satoshi Variable", sans-serif`,

@@ -1,21 +1,17 @@
-'use client';
+"use client";
 
-import { createIcon } from '@chakra-ui/react';
+import { createIcon } from "@chakra-ui/react";
 
 export const GoogleIcon = createIcon({
-  displayName: 'GoogleIcon',
-  viewBox: '-3 0 262 262',
   defaultProps: {
-    xmlns: 'http://www.w3.org/2000/svg',
-    preserveAspectRatio: 'xMidYMid',
-    fill: '#000000',
+    fill: "#000000",
+    preserveAspectRatio: "xMidYMid",
+    xmlns: "http://www.w3.org/2000/svg",
   },
+  displayName: "GoogleIcon",
   path: (
     <>
-      <g
-        id="SVGRepo_bgCarrier"
-        strokeWidth="0"
-      ></g>
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g
         id="SVGRepo_tracerCarrier"
         strokeLinecap="round"
@@ -41,4 +37,5 @@ export const GoogleIcon = createIcon({
       </g>
     </>
   ),
+  viewBox: "-3 0 262 262",
 });

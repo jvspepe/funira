@@ -1,10 +1,11 @@
-import { useQuery } from '@tanstack/react-query';
-import { z } from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Box, Card, Field, Input, Table } from '@chakra-ui/react';
-import { getCategories } from '@/features/categories/services';
-import { AdminCreateCategory } from '@/features/categories/components/create-category';
+import { Box, Card, Field, Input, Table } from "@chakra-ui/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useQuery } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+import { AdminCreateCategory } from "@/features/categories/components/create-category";
+import { getCategories } from "@/features/categories/services";
 
 const formSchema = z.object({
   category: z.string(),
@@ -13,13 +14,13 @@ const formSchema = z.object({
 type FormSchema = z.infer<typeof formSchema>;
 
 const defaultValues: FormSchema = {
-  category: '',
+  category: "",
 };
 
 export function AdminCategories() {
   const categoriesQuery = useQuery({
-    queryKey: ['categories'],
     queryFn: getCategories,
+    queryKey: ["categories"],
   });
 
   const form = useForm<FormSchema>({
@@ -27,18 +28,20 @@ export function AdminCategories() {
     resolver: zodResolver(formSchema),
   });
 
-  const value = form.watch('category');
+  const value = form.watch("category");
 
   if (categoriesQuery.isLoading) {
-    return 'Carregando';
+    return "Carregando";
   }
 
   if (!categoriesQuery.data || categoriesQuery.data.length === 0) {
-    return 'Nenhuma categoria';
+    return "Nenhuma categoria";
   }
 
   const filteredCategories = categoriesQuery.data.filter((category) => {
-    if (!value) return true;
+    if (!value) {
+      return true;
+    }
 
     return category.value.includes(value);
   });
@@ -51,16 +54,8 @@ export function AdminCategories() {
         <Card.Header>
           <Card.Title>Categorias</Card.Title>
         </Card.Header>
-        <Card.Body
-          display="flex"
-          flexDirection="column"
-          gap="1rem"
-        >
-          <Box
-            display="flex"
-            alignItems="end"
-            justifyContent="space-between"
-          >
+        <Card.Body display="flex" flexDirection="column" gap="1rem">
+          <Box display="flex" alignItems="end" justifyContent="space-between">
             <Field.Root w="fit">
               <Field.Label>
                 Procurar uma categoria
@@ -68,17 +63,13 @@ export function AdminCategories() {
               </Field.Label>
               <Input
                 placeholder="Nome da categoria"
-                {...form.register('category')}
+                {...form.register("category")}
               />
               <Field.ErrorText />
             </Field.Root>
             <AdminCreateCategory />
           </Box>
-          <Table.Root
-            size="sm"
-            variant="outline"
-            showColumnBorder
-          >
+          <Table.Root size="sm" variant="outline" showColumnBorder>
             <Table.Header>
               <Table.Row>
                 <Table.ColumnHeader>ID</Table.ColumnHeader>

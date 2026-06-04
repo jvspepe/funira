@@ -1,11 +1,12 @@
-import { useQuery } from '@tanstack/react-query';
-import { z } from 'zod';
-import { FormProvider, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Box, SimpleGrid } from '@chakra-ui/react';
-import { getProducts } from '@/features/products/services';
-import { AdminProductCard } from '@/features/admin/components/admin-product-card';
-import { AdminProductSearch } from '@/features/admin/components/admin-product-search';
+import { Box, SimpleGrid } from "@chakra-ui/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useQuery } from "@tanstack/react-query";
+import { FormProvider, useForm } from "react-hook-form";
+import { z } from "zod";
+
+import { AdminProductCard } from "@/features/admin/components/admin-product-card";
+import { AdminProductSearch } from "@/features/admin/components/admin-product-search";
+import { getProducts } from "@/features/products/services";
 
 const formSchema = z.object({
   label: z.string().array(),
@@ -16,22 +17,22 @@ export type FormSchema = z.infer<typeof formSchema>;
 
 export function AdminProducts() {
   const productsQuery = useQuery({
-    queryKey: ['products'],
     queryFn: async () =>
       await getProducts({
         limitBy: 10,
       }),
+    queryKey: ["products"],
   });
 
   const form = useForm<FormSchema>({
     defaultValues: {
-      label: ['id'],
-      value: '',
+      label: ["id"],
+      value: "",
     },
     resolver: zodResolver(formSchema),
   });
 
-  const [label, value] = form.watch(['label', 'value']);
+  const [label, value] = form.watch(["label", "value"]);
 
   if (productsQuery.isLoading) {
     return <Box>Loading...</Box>;
@@ -42,39 +43,34 @@ export function AdminProducts() {
   }
 
   if (!productsQuery.data || productsQuery.data.length === 0) {
-    return 'Nenhum produto encontrado';
+    return "Nenhum produto encontrado";
   }
 
   const filteredProducts = productsQuery.data.filter((product) => {
-    if (!label || !value) return true;
+    if (!label || !value) {
+      return true;
+    }
 
     switch (label[0]) {
-      case 'id':
+      case "id": {
         return product.id.includes(value);
-      case 'name':
+      }
+      case "name": {
         return product.name.pt.includes(value);
-      case 'category':
+      }
+      case "category": {
         return product.category.label.pt.includes(value);
+      }
     }
   });
 
   return (
     <FormProvider {...form}>
-      <Box
-        display="flex"
-        flexDirection="column"
-        gap="{spacing.5}"
-      >
+      <Box display="flex" flexDirection="column" gap="{spacing.5}">
         <AdminProductSearch />
-        <SimpleGrid
-          columns={2}
-          gap="{spacing.5}"
-        >
+        <SimpleGrid columns={2} gap="{spacing.5}">
           {filteredProducts.map((product) => (
-            <AdminProductCard
-              key={product.id}
-              product={product}
-            />
+            <AdminProductCard key={product.id} product={product} />
           ))}
         </SimpleGrid>
       </Box>

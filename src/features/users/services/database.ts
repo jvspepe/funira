@@ -9,15 +9,16 @@ import {
   query,
   setDoc,
   where,
-} from 'firebase/firestore';
-import { type User } from '@/@types/models';
-import { database } from '@/config/app';
-import { converter } from '@/features/utils';
+} from "firebase/firestore";
+
+import type { User } from "@/@types/models";
+import { database } from "@/config/app";
+import { converter } from "@/features/utils";
 
 export async function checkUserExists(userId: string) {
   const userQuery = query(
-    collection(database, 'users').withConverter(converter<User>()),
-    where(documentId(), '==', userId)
+    collection(database, "users").withConverter(converter<User>()),
+    where(documentId(), "==", userId)
   );
 
   const result = await getCountFromServer(userQuery);
@@ -27,19 +28,19 @@ export async function checkUserExists(userId: string) {
 
 export async function createUser(user: User) {
   if (await checkUserExists(user.id)) {
-    throw new Error('User already exists');
+    throw new Error("User already exists");
   }
 
-  await setDoc(doc(database, 'users', user.id), user);
+  await setDoc(doc(database, "users", user.id), user);
 }
 
 export async function getUser(userId: string) {
   const user = await getDoc(
-    doc(database, 'users', userId).withConverter(converter<User>())
+    doc(database, "users", userId).withConverter(converter<User>())
   );
 
   if (!user.exists()) {
-    throw new Error('Invalid user ID.');
+    throw new Error("Invalid user ID.");
   }
 
   return user.data();
@@ -47,7 +48,7 @@ export async function getUser(userId: string) {
 
 export async function getUsers(): Promise<User[]> {
   const data = await getDocs(
-    collection(database, 'users').withConverter(converter<User>())
+    collection(database, "users").withConverter(converter<User>())
   );
 
   if (data.empty) {
@@ -59,6 +60,6 @@ export async function getUsers(): Promise<User[]> {
 
 export async function deleteUser(userId: string) {
   await deleteDoc(
-    doc(database, 'users', userId).withConverter(converter<User>())
+    doc(database, "users", userId).withConverter(converter<User>())
   );
 }

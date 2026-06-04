@@ -1,4 +1,3 @@
-import { Link } from 'react-router';
 import {
   Box,
   Button,
@@ -6,9 +5,11 @@ import {
   Heading,
   Icon,
   useCollapsible,
-} from '@chakra-ui/react';
-import { ChevronDown, ChevronUp, PackageIcon, UserIcon } from 'lucide-react';
-import { paths } from '@/config/paths';
+} from "@chakra-ui/react";
+import { ChevronDown, ChevronUp, PackageIcon, UserIcon } from "lucide-react";
+import { Link } from "react-router";
+
+import { paths } from "@/config/paths";
 
 export function AdminSidebar() {
   const collapsible = useCollapsible();
@@ -24,11 +25,7 @@ export function AdminSidebar() {
       minWidth="15rem"
     >
       <Heading>Funira Admin</Heading>
-      <Box
-        display="flex"
-        flexDirection="column"
-        gap="{spacing.1}"
-      >
+      <Box display="flex" flexDirection="column" gap="{spacing.1}">
         <Button
           variant="subtle"
           width="full"
@@ -39,10 +36,7 @@ export function AdminSidebar() {
           asChild
         >
           <Link to={paths.admin.users}>
-            <Icon
-              size="sm"
-              color="gray.500"
-            >
+            <Icon size="sm" color="gray.500">
               <UserIcon />
             </Icon>
             Usuários
@@ -67,18 +61,12 @@ export function AdminSidebar() {
                 alignItems="center"
                 gap="{spacing.2}"
               >
-                <Icon
-                  size="sm"
-                  color="gray.500"
-                >
+                <Icon size="sm" color="gray.500">
                   <PackageIcon />
                 </Icon>
                 Produtos
               </Box>
-              <Icon
-                size="sm"
-                color="gray.500"
-              >
+              <Icon size="sm" color="gray.500">
                 {collapsible.open ? <ChevronUp /> : <ChevronDown />}
               </Icon>
             </Button>

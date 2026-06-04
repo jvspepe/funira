@@ -1,28 +1,12 @@
-import { Flex, Heading, Skeleton, Text } from '@chakra-ui/react';
+import { Flex, Heading, Skeleton, Text } from "@chakra-ui/react";
 
 export function ProductCardSkeleton() {
   return (
-    <Flex
-      direction="column"
-      gap="{spacing.2}"
-    >
-      <Skeleton
-        aspectRatio="portrait"
-        borderRadius="{radii.l2}"
-      />
-      <Flex
-        direction="column"
-        grow="1"
-        gap="{spacing.2}"
-        maxWidth="full"
-      >
+    <Flex direction="column" gap="{spacing.2}">
+      <Skeleton aspectRatio="portrait" borderRadius="{radii.l2}" />
+      <Flex direction="column" grow="1" gap="{spacing.2}" maxWidth="full">
         <Skeleton width="fit-content">
-          <Heading
-            size="xl"
-            fontWeight="normal"
-            flexGrow="1"
-            lineClamp="1"
-          >
+          <Heading size="xl" fontWeight="normal" flexGrow="1" lineClamp="1">
             Product Name
           </Heading>
         </Skeleton>

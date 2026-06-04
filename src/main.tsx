@@ -1,18 +1,22 @@
-import { StrictMode } from 'react';
-import ReactDOM from 'react-dom/client';
-import { RouterProvider } from 'react-router';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { StrictMode } from "react";
+import ReactDOM from "react-dom/client";
+import { RouterProvider } from "react-router";
 /*  @ts-expect-error: CSS module */
-import '@fontsource-variable/montserrat';
+import "@fontsource-variable/montserrat";
 /*  @ts-expect-error: CSS module */
-import '@fontsource-variable/space-grotesk';
-import { router } from '@/routes';
-import './features/localization';
+import "@fontsource-variable/space-grotesk";
 
-const root = document.getElementById('root');
+import { router } from "@/routes";
 
-if (!root) throw new Error('No element found with ID of root');
+import "./features/localization";
+
+const root = document.querySelector("#root");
+
+if (!root) {
+  throw new Error("No element found with ID of root");
+}
 
 const queryClient = new QueryClient({
   defaultOptions: {

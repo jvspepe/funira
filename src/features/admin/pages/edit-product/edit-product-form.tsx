@@ -1,15 +1,3 @@
-import { useMemo } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { useTranslation } from 'react-i18next';
-import { z } from 'zod';
-import {
-  Controller,
-  FormProvider,
-  SubmitHandler,
-  useForm,
-} from 'react-hook-form';
-import { DevTool } from '@hookform/devtools';
-import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Button,
   Collapsible,
@@ -27,58 +15,71 @@ import {
   Span,
   Spinner,
   Textarea,
-} from '@chakra-ui/react';
-import { ChevronDownIcon } from 'lucide-react';
-import { type Product } from '@/@types/models';
-import { getCategories } from '@/features/categories/services';
-import { updateProduct } from '@/features/products/services';
-import {
-  type EditProductSchema,
-  editProductSchema,
-} from './edit-product-validation';
-import { Field } from '@/components/ui/field';
+} from "@chakra-ui/react";
+import { DevTool } from "@hookform/devtools";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useQuery } from "@tanstack/react-query";
+import { ChevronDownIcon } from "lucide-react";
+import { useMemo } from "react";
+import type { SubmitHandler } from "react-hook-form";
+import { Controller, FormProvider, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { z } from "zod";
+
+import type { Product } from "@/@types/models";
+import { Field } from "@/components/ui/field";
+import { getCategories } from "@/features/categories/services";
+import { updateProduct } from "@/features/products/services";
+
+import { editProductSchema } from "./edit-product-validation";
+import type { EditProductSchema } from "./edit-product-validation";
 
 const inputsMaxLength = {
+  description: 250,
   name: 30,
   summary: 100,
-  description: 250,
 };
 
 export function EditProductForm({ product }: { product: Product }) {
   const form = useForm<EditProductSchema>({
-    resolver: zodResolver(editProductSchema),
     defaultValues: {
       ...product,
-      price: product.price.toString(),
       category: [product.category.id],
+      price: product.price.toString(),
     },
+    resolver: zodResolver(editProductSchema),
   });
 
   const categoriesQuery = useQuery({
-    queryKey: ['categories'],
     queryFn: getCategories,
+    queryKey: ["categories"],
   });
 
   const { t, i18n } = useTranslation();
 
-  const categoriesCollection = useMemo(() => {
-    return createListCollection({
-      items: categoriesQuery.data ?? [],
-      itemToString: (category) =>
-        category.label[i18n.resolvedLanguage as 'pt' | 'en'],
-      itemToValue: (category) => category.id,
-    });
-  }, [categoriesQuery.data, i18n.resolvedLanguage]);
+  const categoriesCollection = useMemo(
+    () =>
+      createListCollection({
+        itemToString: (category) =>
+          category.label[i18n.resolvedLanguage as "pt" | "en"],
+        itemToValue: (category) => category.id,
+        items: categoriesQuery.data ?? [],
+      }),
+    [categoriesQuery.data, i18n.resolvedLanguage]
+  );
 
   const onSubmit: SubmitHandler<EditProductSchema> = async (data) => {
-    if (!categoriesQuery.data) throw new Error('Nenhuma categoria encontrada');
+    if (!categoriesQuery.data) {
+      throw new Error("Nenhuma categoria encontrada");
+    }
 
     const categoryIndex = categoriesQuery.data.findIndex(
       (category) => category.id === data.category[0]
     );
 
-    if (categoryIndex < 0)
-      throw new Error('Nenhuma categoria encontrada no índice');
+    if (categoryIndex === -1) {
+      throw new Error("Nenhuma categoria encontrada no índice");
+    }
 
     await updateProduct({
       id: product.id,
@@ -92,7 +93,7 @@ export function EditProductForm({ product }: { product: Product }) {
     <>
       <DevTool control={form.control} />
       <Flex
-        direction={{ base: 'column', md: 'row' }}
+        direction={{ base: "column", md: "row" }}
         grow="1"
         gap="{spacing.5}"
       >
@@ -104,17 +105,14 @@ export function EditProductForm({ product }: { product: Product }) {
             gap="{spacing.5}"
             grow="1"
           >
-            <Heading>{t('products.actions.update')}</Heading>
-            <Flex
-              direction="column"
-              gap="{spacing.5}"
-            >
+            <Heading>{t("products.actions.update")}</Heading>
+            <Flex direction="column" gap="{spacing.5}">
               <Controller
                 name="name.en"
                 control={form.control}
                 render={({ field, fieldState }) => (
                   <Field
-                    label={t('products.details.name')}
+                    label={t("products.details.name")}
                     invalid={!!fieldState.error}
                     errorText={
                       fieldState.error ? fieldState.error.message : undefined
@@ -123,7 +121,7 @@ export function EditProductForm({ product }: { product: Product }) {
                     <Input
                       {...field}
                       maxLength={inputsMaxLength.name}
-                      placeholder={t('products.details.name')}
+                      placeholder={t("products.details.name")}
                     />
                   </Field>
                 )}
@@ -133,7 +131,7 @@ export function EditProductForm({ product }: { product: Product }) {
                 name="summary.en"
                 render={({ field, fieldState }) => (
                   <Field
-                    label={t('products.details.summary')}
+                    label={t("products.details.summary")}
                     invalid={!!fieldState.error}
                     errorText={
                       fieldState.error ? fieldState.error.message : undefined
@@ -144,7 +142,7 @@ export function EditProductForm({ product }: { product: Product }) {
                       autoresize
                       rows={2}
                       maxLength={inputsMaxLength.summary}
-                      placeholder={t('products.details.summary')}
+                      placeholder={t("products.details.summary")}
                     />
                   </Field>
                 )}
@@ -154,7 +152,7 @@ export function EditProductForm({ product }: { product: Product }) {
                 name="description.en"
                 render={({ field, fieldState }) => (
                   <Field
-                    label={t('products.details.description')}
+                    label={t("products.details.description")}
                     invalid={!!fieldState.error}
                     errorText={
                       fieldState.error ? fieldState.error.message : undefined
@@ -165,7 +163,7 @@ export function EditProductForm({ product }: { product: Product }) {
                       autoresize
                       rows={3}
                       maxLength={inputsMaxLength.description}
-                      placeholder={t('products.details.description')}
+                      placeholder={t("products.details.description")}
                     />
                   </Field>
                 )}
@@ -173,10 +171,7 @@ export function EditProductForm({ product }: { product: Product }) {
               <Collapsible.Root>
                 <Flex align="center">
                   <Collapsible.Trigger asChild>
-                    <Button
-                      type="button"
-                      variant="surface"
-                    >
+                    <Button type="button" variant="surface">
                       <Span>Portuguese variation</Span>
                       <Icon size="sm">
                         <ChevronDownIcon />
@@ -196,7 +191,7 @@ export function EditProductForm({ product }: { product: Product }) {
                       control={form.control}
                       render={({ field, fieldState }) => (
                         <Field
-                          label={t('products.details.name')}
+                          label={t("products.details.name")}
                           invalid={!!fieldState.error}
                           errorText={
                             fieldState.error
@@ -207,7 +202,7 @@ export function EditProductForm({ product }: { product: Product }) {
                           <Input
                             {...field}
                             maxLength={inputsMaxLength.name}
-                            placeholder={t('products.details.name')}
+                            placeholder={t("products.details.name")}
                           />
                         </Field>
                       )}
@@ -217,7 +212,7 @@ export function EditProductForm({ product }: { product: Product }) {
                       name="summary.pt"
                       render={({ field, fieldState }) => (
                         <Field
-                          label={t('products.details.summary')}
+                          label={t("products.details.summary")}
                           invalid={!!fieldState.error}
                           errorText={
                             fieldState.error
@@ -230,7 +225,7 @@ export function EditProductForm({ product }: { product: Product }) {
                             autoresize
                             rows={2}
                             maxLength={inputsMaxLength.summary}
-                            placeholder={t('products.details.summary')}
+                            placeholder={t("products.details.summary")}
                           />
                         </Field>
                       )}
@@ -240,7 +235,7 @@ export function EditProductForm({ product }: { product: Product }) {
                       name="description.pt"
                       render={({ field, fieldState }) => (
                         <Field
-                          label={t('products.details.description')}
+                          label={t("products.details.description")}
                           invalid={!!fieldState.error}
                           errorText={
                             fieldState.error
@@ -253,7 +248,7 @@ export function EditProductForm({ product }: { product: Product }) {
                             autoresize
                             rows={3}
                             maxLength={inputsMaxLength.description}
-                            placeholder={t('products.details.description')}
+                            placeholder={t("products.details.description")}
                           />
                         </Field>
                       )}
@@ -263,16 +258,13 @@ export function EditProductForm({ product }: { product: Product }) {
               </Collapsible.Root>
             </Flex>
             <Separator />
-            <Flex
-              align="center"
-              gap="{spacing.5}"
-            >
+            <Flex align="center" gap="{spacing.5}">
               <Controller
                 name="price"
                 control={form.control}
                 render={({ field, fieldState }) => (
                   <Field
-                    label={t('products.details.price')}
+                    label={t("products.details.price")}
                     invalid={!!fieldState.error}
                     errorText={
                       fieldState.error ? fieldState.error.message : undefined
@@ -290,10 +282,10 @@ export function EditProductForm({ product }: { product: Product }) {
                       width="full"
                     >
                       <NumberInput.Control />
-                      <InputGroup startElement={'$'}>
+                      <InputGroup startElement={"$"}>
                         <NumberInput.Input
                           onBlur={field.onBlur}
-                          placeholder={t('products.details.price')}
+                          placeholder={t("products.details.price")}
                         />
                       </InputGroup>
                     </NumberInput.Root>
@@ -305,7 +297,7 @@ export function EditProductForm({ product }: { product: Product }) {
                 name="category"
                 render={({ field, fieldState }) => (
                   <Field
-                    label={t('common:inputs.products.category')}
+                    label={t("common:inputs.products.category")}
                     invalid={!!fieldState.error}
                     errorText={
                       fieldState.error ? fieldState.error.message : undefined
@@ -325,7 +317,7 @@ export function EditProductForm({ product }: { product: Product }) {
                         <Select.Trigger>
                           <Select.ValueText
                             placeholder={t(
-                              'products.details.categoryPlaceholder'
+                              "products.details.categoryPlaceholder"
                             )}
                           />
                         </Select.Trigger>
@@ -345,13 +337,10 @@ export function EditProductForm({ product }: { product: Product }) {
                         <Select.Positioner>
                           <Select.Content>
                             {categoriesCollection.items.map((category) => (
-                              <Select.Item
-                                item={category}
-                                key={category.id}
-                              >
+                              <Select.Item item={category} key={category.id}>
                                 {
                                   category.label[
-                                    i18n.resolvedLanguage as 'pt' | 'en'
+                                    i18n.resolvedLanguage as "pt" | "en"
                                   ]
                                 }
                                 <Select.ItemIndicator />
@@ -365,16 +354,13 @@ export function EditProductForm({ product }: { product: Product }) {
                 )}
               />
             </Flex>
-            <Flex
-              align="column"
-              gap="{spacing.5}"
-            >
+            <Flex align="column" gap="{spacing.5}">
               <Controller
                 name="dimensions.depth"
                 control={form.control}
                 render={({ field, fieldState }) => (
                   <Field
-                    label={t('products.details.depth')}
+                    label={t("products.details.depth")}
                     invalid={!!fieldState.error}
                     errorText={
                       fieldState.error ? fieldState.error.message : undefined
@@ -405,7 +391,7 @@ export function EditProductForm({ product }: { product: Product }) {
                 control={form.control}
                 render={({ field, fieldState }) => (
                   <Field
-                    label={t('products.details.height')}
+                    label={t("products.details.height")}
                     invalid={!!fieldState.error}
                     errorText={
                       fieldState.error ? fieldState.error.message : undefined
@@ -437,7 +423,7 @@ export function EditProductForm({ product }: { product: Product }) {
                 control={form.control}
                 render={({ field, fieldState }) => (
                   <Field
-                    label={t('products.details.width')}
+                    label={t("products.details.width")}
                     invalid={!!fieldState.error}
                     errorText={
                       fieldState.error ? fieldState.error.message : undefined
@@ -468,10 +454,10 @@ export function EditProductForm({ product }: { product: Product }) {
             <Button
               type="submit"
               loading={form.formState.isSubmitting}
-              loadingText={t('common:state.loading')}
+              loadingText={t("common:state.loading")}
               size="lg"
             >
-              {t('common:buttons.confirm')}
+              {t("common:buttons.confirm")}
             </Button>
           </Flex>
         </FormProvider>

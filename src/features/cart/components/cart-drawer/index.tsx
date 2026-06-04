@@ -1,4 +1,3 @@
-import { Link } from 'react-router';
 import {
   Button,
   CloseButton,
@@ -10,12 +9,14 @@ import {
   Stack,
   Text,
   useDisclosure,
-} from '@chakra-ui/react';
-import { ShoppingCartIcon } from 'lucide-react';
-import { useAppSelector } from '@/store/store';
-import CartDrawerItem from '@/features/cart/components/cart-drawer-item';
-import { useTranslation } from 'react-i18next';
-import { paths } from '@/config/paths';
+} from "@chakra-ui/react";
+import { ShoppingCartIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router";
+
+import { paths } from "@/config/paths";
+import CartDrawerItem from "@/features/cart/components/cart-drawer-item";
+import { useAppSelector } from "@/store/store";
 
 export function CartDrawer() {
   const { cart } = useAppSelector((state) => state.cartReducer);
@@ -25,11 +26,11 @@ export function CartDrawer() {
 
   return (
     <>
-      <Drawer.Root size={{ base: 'full', md: 'md' }}>
+      <Drawer.Root size={{ base: "full", md: "md" }}>
         <Drawer.Trigger asChild>
           <IconButton
             onClick={onOpen}
-            aria-label={t('cart.state.open')}
+            aria-label={t("cart.state.open")}
             type="button"
             variant="ghost"
             size="lg"
@@ -47,31 +48,25 @@ export function CartDrawer() {
                 <CloseButton size="lg" />
               </Drawer.CloseTrigger>
               <Drawer.Header>
-                <Drawer.Title>{t('cart.heading')}</Drawer.Title>
+                <Drawer.Title>{t("cart.heading")}</Drawer.Title>
               </Drawer.Header>
               <Separator />
 
               <Drawer.Body paddingBlock="{spacing.6}">
-                <Stack
-                  separator={<Separator />}
-                  gap="{spacing.6}"
-                >
+                <Stack separator={<Separator />} gap="{spacing.6}">
                   {cart.length >= 1 ? (
                     cart.map((item) => (
-                      <CartDrawerItem
-                        key={item.id}
-                        product={item}
-                      />
+                      <CartDrawerItem key={item.id} product={item} />
                     ))
                   ) : (
-                    <Text>{t('cart.state.empty')}</Text>
+                    <Text>{t("cart.state.empty")}</Text>
                   )}
                 </Stack>
               </Drawer.Body>
               <Separator />
               <Drawer.Footer padding="{spacing.6}">
                 <Button asChild>
-                  <Link to={paths.user.cart}>{t('cart.links.checkout')}</Link>
+                  <Link to={paths.user.cart}>{t("cart.links.checkout")}</Link>
                 </Button>
               </Drawer.Footer>
             </Drawer.Content>

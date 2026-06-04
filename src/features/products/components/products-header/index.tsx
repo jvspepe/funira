@@ -1,5 +1,5 @@
-import { useTranslation } from 'react-i18next';
-import { Flex, Heading } from '@chakra-ui/react';
+import { Flex, Heading } from "@chakra-ui/react";
+import { useTranslation } from "react-i18next";
 
 export function ProductsHeader() {
   const { t } = useTranslation();
@@ -12,12 +12,8 @@ export function ProductsHeader() {
       backgroundSize="cover"
       backgroundPosition="center"
     >
-      <Heading
-        fontSize="2.25rem"
-        fontWeight="normal"
-        color="white"
-      >
-        {t('products.header')}
+      <Heading fontSize="2.25rem" fontWeight="normal" color="white">
+        {t("products.header")}
       </Heading>
     </Flex>
   );

@@ -1,13 +1,16 @@
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Button, Field, Group, Input, VisuallyHidden } from '@chakra-ui/react';
-import { toaster } from '@/components/ui/toaster';
+import { Button, Field, Group, Input, VisuallyHidden } from "@chakra-ui/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import type { SubmitHandler } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+
+import { toaster } from "@/components/ui/toaster";
+
 import {
-  type NewsletterFormSchema,
   newsletterFormSchema,
   newsletterFormDefaultValues,
-} from './validation';
-import { useTranslation } from 'react-i18next';
+} from "./validation";
+import type { NewsletterFormSchema } from "./validation";
 
 export function NewsletterForm() {
   const form = useForm<NewsletterFormSchema>({
@@ -19,22 +22,18 @@ export function NewsletterForm() {
 
   const onSubmit: SubmitHandler<NewsletterFormSchema> = ({ email }) => {
     toaster.create({
-      title: t('newsletter.success.title'),
-      description: t('newsletter.success.description', {
+      description: t("newsletter.success.description", {
         email,
       }),
-      type: 'success',
+      title: t("newsletter.success.title"),
+      type: "success",
     });
 
     form.reset(newsletterFormDefaultValues);
   };
 
   return (
-    <Group
-      as="form"
-      onSubmit={form.handleSubmit(onSubmit)}
-      attached
-    >
+    <Group as="form" onSubmit={form.handleSubmit(onSubmit)} attached>
       <Controller
         name="email"
         control={form.control}
@@ -47,7 +46,7 @@ export function NewsletterForm() {
               {...field}
               id={field.name}
               type="email"
-              placeholder={t('common:inputs.emailPlaceholder')}
+              placeholder={t("common:inputs.emailPlaceholder")}
               variant="subtle"
               borderRightRadius="0"
               size="xl"
@@ -59,10 +58,7 @@ export function NewsletterForm() {
           </Field.Root>
         )}
       />
-      <Button
-        type="submit"
-        size="xl"
-      >
+      <Button type="submit" size="xl">
         Confirmar
       </Button>
     </Group>

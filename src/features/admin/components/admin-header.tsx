@@ -7,10 +7,11 @@ import {
   Menu,
   Portal,
   Text,
-} from '@chakra-ui/react';
-import { LogOutIcon, MenuIcon } from 'lucide-react';
-import { signOut } from '@/features/users/services';
-import { useAuth } from '@/features/users/hooks/use-auth';
+} from "@chakra-ui/react";
+import { LogOutIcon, MenuIcon } from "lucide-react";
+
+import { useAuth } from "@/features/users/hooks/use-auth";
+import { signOut } from "@/features/users/services";
 
 export function AdminHeader() {
   const { currentUserData } = useAuth();
@@ -56,10 +57,7 @@ export function AdminHeader() {
           <Portal>
             <Menu.Positioner>
               <Menu.Content>
-                <Menu.Item
-                  onClick={handleSignOut}
-                  value="sign-out"
-                >
+                <Menu.Item onClick={handleSignOut} value="sign-out">
                   <Icon size="sm">
                     <LogOutIcon />
                   </Icon>

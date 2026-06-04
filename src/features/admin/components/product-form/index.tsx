@@ -1,12 +1,3 @@
-import { useQuery } from '@tanstack/react-query';
-import { z } from 'zod';
-import {
-  Controller,
-  DefaultValues,
-  FormProvider,
-  useForm,
-} from 'react-hook-form';
-import { DevTool } from '@hookform/devtools';
 import {
   Box,
   Button,
@@ -25,61 +16,67 @@ import {
   Span,
   Spinner,
   Textarea,
-} from '@chakra-ui/react';
-import { getCategories } from '@/features/categories/services';
-import { Trans, useTranslation } from 'react-i18next';
-import { useMemo } from 'react';
-import { Field } from '@/components/ui/field';
-import { ChevronDownIcon, UploadIcon } from 'lucide-react';
-import { Product } from '@/@types/models';
-import { zodResolver } from '@hookform/resolvers/zod';
+} from "@chakra-ui/react";
+import { DevTool } from "@hookform/devtools";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useQuery } from "@tanstack/react-query";
+import { ChevronDownIcon, UploadIcon } from "lucide-react";
+import { useMemo } from "react";
+import type { DefaultValues } from "react-hook-form";
+import { Controller, FormProvider, useForm } from "react-hook-form";
+import { Trans, useTranslation } from "react-i18next";
+import { z } from "zod";
+
+import type { Product } from "@/@types/models";
+import { Field } from "@/components/ui/field";
+import { getCategories } from "@/features/categories/services";
 
 const productSchema = z.object({
-  name: z.object({
-    en: z.string().min(1, 'Nome em inglês é obrigatório'),
-    pt: z.string().min(1, 'Nome em português é obrigatório'),
-  }),
-  summary: z.object({
-    en: z.string().min(1, 'Resumo em inglês é obrigatório'),
-    pt: z.string().min(1, 'Resumo em português é obrigatório'),
-  }),
-  description: z.object({
-    en: z.string().min(1, 'Descrição em inglês é obrigatória'),
-    pt: z.string().min(1, 'Descrição em português é obrigatória'),
-  }),
-  price: z.string().nonempty(),
   category: z.string().nonempty().array(),
+  description: z.object({
+    en: z.string().min(1, "Descrição em inglês é obrigatória"),
+    pt: z.string().min(1, "Descrição em português é obrigatória"),
+  }),
   dimensions: z.object({
     depth: z.string().optional(),
     height: z.string().nonempty(),
     width: z.string().nonempty(),
   }),
   imageCover: z.instanceof(FileList).nullable(),
+  name: z.object({
+    en: z.string().min(1, "Nome em inglês é obrigatório"),
+    pt: z.string().min(1, "Nome em português é obrigatório"),
+  }),
+  price: z.string().nonempty(),
+  summary: z.object({
+    en: z.string().min(1, "Resumo em inglês é obrigatório"),
+    pt: z.string().min(1, "Resumo em português é obrigatório"),
+  }),
 });
 
 type ProductSchema = z.infer<typeof productSchema>;
 
 const defaultValues: DefaultValues<ProductSchema> = {
-  name: {
-    en: '',
-    pt: '',
-  },
-  price: '0',
   category: [],
-  summary: {
-    en: '',
-    pt: '',
-  },
   description: {
-    en: '',
-    pt: '',
+    en: "",
+    pt: "",
   },
   dimensions: {
-    depth: '',
-    height: '',
-    width: '',
+    depth: "",
+    height: "",
+    width: "",
   },
   imageCover: null,
+  name: {
+    en: "",
+    pt: "",
+  },
+  price: "0",
+  summary: {
+    en: "",
+    pt: "",
+  },
 };
 
 interface ProductFormProps {
@@ -92,32 +89,34 @@ export function ProductForm({ product, onSubmit }: ProductFormProps) {
     defaultValues: product
       ? {
           ...product,
-          price: product.price.toString(),
           category: [product.category.id],
           imageCover: null,
+          price: product.price.toString(),
         }
       : defaultValues,
     resolver: zodResolver(productSchema),
   });
 
-  const imageCover = form.register('imageCover');
+  const imageCover = form.register("imageCover");
 
   const categoriesQuery = useQuery({
-    queryKey: ['categories'],
     queryFn: getCategories,
+    queryKey: ["categories"],
   });
 
   const { t, i18n } = useTranslation();
 
-  const categoriesCollection = useMemo(() => {
-    return createListCollection({
-      items: categoriesQuery.data ?? [],
-      itemToString: (category) =>
-        category.label[i18n.resolvedLanguage as 'pt' | 'en'] ??
-        category.label.en,
-      itemToValue: (category) => category.id,
-    });
-  }, [categoriesQuery.data, i18n.resolvedLanguage]);
+  const categoriesCollection = useMemo(
+    () =>
+      createListCollection({
+        itemToString: (category) =>
+          category.label[i18n.resolvedLanguage as "pt" | "en"] ??
+          category.label.en,
+        itemToValue: (category) => category.id,
+        items: categoriesQuery.data ?? [],
+      }),
+    [categoriesQuery.data, i18n.resolvedLanguage]
+  );
 
   return (
     <>
@@ -130,26 +129,20 @@ export function ProductForm({ product, onSubmit }: ProductFormProps) {
           gap="{spacing.5}"
           grow="1"
         >
-          <Heading>{t('products.actions.update')}</Heading>
-          <Flex
-            direction="column"
-            gap="{spacing.5}"
-          >
+          <Heading>{t("products.actions.update")}</Heading>
+          <Flex direction="column" gap="{spacing.5}">
             <Controller
               name="name.en"
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field
-                  label={t('products.details.name')}
+                  label={t("products.details.name")}
                   invalid={!!fieldState.error}
                   errorText={
                     fieldState.error ? fieldState.error.message : undefined
                   }
                 >
-                  <Input
-                    {...field}
-                    placeholder={t('products.details.name')}
-                  />
+                  <Input {...field} placeholder={t("products.details.name")} />
                 </Field>
               )}
             />
@@ -158,7 +151,7 @@ export function ProductForm({ product, onSubmit }: ProductFormProps) {
               name="summary.en"
               render={({ field, fieldState }) => (
                 <Field
-                  label={t('products.details.summary')}
+                  label={t("products.details.summary")}
                   invalid={!!fieldState.error}
                   errorText={
                     fieldState.error ? fieldState.error.message : undefined
@@ -168,7 +161,7 @@ export function ProductForm({ product, onSubmit }: ProductFormProps) {
                     {...field}
                     autoresize
                     rows={2}
-                    placeholder={t('products.details.summary')}
+                    placeholder={t("products.details.summary")}
                   />
                 </Field>
               )}
@@ -178,7 +171,7 @@ export function ProductForm({ product, onSubmit }: ProductFormProps) {
               name="description.en"
               render={({ field, fieldState }) => (
                 <Field
-                  label={t('products.details.description')}
+                  label={t("products.details.description")}
                   invalid={!!fieldState.error}
                   errorText={
                     fieldState.error ? fieldState.error.message : undefined
@@ -188,7 +181,7 @@ export function ProductForm({ product, onSubmit }: ProductFormProps) {
                     {...field}
                     autoresize
                     rows={3}
-                    placeholder={t('products.details.description')}
+                    placeholder={t("products.details.description")}
                   />
                 </Field>
               )}
@@ -196,10 +189,7 @@ export function ProductForm({ product, onSubmit }: ProductFormProps) {
             <Collapsible.Root>
               <Flex align="center">
                 <Collapsible.Trigger asChild>
-                  <Button
-                    type="button"
-                    variant="surface"
-                  >
+                  <Button type="button" variant="surface">
                     <Span>Portuguese variation</Span>
                     <Icon size="sm">
                       <ChevronDownIcon />
@@ -219,7 +209,7 @@ export function ProductForm({ product, onSubmit }: ProductFormProps) {
                     control={form.control}
                     render={({ field, fieldState }) => (
                       <Field
-                        label={t('products.details.name')}
+                        label={t("products.details.name")}
                         invalid={!!fieldState.error}
                         errorText={
                           fieldState.error
@@ -229,7 +219,7 @@ export function ProductForm({ product, onSubmit }: ProductFormProps) {
                       >
                         <Input
                           {...field}
-                          placeholder={t('products.details.name')}
+                          placeholder={t("products.details.name")}
                         />
                       </Field>
                     )}
@@ -239,7 +229,7 @@ export function ProductForm({ product, onSubmit }: ProductFormProps) {
                     name="summary.pt"
                     render={({ field, fieldState }) => (
                       <Field
-                        label={t('products.details.summary')}
+                        label={t("products.details.summary")}
                         invalid={!!fieldState.error}
                         errorText={
                           fieldState.error
@@ -251,7 +241,7 @@ export function ProductForm({ product, onSubmit }: ProductFormProps) {
                           {...field}
                           autoresize
                           rows={2}
-                          placeholder={t('products.details.summary')}
+                          placeholder={t("products.details.summary")}
                         />
                       </Field>
                     )}
@@ -261,7 +251,7 @@ export function ProductForm({ product, onSubmit }: ProductFormProps) {
                     name="description.pt"
                     render={({ field, fieldState }) => (
                       <Field
-                        label={t('products.details.description')}
+                        label={t("products.details.description")}
                         invalid={!!fieldState.error}
                         errorText={
                           fieldState.error
@@ -273,7 +263,7 @@ export function ProductForm({ product, onSubmit }: ProductFormProps) {
                           {...field}
                           autoresize
                           rows={3}
-                          placeholder={t('products.details.description')}
+                          placeholder={t("products.details.description")}
                         />
                       </Field>
                     )}
@@ -283,16 +273,13 @@ export function ProductForm({ product, onSubmit }: ProductFormProps) {
             </Collapsible.Root>
           </Flex>
           <Separator />
-          <Flex
-            align="center"
-            gap="{spacing.5}"
-          >
+          <Flex align="center" gap="{spacing.5}">
             <Controller
               name="price"
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field
-                  label={t('products.details.price')}
+                  label={t("products.details.price")}
                   invalid={!!fieldState.error}
                   errorText={!!fieldState.error && fieldState.error.message}
                 >
@@ -308,10 +295,10 @@ export function ProductForm({ product, onSubmit }: ProductFormProps) {
                     width="full"
                   >
                     <NumberInput.Control />
-                    <InputGroup startElement={'R$'}>
+                    <InputGroup startElement={"R$"}>
                       <NumberInput.Input
                         onBlur={field.onBlur}
-                        placeholder={t('products.details.price')}
+                        placeholder={t("products.details.price")}
                       />
                     </InputGroup>
                   </NumberInput.Root>
@@ -323,7 +310,7 @@ export function ProductForm({ product, onSubmit }: ProductFormProps) {
               name="category"
               render={({ field, fieldState }) => (
                 <Field
-                  label={t('common:inputs.products.category')}
+                  label={t("common:inputs.products.category")}
                   invalid={!!fieldState.error}
                   errorText={!!fieldState.error && fieldState.error.message}
                 >
@@ -341,7 +328,7 @@ export function ProductForm({ product, onSubmit }: ProductFormProps) {
                       <Select.Trigger>
                         <Select.ValueText
                           placeholder={t(
-                            'products.details.categoryPlaceholder'
+                            "products.details.categoryPlaceholder"
                           )}
                         />
                       </Select.Trigger>
@@ -361,13 +348,10 @@ export function ProductForm({ product, onSubmit }: ProductFormProps) {
                       <Select.Positioner>
                         <Select.Content>
                           {categoriesCollection.items.map((category) => (
-                            <Select.Item
-                              item={category}
-                              key={category.id}
-                            >
+                            <Select.Item item={category} key={category.id}>
                               {
                                 category.label[
-                                  i18n.resolvedLanguage as 'pt' | 'en'
+                                  i18n.resolvedLanguage as "pt" | "en"
                                 ]
                               }
                               <Select.ItemIndicator />
@@ -381,16 +365,13 @@ export function ProductForm({ product, onSubmit }: ProductFormProps) {
               )}
             />
           </Flex>
-          <Flex
-            align="center"
-            gap="{spacing.5}"
-          >
+          <Flex align="center" gap="{spacing.5}">
             <Controller
               name="dimensions.depth"
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field
-                  label={t('products.details.depth')}
+                  label={t("products.details.depth")}
                   invalid={!!fieldState.error}
                 >
                   <NumberInput.Root
@@ -417,7 +398,7 @@ export function ProductForm({ product, onSubmit }: ProductFormProps) {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field
-                  label={t('products.details.height')}
+                  label={t("products.details.height")}
                   invalid={!!fieldState.error}
                 >
                   <NumberInput.Root
@@ -444,7 +425,7 @@ export function ProductForm({ product, onSubmit }: ProductFormProps) {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field
-                  label={t('products.details.width')}
+                  label={t("products.details.width")}
                   invalid={!!fieldState.error}
                 >
                   <NumberInput.Root
@@ -469,21 +450,12 @@ export function ProductForm({ product, onSubmit }: ProductFormProps) {
           </Flex>
           <FileUpload.Root {...imageCover}>
             <FileUpload.HiddenInput />
-            <FileUpload.Dropzone
-              width="full"
-              height="full"
-            >
-              <Icon
-                size="md"
-                color="fg.muted"
-              >
+            <FileUpload.Dropzone width="full" height="full">
+              <Icon size="md" color="fg.muted">
                 <UploadIcon />
               </Icon>
               <FileUpload.DropzoneContent>
-                <Trans
-                  t={t}
-                  i18nKey="products.details.file"
-                >
+                <Trans t={t} i18nKey="products.details.file">
                   <Box>Drag files or click here (max 5 files)</Box>
                   <Box color="fg.muted">.png, .jpg up to 5MB</Box>
                 </Trans>
@@ -499,10 +471,10 @@ export function ProductForm({ product, onSubmit }: ProductFormProps) {
             <Button
               type="submit"
               loading={form.formState.isSubmitting}
-              loadingText={t('common:state.loading')}
+              loadingText={t("common:state.loading")}
               size="lg"
             >
-              {t('common:buttons.confirm')}
+              {t("common:buttons.confirm")}
             </Button>
           </Box>
         </Flex>

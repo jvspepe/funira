@@ -1,13 +1,3 @@
-import { useQuery } from '@tanstack/react-query';
-import { z } from 'zod';
-import {
-  type SubmitHandler,
-  Controller,
-  FormProvider,
-  useForm,
-} from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { DevTool } from '@hookform/devtools';
 import {
   Box,
   Button,
@@ -26,20 +16,27 @@ import {
   Span,
   Spinner,
   Textarea,
-} from '@chakra-ui/react';
-import { toaster } from '@/components/ui/toaster';
-import { getCategories } from '@/features/categories/services';
-import { createProduct } from '@/features/products/services';
+} from "@chakra-ui/react";
+import { DevTool } from "@hookform/devtools";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useQuery } from "@tanstack/react-query";
+import { ChevronDownIcon, UploadIcon } from "lucide-react";
+import { useMemo } from "react";
+import { Controller, FormProvider, useForm } from "react-hook-form";
+import type { SubmitHandler } from "react-hook-form";
+import { Trans, useTranslation } from "react-i18next";
+import { z } from "zod";
+
+import { Field } from "@/components/ui/field";
+import { toaster } from "@/components/ui/toaster";
+import { getCategories } from "@/features/categories/services";
+import { createProduct } from "@/features/products/services";
 
 import {
-  type CreateProductSchema,
   createProductSchema,
   defaultValues,
-} from './create-product-validation';
-import { Trans, useTranslation } from 'react-i18next';
-import { useMemo } from 'react';
-import { Field } from '@/components/ui/field';
-import { ChevronDownIcon, UploadIcon } from 'lucide-react';
+} from "./create-product-validation";
+import type { CreateProductSchema } from "./create-product-validation";
 
 export function CreateProductForm() {
   const form = useForm<CreateProductSchema>({
@@ -47,43 +44,47 @@ export function CreateProductForm() {
     resolver: zodResolver(createProductSchema),
   });
 
-  const imageCover = form.register('imageCover');
+  const imageCover = form.register("imageCover");
 
   const categoriesQuery = useQuery({
-    queryKey: ['categories'],
     queryFn: getCategories,
+    queryKey: ["categories"],
   });
 
   const { t, i18n } = useTranslation();
 
-  const categoriesCollection = useMemo(() => {
-    return createListCollection({
-      items: categoriesQuery.data ?? [],
-      itemToString: (category) =>
-        category.label[i18n.resolvedLanguage as 'pt' | 'en'] ??
-        category.label.en,
-      itemToValue: (category) => category.id,
-    });
-  }, [categoriesQuery.data, i18n.resolvedLanguage]);
+  const categoriesCollection = useMemo(
+    () =>
+      createListCollection({
+        itemToString: (category) =>
+          category.label[i18n.resolvedLanguage as "pt" | "en"] ??
+          category.label.en,
+        itemToValue: (category) => category.id,
+        items: categoriesQuery.data ?? [],
+      }),
+    [categoriesQuery.data, i18n.resolvedLanguage]
+  );
 
   const onSubmit: SubmitHandler<CreateProductSchema> = (data) => {
-    if (!data.imageCover) throw new Error('Imagem obrigatória');
+    if (!data.imageCover) {
+      throw new Error("Imagem obrigatória");
+    }
 
-    if (!categoriesQuery.data) throw new Error('Nenhuma categoria encontrada');
+    if (!categoriesQuery.data) {
+      throw new Error("Nenhuma categoria encontrada");
+    }
 
     const categoryIndex = categoriesQuery.data.findIndex(
       (category) => category.id === data.category[0]
     );
 
-    if (categoryIndex < 0)
-      throw new Error('Nenhuma categoria encontrada no índice');
+    if (categoryIndex === -1) {
+      throw new Error("Nenhuma categoria encontrada no índice");
+    }
 
     toaster.promise(
       createProduct({
-        name: data.name,
-        price: z.coerce.number().parse(data.price),
         category: categoriesQuery.data[categoryIndex],
-        summary: data.summary,
         description: data.description,
         dimensions: {
           depth: data.dimensions.depth,
@@ -92,21 +93,24 @@ export function CreateProductForm() {
         },
         imageCover: data.imageCover[0],
         images: [],
+        name: data.name,
+        price: z.coerce.number().parse(data.price),
+        summary: data.summary,
       }),
       {
-        success: {
-          title: t('products.actions.create-success'),
-        },
         error(arg) {
           console.log(arg);
           return {
             title: arg.message,
           };
         },
-        loading: {
-          title: t('common:state.loading'),
-        },
         finally: () => form.reset(),
+        loading: {
+          title: t("common:state.loading"),
+        },
+        success: {
+          title: t("products.actions.create-success"),
+        },
       }
     );
   };
@@ -122,26 +126,20 @@ export function CreateProductForm() {
           gap="{spacing.5}"
           grow="1"
         >
-          <Heading>{t('products.actions.create')}</Heading>
-          <Flex
-            direction="column"
-            gap="{spacing.5}"
-          >
+          <Heading>{t("products.actions.create")}</Heading>
+          <Flex direction="column" gap="{spacing.5}">
             <Controller
               name="name.en"
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field
-                  label={t('products.details.name')}
+                  label={t("products.details.name")}
                   invalid={!!fieldState.error}
                   errorText={
                     fieldState.error ? fieldState.error.message : undefined
                   }
                 >
-                  <Input
-                    {...field}
-                    placeholder={t('products.details.name')}
-                  />
+                  <Input {...field} placeholder={t("products.details.name")} />
                 </Field>
               )}
             />
@@ -150,7 +148,7 @@ export function CreateProductForm() {
               name="summary.en"
               render={({ field, fieldState }) => (
                 <Field
-                  label={t('products.details.summary')}
+                  label={t("products.details.summary")}
                   invalid={!!fieldState.error}
                   errorText={
                     fieldState.error ? fieldState.error.message : undefined
@@ -160,7 +158,7 @@ export function CreateProductForm() {
                     {...field}
                     autoresize
                     rows={2}
-                    placeholder={t('products.details.summary')}
+                    placeholder={t("products.details.summary")}
                   />
                 </Field>
               )}
@@ -170,7 +168,7 @@ export function CreateProductForm() {
               name="description.en"
               render={({ field, fieldState }) => (
                 <Field
-                  label={t('products.details.description')}
+                  label={t("products.details.description")}
                   invalid={!!fieldState.error}
                   errorText={
                     fieldState.error ? fieldState.error.message : undefined
@@ -180,7 +178,7 @@ export function CreateProductForm() {
                     {...field}
                     autoresize
                     rows={3}
-                    placeholder={t('products.details.description')}
+                    placeholder={t("products.details.description")}
                   />
                 </Field>
               )}
@@ -188,10 +186,7 @@ export function CreateProductForm() {
             <Collapsible.Root>
               <Flex align="center">
                 <Collapsible.Trigger asChild>
-                  <Button
-                    type="button"
-                    variant="surface"
-                  >
+                  <Button type="button" variant="surface">
                     <Span>Portuguese variation</Span>
                     <Icon size="sm">
                       <ChevronDownIcon />
@@ -211,7 +206,7 @@ export function CreateProductForm() {
                     control={form.control}
                     render={({ field, fieldState }) => (
                       <Field
-                        label={t('products.details.name')}
+                        label={t("products.details.name")}
                         invalid={!!fieldState.error}
                         errorText={
                           fieldState.error
@@ -221,7 +216,7 @@ export function CreateProductForm() {
                       >
                         <Input
                           {...field}
-                          placeholder={t('products.details.name')}
+                          placeholder={t("products.details.name")}
                         />
                       </Field>
                     )}
@@ -231,7 +226,7 @@ export function CreateProductForm() {
                     name="summary.pt"
                     render={({ field, fieldState }) => (
                       <Field
-                        label={t('products.details.summary')}
+                        label={t("products.details.summary")}
                         invalid={!!fieldState.error}
                         errorText={
                           fieldState.error
@@ -243,7 +238,7 @@ export function CreateProductForm() {
                           {...field}
                           autoresize
                           rows={2}
-                          placeholder={t('products.details.summary')}
+                          placeholder={t("products.details.summary")}
                         />
                       </Field>
                     )}
@@ -253,7 +248,7 @@ export function CreateProductForm() {
                     name="description.pt"
                     render={({ field, fieldState }) => (
                       <Field
-                        label={t('products.details.description')}
+                        label={t("products.details.description")}
                         invalid={!!fieldState.error}
                         errorText={
                           fieldState.error
@@ -265,7 +260,7 @@ export function CreateProductForm() {
                           {...field}
                           autoresize
                           rows={3}
-                          placeholder={t('products.details.description')}
+                          placeholder={t("products.details.description")}
                         />
                       </Field>
                     )}
@@ -275,16 +270,13 @@ export function CreateProductForm() {
             </Collapsible.Root>
           </Flex>
           <Separator />
-          <Flex
-            align="center"
-            gap="{spacing.5}"
-          >
+          <Flex align="center" gap="{spacing.5}">
             <Controller
               name="price"
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field
-                  label={t('products.details.price')}
+                  label={t("products.details.price")}
                   invalid={!!fieldState.error}
                   errorText={!!fieldState.error && fieldState.error.message}
                 >
@@ -300,10 +292,10 @@ export function CreateProductForm() {
                     width="full"
                   >
                     <NumberInput.Control />
-                    <InputGroup startElement={'R$'}>
+                    <InputGroup startElement={"R$"}>
                       <NumberInput.Input
                         onBlur={field.onBlur}
-                        placeholder={t('products.details.price')}
+                        placeholder={t("products.details.price")}
                       />
                     </InputGroup>
                   </NumberInput.Root>
@@ -315,7 +307,7 @@ export function CreateProductForm() {
               name="category"
               render={({ field, fieldState }) => (
                 <Field
-                  label={t('common:inputs.products.category')}
+                  label={t("common:inputs.products.category")}
                   invalid={!!fieldState.error}
                   errorText={!!fieldState.error && fieldState.error.message}
                 >
@@ -333,7 +325,7 @@ export function CreateProductForm() {
                       <Select.Trigger>
                         <Select.ValueText
                           placeholder={t(
-                            'products.details.categoryPlaceholder'
+                            "products.details.categoryPlaceholder"
                           )}
                         />
                       </Select.Trigger>
@@ -353,13 +345,10 @@ export function CreateProductForm() {
                       <Select.Positioner>
                         <Select.Content>
                           {categoriesCollection.items.map((category) => (
-                            <Select.Item
-                              item={category}
-                              key={category.id}
-                            >
+                            <Select.Item item={category} key={category.id}>
                               {
                                 category.label[
-                                  i18n.resolvedLanguage as 'pt' | 'en'
+                                  i18n.resolvedLanguage as "pt" | "en"
                                 ]
                               }
                               <Select.ItemIndicator />
@@ -373,16 +362,13 @@ export function CreateProductForm() {
               )}
             />
           </Flex>
-          <Flex
-            align="center"
-            gap="{spacing.5}"
-          >
+          <Flex align="center" gap="{spacing.5}">
             <Controller
               name="dimensions.depth"
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field
-                  label={t('products.details.depth')}
+                  label={t("products.details.depth")}
                   invalid={!!fieldState.error}
                 >
                   <NumberInput.Root
@@ -409,7 +395,7 @@ export function CreateProductForm() {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field
-                  label={t('products.details.height')}
+                  label={t("products.details.height")}
                   invalid={!!fieldState.error}
                 >
                   <NumberInput.Root
@@ -436,7 +422,7 @@ export function CreateProductForm() {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field
-                  label={t('products.details.width')}
+                  label={t("products.details.width")}
                   invalid={!!fieldState.error}
                 >
                   <NumberInput.Root
@@ -461,21 +447,12 @@ export function CreateProductForm() {
           </Flex>
           <FileUpload.Root {...imageCover}>
             <FileUpload.HiddenInput />
-            <FileUpload.Dropzone
-              width="full"
-              height="full"
-            >
-              <Icon
-                size="md"
-                color="fg.muted"
-              >
+            <FileUpload.Dropzone width="full" height="full">
+              <Icon size="md" color="fg.muted">
                 <UploadIcon />
               </Icon>
               <FileUpload.DropzoneContent>
-                <Trans
-                  t={t}
-                  i18nKey="products.details.file"
-                >
+                <Trans t={t} i18nKey="products.details.file">
                   <Box>Drag files or click here (max 5 files)</Box>
                   <Box color="fg.muted">.png, .jpg up to 5MB</Box>
                 </Trans>
@@ -491,10 +468,10 @@ export function CreateProductForm() {
             <Button
               type="submit"
               loading={form.formState.isSubmitting}
-              loadingText={t('common:state.loading')}
+              loadingText={t("common:state.loading")}
               size="lg"
             >
-              {t('common:buttons.confirm')}
+              {t("common:buttons.confirm")}
             </Button>
           </Box>
         </Flex>

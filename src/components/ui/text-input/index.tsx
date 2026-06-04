@@ -1,10 +1,6 @@
-import { ReactNode, Ref } from 'react';
-import {
-  type InputProps,
-  Field as ChakraField,
-  Input,
-  VisuallyHidden,
-} from '@chakra-ui/react';
+import { Field as ChakraField, Input, VisuallyHidden } from "@chakra-ui/react";
+import type { InputProps } from "@chakra-ui/react";
+import type { ReactNode, Ref } from "react";
 
 interface TextInputProps extends InputProps {
   ref?: Ref<HTMLInputElement>;
@@ -41,10 +37,7 @@ export function TextInput({
           <ChakraField.RequiredIndicator fallback={optionalText} />
         </ChakraField.Label>
       )}
-      <Input
-        ref={ref}
-        {...props}
-      />
+      <Input ref={ref} {...props} />
       {helperText && (
         <ChakraField.HelperText>{helperText}</ChakraField.HelperText>
       )}

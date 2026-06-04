@@ -4,18 +4,18 @@ import {
   defineConfig,
   defineRecipe,
   defineTokens,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 
 const breakpoints = {
-  sm: '40rem',
-  md: '48rem',
-  lg: '64rem',
-  xl: '80rem',
-  '2xl': '80rem',
+  "2xl": "80rem",
+  lg: "64rem",
+  md: "48rem",
+  sm: "40rem",
+  xl: "80rem",
 };
 
 const sizes = defineTokens.sizes({
-  '22': { value: '5.75rem' },
+  "22": { value: "5.75rem" },
 });
 
 const containerRecipe = defineRecipe({
@@ -24,8 +24,8 @@ const containerRecipe = defineRecipe({
       ...breakpoints,
     },
     paddingX: {
-      base: '{spacing.6}',
-      md: '0',
+      base: "{spacing.6}",
+      md: "0",
     },
   },
 });
@@ -35,9 +35,9 @@ const linkRecipe = defineRecipe({
     variant: {
       plain: {
         _currentPage: {
-          textDecoration: 'underline',
-          textUnderlineOffset: '3px',
-          textDecorationColor: 'currentColor/20',
+          textDecoration: "underline",
+          textDecorationColor: "currentColor/20",
+          textUnderlineOffset: "3px",
         },
       },
     },
@@ -46,8 +46,8 @@ const linkRecipe = defineRecipe({
 
 const config = defineConfig({
   globalCss: {
-    '.firebase-emulator-warning': {
-      display: 'none',
+    ".firebase-emulator-warning": {
+      display: "none",
     },
   },
   theme: {

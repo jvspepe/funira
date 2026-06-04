@@ -1,6 +1,7 @@
-import { createContext } from 'react';
-import { User as AuthUser } from 'firebase/auth';
-import { User } from '@/@types/models';
+import type { User as AuthUser } from "firebase/auth";
+import { createContext } from "react";
+
+import type { User } from "@/@types/models";
 
 export interface IAuthContext {
   currentUser: AuthUser | null;

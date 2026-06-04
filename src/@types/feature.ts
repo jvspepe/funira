@@ -1,9 +1,9 @@
-import { ElementType } from 'react';
+import type { ElementType } from "react";
 
-type Feature = {
+interface Feature {
   icon: ElementType;
   title: string;
   details: string;
-};
+}
 
 export default Feature;

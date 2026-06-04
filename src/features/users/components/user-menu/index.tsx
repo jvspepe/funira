@@ -1,10 +1,11 @@
-import { Link } from 'react-router';
-import { Icon, IconButton, Menu, Portal } from '@chakra-ui/react';
-import { CircleUserIcon } from 'lucide-react';
-import { useAuth } from '@/features/users/hooks/use-auth';
-import { signOut } from '@/features/users/services';
-import { useTranslation } from 'react-i18next';
-import { paths } from '@/config/paths';
+import { Icon, IconButton, Menu, Portal } from "@chakra-ui/react";
+import { CircleUserIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router";
+
+import { paths } from "@/config/paths";
+import { useAuth } from "@/features/users/hooks/use-auth";
+import { signOut } from "@/features/users/services";
 
 export function UserMenu() {
   const { currentUserData } = useAuth();
@@ -18,10 +19,7 @@ export function UserMenu() {
   return (
     <Menu.Root>
       <Menu.Trigger asChild>
-        <IconButton
-          variant="ghost"
-          size="lg"
-        >
+        <IconButton variant="ghost" size="lg">
           <Icon>
             <CircleUserIcon />
           </Icon>
@@ -32,29 +30,20 @@ export function UserMenu() {
           <Menu.Content>
             {!currentUserData ? (
               <>
-                <Menu.Item
-                  value="sign-in"
-                  asChild
-                >
+                <Menu.Item value="sign-in" asChild>
                   <Link to={paths.user.signIn}>
-                    {t('common:buttons.sign-in')}
+                    {t("common:buttons.sign-in")}
                   </Link>
                 </Menu.Item>
-                <Menu.Item
-                  value="sign-up"
-                  asChild
-                >
+                <Menu.Item value="sign-up" asChild>
                   <Link to={paths.user.signUp}>
-                    {t('common:buttons.sign-up')}
+                    {t("common:buttons.sign-up")}
                   </Link>
                 </Menu.Item>
               </>
             ) : (
-              <Menu.Item
-                onClick={handleSignOut}
-                value="sign-out"
-              >
-                {t('common:buttons.sign-out')}
+              <Menu.Item onClick={handleSignOut} value="sign-out">
+                {t("common:buttons.sign-out")}
               </Menu.Item>
             )}
           </Menu.Content>

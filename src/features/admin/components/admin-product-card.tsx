@@ -1,19 +1,16 @@
-import { Link } from 'react-router';
-import { Badge, Box, Button, Card, HStack, Image } from '@chakra-ui/react';
-import { type Product } from '@/@types/models';
-import { paths } from '@/config/paths';
+import { Badge, Box, Button, Card, HStack, Image } from "@chakra-ui/react";
+import { Link } from "react-router";
 
-type AdminProductCardProps = {
+import type { Product } from "@/@types/models";
+import { paths } from "@/config/paths";
+
+interface AdminProductCardProps {
   product: Product;
-};
+}
 
 export function AdminProductCard({ product }: AdminProductCardProps) {
   return (
-    <Card.Root
-      flexDirection="row"
-      overflow="hidden"
-      size="sm"
-    >
+    <Card.Root flexDirection="row" overflow="hidden" size="sm">
       <Image
         objectFit="cover"
         aspectRatio="portrait"
@@ -32,7 +29,7 @@ export function AdminProductCard({ product }: AdminProductCardProps) {
           <Button type="button">Ver produto</Button>
           <Button asChild>
             <Link
-              to={paths.admin.editProduct.replace(':productId', product.id)}
+              to={paths.admin.editProduct.replace(":productId", product.id)}
             >
               Editar produto
             </Link>

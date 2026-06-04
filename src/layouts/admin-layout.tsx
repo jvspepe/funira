@@ -1,7 +1,8 @@
-import { Outlet } from 'react-router';
-import { Box, Flex } from '@chakra-ui/react';
-import { AdminHeader } from '@/features/admin/components/admin-header';
-import { AdminSidebar } from '@/features/admin/components/admin-sidebar';
+import { Box, Flex } from "@chakra-ui/react";
+import { Outlet } from "react-router";
+
+import { AdminHeader } from "@/features/admin/components/admin-header";
+import { AdminSidebar } from "@/features/admin/components/admin-sidebar";
 
 export function AdminLayout() {
   return (

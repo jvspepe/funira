@@ -1,20 +1,16 @@
-'use client';
+"use client";
 
-import { createIcon } from '@chakra-ui/react';
+import { createIcon } from "@chakra-ui/react";
 
 export const LinkedInIcon = createIcon({
-  displayName: 'LinkedInIcon',
   defaultProps: {
-    xmlns: 'http://www.w3.org/2000/svg',
-    fill: '#000000',
+    fill: "#000000",
+    xmlns: "http://www.w3.org/2000/svg",
   },
-  viewBox: '0 0 256 256',
+  displayName: "LinkedInIcon",
   path: (
     <>
-      <g
-        id="SVGRepo_bgCarrier"
-        strokeWidth="0"
-      ></g>
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g
         id="SVGRepo_tracerCarrier"
         strokeLinecap="round"
@@ -34,4 +30,5 @@ export const LinkedInIcon = createIcon({
       </g>
     </>
   ),
+  viewBox: "0 0 256 256",
 });

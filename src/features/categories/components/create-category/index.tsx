@@ -1,6 +1,6 @@
-import { Button, Dialog, Portal } from '@chakra-ui/react';
+import { Button, Dialog, Portal } from "@chakra-ui/react";
 
-import { CreateCategoryForm } from './form';
+import { CreateCategoryForm } from "./form";
 
 export function AdminCreateCategory() {
   return (

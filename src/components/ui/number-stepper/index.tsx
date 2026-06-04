@@ -1,4 +1,3 @@
-import { type Dispatch, type SetStateAction } from 'react';
 import {
   Flex,
   Heading,
@@ -6,8 +5,9 @@ import {
   Icon,
   IconButton,
   NumberInput,
-} from '@chakra-ui/react';
-import { MinusIcon, PlusIcon } from 'lucide-react';
+} from "@chakra-ui/react";
+import { MinusIcon, PlusIcon } from "lucide-react";
+import type { Dispatch, SetStateAction } from "react";
 
 interface NumberStepperProps {
   label?: string;
@@ -29,15 +29,9 @@ export function NumberStepper({
   maxValue,
 }: NumberStepperProps) {
   return (
-    <Flex
-      direction="column"
-      gap="{spacing.4}"
-    >
+    <Flex direction="column" gap="{spacing.4}">
       {label && (
-        <Heading
-          size="md"
-          fontWeight="normal"
-        >
+        <Heading size="md" fontWeight="normal">
           {label}
         </Heading>
       )}
@@ -48,21 +42,15 @@ export function NumberStepper({
         max={maxValue}
         unstyled
         spinOnPress={false}
-        width={{ base: 'full', md: 'fit-content' }}
+        width={{ base: "full", md: "fit-content" }}
       >
         <HStack
           backgroundColor="bg.subtle"
           borderRadius="{radii.l2}"
           justifyContent="space-between"
         >
-          <NumberInput.DecrementTrigger
-            asChild
-            onClick={onValueDecrease}
-          >
-            <IconButton
-              variant="subtle"
-              size="lg"
-            >
+          <NumberInput.DecrementTrigger asChild onClick={onValueDecrease}>
+            <IconButton variant="subtle" size="lg">
               <Icon>
                 <MinusIcon />
               </Icon>
@@ -73,14 +61,8 @@ export function NumberStepper({
             fontSize="md"
             minW="{spacing.8}"
           />
-          <NumberInput.IncrementTrigger
-            asChild
-            onClick={onValueIncrease}
-          >
-            <IconButton
-              variant="subtle"
-              size="lg"
-            >
+          <NumberInput.IncrementTrigger asChild onClick={onValueIncrease}>
+            <IconButton variant="subtle" size="lg">
               <Icon>
                 <PlusIcon />
               </Icon>
