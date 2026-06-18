@@ -1,5 +1,6 @@
-import { TanStackDevtools } from "@tanstack/react-devtools";
 import type { QueryClient } from "@tanstack/react-query";
+
+import { TanStackDevtools } from "@tanstack/react-devtools";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import {
   HeadContent,
@@ -8,7 +9,8 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 
-import { Provider } from "../components/ui/provider";
+import { Provider } from "@/components/ui/provider";
+import { Toaster } from "@/components/ui/toaster";
 
 interface MyRouterContext {
   queryClient: QueryClient;
@@ -57,6 +59,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
               },
             ]}
           />
+          <Toaster />
         </Provider>
         <Scripts />
       </body>

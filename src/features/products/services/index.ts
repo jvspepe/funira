@@ -1,3 +1,8 @@
+import type {
+  QueryDocumentSnapshot,
+  QueryNonFilterConstraint,
+} from "firebase/firestore";
+
 import {
   collection,
   deleteDoc,
@@ -12,12 +17,9 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import type {
-  QueryDocumentSnapshot,
-  QueryNonFilterConstraint,
-} from "firebase/firestore";
 
 import type { Product } from "@/@types/models";
+
 import { database } from "@/config/app";
 import { uploadImage } from "@/features/storage/services";
 import {

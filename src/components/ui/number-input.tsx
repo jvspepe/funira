@@ -1,5 +1,6 @@
-import { NumberInput as ChakraNumberInput } from "@chakra-ui/react";
 import type { Ref } from "react";
+
+import { NumberInput as ChakraNumberInput } from "@chakra-ui/react";
 
 interface NumberInputProps extends ChakraNumberInput.RootProps {
   ref?: Ref<HTMLDivElement | null>;

@@ -16,6 +16,7 @@ import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router";
 
 import type { Category } from "@/@types/models";
+
 import { TYPE_PARAM } from "@/config/constants";
 
 interface ProductsFilterProps {

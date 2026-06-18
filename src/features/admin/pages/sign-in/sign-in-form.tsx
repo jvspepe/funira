@@ -1,8 +1,9 @@
+import type { SubmitHandler, DefaultValues } from "react-hook-form";
+
 import { Box, Button, Code, Heading, Icon, Text } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeftIcon } from "lucide-react";
 import { Controller, FormProvider, useForm } from "react-hook-form";
-import type { SubmitHandler, DefaultValues } from "react-hook-form";
 import { Link as RouterLink, useNavigate } from "react-router";
 
 import { Checkbox } from "@/components/ui/checkbox";
@@ -11,8 +12,9 @@ import { TextInput } from "@/components/ui/text-input";
 import { signIn } from "@/features/users/services";
 import { handleAuthError } from "@/features/utils";
 
-import { signInSchema } from "./validation";
 import type { SignInSchema } from "./validation";
+
+import { signInSchema } from "./validation";
 
 const defaultValues: DefaultValues<SignInSchema> = {
   email: "",

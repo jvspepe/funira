@@ -1,12 +1,14 @@
-import { Box, Button, Icon, Text } from "@chakra-ui/react";
 import type { Dispatch, SetStateAction } from "react";
+
+import { Box, Button, Icon, Text } from "@chakra-ui/react";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 
-import { GoogleIcon } from "@/assets/GoogleIcon";
 import type { SignInSchema } from "@/features/users/pages/sign-in/sign-in-validation";
 import type { SignUpSchema } from "@/features/users/pages/sign-up/sign-up-validation";
+
+import { GoogleIcon } from "@/assets/GoogleIcon";
 import { signInWithGoogle } from "@/features/users/services/auth";
 import { handleAuthError } from "@/features/utils";
 

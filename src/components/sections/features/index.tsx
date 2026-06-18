@@ -3,6 +3,7 @@ import { CircleCheck, CreditCard, Leaf, Truck } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import type Feature from "@/@types/feature";
+
 import { FeatureCard } from "@/components/sections/features/feature-card";
 
 const featureIcons = [Truck, CircleCheck, CreditCard, Leaf];

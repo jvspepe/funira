@@ -2,6 +2,7 @@ import { Badge, Box, Button, Card, HStack, Image } from "@chakra-ui/react";
 import { Link } from "react-router";
 
 import type { Product } from "@/@types/models";
+
 import { paths } from "@/config/paths";
 
 interface AdminProductCardProps {

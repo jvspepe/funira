@@ -1,3 +1,5 @@
+import type { SubmitHandler } from "react-hook-form";
+
 import {
   Button,
   Collapsible,
@@ -21,18 +23,19 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
 import { ChevronDownIcon } from "lucide-react";
 import { useMemo } from "react";
-import type { SubmitHandler } from "react-hook-form";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { z } from "zod";
 
 import type { Product } from "@/@types/models";
+
 import { Field } from "@/components/ui/field";
 import { getCategories } from "@/features/categories/services";
 import { updateProduct } from "@/features/products/services";
 
-import { editProductSchema } from "./edit-product-validation";
 import type { EditProductSchema } from "./edit-product-validation";
+
+import { editProductSchema } from "./edit-product-validation";
 
 const inputsMaxLength = {
   description: 250,

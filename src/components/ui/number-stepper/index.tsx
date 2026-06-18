@@ -1,3 +1,5 @@
+import type { Dispatch, SetStateAction } from "react";
+
 import {
   Flex,
   Heading,
@@ -7,7 +9,6 @@ import {
   NumberInput,
 } from "@chakra-ui/react";
 import { MinusIcon, PlusIcon } from "lucide-react";
-import type { Dispatch, SetStateAction } from "react";
 
 interface NumberStepperProps {
   label?: string;

@@ -1,3 +1,5 @@
+import type { SubmitHandler } from "react-hook-form";
+
 import {
   Box,
   Button,
@@ -23,7 +25,6 @@ import { useQuery } from "@tanstack/react-query";
 import { ChevronDownIcon, UploadIcon } from "lucide-react";
 import { useMemo } from "react";
 import { Controller, FormProvider, useForm } from "react-hook-form";
-import type { SubmitHandler } from "react-hook-form";
 import { Trans, useTranslation } from "react-i18next";
 import { z } from "zod";
 
@@ -32,11 +33,12 @@ import { toaster } from "@/components/ui/toaster";
 import { getCategories } from "@/features/categories/services";
 import { createProduct } from "@/features/products/services";
 
+import type { CreateProductSchema } from "./create-product-validation";
+
 import {
   createProductSchema,
   defaultValues,
 } from "./create-product-validation";
-import type { CreateProductSchema } from "./create-product-validation";
 
 export function CreateProductForm() {
   const form = useForm<CreateProductSchema>({

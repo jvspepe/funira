@@ -14,6 +14,7 @@ import { useTranslation } from "react-i18next";
 import { useParams } from "react-router";
 
 import type { Product } from "@/@types/models";
+
 import { NumberStepper } from "@/components/ui/number-stepper";
 import { toaster } from "@/components/ui/toaster";
 import { getProduct } from "@/features/products/services";

@@ -1,4 +1,5 @@
 import type { DefaultValues } from "react-hook-form";
+
 import { z } from "zod";
 
 export const newsletterFormSchema = z.object({

@@ -1,6 +1,8 @@
 "use client";
 
 import type { ButtonProps, GroupProps, InputProps } from "@chakra-ui/react";
+import type { ReactNode, Ref } from "react";
+
 import {
   IconButton,
   Input,
@@ -10,7 +12,6 @@ import {
 } from "@chakra-ui/react";
 import { EyeIcon, EyeOff } from "lucide-react";
 import { useRef } from "react";
-import type { ReactNode, Ref } from "react";
 
 function VisibilityTrigger({
   ref,

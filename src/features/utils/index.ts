@@ -1,11 +1,12 @@
-import { FirebaseError } from "firebase/app";
-import { AuthErrorCodes } from "firebase/auth";
 import type {
   DocumentData,
   FirestoreDataConverter,
   WithFieldValue,
   QueryDocumentSnapshot,
 } from "firebase/firestore";
+
+import { FirebaseError } from "firebase/app";
+import { AuthErrorCodes } from "firebase/auth";
 
 export function converter<T extends DocumentData>(): FirestoreDataConverter<
   T,

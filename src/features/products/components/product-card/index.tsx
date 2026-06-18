@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 
 import type { Product } from "@/@types/models";
+
 import { paths } from "@/config/paths";
 
 interface ProductCardProps {

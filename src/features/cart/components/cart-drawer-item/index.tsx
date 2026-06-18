@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import type { CartProduct } from "@/@types/models";
+
 import { NumberStepper } from "@/components/ui/number-stepper";
 import { changeQuantity, removeFromCart } from "@/store/cartSlice";
 import { useAppDispatch } from "@/store/store";

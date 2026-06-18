@@ -1,13 +1,15 @@
+import type { SubmitHandler } from "react-hook-form";
+
 import { Button, Field, Heading, Input, Group } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { SubmitHandler } from "react-hook-form";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 import { toaster } from "@/components/ui/toaster";
 
-import { footerFormDefaultValues, footerFormSchema } from "./validation";
 import type { FooterFormSchema } from "./validation";
+
+import { footerFormDefaultValues, footerFormSchema } from "./validation";
 
 export function FooterForm() {
   const form = useForm<FooterFormSchema>({

@@ -1,11 +1,13 @@
-import { useEffect, useMemo, useState } from "react";
 import type { ReactNode } from "react";
+
+import { useEffect, useMemo, useState } from "react";
 
 import { handleCurrentUser } from "@/features/users/services";
 import { getUser } from "@/features/users/services";
 
-import { AuthContext } from "./auth-context";
 import type { IAuthContext } from "./auth-context";
+
+import { AuthContext } from "./auth-context";
 
 interface AuthProviderProps {
   children: ReactNode;

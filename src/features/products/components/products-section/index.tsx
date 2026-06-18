@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 
 import type { Product } from "@/@types/models";
+
 import { ProductCard } from "@/features/products/components/product-card";
 
 interface ProductsSectionProps {

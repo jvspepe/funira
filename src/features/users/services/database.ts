@@ -12,6 +12,7 @@ import {
 } from "firebase/firestore";
 
 import type { User } from "@/@types/models";
+
 import { database } from "@/config/app";
 import { converter } from "@/features/utils";
 

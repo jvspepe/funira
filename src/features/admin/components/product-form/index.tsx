@@ -1,3 +1,5 @@
+import type { DefaultValues } from "react-hook-form";
+
 import {
   Box,
   Button,
@@ -22,12 +24,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
 import { ChevronDownIcon, UploadIcon } from "lucide-react";
 import { useMemo } from "react";
-import type { DefaultValues } from "react-hook-form";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import { Trans, useTranslation } from "react-i18next";
 import { z } from "zod";
 
 import type { Product } from "@/@types/models";
+
 import { Field } from "@/components/ui/field";
 import { getCategories } from "@/features/categories/services";
 

@@ -1,3 +1,6 @@
+import type { DefaultValues } from "react-hook-form";
+import type { SubmitHandler } from "react-hook-form";
+
 import {
   Box,
   Button,
@@ -13,9 +16,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeftIcon } from "lucide-react";
 import { useState } from "react";
-import type { DefaultValues } from "react-hook-form";
 import { Controller, FormProvider, useForm } from "react-hook-form";
-import type { SubmitHandler } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link as RouterLink, useNavigate } from "react-router";
 
@@ -27,8 +28,9 @@ import { GoogleAuth } from "@/features/users/components/google-auth";
 import { signIn } from "@/features/users/services";
 import { handleAuthError } from "@/features/utils";
 
-import { signInSchema } from "./sign-in-validation";
 import type { SignInSchema } from "./sign-in-validation";
+
+import { signInSchema } from "./sign-in-validation";
 
 const signInDefaultValues: DefaultValues<SignInSchema> = {
   email: "",

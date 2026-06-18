@@ -1,16 +1,18 @@
+import type { SubmitHandler } from "react-hook-form";
+
 import { Button, Field, Group, Input, VisuallyHidden } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { SubmitHandler } from "react-hook-form";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 import { toaster } from "@/components/ui/toaster";
 
+import type { NewsletterFormSchema } from "./validation";
+
 import {
   newsletterFormSchema,
   newsletterFormDefaultValues,
 } from "./validation";
-import type { NewsletterFormSchema } from "./validation";
 
 export function NewsletterForm() {
   const form = useForm<NewsletterFormSchema>({

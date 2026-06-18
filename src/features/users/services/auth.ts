@@ -1,3 +1,5 @@
+import type { User } from "firebase/auth";
+
 import {
   GoogleAuthProvider,
   browserLocalPersistence,
@@ -13,7 +15,6 @@ import {
   signInWithPopup,
   deleteUser as authDeleteUser,
 } from "firebase/auth";
-import type { User } from "firebase/auth";
 import { Timestamp } from "firebase/firestore";
 
 import { auth } from "@/config/app";

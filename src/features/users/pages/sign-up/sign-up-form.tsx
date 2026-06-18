@@ -1,3 +1,5 @@
+import type { SubmitHandler } from "react-hook-form";
+
 import {
   Box,
   Button,
@@ -14,7 +16,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import { Controller, FormProvider, useForm } from "react-hook-form";
-import type { SubmitHandler } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link as RouterLink, useNavigate } from "react-router";
 
@@ -26,8 +27,9 @@ import { GoogleAuth } from "@/features/users/components/google-auth";
 import { signUp } from "@/features/users/services";
 import { handleAuthError } from "@/features/utils";
 
-import { signUpDefaultValues, signUpSchema } from "./sign-up-validation";
 import type { SignUpSchema } from "./sign-up-validation";
+
+import { signUpDefaultValues, signUpSchema } from "./sign-up-validation";
 
 export function SignUpForm() {
   const [googleLoading, setGoogleLoading] = useState<boolean>(false);

@@ -2,45 +2,32 @@ import {
   Box,
   Button,
   Container,
+  Drawer,
   Flex,
+  Icon,
+  IconButton,
   Link,
   Menu,
   Portal,
-  Spinner,
 } from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
-import { useTranslation } from "react-i18next";
-import { NavLink, Link as RouterLink } from "react-router";
-
-import { MobileDrawer } from "@/components/sections/header/mobile-drawer";
-import { TYPE_PARAM } from "@/config/constants";
-import { paths } from "@/config/paths";
-import { CartDrawer } from "@/features/cart/components/cart-drawer";
-import { getCategories } from "@/features/categories/services";
-import { UserMenu } from "@/features/users/components/user-menu";
+import { Link as RouterLink } from "@tanstack/react-router";
+import {
+  HomeIcon,
+  LibraryIcon,
+  MenuIcon,
+  ShoppingCartIcon,
+  SofaIcon,
+  UserCircleIcon,
+  XIcon,
+} from "lucide-react";
 
 export function Header() {
-  const { t, i18n } = useTranslation();
-
-  const categoriesQuery = useQuery({
-    queryFn: getCategories,
-    queryKey: ["categories"],
-  });
-
   return (
-    <Box
-      as="header"
-      position="sticky"
-      top="0"
-      maxHeight="{sizes.22}"
-      zIndex={99}
-      backgroundColor="white"
-      boxShadow="0 1px 2px 0 rgb(0 0 0 / 0.05)"
-    >
+    <Box as="header" position="sticky" top="0" zIndex={99}>
       <Container>
         <Flex align="center" justify="space-between" paddingY="{spacing.6}">
-          <Link asChild fontSize="{spacing.6}">
-            <RouterLink to={paths.user.home}>Funira</RouterLink>
+          <Link asChild fontSize="2xl">
+            <RouterLink to="/">Funira</RouterLink>
           </Link>
           <Box
             as="ul"
@@ -50,7 +37,7 @@ export function Header() {
           >
             <Box as="li">
               <Link asChild>
-                <NavLink to={paths.user.home}>{t("navigation.home")}</NavLink>
+                <RouterLink to="/">Home</RouterLink>
               </Link>
             </Box>
             <Box as="li">
@@ -58,42 +45,16 @@ export function Header() {
                 <Menu.Trigger asChild>
                   <Link asChild>
                     <Button type="button" unstyled>
-                      {t("navigation.products")}
+                      Products
                     </Button>
                   </Link>
                 </Menu.Trigger>
                 <Portal>
                   <Menu.Positioner>
                     <Menu.Content>
-                      {categoriesQuery.isLoading ? (
-                        <Flex align="center" justify="center">
-                          <Spinner />
-                        </Flex>
-                      ) : (!categoriesQuery.data ? (
-                        t("categories.empty")
-                      ) : (
-                        <>
-                          <Menu.Item asChild value={paths.user.products}>
-                            <RouterLink to={paths.user.products}>
-                              {t("categories.all")}
-                            </RouterLink>
-                          </Menu.Item>
-                          {categoriesQuery.data.map((category) => (
-                            <Menu.Item
-                              key={category.id}
-                              asChild
-                              value={category.value}
-                            >
-                              <RouterLink
-                                to={`${paths.user.products}?${TYPE_PARAM}=${category.value}`}
-                              >
-                                {category.label[i18n.language as "en" | "pt"] ??
-                                  category.label.en}
-                              </RouterLink>
-                            </Menu.Item>
-                          ))}
-                        </>
-                      ))}
+                      <Menu.Item asChild value="/">
+                        <RouterLink to="/">See all</RouterLink>
+                      </Menu.Item>
                     </Menu.Content>
                   </Menu.Positioner>
                 </Portal>
@@ -101,14 +62,104 @@ export function Header() {
             </Box>
             <Box as="li">
               <Link asChild>
-                <NavLink to={paths.user.about}>{t("navigation.about")}</NavLink>
+                <RouterLink to="/">About</RouterLink>
               </Link>
             </Box>
           </Box>
-          <Flex align="center" gap="{spacing.2}">
-            <CartDrawer />
-            <UserMenu />
-            <MobileDrawer categories={categoriesQuery.data ?? []} />
+          <Flex gap="4">
+            <IconButton type="button" variant="ghost">
+              <Icon>
+                <ShoppingCartIcon />
+              </Icon>
+            </IconButton>
+            <Menu.Root positioning={{ placement: "bottom-end" }}>
+              <Menu.Trigger asChild>
+                <IconButton variant="ghost">
+                  <Icon>
+                    <UserCircleIcon />
+                  </Icon>
+                </IconButton>
+              </Menu.Trigger>
+              <Menu.Positioner>
+                <Menu.Content>
+                  <Menu.ItemGroup>
+                    <Menu.ItemGroupLabel>Account</Menu.ItemGroupLabel>
+                    <Menu.Separator />
+                    <Menu.Item value="sign-up" asChild>
+                      <RouterLink to="/sign-up">Sign Up</RouterLink>
+                    </Menu.Item>
+                    <Menu.Item value="sign-in" asChild>
+                      <RouterLink to="/sign-in">Sign In</RouterLink>
+                    </Menu.Item>
+                  </Menu.ItemGroup>
+                </Menu.Content>
+              </Menu.Positioner>
+            </Menu.Root>
+            <Drawer.Root>
+              <Drawer.Backdrop />
+              <Drawer.Trigger asChild>
+                <IconButton
+                  type="button"
+                  variant="ghost"
+                  display={{ base: "block", md: "none" }}
+                >
+                  <Icon>
+                    <MenuIcon />
+                  </Icon>
+                </IconButton>
+              </Drawer.Trigger>
+              <Drawer.Positioner>
+                <Drawer.Content>
+                  <Drawer.Header>
+                    <Drawer.Title>Navigation</Drawer.Title>
+                    <Drawer.CloseTrigger asChild position="initial">
+                      <IconButton variant="ghost">
+                        <Icon>
+                          <XIcon />
+                        </Icon>
+                      </IconButton>
+                    </Drawer.CloseTrigger>
+                  </Drawer.Header>
+                  <Drawer.Body asChild>
+                    <Flex align="start" direction="column">
+                      <Button
+                        asChild
+                        variant="ghost"
+                        width="full"
+                        justifyContent="start"
+                      >
+                        <RouterLink to="/">
+                          <HomeIcon />
+                          Home
+                        </RouterLink>
+                      </Button>
+                      <Button
+                        asChild
+                        variant="ghost"
+                        width="full"
+                        justifyContent="start"
+                      >
+                        <RouterLink to="/">
+                          <SofaIcon />
+                          Products
+                        </RouterLink>
+                      </Button>
+                      <Button
+                        asChild
+                        variant="ghost"
+                        width="full"
+                        justifyContent="start"
+                      >
+                        <RouterLink to="/">
+                          <LibraryIcon />
+                          About Us
+                        </RouterLink>
+                      </Button>
+                    </Flex>
+                  </Drawer.Body>
+                </Drawer.Content>
+              </Drawer.Positioner>
+            </Drawer.Root>
           </Flex>
         </Flex>
       </Container>

@@ -9,86 +9,306 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as authSignUpIndexRouteImport } from './routes/(auth)/sign-up/index'
-import { Route as authSignInIndexRouteImport } from './routes/(auth)/sign-in/index'
+import { Route as layoutRouteRouteImport } from './routes/(layout)/route'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as layoutIndexRouteImport } from './routes/(layout)/index'
+import { Route as AdminadminLayoutRouteRouteImport } from './routes/admin/(admin-layout)/route'
+import { Route as AdminadminLayoutUsersIndexRouteImport } from './routes/admin/(admin-layout)/users/index'
+import { Route as AdminadminLayoutProductsIndexRouteImport } from './routes/admin/(admin-layout)/products/index'
+import { Route as AdminadminLayoutOrdersIndexRouteImport } from './routes/admin/(admin-layout)/orders/index'
+import { Route as AdminadminLayoutDashboardIndexRouteImport } from './routes/admin/(admin-layout)/dashboard/index'
+import { Route as AdminadminLayoutCategoriesIndexRouteImport } from './routes/admin/(admin-layout)/categories/index'
+import { Route as layoutauthSignUpIndexRouteImport } from './routes/(layout)/(auth)/sign-up/index'
+import { Route as layoutauthSignInIndexRouteImport } from './routes/(layout)/(auth)/sign-in/index'
+import { Route as AdminadminLayoutProductsCreateIndexRouteImport } from './routes/admin/(admin-layout)/products/create/index'
 
-const IndexRoute = IndexRouteImport.update({
+const layoutRouteRoute = layoutRouteRouteImport.update({
+  id: '/(layout)',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const layoutIndexRoute = layoutIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => layoutRouteRoute,
+} as any)
+const AdminadminLayoutRouteRoute = AdminadminLayoutRouteRouteImport.update({
+  id: '/admin/(admin-layout)',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
-const authSignUpIndexRoute = authSignUpIndexRouteImport.update({
+const AdminadminLayoutUsersIndexRoute =
+  AdminadminLayoutUsersIndexRouteImport.update({
+    id: '/users/',
+    path: '/users/',
+    getParentRoute: () => AdminadminLayoutRouteRoute,
+  } as any)
+const AdminadminLayoutProductsIndexRoute =
+  AdminadminLayoutProductsIndexRouteImport.update({
+    id: '/products/',
+    path: '/products/',
+    getParentRoute: () => AdminadminLayoutRouteRoute,
+  } as any)
+const AdminadminLayoutOrdersIndexRoute =
+  AdminadminLayoutOrdersIndexRouteImport.update({
+    id: '/orders/',
+    path: '/orders/',
+    getParentRoute: () => AdminadminLayoutRouteRoute,
+  } as any)
+const AdminadminLayoutDashboardIndexRoute =
+  AdminadminLayoutDashboardIndexRouteImport.update({
+    id: '/dashboard/',
+    path: '/dashboard/',
+    getParentRoute: () => AdminadminLayoutRouteRoute,
+  } as any)
+const AdminadminLayoutCategoriesIndexRoute =
+  AdminadminLayoutCategoriesIndexRouteImport.update({
+    id: '/categories/',
+    path: '/categories/',
+    getParentRoute: () => AdminadminLayoutRouteRoute,
+  } as any)
+const layoutauthSignUpIndexRoute = layoutauthSignUpIndexRouteImport.update({
   id: '/(auth)/sign-up/',
   path: '/sign-up/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => layoutRouteRoute,
 } as any)
-const authSignInIndexRoute = authSignInIndexRouteImport.update({
+const layoutauthSignInIndexRoute = layoutauthSignInIndexRouteImport.update({
   id: '/(auth)/sign-in/',
   path: '/sign-in/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => layoutRouteRoute,
 } as any)
+const AdminadminLayoutProductsCreateIndexRoute =
+  AdminadminLayoutProductsCreateIndexRouteImport.update({
+    id: '/products/create/',
+    path: '/products/create/',
+    getParentRoute: () => AdminadminLayoutRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/sign-in/': typeof authSignInIndexRoute
-  '/sign-up/': typeof authSignUpIndexRoute
+  '/admin': typeof AdminadminLayoutRouteRouteWithChildren
+  '/': typeof layoutIndexRoute
+  '/admin/': typeof AdminIndexRoute
+  '/sign-in/': typeof layoutauthSignInIndexRoute
+  '/sign-up/': typeof layoutauthSignUpIndexRoute
+  '/admin/categories/': typeof AdminadminLayoutCategoriesIndexRoute
+  '/admin/dashboard/': typeof AdminadminLayoutDashboardIndexRoute
+  '/admin/orders/': typeof AdminadminLayoutOrdersIndexRoute
+  '/admin/products/': typeof AdminadminLayoutProductsIndexRoute
+  '/admin/users/': typeof AdminadminLayoutUsersIndexRoute
+  '/admin/products/create/': typeof AdminadminLayoutProductsCreateIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/sign-in': typeof authSignInIndexRoute
-  '/sign-up': typeof authSignUpIndexRoute
+  '/admin': typeof AdminIndexRoute
+  '/': typeof layoutIndexRoute
+  '/sign-in': typeof layoutauthSignInIndexRoute
+  '/sign-up': typeof layoutauthSignUpIndexRoute
+  '/admin/categories': typeof AdminadminLayoutCategoriesIndexRoute
+  '/admin/dashboard': typeof AdminadminLayoutDashboardIndexRoute
+  '/admin/orders': typeof AdminadminLayoutOrdersIndexRoute
+  '/admin/products': typeof AdminadminLayoutProductsIndexRoute
+  '/admin/users': typeof AdminadminLayoutUsersIndexRoute
+  '/admin/products/create': typeof AdminadminLayoutProductsCreateIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/(auth)/sign-in/': typeof authSignInIndexRoute
-  '/(auth)/sign-up/': typeof authSignUpIndexRoute
+  '/(layout)': typeof layoutRouteRouteWithChildren
+  '/admin/(admin-layout)': typeof AdminadminLayoutRouteRouteWithChildren
+  '/(layout)/': typeof layoutIndexRoute
+  '/admin/': typeof AdminIndexRoute
+  '/(layout)/(auth)/sign-in/': typeof layoutauthSignInIndexRoute
+  '/(layout)/(auth)/sign-up/': typeof layoutauthSignUpIndexRoute
+  '/admin/(admin-layout)/categories/': typeof AdminadminLayoutCategoriesIndexRoute
+  '/admin/(admin-layout)/dashboard/': typeof AdminadminLayoutDashboardIndexRoute
+  '/admin/(admin-layout)/orders/': typeof AdminadminLayoutOrdersIndexRoute
+  '/admin/(admin-layout)/products/': typeof AdminadminLayoutProductsIndexRoute
+  '/admin/(admin-layout)/users/': typeof AdminadminLayoutUsersIndexRoute
+  '/admin/(admin-layout)/products/create/': typeof AdminadminLayoutProductsCreateIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/sign-in/' | '/sign-up/'
+  fullPaths:
+    | '/admin'
+    | '/'
+    | '/admin/'
+    | '/sign-in/'
+    | '/sign-up/'
+    | '/admin/categories/'
+    | '/admin/dashboard/'
+    | '/admin/orders/'
+    | '/admin/products/'
+    | '/admin/users/'
+    | '/admin/products/create/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/sign-in' | '/sign-up'
-  id: '__root__' | '/' | '/(auth)/sign-in/' | '/(auth)/sign-up/'
+  to:
+    | '/admin'
+    | '/'
+    | '/sign-in'
+    | '/sign-up'
+    | '/admin/categories'
+    | '/admin/dashboard'
+    | '/admin/orders'
+    | '/admin/products'
+    | '/admin/users'
+    | '/admin/products/create'
+  id:
+    | '__root__'
+    | '/(layout)'
+    | '/admin/(admin-layout)'
+    | '/(layout)/'
+    | '/admin/'
+    | '/(layout)/(auth)/sign-in/'
+    | '/(layout)/(auth)/sign-up/'
+    | '/admin/(admin-layout)/categories/'
+    | '/admin/(admin-layout)/dashboard/'
+    | '/admin/(admin-layout)/orders/'
+    | '/admin/(admin-layout)/products/'
+    | '/admin/(admin-layout)/users/'
+    | '/admin/(admin-layout)/products/create/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  authSignInIndexRoute: typeof authSignInIndexRoute
-  authSignUpIndexRoute: typeof authSignUpIndexRoute
+  layoutRouteRoute: typeof layoutRouteRouteWithChildren
+  AdminadminLayoutRouteRoute: typeof AdminadminLayoutRouteRouteWithChildren
+  AdminIndexRoute: typeof AdminIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/(layout)': {
+      id: '/(layout)'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof layoutRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(layout)/': {
+      id: '/(layout)/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+      preLoaderRoute: typeof layoutIndexRouteImport
+      parentRoute: typeof layoutRouteRoute
+    }
+    '/admin/(admin-layout)': {
+      id: '/admin/(admin-layout)'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminadminLayoutRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/(auth)/sign-up/': {
-      id: '/(auth)/sign-up/'
+    '/admin/(admin-layout)/users/': {
+      id: '/admin/(admin-layout)/users/'
+      path: '/users'
+      fullPath: '/admin/users/'
+      preLoaderRoute: typeof AdminadminLayoutUsersIndexRouteImport
+      parentRoute: typeof AdminadminLayoutRouteRoute
+    }
+    '/admin/(admin-layout)/products/': {
+      id: '/admin/(admin-layout)/products/'
+      path: '/products'
+      fullPath: '/admin/products/'
+      preLoaderRoute: typeof AdminadminLayoutProductsIndexRouteImport
+      parentRoute: typeof AdminadminLayoutRouteRoute
+    }
+    '/admin/(admin-layout)/orders/': {
+      id: '/admin/(admin-layout)/orders/'
+      path: '/orders'
+      fullPath: '/admin/orders/'
+      preLoaderRoute: typeof AdminadminLayoutOrdersIndexRouteImport
+      parentRoute: typeof AdminadminLayoutRouteRoute
+    }
+    '/admin/(admin-layout)/dashboard/': {
+      id: '/admin/(admin-layout)/dashboard/'
+      path: '/dashboard'
+      fullPath: '/admin/dashboard/'
+      preLoaderRoute: typeof AdminadminLayoutDashboardIndexRouteImport
+      parentRoute: typeof AdminadminLayoutRouteRoute
+    }
+    '/admin/(admin-layout)/categories/': {
+      id: '/admin/(admin-layout)/categories/'
+      path: '/categories'
+      fullPath: '/admin/categories/'
+      preLoaderRoute: typeof AdminadminLayoutCategoriesIndexRouteImport
+      parentRoute: typeof AdminadminLayoutRouteRoute
+    }
+    '/(layout)/(auth)/sign-up/': {
+      id: '/(layout)/(auth)/sign-up/'
       path: '/sign-up'
       fullPath: '/sign-up/'
-      preLoaderRoute: typeof authSignUpIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof layoutauthSignUpIndexRouteImport
+      parentRoute: typeof layoutRouteRoute
     }
-    '/(auth)/sign-in/': {
-      id: '/(auth)/sign-in/'
+    '/(layout)/(auth)/sign-in/': {
+      id: '/(layout)/(auth)/sign-in/'
       path: '/sign-in'
       fullPath: '/sign-in/'
-      preLoaderRoute: typeof authSignInIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof layoutauthSignInIndexRouteImport
+      parentRoute: typeof layoutRouteRoute
+    }
+    '/admin/(admin-layout)/products/create/': {
+      id: '/admin/(admin-layout)/products/create/'
+      path: '/products/create'
+      fullPath: '/admin/products/create/'
+      preLoaderRoute: typeof AdminadminLayoutProductsCreateIndexRouteImport
+      parentRoute: typeof AdminadminLayoutRouteRoute
     }
   }
 }
 
+interface layoutRouteRouteChildren {
+  layoutIndexRoute: typeof layoutIndexRoute
+  layoutauthSignInIndexRoute: typeof layoutauthSignInIndexRoute
+  layoutauthSignUpIndexRoute: typeof layoutauthSignUpIndexRoute
+}
+
+const layoutRouteRouteChildren: layoutRouteRouteChildren = {
+  layoutIndexRoute: layoutIndexRoute,
+  layoutauthSignInIndexRoute: layoutauthSignInIndexRoute,
+  layoutauthSignUpIndexRoute: layoutauthSignUpIndexRoute,
+}
+
+const layoutRouteRouteWithChildren = layoutRouteRoute._addFileChildren(
+  layoutRouteRouteChildren,
+)
+
+interface AdminadminLayoutRouteRouteChildren {
+  AdminadminLayoutCategoriesIndexRoute: typeof AdminadminLayoutCategoriesIndexRoute
+  AdminadminLayoutDashboardIndexRoute: typeof AdminadminLayoutDashboardIndexRoute
+  AdminadminLayoutOrdersIndexRoute: typeof AdminadminLayoutOrdersIndexRoute
+  AdminadminLayoutProductsIndexRoute: typeof AdminadminLayoutProductsIndexRoute
+  AdminadminLayoutUsersIndexRoute: typeof AdminadminLayoutUsersIndexRoute
+  AdminadminLayoutProductsCreateIndexRoute: typeof AdminadminLayoutProductsCreateIndexRoute
+}
+
+const AdminadminLayoutRouteRouteChildren: AdminadminLayoutRouteRouteChildren = {
+  AdminadminLayoutCategoriesIndexRoute: AdminadminLayoutCategoriesIndexRoute,
+  AdminadminLayoutDashboardIndexRoute: AdminadminLayoutDashboardIndexRoute,
+  AdminadminLayoutOrdersIndexRoute: AdminadminLayoutOrdersIndexRoute,
+  AdminadminLayoutProductsIndexRoute: AdminadminLayoutProductsIndexRoute,
+  AdminadminLayoutUsersIndexRoute: AdminadminLayoutUsersIndexRoute,
+  AdminadminLayoutProductsCreateIndexRoute:
+    AdminadminLayoutProductsCreateIndexRoute,
+}
+
+const AdminadminLayoutRouteRouteWithChildren =
+  AdminadminLayoutRouteRoute._addFileChildren(
+    AdminadminLayoutRouteRouteChildren,
+  )
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  authSignInIndexRoute: authSignInIndexRoute,
-  authSignUpIndexRoute: authSignUpIndexRoute,
+  layoutRouteRoute: layoutRouteRouteWithChildren,
+  AdminadminLayoutRouteRoute: AdminadminLayoutRouteRouteWithChildren,
+  AdminIndexRoute: AdminIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

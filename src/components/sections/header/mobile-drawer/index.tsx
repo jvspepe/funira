@@ -23,6 +23,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 
 import type { Category } from "@/@types/models";
+
 import { TYPE_PARAM } from "@/config/constants";
 import { paths } from "@/config/paths";
 
