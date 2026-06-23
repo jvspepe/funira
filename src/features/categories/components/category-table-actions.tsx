@@ -9,7 +9,9 @@ import type { Category } from "@/features/categories/types";
 import { DeleteCategoryDialog } from "@/features/categories/components/delete-category-dialog";
 import { UpdateCategoryDialog } from "@/features/categories/components/update-category-dialog";
 
-interface CategoryTableActionsProps { cellProps: CellContext<Category, unknown> }
+interface CategoryTableActionsProps {
+  cellProps: CellContext<Category, unknown>;
+}
 
 export function CategoryTableActions({ cellProps }: CategoryTableActionsProps) {
   const [isDeleteCategoryDialogOpen, setIsDeleteCategoryDialogOpen] =
@@ -33,7 +35,9 @@ export function CategoryTableActions({ cellProps }: CategoryTableActionsProps) {
               <Menu.ItemGroupLabel>Actions</Menu.ItemGroupLabel>
               <Menu.Separator />
               <Menu.Item
-                onClick={() => setIsUpdateCategoryDialogOpen(true)}
+                onClick={() => {
+                  setIsUpdateCategoryDialogOpen(true);
+                }}
                 value="update-category"
               >
                 <Icon size="sm">
@@ -42,7 +46,9 @@ export function CategoryTableActions({ cellProps }: CategoryTableActionsProps) {
                 Update category
               </Menu.Item>
               <Menu.Item
-                onClick={() => setIsDeleteCategoryDialogOpen(true)}
+                onClick={() => {
+                  setIsDeleteCategoryDialogOpen(true);
+                }}
                 value="delete-category"
                 color="fg.error"
                 _hover={{ bg: "bg.error", color: "fg.error" }}

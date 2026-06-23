@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { object, pick } from "valibot";
+import { object } from "valibot";
 
 import * as categoryServices from "@/features/categories/services";
 import {
@@ -9,7 +9,7 @@ import {
 } from "@/features/categories/types";
 
 export const createCategory = createServerFn({ method: "POST" })
-  .inputValidator(InsertCategorySchema)
+  .validator(InsertCategorySchema)
   .handler(async ({ data }) => {
     const createdCategory = await categoryServices.createCategory(data);
 
@@ -17,10 +17,10 @@ export const createCategory = createServerFn({ method: "POST" })
   });
 
 export const getCategoryById = createServerFn({ method: "GET" })
-  .inputValidator(pick(CategorySchema, ["id"]))
+  .validator(object({ categoryId: CategorySchema.entries.id }))
   .handler(async ({ data }) => {
     const foundCategory = await categoryServices.getCategoryById({
-      categoryId: data.id,
+      categoryId: data.categoryId,
     });
 
     return foundCategory;
@@ -35,7 +35,7 @@ export const getCategories = createServerFn({ method: "GET" }).handler(
 );
 
 export const updateCategoryById = createServerFn({ method: "POST" })
-  .inputValidator(
+  .validator(
     object({
       categoryData: UpdateCategorySchema,
       categoryId: CategorySchema.entries.id,
@@ -51,10 +51,10 @@ export const updateCategoryById = createServerFn({ method: "POST" })
   });
 
 export const deleteCategoryById = createServerFn({ method: "GET" })
-  .inputValidator(pick(CategorySchema, ["id"]))
+  .validator(object({ categoryId: CategorySchema.entries.id }))
   .handler(async ({ data }) => {
     const deletedCategory = await categoryServices.deleteCategoryById({
-      categoryId: data.id,
+      categoryId: data.categoryId,
     });
 
     return deletedCategory;

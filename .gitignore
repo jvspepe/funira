@@ -4,3 +4,5 @@ node_modules
 /theme
 *.log
 .env
+# Local Netlify folder
+.netlify

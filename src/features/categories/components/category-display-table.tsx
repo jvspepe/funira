@@ -46,7 +46,7 @@ const columns: ColumnDef<Category>[] = [
     cell: (info) => {
       function handleCopyCategoryId() {
         toaster.promise(
-          navigator.clipboard.writeText(info.getValue() as string),
+          navigator.clipboard.writeText(String(info.getValue())),
           {
             loading: {
               title: "Copying ID...",

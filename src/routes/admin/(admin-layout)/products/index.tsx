@@ -13,7 +13,7 @@ import {
   Text,
   VisuallyHidden,
 } from "@chakra-ui/react";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   createColumnHelper,
   flexRender,
@@ -81,10 +81,10 @@ const columns = [
 ];
 
 export const Route = createFileRoute("/admin/(admin-layout)/products/")({
+  component: RouteComponent,
   loader: async ({ context }) => {
     await context.queryClient.prefetchQuery(categoriesQueryOptions());
   },
-  component: RouteComponent,
 });
 
 function RouteComponent() {
@@ -116,9 +116,13 @@ function RouteComponent() {
           <Heading size="2xl">Products</Heading>
           <Text color="fg.muted">9999 products found</Text>
         </Flex>
-        <Button>
-          <PlusIcon />
-          New product
+        <Button asChild>
+          <Link to="/admin/products/create">
+            <Icon size="sm">
+              <PlusIcon />
+            </Icon>
+            New product
+          </Link>
         </Button>
       </Flex>
       <Flex gap="2">

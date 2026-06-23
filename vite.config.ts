@@ -5,10 +5,8 @@ import viteReact from "@vitejs/plugin-react";
 import path from "node:path";
 import { defineConfig } from "vite";
 
-import neon from "./neon-vite-plugin.ts";
-
 const config = defineConfig({
-  plugins: [devtools(), netlify(), neon, tanstackStart(), viteReact()],
+  plugins: [devtools(), netlify(), tanstackStart(), viteReact()],
   resolve: {
     alias: {
       // oxlint-disable-next-line unicorn/prefer-module

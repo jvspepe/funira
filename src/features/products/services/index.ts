@@ -1,143 +1,90 @@
+import { eq } from "drizzle-orm";
+
 import type {
-  QueryDocumentSnapshot,
-  QueryNonFilterConstraint,
-} from "firebase/firestore";
+  InsertProductWithDetails,
+  Product,
+  UpdateProduct,
+} from "@/features/products/types";
 
-import {
-  collection,
-  deleteDoc,
-  doc,
-  getCountFromServer,
-  getDoc,
-  getDocs,
-  limit,
-  orderBy,
-  query,
-  serverTimestamp,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { database } from "@/config/database";
+import { productCategories } from "@/features/product-categories/schemas";
+import { products } from "@/features/products/schemas";
 
-import type { Product } from "@/@types/models";
+interface ImageInput {
+  altText?: string;
+  displayOrder: number;
+  imageUrl: string;
+}
 
-import { database } from "@/config/app";
-import { uploadImage } from "@/features/storage/services";
-import {
-  converter,
-  generateRandomNumber,
-  generateRandomRating,
-} from "@/features/utils";
+type CreateProductData = InsertProductWithDetails & {
+  images: ImageInput[];
+};
 
-const productsCollectionRef = collection(database, "products").withConverter(
-  converter<Product>()
-);
+export async function createProduct(data: CreateProductData): Promise<Product> {
+  const { categories: categoryIds, ...productFields } = data;
 
-export async function createProduct(
-  product: Omit<
-    Product,
-    "id" | "ratingsAverage" | "sales" | "createdAt" | "imageCover"
-  > & {
-    imageCover: File;
+  const [createdProduct] = await database
+    .insert(products)
+    .values(productFields)
+    .returning();
+
+  if (categoryIds.length > 0) {
+    await database.insert(productCategories).values(
+      categoryIds.map((categoryId) => ({
+        categoryId,
+        productId: createdProduct.id,
+      }))
+    );
   }
-) {
-  const productRef = doc(collection(database, "products")).withConverter(
-    converter<Product>()
-  );
 
-  const imageCoverURL = await uploadImage(
-    `products/${productRef.id}`,
-    product.imageCover
-  );
+  return createdProduct;
+}
 
-  await setDoc(productRef, {
-    id: productRef.id,
-    ...product,
-    imageCover: imageCoverURL,
-    ratingsAverage: generateRandomRating(3, 5),
-    sales: generateRandomNumber(30, 100),
-    createdAt: serverTimestamp(),
+export async function getProductById({
+  productId,
+}: {
+  productId: string;
+}): Promise<Product> {
+  const foundProduct = await database.query.products.findFirst({
+    where: eq(products.id, productId),
   });
-}
 
-export async function getProduct(productId: string): Promise<Product> {
-  const product = await getDoc(
-    doc(database, "products", productId).withConverter(converter<Product>())
-  );
-
-  if (!product.exists()) {
-    throw new Error("Produto não existe");
+  if (!foundProduct) {
+    throw new Error("Product not found");
   }
 
-  return product.data();
+  return foundProduct;
 }
 
-export async function getAllProducts(
-  ...queryConstraints: QueryNonFilterConstraint[]
-): Promise<{
-  products: Product[];
-  lastDocument?: QueryDocumentSnapshot<Product, Product>;
-  totalSize?: number;
-}> {
-  const count = await getCountFromServer(
-    query(productsCollectionRef, ...queryConstraints)
-  );
-  const result = await getDocs(
-    query(productsCollectionRef, ...queryConstraints)
-  );
-
-  if (result.empty) {
-    return {
-      products: [],
-    };
-  }
-
-  const lastDocument = result.docs[result.size - 1];
-
-  const products = result.docs.map((product) => product.data());
-
-  return {
-    lastDocument,
-    products,
-    totalSize: count.data().count,
-  };
+export async function getProducts(): Promise<Product[]> {
+  return await database.query.products.findMany();
 }
 
-interface GetProductsOptions {
-  limitBy?: number;
-  sortBy?: [keyof Product, "asc" | "desc"];
-}
-export async function getProducts({
-  limitBy = 8,
-  sortBy = ["createdAt", "desc"],
-}: GetProductsOptions) {
-  const productsQuery = query(
-    collection(database, "products").withConverter(converter<Product>()),
-    orderBy(...sortBy),
-    limit(limitBy)
-  );
+export async function updateProductById({
+  productId,
+  productData,
+}: {
+  productId: string;
+  productData: UpdateProduct;
+}): Promise<Product> {
+  const [updatedProduct] = await database
+    .update(products)
+    .set(productData)
+    .where(eq(products.id, productId))
+    .returning();
 
-  const data = await getDocs(productsQuery);
-
-  if (data.empty) {
-    return [];
-  }
-
-  return data.docs.map((product) => product.data());
+  return updatedProduct;
 }
 
-export async function updateProduct(product: Partial<Product>) {
-  if (!product.id) {
-    throw new Error("Missing required field: ID");
-  }
+export async function deleteProductById({
+  productId,
+}: {
+  productId: string;
+}): Promise<Product> {
+  const [deletedProduct] = await database
+    .delete(products)
+    .where(eq(products.id, productId))
+    .returning();
 
-  await updateDoc(
-    doc(database, "products", product.id).withConverter(converter<Product>()),
-    product
-  );
-}
-
-export async function deleteProduct(productId: string) {
-  await deleteDoc(doc(database, "products", productId));
-
-  return "Produto excluído com sucesso";
+  return deletedProduct;
 }

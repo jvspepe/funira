@@ -1,3 +1,4 @@
+// oxlint-disable unicorn/no-array-for-each
 import {
   Box,
   Button,
@@ -8,24 +9,28 @@ import {
   Heading,
   Icon,
   Input,
+  InputGroup,
+  NumberInput,
   Select,
   Text,
   Textarea,
 } from "@chakra-ui/react";
 import { useForm } from "@tanstack/react-form";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
-import { PlusIcon, UploadIcon } from "lucide-react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowLeftIcon, PlusIcon, UploadIcon } from "lucide-react";
 
-import type { InsertProductWithCategories } from "@/features/products/types";
+import type { InsertProductWithDetails } from "@/features/products/types";
 
 import { categoriesQueryOptions } from "@/features/categories/queries";
-import { InsertProductWithCategoriesSchema } from "@/features/products/types";
+import { InsertProductWithDetailsSchema } from "@/features/products/types";
 
-const defaultValues: InsertProductWithCategories = {
+const defaultValues: InsertProductWithDetails = {
   categories: [],
   description: "",
+  images: [],
   name: "",
+  price: "0",
 };
 
 export const Route = createFileRoute("/admin/(admin-layout)/products/create/")({
@@ -44,10 +49,24 @@ function RouteComponent() {
   const form = useForm({
     defaultValues,
     onSubmit: ({ value, formApi }) => {
+      const formData = new FormData();
+
+      formData.append("name", value.name);
+      formData.append("description", value.description);
+      formData.append("price", value.price);
+
+      value.categories.forEach((category) => {
+        formData.append("categories", category);
+      });
+
+      value.images.forEach((image) => {
+        formData.append("images", image);
+      });
+
       formApi.reset();
     },
     validators: {
-      onSubmit: InsertProductWithCategoriesSchema,
+      onSubmit: InsertProductWithDetailsSchema,
     },
   });
 
@@ -58,19 +77,25 @@ function RouteComponent() {
       onSubmit={(event) => {
         event.preventDefault();
         event.stopPropagation();
-        form.handleSubmit();
+        void form.handleSubmit();
       }}
-      id="category-form"
       direction="column"
       gap="6"
-      >
-          <Flex direction="column">
-
-          <Heading>
-              Create a new product
-              </Heading>
-              <Text color="fg.muted">Fill the form below to add a new product</Text>
-          </Flex>
+    >
+      <Flex direction="column" gap="6">
+        <Button asChild alignSelf="self-start">
+          <Link to="/admin/products">
+            <Icon size="sm">
+              <ArrowLeftIcon />
+            </Icon>
+            Back to Products
+          </Link>
+        </Button>
+        <Flex direction="column">
+          <Heading>Create a new product</Heading>
+          <Text color="fg.muted">Fill the form below to add a new product</Text>
+        </Flex>
+      </Flex>
       <form.Field name="name">
         {(field) => {
           const isInvalid =
@@ -81,16 +106,16 @@ function RouteComponent() {
               <Field.Label htmlFor={field.name}>Name</Field.Label>
               <Input
                 id={field.name}
-                onChange={(event) => {
-                  field.handleChange(event.target.value);
-                }}
-                value={field.state.value}
-                onBlur={field.handleBlur}
                 name={field.name}
                 type="text"
                 placeholder="Ex: Chairs, Wardrobes, Beds..."
+                value={field.state.value}
+                onChange={(event) => {
+                  field.handleChange(event.target.value);
+                }}
+                onBlur={field.handleBlur}
               />
-              {field.state.meta?.errors.map((error) => (
+              {field.state.meta.errors.map((error) => (
                 <Field.ErrorText key={error?.message}>
                   {error?.message}
                 </Field.ErrorText>
@@ -105,87 +130,122 @@ function RouteComponent() {
             <Field.Label htmlFor={field.name}>Description</Field.Label>
             <Textarea
               id={field.name}
-              onChange={(event) => {
-                field.handleChange(event.target.value);
-              }}
-              value={field.state.value}
-              onBlur={field.handleBlur}
               name={field.name}
               rows={4}
               placeholder="A brief product description"
-            />
-            {field.state.meta.errors.length > 0 &&
-              field.state.meta.errors.map((error, index) => (
-                <Field.ErrorText key={`${field.name}-${index}`}>
-                  {error?.message}
-                </Field.ErrorText>
-              ))}
-          </Field.Root>
-        )}
-      </form.Field>
-      <form.Field name="categories">
-        {(field) => (
-          <Field.Root>
-            <Select.Root
-              id={field.name}
-              ids={{
-                trigger: field.name,
-              }}
-              name={field.name}
               value={field.state.value}
-              onValueChange={({ value }) => {
-                field.handleChange(value);
+              onChange={(event) => {
+                field.handleChange(event.target.value);
               }}
-              onInteractOutside={field.handleBlur}
-              collection={categoriesCollection}
-              multiple
-            >
-              <Select.Label htmlFor={field.name}>Categories</Select.Label>
-              <Select.HiddenSelect />
-              <Select.Control>
-                <Select.Trigger>
-                  <Select.ValueText placeholder="Select categories" />
-                </Select.Trigger>
-                <Select.IndicatorGroup>
-                  <Select.Indicator />
-                  <Select.ClearTrigger />
-                </Select.IndicatorGroup>
-              </Select.Control>
-              <Select.Positioner>
-                <Select.Content>
-                  <Select.ItemGroup>
-                    <Select.ItemGroupLabel>Categories</Select.ItemGroupLabel>
-                    {categoriesCollection.items.map((category) => (
-                      <Select.Item item={category} key={category.id}>
-                        {category.name}
-                        <Select.ItemIndicator />
-                      </Select.Item>
-                    ))}
-                  </Select.ItemGroup>
-                </Select.Content>
-              </Select.Positioner>
-            </Select.Root>
-            {field.state.meta.errors.length > 0 &&
-              field.state.meta.errors.map((error, index) => (
+              onBlur={field.handleBlur}
+            />
+            {field.state.meta.errors.map((error, index) => (
+              <Field.ErrorText key={`${field.name}-${index}`}>
+                {error?.message}
+              </Field.ErrorText>
+            ))}
+          </Field.Root>
+        )}
+      </form.Field>
+      <Flex gap="4">
+        <form.Field name="price">
+          {(field) => {
+            const isInvalid =
+              field.state.meta.isTouched && !field.state.meta.isValid;
+
+            return (
+              <Field.Root invalid={isInvalid}>
+                <Field.Label htmlFor={field.name}>Price</Field.Label>
+                <NumberInput.Root
+                  value={field.state.value}
+                  onValueChange={({ value }) => {
+                    field.handleChange(value);
+                  }}
+                  onBlur={field.handleBlur}
+                  step={0.01}
+                  min={0}
+                >
+                  <NumberInput.Control />
+                  <InputGroup startElement="R$">
+                    <NumberInput.Input id={field.name} name={field.name} />
+                  </InputGroup>
+                </NumberInput.Root>
+                {field.state.meta.errors.map((error) => (
+                  <Field.ErrorText key={error?.message}>
+                    {error?.message}
+                  </Field.ErrorText>
+                ))}
+              </Field.Root>
+            );
+          }}
+        </form.Field>
+        <form.Field name="categories">
+          {(field) => (
+            <Field.Root flexGrow={1}>
+              <Select.Root
+                name={field.name}
+                value={field.state.value}
+                onValueChange={({ value }) => {
+                  field.handleChange(value);
+                }}
+                onInteractOutside={field.handleBlur}
+                collection={categoriesCollection}
+                multiple
+              >
+                <Select.Label>Categories</Select.Label>
+                <Select.HiddenSelect />
+                <Select.Control>
+                  <Select.Trigger>
+                    <Select.ValueText placeholder="Select categories" />
+                  </Select.Trigger>
+                  <Select.IndicatorGroup>
+                    <Select.Indicator />
+                    <Select.ClearTrigger />
+                  </Select.IndicatorGroup>
+                </Select.Control>
+                <Select.Positioner>
+                  <Select.Content>
+                    <Select.ItemGroup>
+                      <Select.ItemGroupLabel>Categories</Select.ItemGroupLabel>
+                      {categoriesCollection.items.map((category) => (
+                        <Select.Item item={category} key={category.id}>
+                          {category.name}
+                          <Select.ItemIndicator />
+                        </Select.Item>
+                      ))}
+                    </Select.ItemGroup>
+                  </Select.Content>
+                </Select.Positioner>
+              </Select.Root>
+              {field.state.meta.errors.map((error, index) => (
                 <Field.ErrorText key={`${field.name}-${index}`}>
                   {error?.message}
                 </Field.ErrorText>
               ))}
-          </Field.Root>
-        )}
-      </form.Field>
-      <form.Field name="name">
+            </Field.Root>
+          )}
+        </form.Field>
+      </Flex>
+      <form.Field name="images">
         {(field) => {
           const isInvalid =
             field.state.meta.isTouched && !field.state.meta.isValid;
 
           return (
             <Field.Root invalid={isInvalid}>
-              <Field.Label htmlFor={field.name}>Name</Field.Label>
+              <Field.Label htmlFor={field.name}>Images</Field.Label>
               <FileUpload.Root
-                alignItems="stretch"
+                id={field.name}
+                name={field.name}
+                acceptedFiles={field.state.value}
+                onFileChange={(details) => {
+                  console.log(details);
+                  field.handleChange(details.acceptedFiles);
+                }}
                 accept={["image/png", "image/jpeg"]}
-                maxFiles={10}
+                maxFiles={5}
+                maxFileSize={1024 * 1024 * 5}
+                alignItems="stretch"
               >
                 <FileUpload.HiddenInput />
                 <FileUpload.Dropzone>
@@ -195,7 +255,7 @@ function RouteComponent() {
                   <FileUpload.DropzoneContent>
                     <Box>Drag and drop files here</Box>
                     <Box color="fg.muted">
-                      .png, .jpg up to 5MB per file, max. of 5 files
+                      .png, .jpg up to 2MB per file, max. of 5 files
                     </Box>
                   </FileUpload.DropzoneContent>
                 </FileUpload.Dropzone>
@@ -204,8 +264,8 @@ function RouteComponent() {
                   gridTemplateColumns="repeat(3, 1fr)"
                 >
                   <FileUpload.Context>
-                    {({ acceptedFiles }) =>
-                      acceptedFiles.map((file) => (
+                    {({ acceptedFiles: files }) =>
+                      files.map((file) => (
                         <FileUpload.Item
                           key={file.name}
                           file={file}
@@ -232,11 +292,6 @@ function RouteComponent() {
                   </FileUpload.Context>
                 </FileUpload.ItemGroup>
               </FileUpload.Root>
-              {field.state.meta?.errors.map((error) => (
-                <Field.ErrorText key={error?.message}>
-                  {error?.message}
-                </Field.ErrorText>
-              ))}
             </Field.Root>
           );
         }}
@@ -249,7 +304,8 @@ function RouteComponent() {
             type="submit"
             disabled={!canSubmit}
             loading={isSubmitting}
-            loadingText="Loading..."
+            loadingText="Creating product..."
+            alignSelf="end"
           >
             <Icon size="sm">
               <PlusIcon />

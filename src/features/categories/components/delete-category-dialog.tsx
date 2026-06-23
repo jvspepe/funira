@@ -30,21 +30,16 @@ export function DeleteCategoryDialog({
     mutationFn: async (categoryId: string) =>
       await deleteCategoryFn({
         data: {
-          id: categoryId,
+          categoryId,
         },
       }),
     onSuccess: (deletedCategory) => {
       queryClient.setQueryData(
         categoryQueryKeys.list,
-        (previousCategories: Category[]) => {
-          if (!previousCategories) {
-            return [];
-          }
-
-          return previousCategories.filter(
-            (category) => category.id !== deletedCategory.id
-          );
-        }
+        (previousCategories: Category[]) =>
+          previousCategories.filter(
+            (previousCategory) => previousCategory.id !== deletedCategory.id
+          )
       );
     },
   });
@@ -65,7 +60,12 @@ export function DeleteCategoryDialog({
   }
 
   return (
-    <Dialog.Root open={open} onOpenChange={(e) => setIsOpen(e.open)}>
+    <Dialog.Root
+      open={open}
+      onOpenChange={(e) => {
+        setIsOpen(e.open);
+      }}
+    >
       <Portal>
         <Dialog.Backdrop />
         <Dialog.Positioner>
@@ -83,11 +83,18 @@ export function DeleteCategoryDialog({
               </Text>
             </Dialog.Body>
             <Dialog.Footer>
-              <Button variant="outline" onClick={() => setIsOpen(false)}>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setIsOpen(false);
+                }}
+              >
                 Cancel
               </Button>
               <Button
-                onClick={() => handleDeleteCategory(category.id)}
+                onClick={() => {
+                  handleDeleteCategory(category.id);
+                }}
                 colorPalette="red"
                 loading={deleteCategoryMutation.isPending}
                 loadingText

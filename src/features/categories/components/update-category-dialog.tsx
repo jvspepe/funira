@@ -38,8 +38,10 @@ export function UpdateCategoryDialog({
       queryClient.setQueryData(
         categoryQueryKeys.list,
         (previousCategories: Category[]) =>
-          previousCategories.map((category) =>
-            category.id === updatedCategory.id ? updatedCategory : category
+          previousCategories.map((previousCategory) =>
+            previousCategory.id === updatedCategory.id
+              ? updatedCategory
+              : previousCategory
           )
       );
     },
@@ -138,7 +140,7 @@ export function UpdateCategoryDialog({
                     />
                     {field.state.meta.errors.length > 0 &&
                       field.state.meta.errors.map((error, index) => (
-                        <Field.ErrorText key={`${field.name  }-${  index}`}>
+                        <Field.ErrorText key={`${field.name}-${index}`}>
                           {error?.message}
                         </Field.ErrorText>
                       ))}
