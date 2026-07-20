@@ -9,7 +9,7 @@ export const productImages = pgTable("product_images", {
   altText: text("alt_text"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   displayOrder: integer("display_order").notNull(),
-  id: uuid()
+  id: uuid("id")
     .primaryKey()
     .$defaultFn(() => uuidv7()),
   imageUrl: text("image_url").notNull(),

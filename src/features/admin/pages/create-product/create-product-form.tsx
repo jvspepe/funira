@@ -294,7 +294,7 @@ export function CreateProductForm() {
                     width="full"
                   >
                     <NumberInput.Control />
-                    <InputGroup startElement={"R$"}>
+                    <InputGroup startElement="R$">
                       <NumberInput.Input
                         onBlur={field.onBlur}
                         placeholder={t("products.details.price")}

@@ -5,16 +5,16 @@ import {
   integer,
   minValue,
   nonEmpty,
+  nullable,
   number,
   object,
   omit,
-  optional,
   pipe,
   string,
 } from "valibot";
 
 export const ProductImageSchema = object({
-  altText: optional(string()),
+  altText: nullable(string()),
   createdAt: date(),
   displayOrder: pipe(number(), integer(), minValue(1)),
   id: pipe(string(), nonEmpty()),

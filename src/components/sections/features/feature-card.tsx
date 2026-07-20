@@ -1,26 +1,25 @@
-import { Flex, Heading, Icon, Text } from "@chakra-ui/react";
+import type { ReactNode } from "react";
 
-import type Feature from "@/@types/feature";
+import { Card, Heading, Icon } from "@chakra-ui/react";
 
-interface Props {
+export interface Feature {
+  description: string;
+  heading: string;
+  icon: ReactNode;
+}
+
+interface FeatureCardProps {
   feature: Feature;
 }
 
-export function FeatureCard({ feature }: Props) {
+export function FeatureCard({ feature }: FeatureCardProps) {
   return (
-    <Flex
-      height="100%"
-      direction="column"
-      gap="{spacing.6}"
-      padding="{spacing.6}"
-      bgColor="bg.muted"
-      borderRadius="{radii.l2}"
-    >
-      <Icon as={feature.icon} height="1.5rem" width="1.5rem" />
-      <Heading as="h3" size="xl" fontWeight="normal">
-        {feature.title}
-      </Heading>
-      <Text>{feature.details}</Text>
-    </Flex>
+    <Card.Root variant="subtle">
+      <Card.Header flexDirection="column" gap="4">
+        <Icon aria-hidden>{feature.icon}</Icon>
+        <Heading fontWeight="normal">{feature.heading}</Heading>
+      </Card.Header>
+      <Card.Body>{feature.description}</Card.Body>
+    </Card.Root>
   );
 }

@@ -1,10 +1,19 @@
 import type { InferInput } from "valibot";
 
-import { date, nonEmpty, object, omit, partial, pipe, string } from "valibot";
+import {
+  date,
+  nonEmpty,
+  nullable,
+  object,
+  omit,
+  partial,
+  pipe,
+  string,
+} from "valibot";
 
 export const CategorySchema = object({
   createdAt: date(),
-  description: string(),
+  description: nullable(string()),
   id: pipe(string(), nonEmpty("A category must have an ID")),
   name: pipe(string(), nonEmpty("A category must have a name")),
   updatedAt: date(),

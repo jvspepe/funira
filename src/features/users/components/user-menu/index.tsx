@@ -28,7 +28,11 @@ export function UserMenu() {
       <Portal>
         <Menu.Positioner>
           <Menu.Content>
-            {!currentUserData ? (
+            {currentUserData ? (
+              <Menu.Item onClick={handleSignOut} value="sign-out">
+                {t("common:buttons.sign-out")}
+              </Menu.Item>
+            ) : (
               <>
                 <Menu.Item value="sign-in" asChild>
                   <Link to={paths.user.signIn}>
@@ -41,10 +45,6 @@ export function UserMenu() {
                   </Link>
                 </Menu.Item>
               </>
-            ) : (
-              <Menu.Item onClick={handleSignOut} value="sign-out">
-                {t("common:buttons.sign-out")}
-              </Menu.Item>
             )}
           </Menu.Content>
         </Menu.Positioner>

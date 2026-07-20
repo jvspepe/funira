@@ -15,6 +15,9 @@ import {
   string,
 } from "valibot";
 
+import { CategorySchema } from "@/features/categories/types";
+import { ProductImageSchema } from "@/features/product-images/types";
+
 export const ProductSchema = object({
   createdAt: date(),
   description: pipe(string(), nonEmpty()),
@@ -22,6 +25,12 @@ export const ProductSchema = object({
   name: pipe(string(), nonEmpty()),
   price: pipe(string(), decimal()),
   updatedAt: date(),
+});
+
+export const ProductWithDetailsSchema = object({
+  ...ProductSchema.entries,
+  categories: array(CategorySchema),
+  images: array(ProductImageSchema),
 });
 
 export const InsertProductSchema = pick(ProductSchema, [
@@ -45,6 +54,8 @@ export const InsertProductWithDetailsSchema = object({
 export const UpdateProductSchema = partial(InsertProductSchema);
 
 export type Product = InferInput<typeof ProductSchema>;
+
+export type ProductWithDetails = InferInput<typeof ProductWithDetailsSchema>;
 
 export type InsertProduct = InferInput<typeof InsertProductSchema>;
 

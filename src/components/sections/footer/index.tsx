@@ -1,118 +1,52 @@
-import {
-  Box,
-  Container,
-  Heading,
-  List,
-  Link,
-  Separator,
-  Flex,
-  Grid,
-} from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
-import { useTranslation } from "react-i18next";
-import { Link as RouterLink } from "react-router";
-
-import { Copyright } from "@/components/sections/copyright";
-import { SORT_PARAM, TYPE_PARAM } from "@/config/constants";
-import { paths } from "@/config/paths";
-import { getCategories } from "@/features/categories/services";
-
-import { FooterForm } from "./footer-form";
+import { Heading, Flex, Text, Icon } from "@chakra-ui/react";
+import { SquareIcon } from "lucide-react";
 
 export function Footer() {
-  const { t, i18n } = useTranslation();
-
-  const productRoutes = t("footer.menu.items", {
-    returnObjects: true,
-  }) as Record<string, string>[];
-
-  const companyRoutes = t("footer.company.items", {
-    returnObjects: true,
-  }) as string[];
-
-  const currentLang = i18n.language as "pt" | "en";
-
-  const categoriesQuery = useQuery({
-    queryFn: getCategories,
-    queryKey: ["categories"],
-  });
-
   return (
-    <Box>
-      <Container>
-        <Grid as="footer" gap="{spacing.6}" paddingBlock="{spacing.6}">
-          <Flex direction={{ base: "column", lg: "row" }} gap="{spacing.12}">
-            <Flex wrap="wrap" gap="{spacing.12}">
-              <Flex direction="column" gap="{spacing.2}">
-                <Heading size="md">{t("footer.categories.title")}</Heading>
-                <List.Root
-                  as="ul"
-                  display="flex"
-                  flexDirection="column"
-                  gap="{spacing.2}"
-                  listStyle="none"
-                  margin="0"
-                >
-                  {categoriesQuery.data?.map((item) => (
-                    <List.Item key={item.id} asChild fontSize="0.875rem">
-                      <Link asChild>
-                        <RouterLink
-                          to={`${paths.user.products}?${TYPE_PARAM}=${item.value}`}
-                        >
-                          {item.label[currentLang] || item.label.en}
-                        </RouterLink>
-                      </Link>
-                    </List.Item>
-                  ))}
-                </List.Root>
-              </Flex>
-              <Flex direction="column" gap="{spacing.2}">
-                <Heading size="md">{t("footer.menu.title")}</Heading>
-                <List.Root
-                  display="flex"
-                  flexDirection="column"
-                  gap="{spacing.2}"
-                  listStyle="none"
-                  margin="0"
-                >
-                  {Object.keys(productRoutes).map((key) => (
-                    <List.Item key={key} asChild fontSize="0.875rem">
-                      <Link asChild>
-                        <RouterLink
-                          to={`${paths.user.products}?${SORT_PARAM}=${key}`}
-                        >
-                          {t(`footer.menu.items.${key}`)}
-                        </RouterLink>
-                      </Link>
-                    </List.Item>
-                  ))}
-                </List.Root>
-              </Flex>
-              <Flex direction="column" gap="{spacing.2}">
-                <Heading size="md">{t("footer.company.title")}</Heading>
-                <List.Root
-                  display="flex"
-                  flexDirection="column"
-                  gap="{spacing.2}"
-                  listStyle="none"
-                  margin="0"
-                >
-                  {companyRoutes.map((route) => (
-                    <List.Item key={route} asChild fontSize="0.875rem">
-                      <Link asChild>
-                        <RouterLink to="/">{route}</RouterLink>
-                      </Link>
-                    </List.Item>
-                  ))}
-                </List.Root>
-              </Flex>
-            </Flex>
-            <FooterForm />
+    <Flex flexDirection="column" paddingY="8">
+      <Heading size="6xl">Funira</Heading>
+      <Flex
+        flexDirection={{ md: "row", sm: "column" }}
+        gap="4"
+        justifyContent={{ md: "space-between" }}
+      >
+        <Flex
+          as="ul"
+          flexDirection={{ md: "row", sm: "column" }}
+          alignItems={{ md: "center" }}
+          gap="4"
+        >
+          <Text as="li" color="fg.muted">
+            About Us
+          </Text>
+          <Text as="li" color="fg.muted">
+            Contact
+          </Text>
+          <Text as="li" color="fg.muted">
+            Careers
+          </Text>
+          <Text as="li" color="fg.muted">
+            Terms of Service
+          </Text>
+          <Text as="li" color="fg.muted">
+            Privacy Policy
+          </Text>
+        </Flex>
+        <Flex gap="4" alignItems="center" justifyContent="space-between">
+          <Text>Copyright 2025, Funira LTDA</Text>
+          <Flex gap="2">
+            <Icon>
+              <SquareIcon />
+            </Icon>
+            <Icon>
+              <SquareIcon />
+            </Icon>
+            <Icon>
+              <SquareIcon />
+            </Icon>
           </Flex>
-          <Separator />
-          <Copyright />
-        </Grid>
-      </Container>
-    </Box>
+        </Flex>
+      </Flex>
+    </Flex>
   );
 }

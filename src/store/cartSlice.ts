@@ -47,10 +47,10 @@ const cartSlice = createSlice({
         (product) => product.id === action.payload.id
       );
 
-      if (cartItemIndex !== -1) {
-        draft.cart[cartItemIndex].quantity += action.payload.quantity;
-      } else {
+      if (cartItemIndex === -1) {
         draft.cart.push(action.payload);
+      } else {
+        draft.cart[cartItemIndex].quantity += action.payload.quantity;
       }
       draft.total = calculateTotal(draft.cart);
 

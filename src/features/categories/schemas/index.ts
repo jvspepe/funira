@@ -7,11 +7,11 @@ import { productCategories } from "@/features/product-categories/schemas";
 
 export const categories = pgTable("categories", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
-  description: varchar({ length: 150 }).notNull(),
-  id: uuid()
+  description: varchar("description", { length: 150 }).notNull(),
+  id: uuid("id")
     .primaryKey()
     .$defaultFn(() => uuidv7()),
-  name: varchar({ length: 30 }).notNull(),
+  name: varchar("name", { length: 30 }).notNull(),
   updatedAt: timestamp("updated_at")
     .defaultNow()
     .$onUpdate(() => new Date())

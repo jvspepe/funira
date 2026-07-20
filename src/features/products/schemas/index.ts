@@ -14,12 +14,12 @@ import { productImages } from "@/features/product-images/schemas";
 
 export const products = pgTable("products", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
-  description: varchar({ length: 150 }).notNull(),
-  id: uuid()
+  description: varchar("description", { length: 150 }).notNull(),
+  id: uuid("id")
     .primaryKey()
     .$defaultFn(() => uuidv7()),
-  name: varchar({ length: 30 }).notNull(),
-  price: numeric({ precision: 15, scale: 4 }).notNull(),
+  name: varchar("name", { length: 30 }).notNull(),
+  price: numeric("price", { precision: 15, scale: 4 }).notNull(),
   updatedAt: timestamp("updated_at")
     .defaultNow()
     .$onUpdate(() => new Date())

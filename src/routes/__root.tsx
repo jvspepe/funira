@@ -13,11 +13,11 @@ import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { Provider } from "@/components/ui/provider";
 import { Toaster } from "@/components/ui/toaster";
 
-interface MyRouterContext {
+interface RouterContext {
   queryClient: QueryClient;
 }
 
-export const Route = createRootRouteWithContext<MyRouterContext>()({
+export const Route = createRootRouteWithContext<RouterContext>()({
   head: () => ({
     links: [],
     meta: [

@@ -7,13 +7,13 @@ import { categories } from "@/features/categories/schemas";
 import { products } from "@/features/products/schemas";
 
 export const productCategories = pgTable("product_categories", {
-  categoryId: uuid()
+  categoryId: uuid("category_id")
     .notNull()
     .references(() => categories.id, { onDelete: "cascade" }),
-  id: uuid()
+  id: uuid("id")
     .primaryKey()
     .$defaultFn(() => uuidv7()),
-  productId: uuid()
+  productId: uuid("product_id")
     .notNull()
     .references(() => products.id, { onDelete: "cascade" }),
 });

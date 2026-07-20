@@ -17,12 +17,15 @@ import {
 } from "@chakra-ui/react";
 import { useForm } from "@tanstack/react-form";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { ArrowLeftIcon, PlusIcon, UploadIcon } from "lucide-react";
 
 import type { InsertProductWithDetails } from "@/features/products/types";
 
+import { toaster } from "@/components/ui/toaster";
 import { categoriesQueryOptions } from "@/features/categories/queries";
+import { createProduct } from "@/features/products/functions";
 import { InsertProductWithDetailsSchema } from "@/features/products/types";
 
 const defaultValues: InsertProductWithDetails = {
@@ -35,10 +38,15 @@ const defaultValues: InsertProductWithDetails = {
 
 export const Route = createFileRoute("/admin/(admin-layout)/products/create/")({
   component: RouteComponent,
+  loader: async ({ context }) => {
+    await context.queryClient.prefetchQuery(categoriesQueryOptions());
+  },
 });
 
 function RouteComponent() {
   const { data: categories } = useSuspenseQuery(categoriesQueryOptions());
+  const navigate = useNavigate();
+  const createProductFn = useServerFn(createProduct);
 
   const categoriesCollection = createListCollection({
     itemToString: (item) => item.name,
@@ -48,7 +56,7 @@ function RouteComponent() {
 
   const form = useForm({
     defaultValues,
-    onSubmit: ({ value, formApi }) => {
+    onSubmit: async ({ value, formApi }) => {
       const formData = new FormData();
 
       formData.append("name", value.name);
@@ -63,7 +71,21 @@ function RouteComponent() {
         formData.append("images", image);
       });
 
+      try {
+        await createProductFn({ data: formData });
+      } catch (error) {
+        console.error(error);
+
+        toaster.create({ title: "Failed to create product", type: "error" });
+        return;
+      }
+
+      toaster.create({
+        title: "Product created successfully!",
+        type: "success",
+      });
       formApi.reset();
+      await navigate({ to: "/admin/products" });
     },
     validators: {
       onSubmit: InsertProductWithDetailsSchema,
@@ -125,27 +147,32 @@ function RouteComponent() {
         }}
       </form.Field>
       <form.Field name="description">
-        {(field) => (
-          <Field.Root>
-            <Field.Label htmlFor={field.name}>Description</Field.Label>
-            <Textarea
-              id={field.name}
-              name={field.name}
-              rows={4}
-              placeholder="A brief product description"
-              value={field.state.value}
-              onChange={(event) => {
-                field.handleChange(event.target.value);
-              }}
-              onBlur={field.handleBlur}
-            />
-            {field.state.meta.errors.map((error, index) => (
-              <Field.ErrorText key={`${field.name}-${index}`}>
-                {error?.message}
-              </Field.ErrorText>
-            ))}
-          </Field.Root>
-        )}
+        {(field) => {
+          const isInvalid =
+            field.state.meta.isTouched && !field.state.meta.isValid;
+
+          return (
+            <Field.Root invalid={isInvalid}>
+              <Field.Label htmlFor={field.name}>Description</Field.Label>
+              <Textarea
+                id={field.name}
+                name={field.name}
+                rows={4}
+                placeholder="A brief product description"
+                value={field.state.value}
+                onChange={(event) => {
+                  field.handleChange(event.target.value);
+                }}
+                onBlur={field.handleBlur}
+              />
+              {field.state.meta.errors.map((error, index) => (
+                <Field.ErrorText key={`${field.name}-${index}`}>
+                  {error?.message}
+                </Field.ErrorText>
+              ))}
+            </Field.Root>
+          );
+        }}
       </form.Field>
       <Flex gap="4">
         <form.Field name="price">
@@ -239,7 +266,6 @@ function RouteComponent() {
                 name={field.name}
                 acceptedFiles={field.state.value}
                 onFileChange={(details) => {
-                  console.log(details);
                   field.handleChange(details.acceptedFiles);
                 }}
                 accept={["image/png", "image/jpeg"]}
@@ -255,7 +281,7 @@ function RouteComponent() {
                   <FileUpload.DropzoneContent>
                     <Box>Drag and drop files here</Box>
                     <Box color="fg.muted">
-                      .png, .jpg up to 2MB per file, max. of 5 files
+                      .png, .jpg up to 5MB per file, max. of 5 files
                     </Box>
                   </FileUpload.DropzoneContent>
                 </FileUpload.Dropzone>
@@ -292,6 +318,11 @@ function RouteComponent() {
                   </FileUpload.Context>
                 </FileUpload.ItemGroup>
               </FileUpload.Root>
+              {field.state.meta.errors.map((error, index) => (
+                <Field.ErrorText key={`${field.name}-error-${index}`}>
+                  {error?.message}
+                </Field.ErrorText>
+              ))}
             </Field.Root>
           );
         }}

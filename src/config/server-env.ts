@@ -5,6 +5,7 @@ const ServerEnvSchema = object({
   BETTER_AUTH_URL: pipe(string(), nonEmpty(), url()),
   DATABASE_URL: pipe(string(), nonEmpty(), url()),
   SUPABASE_PLUBISHABLE_KEY: pipe(string(), nonEmpty()),
+  SUPABASE_SECRET_KEY: pipe(string(), nonEmpty()),
   SUPABASE_URL: pipe(string(), nonEmpty(), url()),
 });
 

@@ -2,8 +2,7 @@ import type { ReactNode } from "react";
 
 import { useEffect, useMemo, useState } from "react";
 
-import { handleCurrentUser } from "@/features/users/services";
-import { getUser } from "@/features/users/services";
+import { handleCurrentUser, getUser } from "@/features/users/services";
 
 import type { IAuthContext } from "./auth-context";
 
@@ -32,11 +31,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   useEffect(() => {
     const unsubscribe = handleCurrentUser((user) => {
-      if (!user) {
-        setCurrentUser(null);
-        setCurrentUserData(null);
-        setLoading(false);
-      } else {
+      if (user) {
         getUser(user.uid)
           .then((data) => {
             setCurrentUser(user);
@@ -46,6 +41,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
           .catch((error) => {
             throw error;
           });
+      } else {
+        setCurrentUser(null);
+        setCurrentUserData(null);
+        setLoading(false);
       }
     });
 

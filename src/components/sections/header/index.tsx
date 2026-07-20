@@ -1,3 +1,4 @@
+// oxlint-disable unicorn/no-negated-condition
 import {
   Box,
   Button,
@@ -10,7 +11,12 @@ import {
   Menu,
   Portal,
 } from "@chakra-ui/react";
-import { Link as RouterLink } from "@tanstack/react-router";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  getRouteApi,
+  Link as RouterLink,
+  useRouter,
+} from "@tanstack/react-router";
 import {
   HomeIcon,
   LibraryIcon,
@@ -21,9 +27,37 @@ import {
   XIcon,
 } from "lucide-react";
 
+import { authClient } from "@/config/auth-client";
+import { authQueryKeys, authQueryOptions } from "@/features/auth/queries";
+
 export function Header() {
+  const router = useRouter();
+
+  const routeApi = getRouteApi("/(layout)");
+
+  const { queryClient } = routeApi.useRouteContext();
+
+  const { data: session } = useQuery(authQueryOptions());
+
+  const signOutMutation = useMutation({
+    mutationFn: async () => {
+      await authClient.signOut();
+    },
+    onSuccess: async () => {
+      queryClient.setQueryData(authQueryKeys.all, null);
+
+      await queryClient.invalidateQueries({ queryKey: authQueryKeys.all });
+
+      await router.invalidate();
+    },
+  });
+
+  async function handleSignOut() {
+    await signOutMutation.mutateAsync();
+  }
+
   return (
-    <Box as="header" position="sticky" top="0" zIndex={99}>
+    <Box as="header" backgroundColor="bg" position="sticky" top="0" zIndex={99}>
       <Container>
         <Flex align="center" justify="space-between" paddingY="{spacing.6}">
           <Link asChild fontSize="2xl">
@@ -53,7 +87,7 @@ export function Header() {
                   <Menu.Positioner>
                     <Menu.Content>
                       <Menu.Item asChild value="/">
-                        <RouterLink to="/">See all</RouterLink>
+                        <RouterLink to="/products">See all</RouterLink>
                       </Menu.Item>
                     </Menu.Content>
                   </Menu.Positioner>
@@ -62,7 +96,7 @@ export function Header() {
             </Box>
             <Box as="li">
               <Link asChild>
-                <RouterLink to="/">About</RouterLink>
+                <RouterLink to="/about">About</RouterLink>
               </Link>
             </Box>
           </Box>
@@ -85,12 +119,23 @@ export function Header() {
                   <Menu.ItemGroup>
                     <Menu.ItemGroupLabel>Account</Menu.ItemGroupLabel>
                     <Menu.Separator />
-                    <Menu.Item value="sign-up" asChild>
-                      <RouterLink to="/sign-up">Sign Up</RouterLink>
-                    </Menu.Item>
-                    <Menu.Item value="sign-in" asChild>
-                      <RouterLink to="/sign-in">Sign In</RouterLink>
-                    </Menu.Item>
+                    {!session ? (
+                      <>
+                        <Menu.Item value="sign-up" asChild>
+                          <RouterLink to="/sign-up">Sign Up</RouterLink>
+                        </Menu.Item>
+                        <Menu.Item value="sign-in" asChild>
+                          <RouterLink to="/sign-in">Sign In</RouterLink>
+                        </Menu.Item>
+                      </>
+                    ) : (
+                      <>
+                        <Menu.Item value="settings">Settings</Menu.Item>
+                        <Menu.Item onClick={handleSignOut} value="sign-out">
+                          Sign Out
+                        </Menu.Item>
+                      </>
+                    )}
                   </Menu.ItemGroup>
                 </Menu.Content>
               </Menu.Positioner>
